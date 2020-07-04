@@ -1,0 +1,6 @@
+.htaccess
+.env
+vendor
+nbproject
+.vscode
+_mmServerScripts

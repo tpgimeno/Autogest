@@ -1,0 +1,76 @@
+{% extends "dashboard.twig" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <h2> Cliente </h2>
+        </div>   
+        <div class="col-md-2 d-flex justify-content-end align-items-end">
+            <a class="link pr-4" href="/intranet/customers/list">Lista</a> 
+            <a class="link " href="/intranet/admin">Volver</a> 
+        </div>        
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-dark" role="alert">
+                {{ responseMessage }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <form action="/intranet/customers/save" method="post">
+                <div class="form-row">
+                    <div class="form-group col-md-9">
+                        <label for="inputName">Nombre</label>                        
+                        <input type="text" name="name" class="form-control" id="inputName" placeholder="Nombre" value="{{ customer.name }}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="inputNif">NIF/CIF</label>
+                        <input type="text" name="fiscal_id" class="form-control" id="inputNif" placeholder="ID Fiscal" value="{{ customer.fiscal_id }}">
+                    </div>
+                </div>                
+                <div class="form-group">
+                        <label for="inputAddress">Dirección</label>
+                        <input type="text" name="address" class="form-control" id="inputAddress" placeholder="C/ La paz, 4" value="{{ customer.address }}">
+                    </div>                                      
+                <div class="form-row">                         
+                    <div class="form-group col-md-10">
+                        <label for="inputCity">Población</label>
+                        <input type="text" name="city" class="form-control" id="inputCity" placeholder="Ciudad" value="{{ customer.city }}">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputZip">C.P.</label>
+                        <input type="text" name="postal_code" class="form-control" id="inputZip" placeholder="Código Postal" value="{{ customer.postal_code }}">
+                    </div>                                             
+                </div>
+                <div class="form-row"> 
+                    <div class="form-group col-md-6">
+                        <label for="inputState">Provincia/Estado</label>
+                        <input type="text" name="state" class="form-control" id="inputState" placeholder="Provincia" value="{{ customer.state }}">
+                    </div> 
+                    <div class="form-group col-md-3">
+                        <label for="inputCountry">Pais</label>
+                        <input type="text" name="country" class="form-control" id="inputCountry" placeholder="Pais" value="{{ customer.country }}">
+                    </div>                          
+                    <div class="form-group col-md-3">
+                        <label for="inputPhone">Teléfono</label>
+                        <input type="text" name="phone" class="form-control" id="inputPhone" placeholder="Phone" value="{{ customer.phone }}">
+                    </div>
+                </div>
+                <div class="form-row">                         
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail">Email</label>
+                        <input type="text" name="email" class="form-control" id="inputEmail" placeholder="Email" value="{{ customer.email }}">
+                    </div>                                         
+                </div>
+                <div class="form-row">
+                    <div class="col text-right">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="reset" class="btn btn-primary">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>    
+{% endblock %}
