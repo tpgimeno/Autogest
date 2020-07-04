@@ -49,8 +49,11 @@ class CreateVehiclesTable extends AbstractMigration
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime')
                 ->addColumn('deleted_at', 'datetime')
+<<<<<<< HEAD
                 ->addForeignKey('brand', 'brands', 'id')
                 ->addForeignKey('model', 'models', 'id')
+=======
+>>>>>>> 4bfc5db00600c9c9450fde31dab0a73b487d845d
                 ->create();                
     }
 }
