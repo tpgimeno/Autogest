@@ -31,7 +31,6 @@ final class CreateBuyDeliveryTable extends AbstractMigration
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime')
                 ->addColumn('deleted_at', 'datetime')
-                ->addForeignKey('providor_id', 'providors', 'id')
                 ->create();
     }
 }

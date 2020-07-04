@@ -29,7 +29,6 @@ final class CreateArticlesTable extends AbstractMigration
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime')
                 ->addColumn('deleted_at', 'datetime')
-                ->addForeignKey('mader', 'maders', 'id')
                 ->create();      
     }
 }

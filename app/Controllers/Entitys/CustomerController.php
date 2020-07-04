@@ -25,7 +25,7 @@ class CustomerController extends BaseController
     {
         $customer = Customer::All();
         return $this->renderHTML('/customers/customerList.twig', [
-            'currentUser' => $this->currenUser->getCurrentUserEmailAction(),
+            'currentUser' => $this->currentUser->getCurrentUserEmailAction(),
             'customers' => $customer
         ]);
     }   

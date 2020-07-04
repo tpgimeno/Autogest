@@ -29,8 +29,6 @@ final class CreateProductionTable extends AbstractMigration
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime')
                 ->addColumn('deleted_at', 'datetime')
-                ->addForeignKey('vehicle_id', 'vehicles', 'id')
-                ->addForeignKey('homologation_id', 'homologations', 'id')
                 ->create();
     }
 }

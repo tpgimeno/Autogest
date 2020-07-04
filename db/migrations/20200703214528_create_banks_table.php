@@ -18,6 +18,22 @@ final class CreateBanksTable extends AbstractMigration
      */
     public function change(): void
     {
-
+        $table = $this->table('banks');
+        $table->addColumn('name', 'string')
+                ->addColumn('fiscal_id', 'string')
+                ->addColumn('fiscal_name', 'string')
+                ->addColumn('bank_code', 'string')
+                ->addColumn('address', 'string')
+                ->addColumn('city', 'string')
+                ->addColumn('postal_code', 'integer')
+                ->addColumn('state', 'string')
+                ->addColumn('country', 'string')
+                ->addColumn('phone', 'string')
+                ->addColumn('email', 'string')
+                ->addColumn('site', 'string')
+                ->addColumn('created_at', 'datetime')
+                ->addColumn('updated_at', 'datetime')
+                ->addColumn('deleted_at', 'datetime')
+                ->create();
     }
 }

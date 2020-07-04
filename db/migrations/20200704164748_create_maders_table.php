@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class CreateLocationTable extends AbstractMigration
+final class CreateMadersTable extends AbstractMigration
 {
     /**
      * Change Method.
@@ -18,9 +18,18 @@ final class CreateLocationTable extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('locations');
-        $table->addColumn('store_id', 'integer')  
-                ->addColumn('name', 'string')
+        $table = $this->table('maders');
+        $table->addColumn('name', 'string')
+                ->addColumn('fiscal_id', 'string')
+                ->addColumn('fiscal_name', 'string')
+                ->addColumn('address', 'string')
+                ->addColumn('city', 'string')
+                ->addColumn('postal_code', 'integer')
+                ->addColumn('state', 'string')
+                ->addColumn('country', 'string')
+                ->addColumn('phone', 'string')
+                ->addColumn('email', 'string')
+                ->addColumn('site', 'string')
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime')
                 ->addColumn('deleted_at', 'datetime')

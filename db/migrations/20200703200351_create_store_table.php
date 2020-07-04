@@ -18,6 +18,14 @@ final class CreateStoreTable extends AbstractMigration
      */
     public function change(): void
     {
-
+        $table = $this->table('stores');
+        $table->addColumn('name', 'string')
+                ->addColumn('address', 'string')
+                ->addColumn('city', 'string')
+                ->addColumn('state', 'string')
+                ->addColumn('created_at', 'datetime')
+                ->addColumn('updated_at', 'datetime')
+                ->addColumn('deleted_at', 'datetime')
+                ->create();
     }
 }
