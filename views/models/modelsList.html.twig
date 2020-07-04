@@ -1,0 +1,61 @@
+{% extends "dashboard.twig" %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+               
+                <h2> Modelos </h2>
+            </div>   
+            <div class="col-md-2 d-flex justify-content-end align-items-end">
+                <a class="link " href="/intranet/admin">Volver</a> 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <form id="searchForm" action="/intranet/vehicles/models/search" method="post" class="form">
+                    <div class="container">
+                        <div id="formRow" class="form-row text-right">
+                            <div class="col-11">                                                                                
+                                <input id="searchField" type="text" name="searchFilter" class="form-control mb-2 mr-sm-2" id="inlineFormSearchFilter" placeholder="Nombre / Cif / Telefono / email">
+                            </div>
+                            <div class="col-1">
+                                <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <table class="table">
+                    <tr>
+                        <th>Marca</th>
+                        <th>Nombre</th>                        
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    {% for model in models %}
+                        <tr>
+                            <td>{{ model.brand }}
+                            <td>{{ model.name }}</td>                           
+                            <td><a href="/intranet/vehicles/models/form?id={{model.id}}">Edit</td>
+                            <td><a href="/intranet/vehicles/models/delete?id={{model.id}}">Delete</td>
+                        </tr>
+                    {% endfor %}                
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col d-flex justify-content-end">
+                <form action="/intranet/vehicles/models/form" method="get">
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary" value="Añadir">
+                        <a href="/intranet/admin" class="btn btn-primary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

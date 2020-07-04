@@ -1,0 +1,301 @@
+{% extends "dashboard.twig" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <h2> Vehiculo </h2>
+        </div>   
+        <div class="col-md-2 d-flex justify-content-end align-items-end">
+            <a class="link pr-4" href="/intranet/vehicles/list">Lista</a> 
+            <a class="link " href="/intranet/admin">Volver</a> 
+        </div>        
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-dark" role="alert">
+                {{ responseMessage }}
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col">
+            <form action="/intranet/vehicles/save" method="post">
+                <div class="form-row">
+                    <div class="col">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                              <a class="nav-link active" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true">Datos</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                              <a class="nav-link" id="buy-tab" data-toggle="tab" href="#buy" role="tab" aria-controls="buy" aria-selected="false">Compra</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                              <a class="nav-link" id="sale-tab" data-toggle="tab" href="#sale" role="tab" aria-controls="sale" aria-selected="false">Venta</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                              <a class="nav-link" id="accesories-tab" data-toggle="tab" href="#accesories" role="tab" aria-controls="accesories" aria-selected="false">Equipamiento</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                          <div class="tab-pane fade show active" id="data" role="tabpanel" aria-labelledby="data-tab">
+                              <div class="form-row mt-3">
+                                  <div class="form-group col-md-3">
+                                        <label for="inputId">Id</label>                        
+                                        <input type="text" name="id" class="form-control" id="inputId" placeholder="" value="{{ vehicle.id }}">
+                                    </div>
+                              </div>
+                              <div class="form-row mt-3">
+                                  <div class="form-group col-md-3">
+                                        <label for="inputPlate">Matricula</label>                        
+                                        <input type="text" name="plate" class="form-control" id="inputPlate" placeholder="" value="{{ vehicle.plate }}">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="inputVin">Bastidor</label>
+                                        <input type="text" name="vin" class="form-control" id="inputVin" placeholder="" value="{{ vehicle.vin }}">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="selectBrand">Marca</label>
+                                        <select name="brand" class="form-control" id="selectBrand">
+                                            {% for brand in brands %}
+                                                <option>{{ brand.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="inputModel">Modelo</label>
+                                        <select name="model" class="form-control" id="selectModel">
+                                            {% for model in models %}
+                                                <option>{{ model.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                              </div>
+                              <div class="form-row">                    
+                                    <div class="form-group col-md-6">
+                                        <label for="inputDescription">Descripción</label>
+                                        <input type="text" name="description" class="form-control" id="inputDescription" placeholder="" value="{{ vehicle.description }}">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="inputType">Tipo Vehículo</label>
+                                        <select name="type" class="form-control" id="selectType">
+                                            {% for type in types %}
+                                                <option>{{ type.name }}</option>
+                                            {% endfor %}                            
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="inputLocation">Ubicación</label>
+                                        <input type="text" name="location" class="form-control" id="inputLocation" placeholder="" value="{{ vehicle.location }}">
+                                    </div>
+                                </div>
+                                <div class="form-row"> 
+                                    <div class="form-group col-md-2">
+                                        <label for="inputKm">Kilómetros</label>
+                                        <input type="text" name="km" class="form-control" id="inputKm" placeholder="50000" value="{{ vehicle.km }}">
+                                    </div>                    
+                                    <div class="form-group col-md-2">
+                                        <label for="inputPower">Potencia</label>
+                                        <input type="text" name="power" class="form-control text-center" id="inputPower" placeholder="130cv" value="{{ vehicle.power }}">
+                                    </div>                          
+                                    <div class="form-group col-md-2">
+                                        <label for="inputPlaces">Plazas</label>
+                                        <input type="text" name="places" class="form-control text-center" id="inputPlaces" placeholder="3" value="{{ vehicle.places }}">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="inputDoors">Puertas</label>
+                                        <input type="text" name="doors" class="form-control text-center" id="inputDoors" placeholder="4" value="{{ vehicle.doors }}">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="inputColor">Color</label>
+                                        <input type="text" name="color" class="form-control" id="inputColor" placeholder="Blanco" value="{{ vehicle.color }}">
+                                    </div>                    
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="buy" role="tabpanel" aria-labelledby="buy-tab">
+                                <div class="form-row mt-3">
+                                    <div class="form-group col-md-2">
+                                        <label for="inputCost">Precio Compra</label>
+                                        <input type="text" name="cost" class="form-control" id="inputCost" placeholder="" value="{{ vehicle.cost }}">
+                                    </div> 
+                                </div>
+                            </div>
+                          <div class="tab-pane fade" id="sale" role="tabpanel" aria-labelledby="sale-tab">
+                              <div class="form-row mt-3">
+                                  <div class="form-group col-md-2">
+                                      <label for="inputPvp">Precio Venta</label>
+                                      <input type="text" name="pvp" class="form-control" id="inputPvp" placeholder="" value="{{ vehicle.pvp }}">
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="tab-pane fade" id="accesories" role="tabpanel" aria-labelledby="accesories-tab">
+                              <div class="form-row mt-3">
+                                    <div class="form-check col-md-3">
+                                        <input class="form-check-input" name="acc-A/C" type="checkbox" value="acc-A/C" id="a/c" {% if "acc-A/C" in accesories %} checked {% endif %}>                                                  
+                                       <label class="form-check-label" for="defaultCheck1">
+                                         Aire Acondicionado
+                                       </label>
+                                    </div>
+                                    <div class="form-check col-md-3">
+                                      <input class="form-check-input" name="acc-clima" type="checkbox" value="acc-clima" id="clima" {% if "acc-clima" in accesories %} checked {% endif %}>
+                                      <label class="form-check-label" for="defaultCheck1">
+                                        Climatizador
+                                      </label>
+                                   </div>
+                                    <div class="form-check col-md-3">
+                                      <input class="form-check-input" name="acc-clima-pasaje" type="checkbox" value="acc-clima-pasaje" id="clima-pasaje" {% if "acc-clima-pasaje" in accesories %} checked {% endif %}>
+                                      <label class="form-check-label" for="defaultCheck1">
+                                        Climatización Pasajeros
+                                      </label>
+                                   </div>
+                                    <div class="form-check col-md-3">
+                                      <input class="form-check-input" name="acc-start&stop" type="checkbox" value="acc-start&stop" id="startstop" {% if "acc-start&stop" in accesories %} checked {% endif %}>
+                                      <label class="form-check-label" for="defaultCheck1">
+                                        Start & Stop
+                                      </label>
+                                   </div>
+                              </div>
+                              <div class="form-row">
+                                <div class="form-check col-md-3">
+                                  <input class="form-check-input" name="acc-volantemulti" type="checkbox" value="acc-volantemulti" id="volantemulti" {% if "acc-volantemulti" in accesories %} checked {% endif %}>
+                                  <label class="form-check-label" for="defaultCheck1">
+                                    Volante Multifunción
+                                  </label>
+                                </div>
+                                <div class="form-check col-md-3">
+                                  <input class="form-check-input" name="acc-usb" type="checkbox" value="acc-usb" id="usb" {% if "acc-usb" in accesories %} checked {% endif %}>
+                                  <label class="form-check-label" for="defaultCheck1">
+                                    Radio USB
+                                  </label>
+                                </div>
+                                <div class="form-check col-md-3">
+                                  <input class="form-check-input" name="acc-tactil" type="checkbox" value="acc-tactil" id="tactil" {% if "acc-tactil" in accesories %} checked {% endif %}>
+                                  <label class="form-check-label" for="defaultCheck1">
+                                    Pantalla Táctil
+                                  </label>
+                                </div>
+                                <div class="form-check col-md-3">
+                                  <input class="form-check-input" name="acc-carplay" type="checkbox" value="acc-carplay" id="carplay" {% if "acc-carplay" in accesories %} checked {% endif %}>
+                                  <label class="form-check-label" for="defaultCheck1">
+                                    Apple Car-Play / Android Auto
+                                  </label>
+                                </div>
+                              </div>
+                              <div class="form-row">
+                                <div class="form-check col-md-3">
+                                  <input class="form-check-input" name="acc-dobleairbag" type="checkbox" value="acc-dobleairbag" id="dobleairbag" {% if "acc-dobleairbag" in accesories %} checked {% endif %}>
+                                  <label class="form-check-label" for="defaultCheck1">
+                                    AirBag Pasajero
+                                  </label>
+                                </div>
+                                <div class="form-check col-md-3">
+                                  <input class="form-check-input" name="acc-airbaglat" type="checkbox" value="acc-airbaglat" id="airbaglat" {% if "acc-airbaglat" in accesories %} checked {% endif %}>
+                                  <label class="form-check-label" for="defaultCheck1">
+                                    AirBag Laterales
+                                  </label>
+                                </div>
+                                <div class="form-check col-md-3">
+                                  <input class="form-check-input" name="acc-tempomat" type="checkbox" value="acc-tempomat" id="tempomat" {% if "acc-tempomat" in accesories %} checked {% endif %}>
+                                  <label class="form-check-label" for="defaultCheck1">
+                                    Control y Limitador de velocidad
+                                  </label>
+                                </div>
+                                <div class="form-check col-md-3">
+                                  <input class="form-check-input" name="acc-espejoselec" type="checkbox" value="acc-espejoselec" id="espejoselec" {% if "acc-espejoselec" in accesories %} checked {% endif %}>
+                                  <label class="form-check-label" for="defaultCheck1">
+                                    Espejos electricos
+                                  </label>
+                                </div>
+                              </div>
+                              <div class="form-row">
+                                <div class="form-check col-md-3">
+                                  <input class="form-check-input" name="acc-espejosretrac" type="checkbox" value="acc-espejosretrac" id="espejosretrac" {% if "acc-espejosretrac" in accesories %} checked {% endif %}>
+                                  <label class="form-check-label" for="defaultCheck1">
+                                    Espejos retractiles
+                                  </label>
+                                </div>
+                                <div class="form-check col-md-3">
+                                  <input class="form-check-input" name="acc-espejoscalef" type="checkbox" value="acc-espejoscalef" id="espejoscalef" {% if "acc-espejoscalef" in accesories %} checked {% endif %}>
+                                  <label class="form-check-label" for="defaultCheck1">
+                                    Espejos Calefactables
+                                  </label>
+                                </div>
+                                <div class="form-check col-md-3">
+                                  <input class="form-check-input" name="acc-antiniebla" type="checkbox" value="acc-antiniebla" id="antiniebla" {% if "acc-antiniebla" in accesories %} checked {% endif %}>
+                                  <label class="form-check-label" for="defaultCheck1">
+                                    Faros anti-niebla
+                                  </label>
+                                </div>
+                                <div class="form-check col-md-3">
+                                  <input class="form-check-input" name="acc-gps" type="checkbox" value="acc-gps" id="gps" {% if "acc-gps" in accesories %} checked {% endif %}>
+                                  <label class="form-check-label" for="defaultCheck1">
+                                    Navegador GPS
+                                  </label>
+                                </div>
+                              </div>
+                              <div class="form-row">
+                                <div class="form-check col-md-3">
+                                  <input class="form-check-input" name="acc-reposabrazos" type="checkbox" value="acc-reposabrazos" id="reposabrazos" {% if "acc-reposabrazos" in accesories %} checked {% endif %}>
+                                  <label class="form-check-label" for="defaultCheck1">
+                                    Reposabrazos
+                                  </label>
+                                </div>
+                                <div class="form-check col-md-3">
+                                  <input class="form-check-input" name="acc-suspconfort" type="checkbox" value="acc-suspconfort" id="suspconfort" {% if "acc-suspconfort" in accesories %} checked {% endif %}>
+                                  <label class="form-check-label" for="defaultCheck1">
+                                    Suspensión Confort
+                                  </label>
+                                </div>
+                                <div class="form-check col-md-3">
+                                  <input class="form-check-input" name="acc-lucesauto" type="checkbox" value="acc-lucesauto" id="lucesauto" {% if "acc-lucesauto" in accesories %} checked {% endif %}>
+                                  <label class="form-check-label" for="defaultCheck1">
+                                    Luces Automáticas
+                                  </label>
+                                </div>
+                                <div class="form-check col-md-3">
+                                  <input class="form-check-input" name="acc-mandos" type="checkbox" value="acc-mandos" id="mandos" {% if "acc-mandos" in accesories %} checked {% endif %}>
+                                  <label class="form-check-label" for="defaultCheck1">
+                                    Mandos al volante
+                                  </label>
+                                </div>
+                              </div>
+                              <div class="form-row mb-3">
+                                <div class="form-check col-md-3">
+                                  <input class="form-check-input" name="acc-auto" type="checkbox" value="acc-auto" id="auto" {% if "acc-auto" in accesories %} checked {% endif %}>
+                                  <label class="form-check-label" for="defaultCheck1">
+                                    Cambio Automático
+                                  </label>
+                                </div>
+                                <div class="form-check col-md-3">
+                                  <input class="form-check-input" name="acc-parktr" type="checkbox" value="acc-parktr" id="parktr" {% if "acc-parktr" in accesories %} checked {% endif %}>
+                                  <label class="form-check-label" for="defaultCheck1">
+                                    Parktronic trasero
+                                  </label>
+                                </div>
+                                <div class="form-check col-md-3">
+                                  <input class="form-check-input" name="acc-parkdel" type="checkbox" value="acc-parkdel" id="parkdel" {% if "acc-parkdel" in accesories %} checked {% endif %}>
+                                  <label class="form-check-label" for="defaultCheck1">
+                                    Parktronic delantero
+                                  </label>
+                                </div>
+                                <div class="form-check col-md-3">
+                                  <input class="form-check-input" name="acc-cam" type="checkbox" value="acc-cam" id="cam" {% if "acc-cam" in accesories %} checked {% endif %}>
+                                  <label class="form-check-label" for="defaultCheck1">
+                                    Camara visión trasera
+                                  </label>
+                                </div>
+                              </div>
+                          </div>
+                        </div>
+                    </div>                    
+                </div>                  
+                <div class="form-row">
+                    <div class="col text-right">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a href="/intranet/admin" class="btn btn-primary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>    
+{% endblock %}
