@@ -37,6 +37,7 @@ class CreateVehiclesTable extends AbstractMigration
                 ->addColumn('description', 'string')
                 ->addColumn('plate', 'string')
                 ->addColumn('vin', 'string')
+                ->addColumn('location', 'string')
                 ->addColumn('type', 'integer')
                 ->addColumn('color', 'string')
                 ->addColumn('places', 'string')

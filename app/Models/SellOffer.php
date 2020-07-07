@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class VehiclesType extends Model 
+class SellOffer extends Model
 {
     use SoftDeletes;
-
-    protected $table = "vehicles_type";
+    protected $table = 'sellOffers';
 }
+        

@@ -7,5 +7,5 @@
     width:600px;
 }
 .form-inline .form-control{
-    width: 50em;
+    max-width: 100%;
 }

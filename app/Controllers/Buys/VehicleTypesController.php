@@ -9,7 +9,7 @@
 namespace App\Controllers\Buys;
 
 use App\Controllers\BaseController;
-use App\Models\VehiclesType;
+use App\Models\VehicleTypes;
 use App\Services\Buys\VehicleTypeService;
 use Laminas\Diactoros\ServerRequest;
 use Respect\Validation\Validator as v;
@@ -21,20 +21,20 @@ use Laminas\Diactoros\Response\RedirectResponse;
  *
  * @author tonyl
  */
-class VehiclesTypesController extends BaseController
+class VehicleTypesController extends BaseController
 {
-    protected $vehiclesTypeService;
+    protected $vehicleTypeService;
     
-    public function __construct(VehicleTypeService $vehiclesTypeService) {
+    public function __construct(VehicleTypeService $vehicleTypeService) {
         parent::__construct();
-        $this->vehiclesTypeService = $vehiclesTypeService;
+        $this->vehicleTypeService = $vehicleTypeService;
     }
     
     
     
     public function getIndexAction()
     {
-        $types = VehiclesType::All();
+        $types = VehicleTypes::All();
         return $this->renderHTML('/vehiclesTypes/vehiclesTypesList.html.twig', [
             'currentUser' => $this->currentUser->getCurrentUserEmailAction(),
             'types' => $types
@@ -44,7 +44,7 @@ class VehiclesTypesController extends BaseController
     {
         $searchData = $request->getParsedBody();
         $searchString = $searchData['searchFilter'];        
-        $type = VehicleType::Where("name", "like", "%".$searchString."%")
+        $type = VehicleTypes::Where("name", "like", "%".$searchString."%")
                 ->orWhere("id", "like", "%".$searchString."%")                
                 ->get();     
         return $this->renderHTML('/vehiclesTypes/vehiclesTypesList.twig', [
@@ -54,7 +54,7 @@ class VehiclesTypesController extends BaseController
         ]);
     }
     
-    public function getVehiclesTypesDataAction($request)
+    public function getVehicleTypesDataAction($request)
     {                
         $responseMessage = null;
         if($request->getMethod() == 'POST')
@@ -63,7 +63,7 @@ class VehiclesTypesController extends BaseController
             $typeValidator = v::key('name', v::stringType()->notEmpty());           
             try{
                 $typeValidator->assert($postData); // true 
-                $type = new VehiclesType();
+                $type = new VehicleTypes();
                 $type->name = $postData['name'];                          
                 $type->save();     
                 $responseMessage = 'Saved';     
@@ -74,7 +74,7 @@ class VehiclesTypesController extends BaseController
         $typeSelected = null;
         if($_GET)
         {
-            $typeSelected = VehiclesType::find($_GET['id']);
+            $typeSelected = VehicleTypes::find($_GET['id']);
         }
         return $this->renderHTML('/vehiclesTypes/vehiclesTypesForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
@@ -86,7 +86,7 @@ class VehiclesTypesController extends BaseController
     public function deleteAction(ServerRequest $request)
     {         
         $this->vehiclesTypeService->deleteVehicleType($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/vehicles/vehiclesTypes/list');
+        return new RedirectResponse('/intranet/vehicles/vehicleTypes/list');
     }
 
 }

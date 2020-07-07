@@ -12,7 +12,7 @@ use App\Controllers\BaseController;
 use App\Models\Brand;
 use App\Models\ModelVh;
 use App\Models\Vehicle;
-use App\Models\VehiclesType;
+use App\Models\VehicleTypes;
 use App\Services\Buys\VehicleService;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\ServerRequest;
@@ -38,7 +38,7 @@ class VehicleController extends BaseController
         $vehicles = Vehicle::All();
         $marcas = Brand::All();
         $modelos = ModelVh::All();
-        $types = VehiclesType::All();
+        $types = VehicleTypes::All();
         return $this->renderHTML('/vehicles/vehiclesList.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'vehicles' => $vehicles,
@@ -61,7 +61,7 @@ class VehicleController extends BaseController
         
         $marcas = Brand::All();
         $modelos = ModelVh::All();
-        $types = VehiclesType::All();
+        $types = VehicleTypes::All();
         return $this->renderHTML('/vehicles/vehiclesList.html.twig',[
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'vehicles' => $vehicles,
@@ -72,7 +72,8 @@ class VehicleController extends BaseController
     }    
     public function getVehicleDataAction($request)
     {                
-        $responseMessage = null;        
+        $responseMessage = null;   
+        $vh_temp = null;
         if($request->getMethod() == 'POST')
         {
             $postData = $request->getParsedBody();            
@@ -144,7 +145,7 @@ class VehicleController extends BaseController
         }
         $brands = Brand::All();
         $models = ModelVh::All();
-        $types = VehiclesType::All();                 
+        $types = VehicleTypes::All();                 
         return $this->renderHTML('/vehicles/vehiclesForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,

@@ -8,7 +8,7 @@
 
 namespace App\Services;
 
-use App\Models\VehiclesType;
+use App\Models\VehicleTypes;
 
 /**
  * Description of TypeService
@@ -18,7 +18,7 @@ use App\Models\VehiclesType;
 class TypeService {
     public function deleteType($id)
     {        
-        $customer = VehiclesType::find($id)->first();
+        $customer = VehicleTypes::find($id)->first();
         $customer->delete();    
     }
 }

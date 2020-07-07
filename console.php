@@ -7,7 +7,7 @@
 require __DIR__.'/vendor/autoload.php';
 
 use App\Commands\CreateUserCommand;
-use App\Commands\SendMailCommand;
+use App\Commands\SendMailsCommand;
 use Dotenv\Dotenv;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Symfony\Component\Console\Application;
@@ -35,6 +35,6 @@ $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
 $application = new Application();
-$application->add(new SendMailCommand());
+$application->add(new SendMailsCommand());
 $application->add(new CreateUserCommand());
 $application->run();
