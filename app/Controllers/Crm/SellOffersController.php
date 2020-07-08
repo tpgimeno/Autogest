@@ -9,9 +9,12 @@
 namespace App\Controllers\Crm;
 
 use App\Controllers\BaseController;
+use App\Models\Customer;
 use App\Models\SellOffer;
+use App\Models\Vehicle;
 use App\Services\Crm\SellOfferService;
 use Respect\Validation\Validator as v;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 /**
  * Description of SellOffersController
@@ -36,23 +39,40 @@ class SellOffersController extends BaseController
             'offers' => $offers
         ]);
     }
-    public function getSearchCustomerSellOffersAction($request)
+    public function searchCustomerSellOfferAction($request)
     {
         $customer = null;
+        $selected_offer = null;
         $postData = $request->getParsedBody();
-        $searchString = $postData['searchCustomerFilter'];
-        $customer = Customer::Where("name", "like", "%".$searchString."%" )
+        
+        $params = $request->getQueryParams();
+        if($params['customer_id'])
+        {
+            $customer = Customer::find($params['customer_id']);
+        }
+        else
+        {
+            $searchString = $postData['searchCustomerFilter'];
+            $customer = Customer::Where("name", "like", "%".$searchString."%" )
                 ->orWhere("fiscal_id", "like", "%".$searchString."%")
                 ->orWhere("address", "like", "%".$searchString."%")
                 ->orWhere("phone", "like", "%".$searchString."%")
                 ->orWhere("email", "like", "%".$searchString."%")
                 ->get();
+            $selected_offer = $postData['id'];
+        }        
+        $customers = Customer::All();
         return $this->renderHTML('/sells/offers/sellOffersForm.html.twig', [
             'sellOffer' => $selected_offer,
-            'customer' => $customer,            
-            'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
-            'responseMessage' => $responseMessage
+            'customer' => $customer,   
+            'customers' => $customers,
+            'userEmail' => $this->currentUser->getCurrentUserEmailAction()
+            
         ]);
+        
+    }
+    public function searchSellOffersAction()
+    {
         
     }
     public function getSellOfferDataAction($request)
@@ -106,8 +126,12 @@ class SellOffersController extends BaseController
         {
             $selected_offer = SellOffer::find($request->getQueryParams('id'))->first();
         }
+        $customers = Customer::All();
+        $vehicles = Vehicle::All();
         return $this->renderHTML('/sells/offers/sellOffersForm.html.twig', [
             'sellOffer' => $selected_offer,
+            'customers' => $customers,
+            'vehicles' => $vehicles,
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage
         ]);

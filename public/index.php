@@ -215,6 +215,10 @@ $map->post('searchCustomerSellOffers', '/intranet/crm/offers/customer/search', [
     'App\Controllers\Crm\SellOffersController',
     'searchCustomerSellOfferAction'
 ]);
+$map->get('selectCustomerSellOffers', '/intranet/crm/offers/customer/search', [
+    'App\Controllers\Crm\SellOffersController',
+    'searchCustomerSellOfferAction'
+]);
 $map->post('searchVehicleSellOffers', '/intranet/crm/offers/vehicle/search', [
     'App\Controllers\Crm\SellOffersController',
     'searchVehicleSellOfferAction'

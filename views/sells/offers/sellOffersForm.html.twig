@@ -36,26 +36,17 @@
         <div class="tab-content" id="myTabContent">        
             <div class="tab-pane fade show active" id="customer" role="tabpanel" aria-labelledby="customer-tab">
                 <div class="form-row mt-3">
-                    <div class="form-group col">
-                        <form id="searchVehicleForm" action="/intranet/crm/offers/vehicle/search" method="post" class="inline-form">
-                            <div class="container">
-                                <div class="form-row text-right">
-                                    <div class="col-11">                                                                                
-                                        <input id="searchVehicleField" type="text" name="searchVehicleFilter" class="form-control mb-2 mr-sm-2" id="inlineFormSearchFilter" placeholder="Nombre / Cif / Telefono / email">
-                                    </div>
-                                    <div class="col-1">
-                                        <button form="searchVehicleForm" type="submit" class="btn btn-primary mb-2">Buscar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+                    <div class="form-group col text-right">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchCustomerModal">
+                            Buscar Cliente
+                        </button>
                     </div>
 
                 </div>
                 <div class="form-row mt-3">
                     <div class="form-group col-md-1">
-                          <label for="inputID">ID</label>                        
-                          <input type="text" name="id" class="form-control" id="inputId" placeholder="" value="{{ customer.id }}">
+                          <label for="inputCustomerID">ID</label>                        
+                          <input type="text" name="customer_id" class="form-control" id="inputCustomerId" placeholder="" value="{{ customer.id }}">
                       </div>
                     <div class="form-group col-md-3">
                         <label for="inputName">Nombre</label>                        
@@ -93,7 +84,7 @@
                                         <input id="searchVehicleField" type="text" name="searchVehicleFilter" class="form-control mb-2 mr-sm-2" id="inlineFormSearchFilter" placeholder="Nombre / Cif / Telefono / email">
                                     </div>
                                     <div class="col-1">
-                                        <button form="searchVehicleForm" type="submit" class="btn btn-primary mb-2">Buscar</button>
+                                        <button form="#searchVehicleForm" type="submit" class="btn btn-primary mb-2">Buscar</button>
                                     </div>
                                 </div>
                             </div>
@@ -101,6 +92,10 @@
                     </div>
                 </div>
                 <div class="form-row">
+                    <div class="form-group col-md-1">
+                          <label for="inputVehicleID">ID</label>                        
+                          <input type="text" name="vehicle_id" class="form-control" id="inputVehicleId" placeholder="" value="{{ vehicle.id }}">
+                    </div>
                     <div class="form-group col-md-2">                                   
                         <label for="inputPlate">Matricula</label>
                         <input type="text" name="plate" class="form-control" id="inputPlate" placeholder="" value="{{ vehicle.plate }}">
@@ -109,7 +104,7 @@
                         <label for="inputBrand">Marca</label>
                         <input type="text" name="brand" class="form-control" id="inputBrand" placeholder="" value="{{ vehicle.brand }}">
                     </div>                                
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-2">
                         <label for="inputModelVh">Modelo</label>
                         <input type="text" name="model" class="form-control" id="inputKm" placeholder="50000" value="{{ vehicle.km }}">
                     </div>                    
@@ -147,6 +142,10 @@
             </div>                        
             <div class="tab-pane fade" id="offer" role="tabpanel" aria-labelledby="offer-tab">
                 <div class="form-row mt-3">
+                    <div class="form-group col-md-1">
+                          <label for="inputOfferID">ID</label>                        
+                          <input type="text" name="id" class="form-control" id="inputId" placeholder="" value="{{ offer.id }}">
+                      </div>
                     <div class="form-group col-md-2 offset-md-4">
                         <label for="inputPrice">P.V.P.</label>
                         <input type="text" name="price" class="form-control" id="inputPrice" placeholder="" value="{{ offer.pvp }}">
@@ -173,5 +172,61 @@
             </div>
         </div> 
     </form>         
-    
+    <!-- Modal -->
+    <div class="modal fade" id="searchCustomerModal" tabindex="-1" role="dialog" aria-labelledby="searchCustomerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Clientes</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <form id="searchForm" action="/intranet/customers/search" method="post" class="form">
+                                <div class="container">
+                                    <div id="formRow" class="form-row text-right">
+                                        <div class="col-11">                                                                                
+                                            <input id="searchField" type="text" name="searchCustomerFilter" class="form-control mb-2 mr-sm-2" id="inlineFormSearchFilter" placeholder="Nombre / Cif / Telefono / email">
+                                        </div>
+                                        <div class="col-1">
+                                            <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>                          
+                        <div class="row">
+                        <div class="col">
+                            <table class="table">
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Población</th>
+                                    <th>Teléfono</th>
+                                    <th>Email</th>
+                                    <th>Edit</th>                                    
+                                </tr>
+                                {% for customer in customers %}
+                                    <tr>
+                                        <td>{{ customer.name }}</td>
+                                        <td>{{ customer.city }}</td>
+                                        <td>{{ customer.phone }}</td>
+                                        <td>{{ customer.email }}</td>
+                                        <td><a href="/intranet/crm/offers/customer/search?customer_id={{customer.id}}">Select</a></td>                                        
+                                    </tr>
+                                {% endfor %}                
+                            </table>
+                        </div>
+                    </div>                    
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                  
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
