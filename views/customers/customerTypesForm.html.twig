@@ -3,10 +3,10 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10">
-            <h2> Tipo Vehículo </h2>
+            <h2> Tipo Cliente </h2>
         </div>   
         <div class="col-md-2 d-flex justify-content-end align-items-end">
-            <a class="link pr-4" href="/intranet/vehicles/vehicleTypes/list">Lista</a> 
+            <a class="link pr-4" href="/intranet/customer/customerTypes/list">Lista</a> 
             <a class="link " href="/intranet/admin">Volver</a> 
         </div>        
     </div>
@@ -19,17 +19,11 @@
     </div>
     <div class="row">
         <div class="col">
-            <form action="/intranet/vehicles/vehicleTypes/save" method="post">
+            <form action="/intranet/customer/customerTypes/save" method="post">
                 <div class="form-row">
                     <div class="form-group col">
-                        <label for="inputId">ID</label>                        
-                        <input type="text" name="id" class="form-control" id="inputId" placeholder="" value="{{ customerType.id }}">
-                    </div>                    
-                </div>
-                <div class="form-row">
-                    <div class="form-group col">
-                        <label for="inputName">Nombre</label>                        
-                        <input type="text" name="name" class="form-control" id="inputName" placeholder="Nombre" value="{{ customerType.name }}">
+                        <label for="inputName">Descripción</label>                        
+                        <input type="text" name="name" class="form-control" id="inputName" placeholder="Nombre" value="{{ customer_type.name }}">
                     </div>                    
                 </div>              
                 <div class="form-row">
@@ -42,4 +36,5 @@
     </div>
 </div>    
 {% endblock %}
+
 

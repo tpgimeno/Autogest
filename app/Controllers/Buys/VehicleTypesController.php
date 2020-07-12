@@ -49,11 +49,9 @@ class VehicleTypesController extends BaseController
                 ->get();     
         return $this->renderHTML('/vehiclesTypes/vehiclesTypesList.twig', [
             'currentUser' => $this->currenUser->getCurrentUserEmailAction(),
-            'types' => $type
-                
+            'types' => $type                
         ]);
-    }
-    
+    }    
     public function getVehicleTypesDataAction($request)
     {                
         $responseMessage = null;

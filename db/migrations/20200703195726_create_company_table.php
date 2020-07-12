@@ -18,7 +18,7 @@ final class CreateCompanyTable extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('companies');
+        $table = $this->table('company');
         $table->addColumn('name', 'string')
                 ->addColumn('fiscal_id', 'string')
                 ->addColumn('fiscal_name', 'string')

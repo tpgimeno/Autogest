@@ -33,14 +33,15 @@ class CustomerController extends BaseController
     {
         $searchData = $request->getParsedBody();
         $searchString = $searchData['searchFilter'];        
-        $customer = Customer::Where("name", "like", "%".$searchString."%")
+        $customer = Customer::Where("id", "like", "%".$searchString."%")
+                ->orWhere("name", "like", "%".$searchString."%")
                 ->orWhere("fiscal_id", "like", "%".$searchString."%")
                 ->orWhere("phone", "like", "%".$searchString."%")
                 ->orWhere("email", "like", "%".$searchString."%")
                 ->get();       
 
         return $this->renderHTML('/customers/customerList.twig', [
-            'currentUser' => $this->currenUser->getCurrentUserEmailAction(),
+            'currentUser' => $this->currentUser->getCurrentUserEmailAction(),
             'customers' => $customer
                 
         ]);
@@ -76,9 +77,9 @@ class CustomerController extends BaseController
             }              
         }
         $customerSelected = null;
-        if($_GET)
+        if($request->getqueryParams())
         {
-            $customerSelected = Customer::find($_GET['id']);
+            $customerSelected = Customer::find($request->getQueryParams('id'));
         }
         return $this->renderHTML('/customers/customerForm.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),

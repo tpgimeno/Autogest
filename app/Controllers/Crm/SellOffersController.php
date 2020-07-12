@@ -71,7 +71,7 @@ class SellOffersController extends BaseController
         ]);
         
     }
-    public function searchSellOffersAction()
+    public function searchSellOffersAction($request)
     {
         
     }
