@@ -21,6 +21,7 @@ final class CreateProductionTable extends AbstractMigration
         $table = $this->table('productions');
         $table->addColumn('vehicle_id', 'integer')
                 ->addColumn('homologation_id', 'integer')
+                ->addColumn('production_number', 'string')
                 ->addColumn('description', 'string')
                 ->addColumn('date_in', 'date')
                 ->addColumn('date_out', 'date')

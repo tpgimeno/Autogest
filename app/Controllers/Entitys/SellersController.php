@@ -5,7 +5,7 @@ namespace App\Controllers\Entitys;
 use App\Controllers\BaseController;
 use Respect\Validation\Validator as v;
 use App\Models\Sellers;
-use App\Services\SellersService;
+use App\Services\Sells\SellersService;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\Response\RedirectResponse;
 

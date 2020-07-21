@@ -9,5 +9,5 @@ class BuyDelivery extends Model
 {
     use SoftDeletes;
 
-    protected $table = "buy_deliveries";
+    protected $table = "buy_delivery";
 }

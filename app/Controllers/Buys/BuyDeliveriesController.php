@@ -4,7 +4,7 @@ namespace App\Controllers\Buys;
 
 use App\Controllers\BaseController;
 use Respect\Validation\Validator as v;
-use App\Models\BuyDeliveries;
+use App\Models\BuyDelivery;
 use App\Services\Buys\BuyDeliveryService;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\Response\RedirectResponse;
@@ -24,9 +24,9 @@ class BuyDeliveriesController extends BaseController
     
     public function getIndexAction()
     {
-        $buyDeliverys = BuyDeliveries::All();
-        return $this->renderHTML('/buys/buy_deliveryList.twig', [
-            'buyDeliverys' => $buyDeliverys
+        $buyDelivery = BuyDelivery::All();
+        return $this->renderHTML('/buys/buy_deliveryList.html.twig', [
+            'buyDeliverys' => $buyDelivery
         ]);
     }   
     
@@ -66,7 +66,7 @@ class BuyDeliveriesController extends BaseController
         {
             $buyDeliverySelected = BuyDeliveries::find($_GET['id']);
         }
-        return $this->renderHTML('/buys/buy_deliveryForm.twig', [
+        return $this->renderHTML('/buys/buy_deliveryForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
             'buyDelivery' => $buyDeliverySelected
@@ -77,7 +77,7 @@ class BuyDeliveriesController extends BaseController
     {
          
         $this->buyDeliveryService->deleteBuyDeliveries($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/buyDeliverys/list');
+        return new RedirectResponse('/intranet/buys/deliveries/list');
     }
 
    

@@ -22,7 +22,7 @@ class BanksController extends BaseController
     public function getIndexAction()
     {
         $banks = Bank::All();
-        return $this->renderHTML('/banks/banksList.twig', [
+        return $this->renderHTML('/banks/banksList.html.twig', [
             'banks' => $banks
         ]);
     }     
@@ -40,6 +40,15 @@ class BanksController extends BaseController
             try{
                 $bankValidator->assert($postData); // true 
                 $bank = new Bank();
+                $bank->id = $postData['id'];
+                if($bank->id)
+                {
+                    $temp_bank = Bank::find($bank->id)->first();
+                }
+                if(isset($temp_bank))
+                {
+                    $bank = $temp_bank;
+                }
                 $bank->name = $postData['name'];
                 $bank->fiscal_id = $postData['fiscal_id'];
                 $bank->fiscal_name = $postData['fiscal_name'];
@@ -51,18 +60,28 @@ class BanksController extends BaseController
                 $bank->phone = $postData['phone'];
                 $bank->email = $postData['email'];
                 $bank->site = $postData['site'];
-                $bank->save();     
-                $responseMessage = 'Saved';     
-            }catch(\Exception $e){                
+                if(isset($temp_bank))
+                {
+                    $bank->update();
+                    $responseMessage = 'Updated';
+                }
+                else
+                {
+                    $bank->save();     
+                    $responseMessage = 'Saved'; 
+                }
+                    
+            }catch(\Exception $e)
+            {                
                 $responseMessage = $e->getMessage();
             }              
         }
         $bankSelected = null;
-        if($_GET)
+        if($request->getQueryParams('id'))
         {
-            $bankSelected = Bank::find($_GET['id']);
+            $bankSelected = Bank::find($request->getQueryParams('id'))->first();
         }
-        return $this->renderHTML('/banks/banksForm.twig', [
+        return $this->renderHTML('/banks/banksForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
             'bank' => $bankSelected

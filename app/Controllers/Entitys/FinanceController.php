@@ -18,14 +18,12 @@ class FinanceController extends BaseController
     {
         parent::__construct();
         $this->financeService = $financeService;
-    }
-    
-    
+    }    
     
     public function getIndexAction()
     {
         $finances = Finance::All();
-        return $this->renderHTML('/finance/financeList.twig', [
+        return $this->renderHTML('/finance/financeList.html.twig', [
             'finances' => $finances
         ]);
     }   
@@ -62,11 +60,11 @@ class FinanceController extends BaseController
             }              
         }
         $financeSelected = null;
-        if($_GET)
+        if($request->getQueryParams('id'))
         {
-            $financeSelected = Finance::find($_GET['id']);
+            $financeSelected = Finance::find($request->getQueryParams('id'))->first();
         }
-        return $this->renderHTML('/finance/financeForm.twig', [
+        return $this->renderHTML('/finance/financeForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
             'finance' => $financeSelected

@@ -43,9 +43,15 @@ class UsersController extends BaseController
             {                
                 $responseMessage = $e->getMessage();
             }              
-        }         
+        }  
+        $selected_user = null;
+        if($request->getQueryParams('id'))
+        {
+            $selected_user = User::find($request->getQueryParams('id'))->first();
+        }
         return $this->renderHTML('/users/userForm.twig', [
-            'responseMessage' => $responseMessage
+            'responseMessage' => $responseMessage,
+            'user' => $selected_user
         ]);         
     }
 

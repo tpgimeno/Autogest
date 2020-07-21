@@ -9,7 +9,7 @@ use App\Services\Buys\BuyInvoiceService;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\Response\RedirectResponse;
 
-class BuyInvoiceController extends BaseController
+class BuyInvoicesController extends BaseController
 {    
     
     protected $buyInvoiceService;
@@ -25,7 +25,7 @@ class BuyInvoiceController extends BaseController
     public function getIndexAction()
     {
         $buyInvoices = BuyInvoice::All();
-        return $this->renderHTML('/buys/buy_invoicesList.twig', [
+        return $this->renderHTML('/buys/buy_invoicesList.html.twig', [
             'buyInvoices' => $buyInvoices
         ]);
     }   
@@ -35,8 +35,7 @@ class BuyInvoiceController extends BaseController
         $responseMessage = null;
         if($request->getMethod() == 'POST')
         {
-            $postData = $request->getParsedBody();
-            
+            $postData = $request->getParsedBody();            
             $buyInvoiceValidator = v::key('name', v::stringType()->notEmpty()) 
             ->key('fiscal_id', v::notEmpty())
             ->key('phone', v::notEmpty())
@@ -44,6 +43,15 @@ class BuyInvoiceController extends BaseController
             try{
                 $buyInvoiceValidator->assert($postData); // true 
                 $buyInvoice = new BuyInvoice();
+                $buyInvoice->id = $postData['id'];
+                if($buyInvoice->id)
+                {
+                    $temp_buyInvoice = BuyInvoice::find($buyInvoice->id)->first();
+                }
+                if(isset($temp_buyInvoice))
+                {
+                    $buyInvoice = $temp_buyInvoice;
+                }
                 $buyInvoice->name = $postData['name'];
                 $buyInvoice->fiscal_id = $postData['fiscal_id'];
                 $buyInvoice->fiscal_name = $postData['fiscal_name'];
@@ -55,29 +63,37 @@ class BuyInvoiceController extends BaseController
                 $buyInvoice->phone = $postData['phone'];
                 $buyInvoice->email = $postData['email'];
                 $buyInvoice->site = $postData['site'];
-                $buyInvoice->save();     
-                $responseMessage = 'Saved';     
-            }catch(\Exception $e){                
+                if(isset($temp_buyInvoice))
+                {
+                    $buyInvoice->update();
+                    $responseMessage = 'Updated';
+                }
+                else
+                {
+                    $buyInvoice->save();     
+                    $responseMessage = 'Saved';  
+                }
+                   
+            }catch(\Exception $e)
+            {                
                 $responseMessage = $e->getMessage();
             }              
         }
         $buyInvoiceSelected = null;
-        if($_GET)
+        if($request->getQueryParams('id'))
         {
-            $buyInvoiceSelected = BuyInvoice::find($_GET['id']);
+            $buyInvoiceSelected = BuyInvoice::find($request->getQueryParams('id'))->first();
         }
-        return $this->renderHTML('/buys/buy_invoicesForm.twig', [
+        return $this->renderHTML('/buys/buy_invoicesForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
             'buyInvoice' => $buyInvoiceSelected
         ]);
     }
-
     public function deleteAction(ServerRequest $request)
-    {
-         
+    {         
         $this->buyInvoiceService->deleteBuyInvoice($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/buyInvoices/list');
+        return new RedirectResponse('/intranet/buys/invoices/list');
     }
 
    

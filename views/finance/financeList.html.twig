@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-10">
-                <h2> Company </h2>
+                <h2> Financieras </h2>
             </div>   
             <div class="col-md-2 d-flex justify-content-end align-items-end">
                 <a class="link " href="/intranet/admin">Volver</a> 
@@ -14,20 +14,18 @@
                 <table class="table">
                     <tr>
                         <th>Nombre</th>
-                        <th>Dirección</th>
                         <th>Teléfono</th>
                         <th>Email</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
-                    {% for store in stores %}
+                    {% for finance in finances %}
                         <tr>
-                            <td>{{ store.name }}</td>
-                            <td>{{ store.city }}</td>
-                            <td>{{ store.phone }}</td>
-                            <td>{{ store.email }}</td>
-                            <td><a href="/intranet/stores/form?id={{comp.id}}">Edit</td>
-                            <td><a href="/intranet/stores/delete?id={{comp.id}}">Delete</td>
+                            <td>{{ finance.name }}</td>                            <
+                            <td>{{ finance.phone }}</td>
+                            <td>{{ finance.email }}</td>
+                            <td><a href="/intranet/finance/form?id={{finance.id}}">Edit</td>
+                            <td><a href="/intranet/finance/delete?id={{finance.id}}">Delete</td>
                         </tr>
                     {% endfor %}                
                 </table>
@@ -35,7 +33,7 @@
         </div>
         <div class="row">
             <div class="col d-flex justify-content-end">
-                <form action="/intranet/stores/form" method="get">
+                <form action="/intranet/finance/form" method="get">
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary" value="Añadir">
                         <a href="/intranet/admin" class="btn btn-primary">Cancelar</a>

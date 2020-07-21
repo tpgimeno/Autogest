@@ -25,7 +25,7 @@ class StoreController extends BaseController
     public function getIndexAction()
     {
         $store = Store::All();
-        return $this->renderHTML('/stores/storeList.twig', [
+        return $this->renderHTML('/stores/storeList.html.twig', [
             'stores' => $store
         ]);
     }   
@@ -42,6 +42,15 @@ class StoreController extends BaseController
             try{
                 $storeValidator->assert($postData); // true 
                 $store = new Store();
+                $store->id = $postData['id'];
+                if($store->id)
+                {
+                    $temp_store = Store::find($store->id)->first();
+                }
+                if(isset($temp_store))
+                {
+                    $store = $temp_store;
+                }
                 $store->name = $postData['name'];                
                 $store->address = $postData['address'];
                 $store->city = $postData['city'];
@@ -49,32 +58,37 @@ class StoreController extends BaseController
                 $store->state = $postData['state'];
                 $store->country = $postData['country'];
                 $store->phone = $postData['phone'];
-                $store->email = $postData['email'];               
-                $store->save();     
-                $responseMessage = 'Saved';     
+                $store->email = $postData['email'];   
+                if(isset($temp_store))
+                {
+                    $store->update();
+                    $responseMessage = 'Updated';
+                }
+                else
+                {
+                    $store->save();     
+                    $responseMessage = 'Saved';  
+                }
+                   
             }catch(\Exception $e){                
                 $responseMessage = $e->getMessage();
             }              
         }
         $storeSelected = null;
-        if($_GET)
+        if($request->getQueryParams('id'))
         {
-            $storeSelected = Store::find($_GET['id']);
+            $storeSelected = Store::find($request->getQueryParams('id'))->first();
         }
-        return $this->renderHTML('/stores/storeForm.twig', [
+        return $this->renderHTML('/stores/storeForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
             'store' => $storeSelected
         ]);
     }
-
     public function deleteAction(ServerRequest $request)
     {
          
         $this->storeService->deleteStore($request->getQueryParams('id'));               
         return new RedirectResponse('/intranet/store/list');
     }
-
-   
-
 }

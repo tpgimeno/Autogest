@@ -1,6 +1,5 @@
 {% extends "dashboard.twig" %}
 {% block content %}
-
     <div class="row">
         <div class="col-md-10">
             <h2> Oferta </h2>
@@ -42,24 +41,28 @@
                         </button>
                     </div>
                 </div>
-                <div class="form-row mt-3">
-                    <div class="form-group col-md-1">
+                <div class="form-row">
+                    <div class="form-group col-md-2">
                           <label for="inputCustomerID">ID</label>                        
                           <input type="text" name="customer_id" class="form-control" id="inputCustomerId" placeholder="" value="{{ customer.id }}">
-                      </div>
-                    <div class="form-group col-md-3">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-9">
                         <label for="inputName">Nombre</label>                        
                         <input type="text" name="name" class="form-control" id="inputName" placeholder="" value="{{ customer.name }}">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputFiscalId">DNI/CIF</label>
                         <input type="text" name="fiscal_id" class="form-control" id="inputFiscalId" placeholder="" value="{{ customer.fiscal_id }}">
-                    </div>
-                    <div class="form-group col-md-3">
+                    </div>                    
+                </div>
+                <div class="form-row mb-3">
+                    <div class="form-group col-md-4">
                         <label for="inputCity">Población</label>
                         <input type="text" name="city" class="form-control" id="inputCity" placeholder="" value="{{ customer.city }}">
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-2">
                         <label for="inputPostalCode">C.P.</label>
                         <input type="text" name="cp" class="form-control" id="inputCp" placeholder="" value="{{ customer.cp }}">
                     </div>
@@ -71,7 +74,17 @@
                         <label for="inputCountry">Pais</label>
                         <input type="text" name="country" class="form-control" id="inputCountry" placeholder="" value="{{ customer.country }}">
                     </div>
-                </div>  
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="inputPhone">Teléfono</label>                        
+                        <input type="text" name="phone" class="form-control" id="inputPhone" placeholder="" value="{{ customer.phone }}">
+                    </div>
+                    <div class="form-group col-md-5 offset-md-4">
+                        <label for="inputFiscalId">Email</label>
+                        <input type="text" name="email" class="form-control" id="inputEmail" placeholder="" value="{{ customer.email }}">
+                    </div>                    
+                </div>
             </div>                        
             <div class="tab-pane fade" id="vehicle" role="tabpanel" aria-labelledby="vehicle-tab">
                 <div class="form-row mt-3">                                                      
@@ -177,11 +190,11 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
-                            <form id="searchForm" action="/intranet/customers/search" method="post" class="form">
+                            <form id="searchCustomerForm" action="/intranet/crm/offers/customer/search" method="post" class="form">
                                 <div class="container">
                                     <div id="formRow" class="form-row text-right">
                                         <div class="col-11">                                                                                
-                                            <input id="searchField" type="text" name="searchCustomerFilter" class="form-control mb-2 mr-sm-2" id="inlineFormSearchFilter" placeholder="Nombre / Cif / Telefono / email">
+                                            <input id="searchCustomerField" type="text" name="searchCustomerFilter" class="form-control mb-2 mr-sm-2" id="inlineFormSearchFilter" placeholder="Nombre / Cif / Telefono / email">
                                         </div>
                                         <div class="col-1">
                                             <button type="submit" class="btn btn-primary mb-2">Buscar</button>
@@ -193,7 +206,7 @@
                     </div>                          
                         <div class="row">
                         <div class="col">
-                            <table class="table">
+                            <table id="customersTable" class="table">
                                 <tr>
                                     <th>Nombre</th>
                                     <th>Población</th>
@@ -201,14 +214,14 @@
                                     <th>Email</th>
                                     <th>Edit</th>                                    
                                 </tr>
-                                {% for customer in customers %}
-                                    <tr>
+                                {% for customer in customers %}                                    
+                                    <tr id="datarow">
                                         <td>{{ customer.name }}</td>
                                         <td>{{ customer.city }}</td>
                                         <td>{{ customer.phone }}</td>
                                         <td>{{ customer.email }}</td>
-                                        <td><a href="/intranet/crm/offers/customer/search?customer_id={{customer.id}}">Select</a></td>                                        
-                                    </tr>
+                                        <td><a href="/intranet/crm/offers/customer/select?customer_id={{customer.id}}">Select</a></td>                                        
+                                    </tr>                                    
                                 {% endfor %}                
                             </table>
                         </div>
@@ -220,7 +233,54 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>                            
+    {% block javascripts %}
+        <script>
+            window.addEventListener('load', function()
+            {                   
+                document.getElementById("searchCustomerField").addEventListener("keyup", function()
+                {                      
+                    var request = new XMLHttpRequest();
+                    request.open('POST', '/intranet/crm/offers/customer/search', true);
+                    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    if(document.getElementById('searchCustomerField').value == "")
+                    {
+                        
+                    }
+                    else
+                    {
+                        request.send("searchCustomerFilter=" + document.getElementById('searchCustomerField').value);
+                        function reqListener()
+                        {
+                            var response = JSON.parse(request.responseText);                            
+                            var table = document.getElementById("customersTable");
+                            while(table.childElementCount > 0)
+                            {
+                                table.removeChild(table.firstChild);
+                            }                        
+                            if(!response[0])
+                            {
+                                table.innerHTML = "<tr><td> No hay datos </td></tr>";
+                            }
+                            else
+                            {                          
+                               for(let i = 0; i < response.length ; i++)
+                               {
+                                   table.innerHTML += "<tr><td>"+response[i]['name']+"</td><td>"+response[i]['city']+"</td><td>"+response[i]['fiscal_id']+"</td><td>"+response[i]['address']+"</td><td><a href=/intranet/crm/offers/customer/select?customer_id="+response[i]['id']+"&offer_id={{offer.id}}&vehicle_id={{vehicle.id}}>Select</a></td></tr>";
+                               } 
+                               
+                            }                        
+                        }
+                        request.addEventListener("load", reqListener);
+                    }
+                    
+                    
+                });
+                
+            });
+         </script>
+    {% endblock %}
+    
     <!-- Modal Vehicles -->
     <div class="modal fade" id="searchVehicleModal" tabindex="-1" role="dialog" aria-labelledby="searchVehicleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">

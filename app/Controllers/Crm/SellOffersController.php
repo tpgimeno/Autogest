@@ -13,8 +13,11 @@ use App\Models\Customer;
 use App\Models\SellOffer;
 use App\Models\Vehicle;
 use App\Services\Crm\SellOfferService;
+use Laminas\Diactoros\Response\JsonResponse;
+use Psr\Http\Message\ServerRequestInterface;
 use Respect\Validation\Validator as v;
 use Symfony\Component\Config\Definition\Exception\Exception;
+
 
 /**
  * Description of SellOffersController
@@ -39,37 +42,66 @@ class SellOffersController extends BaseController
             'offers' => $offers
         ]);
     }
-    public function searchCustomerSellOfferAction($request)
+    public function searchCustomerSellOfferAction(ServerRequestInterface $request)
     {
-        $customer = null;
-        $selected_offer = null;
-        $postData = $request->getParsedBody();
-        
-        $params = $request->getQueryParams();
-        if($params['customer_id'])
+        $customers = null;      
+        $postData = $request->getParsedBody();       
+        $searchString = $postData['searchCustomerFilter'];
+        if($searchString == "")
         {
-            $customer = Customer::find($params['customer_id']);
+            $customers = Customer::All();
         }
         else
         {
-            $searchString = $postData['searchCustomerFilter'];
-            $customer = Customer::Where("name", "like", "%".$searchString."%" )
-                ->orWhere("fiscal_id", "like", "%".$searchString."%")
-                ->orWhere("address", "like", "%".$searchString."%")
-                ->orWhere("phone", "like", "%".$searchString."%")
-                ->orWhere("email", "like", "%".$searchString."%")
-                ->get();
-            $selected_offer = $postData['id'];
+          $customers= Customer::Where("name", "like", "%".$searchString."%" )
+            ->orWhere("fiscal_id", "like", "%".$searchString."%")
+            ->orWhere("address", "like", "%".$searchString."%")
+            ->orWhere("phone", "like", "%".$searchString."%")
+            ->orWhere("email", "like", "%".$searchString."%")
+            ->get();  
+        }                 
+        $response = new JsonResponse($customers);        
+        return $response;
+                  
+    }
+    public function selectCustomerSellOfferAction($request)
+    {
+        $responseMessage = null;
+        $params = $request->getQueryParams();
+        $customer = null;
+//        var_dump($params);die;
+        if($params['customer_id'])
+        {
+            $customer = Customer::find($params['customer_id'])->first();
+        }
+        $selected_offer = null;
+        if(isset($params['offer_id']))
+        {
+            if($params['offer_id'])
+            {
+                $selected_offer = SellOffer::find($params['offer_id'])->first();
+            }
         }        
+        $vehicle = null;
+        if(isset($params['vehicle_id']))
+        {
+            if($params['vehicle_id'])
+            {
+                $vehicle = Vehicle::find($params['vehicle_id'])->first();
+            }
+        }
+        
         $customers = Customer::All();
+        $vehicles = Vehicle::All();
         return $this->renderHTML('/sells/offers/sellOffersForm.html.twig', [
             'sellOffer' => $selected_offer,
-            'customer' => $customer,   
             'customers' => $customers,
-            'userEmail' => $this->currentUser->getCurrentUserEmailAction()
-            
+            'customer' => $customer,
+            'vehicles' => $vehicles,
+            'vehicle' => $vehicle,
+            'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
+            'responseMessage' => $responseMessage
         ]);
-        
     }
     public function searchSellOffersAction($request)
     {

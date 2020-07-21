@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10">
-            <h2> Almacenes </h2>
+            <h2> Almacen </h2>
         </div>   
         <div class="col-md-2 d-flex justify-content-end align-items-end">
             <a class="link pr-4" href="/intranet/stores/list">Lista</a> 
@@ -20,6 +20,13 @@
     <div class="row">
         <div class="col">
             <form action="/intranet/stores/save" method="post">
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="inputId">ID</label>
+                        
+                        <input type="id" name="id" class="form-control" id="inputId" placeholder="" value="{{ store.id }}">
+                    </div>                    
+                </div>
                 <div class="form-row">
                     <div class="form-group col-md">
                         <label for="inputName">Nombre</label>

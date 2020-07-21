@@ -18,7 +18,7 @@ final class CreateProviderTable extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('providors');
+        $table = $this->table('providers');
         $table->addColumn('name', 'string')
                 ->addColumn('fiscal_id', 'string')
                 ->addColumn('fiscal_name', 'string')

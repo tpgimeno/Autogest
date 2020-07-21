@@ -91,6 +91,10 @@ $map->get('companyList', '/intranet/company/list', [
     'App\Controllers\Entitys\CompanyController',
     'getIndexAction'
 ]);
+$map->post('searchCompany', '/intranet/company/search', [
+    'App\Controllers\Entitys\CompanyController',
+    'searchCompanyAction'
+]);
 $map->post('saveCompany', '/intranet/company/save', [
     'App\Controllers\Entitys\CompanyController',
     'getCompanyDataAction'
@@ -199,6 +203,46 @@ $map->get('deleteVehicleTypes', '/intranet/vehicles/vehicleTypes/delete', [
     'App\Controllers\Buys\VehicleTypesController',
     'deleteAction'   
 ]);
+$map->get('deliveriesForm', '/intranet/buys/deliveries/form', [
+    'App\Controllers\Buys\BuyDeliveriesController',
+    'getBuyDeliveriesDataAction'
+]);
+$map->get('deliveriesList', '/intranet/buys/deliveries/list', [
+    'App\Controllers\Buys\BuyDeliveriesController',
+    'getIndexAction'
+]);
+$map->post('searchDeliveries', '/intranet/buys/deliveries/search', [
+    'App\Controllers\Buys\BuyDeliveriesController',
+    'searchBuyDeliveriesAction'
+]);
+$map->post('saveDeliveries', '/intranet/buys/deliveries/save', [
+    'App\Controllers\Buys\BuyDeliveriesController',
+    'getBuyDeliveriesDataAction'
+]);
+$map->get('deleteDeliveries', '/intranet/buys/deliveries/delete', [        
+    'App\Controllers\Buys\BuyDeliveriesController',
+    'deleteAction'  
+]);
+$map->get('invoicesForm', '/intranet/buys/invoices/form', [
+    'App\Controllers\Buys\BuyInvoicesController',
+    'getBuyInvoicesDataAction'
+]);
+$map->get('invoicesList', '/intranet/buys/invoices/list', [
+    'App\Controllers\Buys\BuyInvoicesController',
+    'getIndexAction'
+]);
+$map->post('searchBuyInvoices', '/intranet/buys/invoices/search', [
+    'App\Controllers\Buys\BuyInvoicesController',
+    'searchBuyInvoicesAction'
+]);
+$map->post('saveBuyInvoices', '/intranet/buys/invoices/save', [
+    'App\Controllers\Buys\BuyInvoicesController',
+    'getBuyInvoicesDataAction'
+]);
+$map->get('deleteBuyInvoices', '/intranet/buys/invoices/delete', [        
+    'App\Controllers\Buys\BuyInvoicesController',
+    'deleteAction'  
+]);
 $map->get('sellOffersForm', '/intranet/crm/offers/form', [
     'App\Controllers\Crm\SellOffersController',
     'getSellOfferDataAction'
@@ -215,9 +259,9 @@ $map->post('searchCustomerSellOffers', '/intranet/crm/offers/customer/search', [
     'App\Controllers\Crm\SellOffersController',
     'searchCustomerSellOfferAction'
 ]);
-$map->get('selectCustomerSellOffers', '/intranet/crm/offers/customer/search', [
+$map->get('selectCustomerSellOffers', '/intranet/crm/offers/customer/select', [
     'App\Controllers\Crm\SellOffersController',
-    'searchCustomerSellOfferAction'
+    'selectCustomerSellOfferAction'
 ]);
 $map->post('searchVehicleSellOffers', '/intranet/crm/offers/vehicle/search', [
     'App\Controllers\Crm\SellOffersController',
@@ -338,7 +382,7 @@ $map->get('productionDelete', '/intranet/production/delete', [
     'deleteAction'
 ]);
 $map->get('providersList', '/intranet/buys/providers/form', [
-    'App\Controllers\Buys\GaragesController',
+    'App\Controllers\Buys\ProvidersController',
     'getProviderDataAction'
 ]);
 $map->get('providersForm', '/intranet/buys/providers/list', [
@@ -406,8 +450,8 @@ if(!$route)
    try
     {
         $harmony = new Harmony($request, new Response());
-        $harmony
-            ->addMiddleware(new LaminasEmitterMiddleware(new SapiEmitter()));
+            $harmony
+                ->addMiddleware(new LaminasEmitterMiddleware(new SapiEmitter()));
         if(getenv('DEBUG') === "true")
         {
             $harmony

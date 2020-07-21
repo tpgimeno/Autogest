@@ -18,18 +18,14 @@ class ProvidersController extends BaseController
     {
         parent::__construct();
         $this->providerService = $providerService;
-    }
-    
-    
-    
+    }    
     public function getIndexAction()
     {
         $providers = Provider::All();
-        return $this->renderHTML('/buys/providersList.twig', [
+        return $this->renderHTML('/buys/providersList.html.twig', [
             'providers' => $providers
         ]);
-    }   
-    
+    }    
     public function getProviderDataAction($request)
     {                
         $responseMessage = null;
@@ -66,20 +62,15 @@ class ProvidersController extends BaseController
         {
             $providerSelected = Provider::find($_GET['id']);
         }
-        return $this->renderHTML('/buys/providersForm.twig', [
+        return $this->renderHTML('/buys/providersForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
             'provider' => $providerSelected
         ]);
     }
-
     public function deleteAction(ServerRequest $request)
-    {
-         
+    {         
         $this->providerService->deleteProvider($request->getQueryParams('id'));               
         return new RedirectResponse('/intranet/buys/providers/list');
-    }
-
-   
-
+    }    
 }

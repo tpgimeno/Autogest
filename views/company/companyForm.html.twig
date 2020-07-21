@@ -21,9 +21,14 @@
         <div class="col">
             <form action="/intranet/company/save" method="post">
                 <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="inputId">ID</label>                        
+                        <input type="text" name="id" class="form-control" id="inputId" placeholder="" value="{{ company.id }}">
+                    </div>                   
+                </div>
+                <div class="form-row">
                     <div class="form-group col-md-9">
-                        <label for="inputName">Nombre</label>
-                        
+                        <label for="inputName">Nombre</label>                        
                         <input type="name" name="name" class="form-control" id="inputName" placeholder="Nombre" value="{{ company.name }}">
                     </div>
                     <div class="form-group col-md-3">
