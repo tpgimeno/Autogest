@@ -64,7 +64,7 @@
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputPostalCode">C.P.</label>
-                        <input type="text" name="cp" class="form-control" id="inputCp" placeholder="" value="{{ customer.cp }}">
+                        <input type="text" name="cp" class="form-control" id="inputCp" placeholder="" value="{{ customer.postal_code }}">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputState">Provincia</label>
@@ -150,22 +150,44 @@
                     <div class="form-group col-md-1">
                           <label for="inputOfferID">ID</label>                        
                           <input type="text" name="id" class="form-control" id="inputId" placeholder="" value="{{ offer.id }}">
-                      </div>
+                    </div>
+                    <div class="form-group col-md-2 offset-md-9">
+                          <label for="inputOfferDate">Fecha</label>                        
+                          <input type="text" name="date" class="form-control" id="inputDate" placeholder="" value="{{ offer.offer_date }}">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="texts">Textos</label>
+                        <textarea class="form-control" name="texts" id="texts" rows="4">
+                            
+                        </textarea>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="observations">Observaciones</label>
+                        <textarea class="form-control" name="observations" id="observations" rows="4">
+                            
+                        </textarea>
+                    </div>
+                </div>
+                <div class="form-row">
                     <div class="form-group col-md-2 offset-md-4">
                         <label for="inputPrice">P.V.P.</label>
-                        <input type="text" name="price" class="form-control" id="inputPrice" placeholder="" value="{{ offer.pvp }}">
+                        <input type="number" name="price" class="form-control" id="inputPrice" placeholder="" value="{{ offer.pvp }}">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputDiscount">Descuento</label>
-                        <input type="text" name="discount" class="form-control" id="inputDiscount" placeholder="" value="{{ offer.discount }}">
+                        <input type="number" name="discount" class="form-control" id="inputDiscount" placeholder="" value="{{ offer.discount }}">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputTva">I.V.A.</label>
-                        <input type="text" name="tva" class="form-control" id="inputTva" placeholder="" value="{{ offer.tva }}">
+                        <input type="number" name="tva" step="0.01" class="form-control" id="inputTva" placeholder="" value="{{ offer.tva }}">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputTotal">Total</label>
-                        <input type="text" name="total" class="form-control" id="inputTotal" placeholder="" value="{{ offer.vehicle.total }}">
+                        <input type="number" name="total" step="0.01" class="form-control" id="inputTotal" placeholder="" value="{{ offer.vehicle.total }}">
                     </div>
                 </div>
             </div>
@@ -220,7 +242,7 @@
                                         <td>{{ customer.city }}</td>
                                         <td>{{ customer.phone }}</td>
                                         <td>{{ customer.email }}</td>
-                                        <td><a href="/intranet/crm/offers/customer/select?customer_id={{customer.id}}">Select</a></td>                                        
+                                        <td><a href="/intranet/crm/offers/customer/select?customer_id={{customer.id}}&offer_id={{ offer.id }}&vehicle_id{{ vehicle.id }}">Select</a></td>                                        
                                     </tr>                                    
                                 {% endfor %}                
                             </table>
@@ -267,20 +289,72 @@
                                for(let i = 0; i < response.length ; i++)
                                {
                                    table.innerHTML += "<tr><td>"+response[i]['name']+"</td><td>"+response[i]['city']+"</td><td>"+response[i]['fiscal_id']+"</td><td>"+response[i]['address']+"</td><td><a href=/intranet/crm/offers/customer/select?customer_id="+response[i]['id']+"&offer_id={{offer.id}}&vehicle_id={{vehicle.id}}>Select</a></td></tr>";
-                               } 
-                               
+                               }                               
                             }                        
                         }
                         request.addEventListener("load", reqListener);
-                    }
-                    
-                    
+                    }                   
                 });
-                
+                document.getElementById("searchVehicleField").addEventListener("keyup", function()
+                {                      
+                    var request = new XMLHttpRequest();
+                    request.open('POST', '/intranet/crm/offers/vehicle/search', true);
+                    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    if(document.getElementById('searchVehicleField').value == "")
+                    {                        
+                    }
+                    else
+                    {
+                        request.send("searchVehicleFilter=" + document.getElementById('searchVehicleField').value);
+                        function reqListener()
+                        {
+                            var response = JSON.parse(request.responseText);                            
+                            var table = document.getElementById("vehiclesTable");
+                            while(table.childElementCount > 0)
+                            {
+                                table.removeChild(table.firstChild);
+                            }                        
+                            if(!response[0])
+                            {
+                                table.innerHTML = "<tr><td> No hay datos </td></tr>";
+                            }
+                            else
+                            {                          
+                               for(let i = 0; i < response.length ; i++)
+                               {
+                                   table.innerHTML += "<tr><td>"+response[i]['plate']+"</td><td>"+response[i]['vin']+"</td><td>"+response[i]['brand']+"</td><td>"+response[i]['model']+"</td><td><a href=/intranet/crm/offers/customer/select?customer_id="+response[i]['id']+"&offer_id={{offer.id}}&customer_id={{customer.id}}>Select</a></td></tr>";
+                               }                               
+                            }                        
+                        }
+                        request.addEventListener("load", reqListener);
+                    }                   
+                });
+                var discount = document.getElementById("inputDiscount");
+                var tva = document.getElementById("inputTva");
+                var total = document.getElementById("inputTotal");
+                var price = document.getElementById("inputPrice");
+                var base = 0;
+                document.getElementById("inputPrice").addEventListener("keyup", function()
+                {
+                   base = price.value - discount.value;
+                   tva.value = base * 0.21;
+                   total.value = base + parseFloat(tva.value);
+                });
+                document.getElementById("inputDiscount").addEventListener("keyup", function()
+                {
+                   base = price.value - discount.value;
+                   tva.value = base * 0.21;
+                   total.value = base + parseFloat(tva.value);
+                });
+                document.getElementById("inputTva").addEventListener("keyup", function()
+                {
+                   base = price.value - discount.value;
+                   tva.value = base * 0.21;
+                   total.value = base + parseFloat(tva.value);
+                });
             });
          </script>
-    {% endblock %}
-    
+    {% endblock %}    
     <!-- Modal Vehicles -->
     <div class="modal fade" id="searchVehicleModal" tabindex="-1" role="dialog" aria-labelledby="searchVehicleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
@@ -294,11 +368,11 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
-                            <form id="searchForm" action="/intranet/crm/offers/vehicle/search" method="post" class="form">
+                            <form id="searchVehicleForm" action="/intranet/crm/offers/vehicle/search" method="post" class="form">
                                 <div class="container">
                                     <div id="formRow" class="form-row text-right">
                                         <div class="col-11">                                                                                
-                                            <input id="searchField" type="text" name="searchVehicleFilter" class="form-control mb-2 mr-sm-2" id="inlineFormSearchFilter" placeholder="Nombre / Cif / Telefono / email">
+                                            <input id="searchVehicleField" type="text" name="searchVehicleFilter" class="form-control mb-2 mr-sm-2" placeholder=" Matricula / Bastidor / Marca / Modelo / Descripcion">
                                         </div>
                                         <div class="col-1">
                                             <button type="submit" class="btn btn-primary mb-2">Buscar</button>
@@ -308,23 +382,25 @@
                             </form>
                         </div>
                     </div>                          
-                        <div class="row">
+                    <div class="row">
                         <div class="col">
-                            <table class="table">
+                            <table id="vehiclesTable" class="table">
                                 <tr>
-                                    <th>Nombre</th>
-                                    <th>Población</th>
-                                    <th>Teléfono</th>
-                                    <th>Email</th>
+                                    <th>Matricula</th>
+                                    <th>Bastidor</th>
+                                    <th>Marca</th>
+                                    <th>Modelo</th>
+                                    <th>Descripcion</th>
                                     <th>Edit</th>                                    
                                 </tr>
-                                {% for customer in customers %}
+                                {% for vehicle in vehicles %}
                                     <tr>
-                                        <td>{{ customer.name }}</td>
-                                        <td>{{ customer.city }}</td>
-                                        <td>{{ customer.phone }}</td>
-                                        <td>{{ customer.email }}</td>
-                                        <td><a href="/intranet/crm/offers/customer/search?customer_id={{customer.id}}">Select</a></td>                                        
+                                        <td>{{ vehicle.plate }}</td>
+                                        <td>{{ vehicle.vin }}</td>
+                                        <td>{{ vehicle.brand }}</td>
+                                        <td>{{ vehicle.model }}</td>
+                                        <td>{{ vehicle.description }}</td>
+                                        <td><a href="/intranet/crm/offers/vehicle/select?vehicle_id={{vehicle.id}}&offer_id={{ offer.id }}&customer_id={{ customer.id }}">Select</a></td>                                        
                                     </tr>
                                 {% endfor %}                
                             </table>
@@ -332,8 +408,7 @@
                     </div>                    
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                  
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>                  
                 </div>
             </div>
         </div>

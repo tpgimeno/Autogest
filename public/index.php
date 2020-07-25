@@ -267,9 +267,9 @@ $map->post('searchVehicleSellOffers', '/intranet/crm/offers/vehicle/search', [
     'App\Controllers\Crm\SellOffersController',
     'searchVehicleSellOfferAction'
 ]);
-$map->get('selectVehicleSellOffers', '/intranet/crm/offers/vehicle/search', [
+$map->get('selectVehicleSellOffers', '/intranet/crm/offers/vehicle/select', [
     'App\Controllers\Crm\SellOffersController',
-    'searchVehicleSellOfferAction'
+    'selectVehicleSellOfferAction'
 ]);
 $map->post('saveSellOffers', '/intranet/crm/offers/save', [
     'App\Controllers\Crm\SellOffersController',

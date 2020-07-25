@@ -17,6 +17,7 @@ use App\Services\Buys\VehicleService;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\ServerRequest;
 use Respect\Validation\Validator as v;
+use Illuminate\Database\Capsule\Manager as DB;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
 /**
@@ -35,30 +36,39 @@ class VehicleController extends BaseController
     
     public function getIndexAction()
     {
-        $vehicles = Vehicle::All();
-        $marcas = Brand::All();
-        $modelos = ModelVh::All();
-        $types = VehicleTypes::All();
+        $vehicles = DB::table('vehicles')  
+                ->join('brands', 'vehicles.brand', '=', 'brands.id')
+                ->join('models', 'vehicles.model', '=', 'models.id')
+                ->select('vehicles.id', 'brands.name as brand', 'models.name as model', 'vehicles.description', 'vehicles.plate', 'vehicles.vin')
+                ->whereNull('vehicles.deleted_at')
+                ->get();       
         return $this->renderHTML('/vehicles/vehiclesList.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
-            'vehicles' => $vehicles,
-            'marcas' => $marcas,
-            'modelos' => $modelos,
-            'types' => $types
+            'vehicles' => $vehicles
         ]);
     }
     
-    public function searchVehicleAction($searchString)
+    public function searchVehicleAction($request)
     {
-        $vehicles = Vehicle::Where("brand", "like", "%".$searchString."%" )
-                ->orWhere("model", "like", "%".$searchString."%")
-                ->orWhere("description", "like", "%".$searchString."%")
-                ->orWhere("plate", "like", "%".$searchString."%")
-                ->orWhere("vin", "like", "%".$searchString."%")
-                ->orWhere("type", "like", "%".$searchString."%")
-                ->orWhere("id", "like", "%".$searchString."%")
-                ->get();
-        
+        $postData = $request->getParsedBody();
+        $searchString = $postData['searchFilter'];
+        $vehicles = DB::table('vehicles')
+                ->join('brands', 'vehicles.brand', '=', 'brands.id')
+                ->join('models', 'vehicles.model', '=', 'models.id')
+                ->join('vehicle_types', 'vehicles.type', '=', 'vehicle_types.id')
+                ->select('vehicles.id as id', 'vehicles.plate as plate', 'vehicles.vin as vin', 
+                        'vehicles.description as description', 'vehicles.location', 'vehicle_types.name as type', 
+                        'brands.name as brand', 'models.name as model', 'vehicles.color', 'vehicles.places',
+                        'vehicles.doors', 'vehicles.power', 'vehicles.cost', 'vehicles.pvp', 'vehicles.accesories')
+                ->where("brands.name", "like", "%".$searchString."%" )
+                ->orWhere("models.name", "like", "%".$searchString."%")
+                ->orWhere("vehicles.description", "like", "%".$searchString."%")
+                ->orWhere("vehicles.plate", "like", "%".$searchString."%")
+                ->orWhere("vehicles.vin", "like", "%".$searchString."%")
+                ->orWhere("vehicle_types.name", "like", "%".$searchString."%")
+                ->orWhere("vehicles.id", "like", "%".$searchString."%")
+                ->WhereNull('vehicles.deleted_at')
+                ->get();         
         $marcas = Brand::All();
         $modelos = ModelVh::All();
         $types = VehicleTypes::All();
@@ -92,13 +102,16 @@ class VehicleController extends BaseController
                     {
                         $vehicle = $vh_temp;
                     }
-                }
-                $vehicle->brand = $postData['brand'];
-                $vehicle->model = $postData['model'];               
+                } 
+                $brand = Brand::where('name', '=', $postData['brand'])->first();
+                $vehicle->brand = $brand->id;
+                $model = ModelVh::where('name', '=', $postData['model'])->first();
+                $vehicle->model = $model->id;               
                 $vehicle->description = $postData['description'];
                 $vehicle->plate = $postData['plate'];
                 $vehicle->vin = $postData['vin'];
-                $vehicle->type = $postData['type'];
+                $type = VehicleTypes::where('name', '=', $postData['type'])->first();
+                $vehicle->type = $type->id;
                 $vehicle->location = $postData['location'];                
                 $vehicle->power = $postData['power'];
                 $vehicle->places = $postData['places'];
@@ -115,7 +128,8 @@ class VehicleController extends BaseController
                 });    
                 $accesories = array_unique($accesories);
                 $vehicle->accesories = implode(", ", $accesories);
-                $vehicle->doors = $postData['doors'];                         
+                $vehicle->doors = $postData['doors'];  
+                
                 if($vh_temp)
                 {
                     $vehicle->update();

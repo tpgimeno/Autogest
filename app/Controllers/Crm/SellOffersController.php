@@ -12,7 +12,9 @@ use App\Controllers\BaseController;
 use App\Models\Customer;
 use App\Models\SellOffer;
 use App\Models\Vehicle;
+use App\Models\VehicleTypes;
 use App\Services\Crm\SellOfferService;
+use Illuminate\Database\Capsule\Manager as DB;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ServerRequestInterface;
 use Respect\Validation\Validator as v;
@@ -64,6 +66,78 @@ class SellOffersController extends BaseController
         return $response;
                   
     }
+    public function searchVehicleSellOfferAction($request)
+    {
+        $vehicles = null;      
+        $postData = $request->getParsedBody();       
+        $searchString = $postData['searchVehicleFilter'];
+        if($searchString == "")
+        {
+            $vehicles = Vehicle::All();
+        }
+        else
+        {
+          $vehicles= DB::table('vehicles')
+                ->join('brands', 'vehicles.brand', '=', 'brands.id')
+                ->join('models', 'vehicles.model', '=', 'models.id')
+                ->join('vehicle_types', 'vehicles.type', '=', 'vehicle_types.id')
+                ->select('vehicles.id as id', 'vehicles.plate as plate', 'vehicles.vin as vin', 
+                        'vehicles.description as description', 'vehicles.location', 'vehicle_types.name as type', 
+                        'brands.name as brand', 'models.name as model', 'vehicles.color', 'vehicles.places',
+                        'vehicles.doors', 'vehicles.power', 'vehicles.cost', 'vehicles.pvp', 'vehicles.accesories')
+                ->where("brands.name", "like", "%".$searchString."%" )
+                ->orWhere("models.name", "like", "%".$searchString."%")
+                ->orWhere("vehicles.description", "like", "%".$searchString."%")
+                ->orWhere("vehicles.plate", "like", "%".$searchString."%")
+                ->orWhere("vehicles.vin", "like", "%".$searchString."%")
+                ->orWhere("vehicle_types.name", "like", "%".$searchString."%")
+                ->orWhere("vehicles.id", "like", "%".$searchString."%")
+                ->WhereNull('vehicles.deleted_at')
+                ->get();         
+        }                 
+        $response = new JsonResponse($vehicles);        
+        return $response;
+    }
+    public function selectVehicleSellOfferAction($request)
+    {
+        $responseMessage = null;
+        $params = $request->getQueryParams();
+        $customer = null;
+//        var_dump($params);die;
+        if(isset($params['customer_id']))
+        {
+            $customer = Customer::find($params['customer_id'])->first();
+        }
+        $selected_offer = null;
+        if(isset($params['offer_id']))
+        {
+            if($params['offer_id'])
+            {
+                $selected_offer = SellOffer::find($params['offer_id'])->first();
+            }
+        }        
+        $vehicle = null;
+        if(isset($params['vehicle_id']))
+        {
+            if($params['vehicle_id'])
+            {
+                $vehicle = Vehicle::find($params['vehicle_id'])->first();
+            }
+        }        
+        $customers = Customer::All();
+        $vehicles = Vehicle::All();
+        $types = VehicleTypes::All();
+        return $this->renderHTML('/sells/offers/sellOffersForm.html.twig', [
+            'sellOffer' => $selected_offer,
+            'customers' => $customers,
+            'customer' => $customer,
+            'vehicles' => $vehicles,
+            'vehicle' => $vehicle,
+            'types' => $types,
+            'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
+            'responseMessage' => $responseMessage
+        ]);
+    }
     public function selectCustomerSellOfferAction($request)
     {
         $responseMessage = null;
@@ -89,8 +163,7 @@ class SellOffersController extends BaseController
             {
                 $vehicle = Vehicle::find($params['vehicle_id'])->first();
             }
-        }
-        
+        }        
         $customers = Customer::All();
         $vehicles = Vehicle::All();
         return $this->renderHTML('/sells/offers/sellOffersForm.html.twig', [
@@ -105,7 +178,26 @@ class SellOffersController extends BaseController
     }
     public function searchSellOffersAction($request)
     {
-        
+        $postData = $request->getParsedBody();
+        $searchString = $postData['searchFilter'];
+        $offers = DB::table('selloffers')
+                ->join('customers', 'selloffers.customer_id', '=', 'customers.id')
+                ->join('vehicles', 'selloffers.vehicle_id', '=', 'vehicles.id')
+                ->join('brands', 'vehicles.brand', '=', 'brands.id')
+                ->join('models', 'vehicles.model', '=', 'models.id')
+                ->select('selloffers.offer_number', 'customers.name as customer_name', 'brands.name as brand',
+                        'models.name as model')
+                ->where('selloffers.offer_date', 'like', '%'.$searchString.'%')
+                ->orWhere('selloffers.offer_number', 'like', '%'.$searchString.'%')
+                ->orWhere('customers.name', 'like', '%'.$searchString.'%')
+                ->orWhere('brands.name', 'like', '%'.$searchString.'%')
+                ->orWhere('models.name', 'like', '%'.$searchString.'%')
+                ->whereNull('deleted_at')
+                ->get();
+        return $this->renderHTML('/sells/offers/sellOffersList.html.twig', [
+            'currentUser' => $this->currentUser->getCurrentUserEmailAction(),
+            'offers' => $offers
+        ]);
     }
     public function getSellOfferDataAction($request)
     {
