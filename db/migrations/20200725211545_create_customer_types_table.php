@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class CreateSuppliesTable extends AbstractMigration
+final class CreateCustomerTypesTable extends AbstractMigration
 {
     /**
      * Change Method.
@@ -18,15 +18,8 @@ final class CreateSuppliesTable extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('supplies');
-        $table->addColumn('name', 'string')
-                ->addColumn('ref', 'string')
-                ->addColumn('mader', 'integer')
-                ->addColumn('mader_code', 'string')
-                ->addColumn('pvc', 'float')
-                ->addColumn('pvp', 'float')
-                ->addColumn('observations', 'string')
-                 ->addColumn('stock', 'integer')
+        $table = $this->table('customer_types');
+        $table->addColumn('name', 'string')  
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime')
                 ->addColumn('deleted_at', 'datetime')

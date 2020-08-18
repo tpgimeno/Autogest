@@ -9,9 +9,9 @@
 namespace App\Controllers\Crm;
 
 use App\Controllers\BaseController;
-use App\Models\Customer;
 use App\Models\CustomerTypes;
 use App\Services\Crm\CustomerTypesService;
+use Respect\Validation\Validator as v;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
 
@@ -36,16 +36,12 @@ class CustomerTypesController extends BaseController
     {
         $searchData = $request->getParsedBody();
         $searchString = $searchData['searchFilter'];        
-        $customer = Customer::Where("id", "like", "%".$searchString."%")
-                ->orWhere("name", "like", "%".$searchString."%")
-                ->orWhere("fiscal_id", "like", "%".$searchString."%")
-                ->orWhere("phone", "like", "%".$searchString."%")
-                ->orWhere("email", "like", "%".$searchString."%")
+        $customer_types = CustomerTypes::Where("name", "like", "%".$searchString."%")                
                 ->get(); 
         
-        return $this->renderHTML('/customers/customerTypesList', [
+        return $this->renderHTML('/customers/customerTypesList.html.twig', [
             'currentUser' => $this->currentUser->getCurrentUserEmailAction(),
-            'customer_types' => $customer
+            'customer_types' => $customer_types
         ]);
 
     }
@@ -54,22 +50,22 @@ class CustomerTypesController extends BaseController
         $responseMessage = null;
         if($request->getMethod() == 'POST')
         {
-            $postData = $request->getParsedBody();
-            $postData = $request->getParsedBody();            
+            $postData = $request->getParsedBody();                       
             $customerTypeValidator = v::key('name', v::stringType()->notEmpty());           
             try{
                 $customerTypeValidator->assert($postData); // true    
-                $customerType = CustomerTypes();
-                $customerType->description = postData['description'];
+                $customerType = new CustomerTypes();
+                $customerType->name = $postData['name'];
                 $customerType->save();
                 $responseMessage = 'Saved';
             }catch(Exception $e)
             {
                 $responseMessage = $e->getMessage();
-            }
-            
+            }            
         }
-    }
-    
-    
+        return $this->renderHTML('/customers/customerTypesForm.html.twig', [
+            'currentUser' => $this->currentUser->getCurrentUserEmailAction(),
+            'responseMessage' => $responseMessage
+        ]);
+    }    
 }

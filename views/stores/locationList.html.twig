@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-10">               
-                <h2> Ofertas </h2>
+                <h2> Ubicaciones </h2>
             </div>   
             <div class="col-md-2 d-flex justify-content-end align-items-end">
                 <a class="link " href="/intranet/admin">Volver</a> 
@@ -11,7 +11,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <form id="searchForm" action="/intranet/crm/offers/search" method="post" class="form">
+                <form id="searchForm" action="/intranet/locations/search" method="post" class="form">
                     <div class="container">
                         <div id="formRow" class="form-row text-right">
                             <div class="col-11">                                                                                
@@ -29,21 +29,17 @@
             <div class="col">
                 <table class="table">
                     <tr>
-                        <th>Nº Oferta</th>
-                        <th>Fecha</th>
-                        <th>Cliente</th>
-                        <th>Vehículo</th>
+                        <th>Almacén</th>
+                        <th>Nombre</th>                        
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
-                    {% for offer in offers %}
+                    {% for location in locations %}
                         <tr>
-                            <td>{{ offer.offer_number }}</td>
-                            <td>{{ offer.offer_date }}</td>
-                            <td>{{ offer.name }}</td>
-                            <td>{{ offer.brand }} {{ offer.model }}</td>                           
-                            <td><a href="/intranet/crm/offers/form?id={{offer.id}}">Edit</td>
-                            <td><a href="/intranet/crm/offers/delete?id={{offer.id}}">Delete</td>
+                            <td>{{ location.store }}
+                            <td>{{ location.name }}</td>                           
+                            <td><a href="/intranet/locations/form?id={{location.id}}">Edit</td>
+                            <td><a href="/intranet/locations/delete?id={{location.id}}">Delete</td>
                         </tr>
                     {% endfor %}                
                 </table>
@@ -51,7 +47,7 @@
         </div>
         <div class="row">
             <div class="col d-flex justify-content-end">
-                <form action="/intranet/crm/offers/form" method="get">
+                <form action="/intranet/locations/form" method="get">
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary" value="Añadir">
                         <a href="/intranet/admin" class="btn btn-primary">Cancelar</a>
@@ -61,3 +57,4 @@
         </div>
     </div>
 {% endblock %}
+

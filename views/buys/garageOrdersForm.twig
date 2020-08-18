@@ -26,26 +26,85 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="form-row">
         <div class="col">
-            <form action="/intranet/buys/orders/save" method="post" name="form">
-                <div class="form-row">                    
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link active" id="order-tab" data-toggle="tab" href="#order" role="tab" aria-controls="order" aria-selected="true">Orden</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" id="vehicle-tab" data-toggle="tab" href="#vehicle" role="tab" aria-controls="vehicle" aria-selected="false">Vehículo</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" id="customer-tab" data-toggle="tab" href="#customer" role="tab" aria-controls="customer" aria-selected="false">Cliente</a>
+                </li> 
+                 <li class="nav-item" role="presentation">
+                  <a class="nav-link" id="supplies-tab" data-toggle="tab" href="#supplies" role="tab" aria-controls="supplies" aria-selected="false">Recambios</a>
+                </li> 
+                 <li class="nav-item" role="presentation">
+                  <a class="nav-link" id="components-tab" data-toggle="tab" href="#components" role="tab" aria-controls="components" aria-selected="false">Componentes</a>
+                </li> 
+            </ul>
+        </div>
+    </div>
+    <form action="/intranet/buys/orders/save" method="post" name="form">
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="order" role="tabpanel" aria-labelledby="order-tab">
+                <div class="form-row mt-3">                    
                     <div class="form-group col-md-3">
                         <label for="inputName">Nº Orden</label>                        
                         <input type="text" name="order_number" class="form-control" id="inputNumber" placeholder="Número Orden" value="{{ order.order_number }}">
-                    </div>
-                    <div class="form-group col-md-3 d-none">
-                        <label for="inputName">Nº Orden</label>                        
-                        <input type="text" name="date_out" class="form-control" id="inputNumber" placeholder="Número Orden" value="{{ order.order_number }}">
-                    </div>
+                    </div>                    
                     <div class="form-group col-md-3 ml-auto">
                         <label for="inputDate_in">Fecha Entrada</label>
                         <input type="text" name="date_in" class="form-control" id="inputDate_in" placeholder="Fecha Entrada" value="{{ order.date_in }}">
                     </div>
+                    <div class="form-group col-md-3">
+                        <label for="inputName">Fecha Salida</label>                        
+                        <input type="text" name="date_out" class="form-control" id="inputDate_out" placeholder="Fecha Salida" value="{{ order.date_out }}">
+                    </div>
                 </div>
+                    {% block javascripts %}
+                            <script>
+                               {{ include('js/garageOrders.js')}}
+                            </script>
+                    {% endblock %}
                 <div class="form-row">
+                    <div class="form-group col-9">
+                        <label for="inputWork">Tarea</label>
+                        <input type="text" name="work" class="form-control" id="inputWork" placeholder="Trabajo">                              
+                    </div>
+                    <div class="form-group col-3 d-flex justify-content-end align-items-end">
+                        <input type="button" onclick="addWork()" class="form-control btn btn-primary" value="Añadir">
+                    </div>                    
+                </div>                                
+                <div class="form-row">
+                    <div class="form-group col">                                                     
+                        <label for="inputWorks">Trabajos a Realizar</label>                        
+                        <div class="input-group">
+                            <textarea class="form-control" id="inputWorks" cols="50" rows="10" name="works"></textarea>                                        
+                        </div>                
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="vehicle" role="tabpanel" aria-labelledby="vehicle-tab">
+                <div class="form-row mt-4">
                     <div class="form-group col">
                         <h4> VEHICULO <a href="#" class="link">Buscar</a> </h4>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-3">                                            
+                        <label for="inputId">ID</label>
+                        <input type="text" name="id" class="form-control" id="inputId" placeholder="Id" value="{{ vehicle.id }}">
+                    </div>
+                    <div class="form-group col-3 offset-md-3">                                            
+                        <label for="inputKm">Kilometros Entrada</label>
+                        <input type="text" name="km_in" class="form-control" id="inputKm" placeholder="Kilómetros" value="{{ vehicle.km }}">
+                    </div>
+                    <div class="form-group col-3">                                            
+                        <label for="inputKm">Kilometros Salida</label>
+                        <input type="text" name="km_in" class="form-control" id="inputKm" placeholder="Kilómetros" value="{{ vehicle.km }}">
                     </div>
                 </div>
                 <div class="form-row">
@@ -72,13 +131,80 @@
                         <input type="text" name="description" class="form-control" id="inputDescription" placeholder="Descripción" value="{{ vehicle.description }}">
                     </div>
                     <div class="form-group col-md-2">
-                        <label for="inputKm">Kilometros Entrada</label>
-                        <input type="text" name="km_in" class="form-control" id="inputKm" placeholder="Kilómetros" value="{{ vehicle.km }}">
+                        
                     </div>                                             
-                </div>
-                <div class="form-row">
+                </div>                    
+            </div>
+            <div class="tab-pane fade" id="customer" role="tabpanel" aria-labelledby="customer-tab">
+                <div class="form-row mt-4">
                     <div class="form-group col">
                         <h4> CLIENTE <a href="#" class="link">Buscar</a> </h4>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-6">                                            
+                        <label for="inputName">Nombre</label>
+                        <input type="text" name="customer_name" class="form-control" id="inputPlate" placeholder="Nombre" value="{{ customer.name }}">
+                    </div>                    
+                    <div class="form-group col-3 ml-auto">
+                        <label for="inputPhone">Teléfono</label>
+                        <input type="text" name="customer_phone" class="form-control" id="inputPhone" placeholder="Teléfono" value="{{ customer.phone }}">
+                    </div>
+                    <div class="form-group col-3">                                            
+                        <label for="inputEmail">Email</label>
+                        <input type="text" name="customer_email" class="form-control" id="inputEmail" placeholder="Email" value="{{ customer.email }}">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-4">
+                        <label for="inputAddress">Dirección</label>
+                        <input type="text" name="customer_address" class="form-control" id="inputAddress" placeholder="Dirección" value="{{ customer.address }}">
+                    </div>                    
+                    <div class="form-group col-3">
+                        <label for="inputPostalCode">Población</label>
+                        <input type="text" name="customer_city" class="form-control" id="inputCity" placeholder="Población" value="{{ customer.city }}">
+                    </div>
+                    <div class="form-group col-2">
+                        <label for="inputPostalCode">C.P.</label>
+                        <input type="text" name="customer_postalCode" class="form-control" id="inputPostalCode" placeholder="Codigo Postal" value="{{ customer.postal_code }}">
+                    </div>
+                    <div class="form-group col-3">
+                        <label for="inputState">Provincia</label>
+                        <input type="text" name="customer_state" class="form-control" id="inputState" placeholder="Provincia" value="{{ customer.state }}">
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="supplies" role="tabpanel" aria-labelledby="supplies-tab">
+                <div class="form-row mt-4">
+                    <div class="form-group col">
+                        <h4> RECAMBIOS <a href="#" class="link">Buscar</a> </h4>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-2">                                            
+                        <label for="inputId">ID</label>
+                        <input type="text" name="customer_name" class="form-control" id="inputPlate" placeholder="Nombre" value="{{ customer.name }}">
+                    </div>
+                    <div class="form-group col-3 ml-auto">
+                        <label for="inputPhone">Teléfono</label>
+                        <input type="text" name="customer_phone" class="form-control" id="inputPhone" placeholder="Teléfono" value="{{ customer.phone }}">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-9">
+                        <label for="inputAddress">Dirección</label>
+                        <input type="text" name="customer_address" class="form-control" id="inputAddress" placeholder="Dirección" value="{{ customer.address }}">
+                    </div>                    
+                    <div class="form-group col-3">
+                        <label for="inputCity">Población</label>
+                        <input type="text" name="customer_city" class="form-control" id="inputCity" placeholder="Población" value="{{ customer.city }}">
+                    </div>                     
+                </div>
+            </div>
+                    <div class="tab-pane fade" id="components" role="tabpanel" aria-labelledby="components-tab">
+                <div class="form-row mt-4">
+                    <div class="form-group col">
+                        <h4> COMPONENTES <a href="#" class="link">Buscar</a> </h4>
                     </div>
                 </div>
                 <div class="form-row">
@@ -100,51 +226,17 @@
                         <label for="inputCity">Población</label>
                         <input type="text" name="customer_city" class="form-control" id="inputCity" placeholder="Población" value="{{ customer.city }}">
                     </div>                     
-                </div>                                
-                <div class="form-row">
-                    <div class="form-group col-9">
-                        <label for="inputWork">Tarea</label>
-                        <input type="text" name="work" class="form-control" id="inputWork" placeholder="Trabajo">                              
-                    </div>
-                    <div class="form-group col-3 d-flex justify-content-end align-items-end">
-                        <input type="submit" class="form-control btn btn-primary" value="Añadir">
-                    </div>                    
-                </div>                                
-                <div class="form-row">
-                    <div class="form-group col">
-                        <table class="table">
-                            <tr>
-                                <th> Descripción </th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label for="inputWork">Trabajos a Realizar</label>                                    
-                                    
-                                    <div class="input-group mb-3">
-                                        <textarea class="form-control" form="work" cols="50" rows="10" name="works">
-                                        {% for work in workslist %}
-                                        {{ work }}
-                                        <div class="input-group-append">
-                                            <button class="btn btn-outline-secondary" type="button" id="edit-button">Editar</button>
-                                            <button class="btn btn-outline-secondary" type="button" id="del-button">Eliminar</button>
-                                        </div>
-                                        {% endfor %}
-                                        </textarea>
-                                        
-                                    </div>                                                                                                   
-                                                                       
-                                </td>
-                            </tr>                            
-                        </table>
-                    </div>
                 </div>
-                <div class="form-row">
-                    <div class="col text-right">
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                    <button type="reset" class="btn btn-primary">Cancelar</button>
-                </div>                            
-            </form>            
+            </div>
+            <div class="form-row">
+                <div class="col text-right">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="reset" class="btn btn-primary">Cancelar</button>
+                </div>            
+            </div>
         </div>
-    </div>
+    </form>
+    <!-- Modal Supplies-->
+    
 </div>    
 {% endblock %}

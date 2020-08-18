@@ -38,7 +38,14 @@ class SellOffersController extends BaseController
     
     public function getIndexAction()
     {
-        $offers = SellOffer::All();
+        $offers = DB::table('selloffers')
+                ->join('customers', 'selloffers.customer_id', '=', 'customers.id')
+                ->join('vehicles', 'selloffers.vehicle_id', '=', 'vehicles.id')
+                ->join('brands', 'vehicles.brand', '=', 'brands.id')
+                ->join('models', 'vehicles.model', '=', 'models.id')
+                ->select('selloffers.id', 'selloffers.offer_number', 'selloffers.offer_date', 'customers.name as name', 'brands.name as brand', 'models.name as model')
+                ->whereNull('selloffers.deleted_at')
+                ->get();
         return $this->renderHTML('/sells/offers/sellOffersList.html.twig', [
             'currentUser' => $this->currentUser->getCurrentUserEmailAction(),
             'offers' => $offers
@@ -61,7 +68,7 @@ class SellOffersController extends BaseController
             ->orWhere("phone", "like", "%".$searchString."%")
             ->orWhere("email", "like", "%".$searchString."%")
             ->get();  
-        }                 
+        } 
         $response = new JsonResponse($customers);        
         return $response;
                   
@@ -106,14 +113,14 @@ class SellOffersController extends BaseController
 //        var_dump($params);die;
         if(isset($params['customer_id']))
         {
-            $customer = Customer::find($params['customer_id'])->first();
+            $customer = Customer::where('id', $params['customer_id'])->first();
         }
         $selected_offer = null;
         if(isset($params['offer_id']))
         {
             if($params['offer_id'])
             {
-                $selected_offer = SellOffer::find($params['offer_id'])->first();
+                $selected_offer = SellOffer::where('id', $params['offer_id'])->first();
             }
         }        
         $vehicle = null;
@@ -121,7 +128,7 @@ class SellOffersController extends BaseController
         {
             if($params['vehicle_id'])
             {
-                $vehicle = Vehicle::find($params['vehicle_id'])->first();
+                $vehicle = Vehicle::where('id', $params['vehicle_id'])->first();
             }
         }        
         $customers = Customer::All();
@@ -143,17 +150,17 @@ class SellOffersController extends BaseController
         $responseMessage = null;
         $params = $request->getQueryParams();
         $customer = null;
-//        var_dump($params);die;
         if($params['customer_id'])
         {
-            $customer = Customer::find($params['customer_id'])->first();
+            $customer = Customer::where('id', $params['customer_id'])->first();
         }
+        
         $selected_offer = null;
         if(isset($params['offer_id']))
         {
             if($params['offer_id'])
             {
-                $selected_offer = SellOffer::find($params['offer_id'])->first();
+                $selected_offer = SellOffer::where('id', $params['offer_id'])->first();
             }
         }        
         $vehicle = null;
@@ -161,7 +168,7 @@ class SellOffersController extends BaseController
         {
             if($params['vehicle_id'])
             {
-                $vehicle = Vehicle::find($params['vehicle_id'])->first();
+                $vehicle = Vehicle::where('id', $params['vehicle_id'])->first();
             }
         }        
         $customers = Customer::All();
@@ -199,37 +206,44 @@ class SellOffersController extends BaseController
             'offers' => $offers
         ]);
     }
-    public function getSellOfferDataAction($request)
+    public function getSellOffersDataAction($request)
     {
         $responseMessage = null;
         if($request->getMethod() == 'POST')
         {
             $postData = $request->getParsedBody();
-            $offerValidator = v::key('order_number', v::stringType()->noEmpty())
-                    ->key('customer_id', v::noEmpty())
-                    ->key('vehicle_id', v::noEmpty());
+            $offerValidator = v::key('offer_number', v::stringType()->notEmpty())
+                    ->key('customer_id', v::notEmpty())
+                    ->key('vehicle_id', v::notEmpty());
             try
             {
                  $offerValidator->assert($postData);
                  $offer = new SellOffer();
                  $offer->id = $postData['id'];
+                 $offer_selected = false;
                  if($offer->id)
                  {
                      $offer_temp = SellOffer::find($offer->id)->first();
-                     $offer = $offer_temp;
+                     if($offer_temp)
+                     {
+                         $offer = $offer_temp;
+                         $offer_selected = true;
+                     }                    
                  }
                  $offer->offer_number = $postData['offer_number'];
+                 $offer->offer_date = $postData['date'];
                  $customer = Customer::where('name', 'LIKE', $postData['name'])->first();
                  $offer->customer_id = $customer->id;
                  $vehicle = Vehicle::where('plate', 'LIKE', $postData['plate'])->first();
                  $offer->vehicle_id = $vehicle->id;                 
-                 $offer->discount = $postData['discount'];
-                 $offer->pvp = $postData['pvp'] - $postData['discount'];
-                 $offer->tva = $offer->pvp * 0.21;
-                 $offer->total = $offer->pvp + $offer->tva;
+                 $offer->discount = $postData['discount'];                 
+                 $offer->pvp = intval($postData['price']) - intval($postData['discount']);
+                 $offer->tva = intval($offer->pvp) * 0.21;
+                 $offer->total = intval($offer->pvp) + intval($offer->tva);
                  $offer->observations = $postData['observations'];
                  $offer->texts = $postData['texts'];
-                 if($offer->id)
+                 $offer->vehicle_comments = $postData['vehicle_comments'];
+                 if($offer_selected == true)
                  {
                      $offer->update();
                      $responseMessage = 'Updated';
@@ -250,12 +264,22 @@ class SellOffersController extends BaseController
         {
             $selected_offer = SellOffer::find($request->getQueryParams('id'))->first();
         }
+        $selected_customer = null;
+        $selected_vehicle = null;
+        if($selected_offer)
+        {
+            $selected_customer = Customer::find($selected_offer->customer_id)->first();
+            $selected_vehicle = Vehicle::find($selected_offer->vehicle_id)->first();
+        }
+        
         $customers = Customer::All();
         $vehicles = Vehicle::All();
         return $this->renderHTML('/sells/offers/sellOffersForm.html.twig', [
             'sellOffer' => $selected_offer,
             'customers' => $customers,
+            'customer' => $selected_customer,
             'vehicles' => $vehicles,
+            'vehicle' => $selected_vehicle,
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage
         ]);

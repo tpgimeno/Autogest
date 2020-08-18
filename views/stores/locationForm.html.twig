@@ -3,10 +3,10 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10">
-            <h2> Tipo Cliente </h2>
+            <h2> Ubicación </h2>
         </div>   
         <div class="col-md-2 d-flex justify-content-end align-items-end">
-            <a class="link pr-4" href="/intranet/customers/type/list">Lista</a> 
+            <a class="link pr-4" href="/intranet/locations/list">Lista</a> 
             <a class="link " href="/intranet/admin">Volver</a> 
         </div>        
     </div>
@@ -19,11 +19,16 @@
     </div>
     <div class="row">
         <div class="col">
-            <form action="/intranet/customers/type/save" method="post">
+            <form action="/intranet/locations/save" method="post">
                 <div class="form-row">
-                    <div class="form-group col">
-                        <label for="inputName">Descripción</label>                        
-                        <input type="text" name="name" class="form-control" id="inputName" placeholder="Nombre" value="{{ customer_type.name }}">
+                    <div class="form-group col-md-4">
+                        <select name="store" class="form-control" id="selectType" value="{{ location.store }}">
+                            {% for store in stores %}
+                                <option>{{ store.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="inputName">Nombre</label>                        
+                        <input type="text" name="name" class="form-control" id="inputName" placeholder="Nombre" value="{{ location.name }}">
                     </div>                    
                 </div>              
                 <div class="form-row">
@@ -36,5 +41,4 @@
     </div>
 </div>    
 {% endblock %}
-
 

@@ -36,9 +36,9 @@
                     </tr>
                     {% for customer_type in customer_types %}
                         <tr>
-                            <td>{{ type.name }}</td>                           
-                            <td><a href="/intranet/customers/customerTypes/form?id={{customer_type.id}}">Edit</td>
-                            <td><a href="/intranet/customers/customerTypes/delete?id={{customer_type.id}}">Delete</td>
+                            <td>{{ customer_type.name }}</td>                           
+                            <td><a href="/intranet/customers/type/form?id={{customer_type.id}}">Edit</td>
+                            <td><a href="/intranet/customers/type/delete?id={{customer_type.id}}">Delete</td>
                         </tr>
                     {% endfor %}                
                 </table>
@@ -46,7 +46,7 @@
         </div>
         <div class="row">
             <div class="col d-flex justify-content-end">
-                <form action="/intranet/customers/customerTypes/form" method="get">
+                <form action="/intranet/customers/type/form" method="get">
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary" value="Añadir">
                         <a href="/intranet/admin" class="btn btn-primary">Cancelar</a>

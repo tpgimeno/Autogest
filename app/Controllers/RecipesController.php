@@ -6,16 +6,11 @@
  * and open the template in the editor.
  */
 
-namespace App\Models;
-
-use Illuminate\Database\Eloquent\Model;
-
 /**
- * Description of CustomerTypes
+ * Description of Recipes
  *
  * @author tonyl
  */
-class CustomerTypes extends Model
-{
-    protected $table = 'customer_types';
+class RecipesControler {
+    //put your code here
 }

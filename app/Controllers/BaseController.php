@@ -26,6 +26,7 @@ class BaseController
         ]);
         $this->currentUser = new CurrentUserService();
         $this->templateEngine->addExtension(new \Twig\Extension\DebugExtension());
+        $this->templateEngine->addExtension(new \Twig\Extra\Intl\IntlExtension());
         
       
     }

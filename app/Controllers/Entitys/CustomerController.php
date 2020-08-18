@@ -4,6 +4,7 @@ namespace App\Controllers\Entitys;
 
 use App\Controllers\BaseController;
 use App\Models\Customer;
+use App\Models\CustomerTypes;
 use App\Services\CustomerService;
 use Exception;
 use Laminas\Diactoros\Response\RedirectResponse;
@@ -24,7 +25,7 @@ class CustomerController extends BaseController
     public function getIndexAction()
     {
         $customer = Customer::All();
-        return $this->renderHTML('/customers/customerList.twig', [
+        return $this->renderHTML('/customers/customerList.html.twig', [
             'currentUser' => $this->currentUser->getCurrentUserEmailAction(),
             'customers' => $customer
         ]);
@@ -38,12 +39,12 @@ class CustomerController extends BaseController
                 ->orWhere("fiscal_id", "like", "%".$searchString."%")
                 ->orWhere("phone", "like", "%".$searchString."%")
                 ->orWhere("email", "like", "%".$searchString."%")
-                ->get();       
-
-        return $this->renderHTML('/customers/customerList.twig', [
+                ->get();
+        
+        return $this->renderHTML('/customers/customerList.html.twig', [
             'currentUser' => $this->currentUser->getCurrentUserEmailAction(),
-            'customers' => $customer
-                
+            'customers' => $customer,
+           
         ]);
     }
     
@@ -61,6 +62,13 @@ class CustomerController extends BaseController
             try{
                 $customerValidator->assert($postData); // true 
                 $customer = new Customer();
+                $customer->id = $postData['id'];
+                $selected = false;
+                if($customer->id)
+                {
+                    $customer = Customer::find($postData['id'])->first();
+                    $selected = true;
+                }
                 $customer->name = $postData['name'];
                 $customer->fiscal_id = $postData['fiscal_id'];               
                 $customer->address = $postData['address'];
@@ -69,9 +77,19 @@ class CustomerController extends BaseController
                 $customer->state = $postData['state'];
                 $customer->country = $postData['country'];
                 $customer->phone = $postData['phone'];
-                $customer->email = $postData['email'];               
-                $customer->save();     
-                $responseMessage = 'Saved';     
+                $customer->email = $postData['email'];
+                $customer->birth_date = $postData['birth'];
+                $customer->customer_type = $postData['type'];
+                if($selected == true)
+                {
+                    $customer->update();     
+                    $responseMessage = 'Update'; 
+                }
+                else
+                {
+                    $customer->save();     
+                    $responseMessage = 'Saved'; 
+                }                    
             }catch(Exception $e){                
                 $responseMessage = $e->getMessage();
             }              
@@ -81,10 +99,16 @@ class CustomerController extends BaseController
         {
             $customerSelected = Customer::find($request->getQueryParams('id'));
         }
-        return $this->renderHTML('/customers/customerForm.twig', [
+        $types = CustomerTypes::All();
+        if($customerSelected)
+        {
+            $types = CustomerTypes::find($customerSelected->customer_type)->first();
+        }
+        return $this->renderHTML('/customers/customerForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
-            'customer' => $customerSelected
+            'customer' => $customerSelected,
+            'types' => $types
         ]);
     }
 

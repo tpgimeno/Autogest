@@ -6,16 +6,13 @@
  * and open the template in the editor.
  */
 
-namespace App\Models;
-
-use Illuminate\Database\Eloquent\Model;
+namespace App\Controllers\Buys;
 
 /**
- * Description of CustomerTypes
+ * Description of PaymentWaysController
  *
  * @author tonyl
  */
-class CustomerTypes extends Model
-{
-    protected $table = 'customer_types';
+class PaymentWaysController {
+    //put your code here
 }

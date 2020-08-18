@@ -42,12 +42,12 @@ class GarageOrdersController extends BaseController
         if($request->getMethod() == 'POST')
         {
             $postData = $request->getParsedBody();            
-            // $GarageOrderValidator = v::key('name', v::stringType()->notEmpty()) 
-            // ->key('fiscal_id', v::notEmpty())
-            // ->key('phone', v::notEmpty())
-            // ->key('email', v::stringType()->notEmpty());            
+             $GarageOrderValidator = v::key('name', v::stringType()->notEmpty()) 
+             ->key('fiscal_id', v::notEmpty())
+             ->key('phone', v::notEmpty())
+             ->key('email', v::stringType()->notEmpty());            
             try{
-                // $GarageOrderValidator->assert($postData); // true 
+                 $GarageOrderValidator->assert($postData); // true 
                 $GarageOrder = new GarageOrder();
                 $GarageOrder->order_number = $postData['order_number'];
                 $GarageOrder->date_in = $postData['date_in'];
