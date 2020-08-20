@@ -23,18 +23,36 @@ class GaragesController extends BaseController
     public function getIndexAction()
     {
         $garages = Garage::All();
-        return $this->renderHTML('/buys/garagesList.twig', [
+        return $this->renderHTML('/buys/garagesList.html.twig', [
             'garages' => $garages
         ]);
     }   
     
+    public function searchGarageAction($request)
+    {
+        $postData = $request->getParsedBody();
+        $searchString = $postData['searchFilter'];
+        $garages = Garage::where('name', 'like', "%".$searchString."%")
+                ->orWhere('fiscal_id', 'like', "%".$searchString."%")
+                ->orWhere('fiscal_name', 'like', "%".$searchString."%")
+                 ->orWhere('phone', 'like', "%".$searchString."%")
+                 ->orWhere('email', 'like', "%".$searchString."%")
+                ->orWhere('city', 'like', "%".$searchString."%")
+                ->orWhere('state', 'like', "%".$searchString."%")
+                ->WhereNull('deleted_at')
+                ->get();
+        
+        return $this->renderHTML('/buys/garagesList.html.twig', [
+            'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
+            'garages' => $garages
+        ]);
+    }
     public function getGarageDataAction($request)
     {                
         $responseMessage = null;
         if($request->getMethod() == 'POST')
         {
-            $postData = $request->getParsedBody();
-            
+            $postData = $request->getParsedBody();            
             $garageValidator = v::key('name', v::stringType()->notEmpty()) 
             ->key('fiscal_id', v::notEmpty())
             ->key('phone', v::notEmpty())
@@ -42,6 +60,15 @@ class GaragesController extends BaseController
             try{
                 $garageValidator->assert($postData); // true 
                 $garage = new Garage();
+                $garage->id = $postData['id'];
+                if($garage->id)
+                {
+                    $garage_temp = Garage::find($garage->id)->first();
+                    if($garage_temp)
+                    {
+                        $garage = $garage_temp;
+                    }
+                }
                 $garage->name = $postData['name'];
                 $garage->fiscal_id = $postData['fiscal_id'];                
                 $garage->address = $postData['address'];
@@ -50,19 +77,27 @@ class GaragesController extends BaseController
                 $garage->state = $postData['state'];
                 $garage->country = $postData['country'];
                 $garage->phone = $postData['phone'];
-                $garage->email = $postData['email'];                
-                $garage->save();     
-                $responseMessage = 'Saved';     
+                $garage->email = $postData['email'];  
+                if($garage_temp)
+                {
+                    $garage->update();
+                    $responseMessage = 'Updated';
+                }
+                else
+                {
+                    $garage->save();     
+                    $responseMessage = 'Saved'; 
+                }                    
             }catch(\Exception $e){                
                 $responseMessage = $e->getMessage();
             }              
         }
         $garageSelected = null;
-        if($_GET)
+        if($request->getQueryParams('id'))
         {
-            $garageSelected = Garage::find($_GET['id']);
+            $garageSelected = Garage::find($request->getQueryParams('id'))->first();
         }
-        return $this->renderHTML('/buys/garagesForm.twig', [
+        return $this->renderHTML('/buys/garagesForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
             'garage' => $garageSelected

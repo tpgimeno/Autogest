@@ -223,43 +223,43 @@ $map->get('deleteVehicleTypes', '/intranet/vehicles/vehicleTypes/delete', [
     'App\Controllers\Buys\VehicleTypesController',
     'deleteAction'   
 ]);
-$map->get('deliveriesForm', '/intranet/buys/deliveries/form', [
+$map->get('deliveriesForm', '/intranet/buys/buyDeliveries/form', [
     'App\Controllers\Buys\BuyDeliveriesController',
     'getBuyDeliveriesDataAction'
 ]);
-$map->get('deliveriesList', '/intranet/buys/deliveries/list', [
+$map->get('deliveriesList', '/intranet/buys/buyDeliveries/list', [
     'App\Controllers\Buys\BuyDeliveriesController',
     'getIndexAction'
 ]);
-$map->post('searchDeliveries', '/intranet/buys/deliveries/search', [
+$map->post('searchDeliveries', '/intranet/buys/buyDeliveries/search', [
     'App\Controllers\Buys\BuyDeliveriesController',
     'searchBuyDeliveriesAction'
 ]);
-$map->post('saveDeliveries', '/intranet/buys/deliveries/save', [
+$map->post('saveDeliveries', '/intranet/buys/buyDeliveries/save', [
     'App\Controllers\Buys\BuyDeliveriesController',
     'getBuyDeliveriesDataAction'
 ]);
-$map->get('deleteDeliveries', '/intranet/buys/deliveries/delete', [        
+$map->get('deleteDeliveries', '/intranet/buys/buyDeliveries/delete', [        
     'App\Controllers\Buys\BuyDeliveriesController',
     'deleteAction'  
 ]);
-$map->get('buyInvoicesForm', '/intranet/buys/invoices/form', [
+$map->get('buyInvoicesForm', '/intranet/buys/buyInvoices/form', [
     'App\Controllers\Buys\BuyInvoicesController',
     'getBuyInvoicesDataAction'
 ]);
-$map->get('buyInvoicesList', '/intranet/buys/invoices/list', [
+$map->get('buyInvoicesList', '/intranet/buys/buyInvoices/list', [
     'App\Controllers\Buys\BuyInvoicesController',
     'getIndexAction'
 ]);
-$map->post('searchBuyInvoices', '/intranet/buys/invoices/search', [
+$map->post('searchBuyInvoices', '/intranet/buys/buyInvoices/search', [
     'App\Controllers\Buys\BuyInvoicesController',
     'searchBuyInvoicesAction'
 ]);
-$map->post('saveBuyInvoices', '/intranet/buys/invoices/save', [
+$map->post('saveBuyInvoices', '/intranet/buys/buyInvoices/save', [
     'App\Controllers\Buys\BuyInvoicesController',
     'getBuyInvoicesDataAction'
 ]);
-$map->get('deleteBuyInvoices', '/intranet/buys/invoices/delete', [        
+$map->get('deleteBuyInvoices', '/intranet/buys/buyInvoices/delete', [        
     'App\Controllers\Buys\BuyInvoicesController',
     'deleteAction'  
 ]);
@@ -470,6 +470,10 @@ $map->get('providersForm', '/intranet/buys/providers/list', [
     'App\Controllers\Buys\ProvidersController',
     'getIndexAction'
 ]);
+$map->post('searchProvider', '/intranet/buys/providers/search', [
+    'App\Controllers\Buys\ProvidersController',
+    'searchProviderAction'
+]);
 $map->post('saveProvider', '/intranet/buys/providers/save', [
     'App\Controllers\Buys\ProvidersController',
     'getProviderDataAction'
@@ -501,6 +505,10 @@ $map->get('garagesList', '/intranet/buys/garages/form', [
 $map->get('garagesForm', '/intranet/buys/garages/list', [
     'App\Controllers\Buys\GaragesController',
     'getIndexAction'
+]);
+$map->post('searchGarage', '/intranet/buys/garages/search', [
+    'App\Controllers\Buys\GaragesController',
+    'searchGarageAction'
 ]);
 $map->post('saveGarage', '/intranet/buys/garages/save', [
     'App\Controllers\Buys\GaragesController',

@@ -14,8 +14,7 @@
                 <table class="table">
                     <tr>
                         <th>NºAlbaran</th>
-                        <th>Fecha</th>
-                        <th>Articulos</th>
+                        <th>Fecha</th>                       
                         <th>Proveedor</th>
                         <th>Total</th>
                         <th>Edit</th>
@@ -24,8 +23,7 @@
                     {% for delivery in deliveries %}
                         <tr>
                             <td>{{ delivery.delivery_number }}</td>
-                            <td>{{ delivery.date }}</td>
-                            <td>{{ delivery.articles }}</td>
+                            <td>{{ delivery.date }}</td>                            
                             <td>{{ delivery.provider }}</td>
                             <td>{{ delivery.total }}</td>
                             <td><a href="/intranet/buys/deliveries/form?id={{delivery.id}}">Edit</td>

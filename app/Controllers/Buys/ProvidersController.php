@@ -23,16 +23,33 @@ class ProvidersController extends BaseController
     {
         $providers = Provider::All();
         return $this->renderHTML('/buys/providersList.html.twig', [
+            'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'providers' => $providers
         ]);
-    }    
+    } 
+    public function searchProviderAction($request)
+    {
+        $postData = $request->getParsedBody();
+        $searchString = $postData['searchFilter'];
+        $providers = Provider::where('name', 'like', "%".$searchString."%")
+                ->orWhere('fiscal_id', 'like', "%".$searchString."%")
+                ->orWhere('fiscal_name', 'like', "%".$searchString."%")
+                ->orWhere('city', 'like', "%".$searchString."%")
+                ->orWhere('state', 'like', "%".$searchString."%")
+                ->WhereNull('deleted_at')
+                ->get();
+        
+        return $this->renderHTML('/buys/providersList.html.twig', [
+            'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
+            'providers' => $providers
+        ]);
+    }
     public function getProviderDataAction($request)
     {                
         $responseMessage = null;
         if($request->getMethod() == 'POST')
         {
-            $postData = $request->getParsedBody();
-            
+            $postData = $request->getParsedBody();            
             $providerValidator = v::key('name', v::stringType()->notEmpty()) 
             ->key('fiscal_id', v::notEmpty())
             ->key('phone', v::notEmpty())
@@ -40,6 +57,15 @@ class ProvidersController extends BaseController
             try{
                 $providerValidator->assert($postData); // true 
                 $provider = new Provider();
+                $provider->id = $postData['id'];
+                if($provider->id)
+                {
+                    $provider_temp = Provider::find($provider->id)->first();
+                    if($provider_temp)
+                    {
+                        $provider = $provider_temp;
+                    }
+                }
                 $provider->name = $postData['name'];
                 $provider->fiscal_id = $postData['fiscal_id'];
                 $provider->fiscal_name = $postData['fiscal_name'];
@@ -51,8 +77,16 @@ class ProvidersController extends BaseController
                 $provider->phone = $postData['phone'];
                 $provider->email = $postData['email'];
                 $provider->site = $postData['site'];
-                $provider->save();     
-                $responseMessage = 'Saved';     
+                if($provider_temp)
+                {
+                    $provider->update();
+                    $responseMessage = 'Updated';
+                }
+                else
+                {
+                    $provider->save();     
+                    $responseMessage = 'Saved';
+                }                     
             }catch(\Exception $e){                
                 $responseMessage = $e->getMessage();
             }              

@@ -18,17 +18,16 @@ class BuyDeliveriesController extends BaseController
     {
         parent::__construct();
         $this->buyDeliveryService = $buyDeliveryService;
-    }
-    
-    
-    
+    }    
     public function getIndexAction()
     {
-        $buyDelivery = BuyDelivery::All();
+        $buyDeliveries = BuyDelivery::All();
         return $this->renderHTML('/buys/buy_deliveryList.html.twig', [
-            'buyDeliverys' => $buyDelivery
+            'buyDeliveries' => $buyDeliveries
         ]);
     }   
+    
+    
     
     public function getBuyDeliveriesDataAction($request)
     {                
