@@ -20,134 +20,95 @@
         <div class="col">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                  <a class="nav-link active" id="customer-tab" data-toggle="tab" href="#customer" role="tab" aria-controls="customer" aria-selected="true">Cliente</a>
+                  <a class="nav-link active" id="provider-tab" data-toggle="tab" href="#provider" role="tab" aria-controls="provider" aria-selected="true">Proveedor</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <a class="nav-link" id="vehicle-tab" data-toggle="tab" href="#vehicle" role="tab" aria-controls="vehicle" aria-selected="false">Vehículo</a>
+                  <a class="nav-link" id="articles-tab" data-toggle="tab" href="#articles" role="tab" aria-controls="articles" aria-selected="false">Articulos</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <a class="nav-link" id="offer-tab" data-toggle="tab" href="#offer" role="tab" aria-controls="offer" aria-selected="false">Oferta</a>
+                  <a class="nav-link" id="delivery-tab" data-toggle="tab" href="#delivery" role="tab" aria-controls="delivery" aria-selected="false">Albarán</a>
                 </li>                            
             </ul>
         </div>
     </div>      
-    <form action="/intranet/crm/offers/save" method="post" class="form">
+    <form action="/intranet/buys/buyDeliveries/save" method="post" class="form">
         <div class="tab-content" id="myTabContent">        
-            <div class="tab-pane fade show active" id="customer" role="tabpanel" aria-labelledby="customer-tab">
+            <div class="tab-pane fade show active" id="provider" role="tabpanel" aria-labelledby="provider-tab">
                 <div class="form-row mt-3">
                     <div class="form-group col text-right">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchCustomerModal">
-                            Buscar Cliente
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchProviderModal">
+                            Buscar Proveedor
                         </button>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-2">
-                          <label for="inputCustomerID">ID</label>                        
-                          <input type="text" name="customer_id" class="form-control" id="inputCustomerId" placeholder="" value="{{ customer.id }}">
+                          <label for="inputProviderID">ID</label>                        
+                          <input type="text" name="provider_id" class="form-control" id="inputProviderId" placeholder="" value="{{ provider.id }}">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-9">
                         <label for="inputName">Nombre</label>                        
-                        <input type="text" name="name" class="form-control" id="inputName" placeholder="" value="{{ customer.name }}">
+                        <input type="text" name="name" class="form-control" id="inputName" placeholder="" value="{{ provider.name }}">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputFiscalId">DNI/CIF</label>
-                        <input type="text" name="fiscal_id" class="form-control" id="inputFiscalId" placeholder="" value="{{ customer.fiscal_id }}">
+                        <input type="text" name="fiscal_id" class="form-control" id="inputFiscalId" placeholder="" value="{{ provider.fiscal_id }}">
                     </div>                    
                 </div>
                 <div class="form-row mb-3">
                     <div class="form-group col-md-4">
                         <label for="inputCity">Población</label>
-                        <input type="text" name="city" class="form-control" id="inputCity" placeholder="" value="{{ customer.city }}">
+                        <input type="text" name="city" class="form-control" id="inputCity" placeholder="" value="{{ provider.city }}">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputPostalCode">C.P.</label>
-                        <input type="text" name="cp" class="form-control" id="inputCp" placeholder="" value="{{ customer.postal_code }}">
+                        <input type="text" name="cp" class="form-control" id="inputCp" placeholder="" value="{{ provider.postal_code }}">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputState">Provincia</label>
-                        <input type="text" name="state" class="form-control" id="inputState" placeholder="" value="{{ customer.state }}">
+                        <input type="text" name="state" class="form-control" id="inputState" placeholder="" value="{{ provider.state }}">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputCountry">Pais</label>
-                        <input type="text" name="country" class="form-control" id="inputCountry" placeholder="" value="{{ customer.country }}">
+                        <input type="text" name="country" class="form-control" id="inputCountry" placeholder="" value="{{ provider.country }}">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="inputPhone">Teléfono</label>                        
-                        <input type="text" name="phone" class="form-control" id="inputPhone" placeholder="" value="{{ customer.phone }}">
+                        <input type="text" name="phone" class="form-control" id="inputPhone" placeholder="" value="{{ provider.phone }}">
                     </div>
                     <div class="form-group col-md-5 offset-md-4">
                         <label for="inputFiscalId">Email</label>
-                        <input type="text" name="email" class="form-control" id="inputEmail" placeholder="" value="{{ customer.email }}">
+                        <input type="text" name="email" class="form-control" id="inputEmail" placeholder="" value="{{ provider.email }}">
                     </div>                    
                 </div>
             </div>                        
-            <div class="tab-pane fade" id="vehicle" role="tabpanel" aria-labelledby="vehicle-tab">
+            <div class="tab-pane fade" id="articles" role="tabpanel" aria-labelledby="articles-tab">
                 <div class="form-row mt-3">                                                      
                     <div class="form-group col">
                         <div class="form-group col text-right">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchVehicleModal">
-                            Buscar Vehículo
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchArticlesModal">
+                            Buscar Articulos
                         </button>
                     </div>
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-1">
-                          <label for="inputVehicleID">ID</label>                        
-                          <input type="text" name="vehicle_id" class="form-control" id="inputVehicleId" placeholder="" value="{{ vehicle.id }}">
-                    </div>                    
-                    <div class="form-group col-md-2">                          
-                        <label for="inputPlate">Matricula</label>
-                        <input type="text" name="plate" class="form-control" id="inputPlate" placeholder="" value="{{ vehicle.plate }}">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="inputBrand">Marca</label>
-                        <input type="text" name="brand" class="form-control" id="inputBrand" placeholder="" value="{{ vehicle.brand }}">
-                    </div>                                
-                    <div class="form-group col-md-2">
-                        <label for="inputModelVh">Modelo</label>
-                        <input type="text" name="model" class="form-control" id="inputKm" placeholder="50000" value="{{ vehicle.km }}">
-                    </div>                    
-                    <div class="form-group col-md-4">
-                        <label for="inputDescription">Descripcion</label>
-                        <input type="text" name="description" class="form-control text-center" id="inputDescription" placeholder="130cv" value="{{ vehicle.description }}">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-3">
-                        <label for="inputColor">Color</label>
-                        <input type="text" name="color" class="form-control text-center" id="inputColor" placeholder="" value="{{ vehicle.color }}">
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="inputDoors">Puertas</label>
-                        <input type="text" name="doors" class="form-control text-center" id="inputDoors" placeholder="" value="{{ vehicle.doors }}">
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="inputPlazas">Plazas</label>
-                        <input type="text" name="places" class="form-control" id="inputPlaces" placeholder="" value="{{ vehicle.places }}">
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="inputPower">Potencia</label>
-                        <input type="text" name="power" class="form-control" id="inputPower" placeholder="" value="{{ vehicle.power }}">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="inputType">Tipo Vehículo</label>
-                        <select name="type" class="form-control" id="selectType">
-                            {% for type in types %}
-                                <option>{{ type.name }}</option>
-                            {% endfor %}                            
-                        </select>
+                    <div class="col">
+                        <table class="table">
+                            <tr>
+                                <th>MATRICULA/REFERENCIA</th>
+                                <th>NOMBRE/DESCRIPCION</th>
+                        </table>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col">
-                        <label for="vehicle_comments">Comentarios</label>
-                        <textarea class="form-control" name="vehicle_comments" id="vehicle_comments" rows="6">{{ sellOffer.vehicle_comments }}</textarea>
+                        <label for="observations">Comentarios</label>
+                        <textarea class="form-control" name="vehicle_comments" id="vehicle_comments" rows="6">{{ buyDelivery.vehicle_comments }}</textarea>
                     </div>
                 </div>
             </div>                        
@@ -155,27 +116,27 @@
                 <div class="form-row mt-3">
                     <div class="form-group col-md-1">
                           <label for="inputOfferID">ID</label>                        
-                          <input type="text" name="id" class="form-control" id="inputId" placeholder="" value="{{ sellOffer.id }}">
+                          <input type="text" name="id" class="form-control" id="inputId" placeholder="" value="{{ buyDelivery.id }}">
                     </div>
                     <div class="form-group col-md-2 offset-md-6">
                           <label for="inputOfferNumber">Numero de Oferta</label>                        
-                          <input type="text" name="offer_number" class="form-control" id="inputOfferNumber" placeholder="" value="{{ sellOffer.offer_number }}">
+                          <input type="text" name="offer_number" class="form-control" id="inputOfferNumber" placeholder="" value="{{ buyDelivery.offer_number }}">
                     </div>
                     <div class="form-group col-md-2">
                           <label for="inputOfferDate">Fecha</label>                        
-                          <input type="date" name="date" class="form-control" id="inputDate" placeholder="" value="{{ sellOffer.offer_date }}">
+                          <input type="date" name="date" class="form-control" id="inputDate" placeholder="" value="{{ buyDelivery.offer_date }}">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col">
                         <label for="texts">Textos</label>
-                        <textarea class="form-control" name="texts" id="texts" rows="4">{{ sellOffer.texts }}</textarea>
+                        <textarea class="form-control" name="texts" id="texts" rows="4">{{ buyDelivery.texts }}</textarea>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col">
                         <label for="observations">Observaciones</label>
-                        <textarea class="form-control" name="observations" id="observations" rows="4">{{ sellOffer.observations }}</textarea>
+                        <textarea class="form-control" name="observations" id="observations" rows="4">{{ buyDelivery.observations }}</textarea>
                     </div>
                 </div>
                 <div class="form-row">
@@ -185,15 +146,15 @@
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputDiscount">Descuento</label>
-                        <input type="text" name="discount" step="0.01" class="euros form-control" id="inputDiscount" placeholder="" value="{{ sellOffer.discount }}">
+                        <input type="text" name="discount" step="0.01" class="euros form-control" id="inputDiscount" placeholder="" value="{{ buyDelivery.discount }}">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputTva">I.V.A.</label>
-                        <input type="text" name="tva" step="0.01" class="euros form-control" id="inputTva" placeholder="" value="{{ sellOffer.tva }}">
+                        <input type="text" name="tva" step="0.01" class="euros form-control" id="inputTva" placeholder="" value="{{ buyDelivery.tva }}">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputTotal">Total</label>
-                        <input type="text" name="total" class="euros form-control" id="inputTotal" placeholder="" value="{{ sellOffer.total}}">
+                        <input type="text" name="total" class="euros form-control" id="inputTotal" placeholder="" value="{{ buyDelivery.total}}">
                     </div>
                 </div>
             </div>
@@ -205,8 +166,8 @@
             </div>
         </div> 
     </form>         
-    <!-- Modal Customers -->
-    <div class="modal fade" id="searchCustomerModal" tabindex="-1" role="dialog" aria-labelledby="searchCustomerModalLabel" aria-hidden="true">
+    <!-- Modal Providers -->
+    <div class="modal fade" id="searchProviderModal" tabindex="-1" role="dialog" aria-labelledby="searchProviderModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content ">
                 <div class="modal-header">
@@ -218,11 +179,11 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
-                            <form id="searchCustomerForm" action="/intranet/crm/offers/customer/search" method="post" class="form">
+                            <form id="searchProviderForm" action="/intranet/crm/offers/provider/search" method="post" class="form">
                                 <div class="container">
                                     <div id="formRow" class="form-row text-right">
                                         <div class="col-11">                                                                                
-                                            <input id="searchCustomerField" type="text" name="searchCustomerFilter" class="form-control mb-2 mr-sm-2" id="inlineFormSearchFilter" placeholder="Nombre / Cif / Telefono / email">
+                                            <input id="searchProviderField" type="text" name="searchProviderFilter" class="form-control mb-2 mr-sm-2" id="inlineFormSearchFilter" placeholder="Nombre / Cif / Telefono / email">
                                         </div>
                                         <div class="col-1">
                                             <button type="submit" class="btn btn-primary mb-2">Buscar</button>
@@ -234,7 +195,7 @@
                     </div>                          
                         <div class="row">
                         <div class="col">
-                            <table id="customersTable" class="table">
+                            <table id="providersTable" class="table">
                                 <tr>
                                     <th>Nombre</th>
                                     <th>Población</th>
@@ -243,13 +204,13 @@
                                     <th>Edit</th>                                    
                                 </tr>
                                 
-                                {% for customer in customers %}                                    
+                                {% for provider in providers %}                                    
                                     <tr id="datarow">
-                                        <td>{{ customer.name }}</td>
-                                        <td>{{ customer.city }}</td>
-                                        <td>{{ customer.phone }}</td>
-                                        <td>{{ customer.email }}</td>
-                                        <td><a href="/intranet/crm/offers/customer/select?customer_id={{customer.id}}&offer_id={{ offer.id }}&vehicle_id{{ vehicle.id }}">Select</a></td>                                        
+                                        <td>{{ provider.name }}</td>
+                                        <td>{{ provider.city }}</td>
+                                        <td>{{ provider.phone }}</td>
+                                        <td>{{ provider.email }}</td>
+                                        <td><a href="/intranet/crm/offers/provider/select?provider_id={{provider.id}}&offer_id={{ offer.id }}&vehicle_id{{ vehicle.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>
@@ -265,7 +226,7 @@
     </div>                            
     {% block javascripts %}
         <script>
-            {{ include('js/sellOffers.js')}}
+            {{ include('js/buyDeliveries.js')}}
          </script>
     {% endblock %}    
     <!-- Modal Vehicles -->
@@ -273,7 +234,7 @@
         <div class="modal-dialog modal-xl">
             <div class="modal-content ">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Clientes</h5>
+                    <h5 class="modal-title" id="ProviderModalLabel">Proveedores</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -313,7 +274,7 @@
                                         <td>{{ vehicle.brand }}</td>
                                         <td>{{ vehicle.model }}</td>
                                         <td>{{ vehicle.description }}</td>
-                                        <td><a href="/intranet/crm/offers/vehicle/select?vehicle_id={{vehicle.id}}&offer_id={{ offer.id }}&customer_id={{ customer.id }}">Select</a></td>                                        
+                                        <td><a href="/intranet/crm/offers/vehicle/select?vehicle_id={{vehicle.id}}&offer_id={{ offer.id }}&provider_id={{ provider.id }}">Select</a></td>                                        
                                     </tr>
                                 {% endfor %}                
                             </table>

@@ -469,23 +469,23 @@ $map->get('deleteVehicleTypes', '/intranet/vehicles/vehicleTypes/delete', [
     'App\Controllers\Buys\VehicleTypesController',
     'deleteAction'   
 ]);
-$map->get('deliveriesForm', '/intranet/buys/buyDeliveries/form', [
+$map->get('buyDeliveriesForm', '/intranet/buys/buyDeliveries/form', [
     'App\Controllers\Buys\BuyDeliveriesController',
     'getBuyDeliveriesDataAction'
 ]);
-$map->get('deliveriesList', '/intranet/buys/buyDeliveries/list', [
+$map->get('buyDeliveriesList', '/intranet/buys/buyDeliveries/list', [
     'App\Controllers\Buys\BuyDeliveriesController',
     'getIndexAction'
 ]);
-$map->post('searchDeliveries', '/intranet/buys/buyDeliveries/search', [
+$map->post('searchBuyDeliveries', '/intranet/buys/buyDeliveries/search', [
     'App\Controllers\Buys\BuyDeliveriesController',
     'searchBuyDeliveriesAction'
 ]);
-$map->post('saveDeliveries', '/intranet/buys/buyDeliveries/save', [
+$map->post('saveBuyDeliveries', '/intranet/buys/buyDeliveries/save', [
     'App\Controllers\Buys\BuyDeliveriesController',
     'getBuyDeliveriesDataAction'
 ]);
-$map->get('deleteDeliveries', '/intranet/buys/buyDeliveries/delete', [        
+$map->get('deleteBuyDeliveries', '/intranet/buys/buyDeliveries/delete', [        
     'App\Controllers\Buys\BuyDeliveriesController',
     'deleteAction'  
 ]);
@@ -608,7 +608,6 @@ $map->get('ordersDelete', '/intranet/buys/orders/delete', [
 /*
  * PRODUCTION ROUTES
  */
-
 $map->get('productionList', '/intranet/production/form', [
     'App\Controllers\Entitys\ProductionController',
     'getProductionDataAction'

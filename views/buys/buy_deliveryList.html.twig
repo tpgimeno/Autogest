@@ -11,6 +11,22 @@
         </div>
         <div class="row">
             <div class="col">
+                <form id="searchForm" action="/intranet/buys/buyDeliveries/search" method="post" class="form">
+                    <div class="container">
+                        <div id="formRow" class="form-row text-right">
+                            <div class="col-11">                                                                                
+                                <input id="searchField" type="text" name="searchFilter" class="form-control mb-2 mr-sm-2" id="inlineFormSearchFilter" placeholder="Nombre / Cif / Telefono / email">
+                            </div>
+                            <div class="col-1">
+                                <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
                 <table class="table">
                     <tr>
                         <th>NºAlbaran</th>
@@ -26,8 +42,8 @@
                             <td>{{ delivery.date }}</td>                            
                             <td>{{ delivery.provider }}</td>
                             <td>{{ delivery.total }}</td>
-                            <td><a href="/intranet/buys/deliveries/form?id={{delivery.id}}">Edit</td>
-                            <td><a href="/intranet/buys/deliveries/delete?id={{delivery.id}}">Delete</td>
+                            <td><a href="/intranet/buys/buyDeliveries/form?id={{delivery.id}}">Edit</td>
+                            <td><a href="/intranet/buys/buyDeliveries/delete?id={{delivery.id}}">Delete</td>
                         </tr>
                     {% endfor %}                
                 </table>
@@ -35,7 +51,7 @@
         </div>
         <div class="row">
             <div class="col d-flex justify-content-end">
-                <form action="/intranet/buys/deliveries/form" method="get">
+                <form action="/intranet/buys/buyDeliveries/form" method="get">
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary" value="Añadir">
                         <a href="/intranet/admin" class="btn btn-primary">Cancelar</a>

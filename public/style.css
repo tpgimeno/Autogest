@@ -13,4 +13,12 @@
 {
     text-align: right;    
 }
+.disabled {
+    pointer-events: none;
+    text-decoration: none;
+}
+.disabled:hover{
+    pointer-events: none;
+    text-decoration: none;
+}
 
