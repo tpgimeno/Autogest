@@ -66,13 +66,13 @@ class VehicleTypesController extends BaseController
                 $type->save();     
                 $responseMessage = 'Saved';     
             }catch(Exception $e){                
-                $responseMessage = $e->getMessage();
+                $responseMessage = $this->errorService->getError($e);
             }              
         }
         $typeSelected = null;
-        if($_GET)
+        if($request->getQueryParams('id'))
         {
-            $typeSelected = VehicleTypes::find($_GET['id']);
+            $typeSelected = VehicleTypes::find($request->getQueryParams('id'));
         }
         return $this->renderHTML('/vehiclesTypes/vehiclesTypesForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),

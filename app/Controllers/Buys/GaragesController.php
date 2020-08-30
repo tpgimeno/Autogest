@@ -89,7 +89,7 @@ class GaragesController extends BaseController
                     $responseMessage = 'Saved'; 
                 }                    
             }catch(\Exception $e){                
-                $responseMessage = $e->getMessage();
+                $responseMessage = $this->errorService->getError($e);
             }              
         }
         $garageSelected = null;

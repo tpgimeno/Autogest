@@ -126,8 +126,8 @@ class VehicleController extends BaseController
                         return $string;
                     }
                 });    
-                $accesories = array_unique($accesories);
-                $vehicle->accesories = implode(", ", $accesories);
+                $accesories_ord = \array_unique($accesories);
+                $vehicle->accesories = implode(", ", $accesories_ord);
                 $vehicle->doors = $postData['doors'];  
                 
                 if($vh_temp)
@@ -141,8 +141,9 @@ class VehicleController extends BaseController
                     $responseMessage = 'Saved';  
                 }
                    
-            }catch(Exception $e){                
-                $responseMessage = $e->getMessage();
+            }catch(Exception $e)
+            {                
+                $responseMessage = $this->errorService->getError($e);
             }              
         }
         $vehicleSelected = null;   
@@ -170,6 +171,7 @@ class VehicleController extends BaseController
             'accesories' => $accesories_withkeys
         ]);
     }
+    
     public function deleteAction(ServerRequest $request)
     {         
         $this->vehicleService->deleteVehicle($request->getQueryParams('id'));               

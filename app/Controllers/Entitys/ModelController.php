@@ -73,14 +73,16 @@ class ModelController extends BaseController
                 $model->brand_id = $brand_id; 
                 $model->save();     
                 $responseMessage = 'Saved';     
-            }catch(Exception $e){                
-                $responseMessage = $e->getMessage();
-            }              
+            }
+            catch(Exception $e)
+            {                 
+                $responseMessage = $this->errorService->getError($e);                
+            }               
         }
         $modelSelected = null;
-        if($_GET)
+        if($request->getQueryParams('id'))
         {
-            $modelSelected = ModelVh::find($_GET['id']);
+            $modelSelected = ModelVh::find($request->getQueryParams('id'));
         }
         $brands = Brand::All();
         return $this->renderHTML('/models/modelsForm.html.twig', [

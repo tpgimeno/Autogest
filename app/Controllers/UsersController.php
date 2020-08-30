@@ -41,7 +41,7 @@ class UsersController extends BaseController
               
             }catch(\Exception $e)
             {                
-                $responseMessage = $e->getMessage();
+                $responseMessage = $this->errorService->getError($e);
             }              
         }  
         $selected_user = null;

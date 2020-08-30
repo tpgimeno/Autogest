@@ -5,8 +5,11 @@ namespace App\Controllers;
 require_once "../vendor/autoload.php";
 
 use App\Services\CurrentUserService;
+use App\Services\ErrorService;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Twig\Environment;
+use Twig\Extension\DebugExtension;
+use Twig\Extra\Intl\IntlExtension;
 use Twig\Loader\FilesystemLoader;
 
 
@@ -16,6 +19,7 @@ class BaseController
 {
     protected $templateEngine;
     protected $currentUser;
+    protected $errorService;
     
     public function __construct()   
     {
@@ -25,10 +29,9 @@ class BaseController
             'cache' => false,
         ]);
         $this->currentUser = new CurrentUserService();
-        $this->templateEngine->addExtension(new \Twig\Extension\DebugExtension());
-        $this->templateEngine->addExtension(new \Twig\Extra\Intl\IntlExtension());
-        
-      
+        $this->errorService = new ErrorService();
+        $this->templateEngine->addExtension(new DebugExtension());
+        $this->templateEngine->addExtension(new IntlExtension());      
     }
     public function renderHTML($fileName, $data = [])
     {      
