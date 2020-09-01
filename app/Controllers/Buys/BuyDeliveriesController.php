@@ -25,9 +25,7 @@ class BuyDeliveriesController extends BaseController
         return $this->renderHTML('/buys/buy_deliveryList.html.twig', [
             'buyDeliveries' => $buyDeliveries
         ]);
-    }   
-    
-    
+    }       
     
     public function getBuyDeliveriesDataAction($request)
     {                
