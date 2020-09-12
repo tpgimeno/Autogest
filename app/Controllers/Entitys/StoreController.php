@@ -19,57 +19,54 @@ class StoreController extends BaseController
         parent::__construct();
         $this->storeService = $storeService;
     }
-    
-    
-    
+        
     public function getIndexAction()
     {
         $store = Store::All();
         return $this->renderHTML('/stores/storeList.html.twig', [
             'stores' => $store
         ]);
-    }   
+    }  
+    public function searchStore($request)
+    {
+        $responseMessage = null;
+        $postData = $request->getParsedBody();
+        $searchString = $postData['searchFilter'];
+        $store = Store::where('name', 'like', "%".$searchString."%")
+                ->orWhere('address', 'like', "%".$searchString."%")
+                ->orWhere('city', 'like', "%".$searchString."%")
+                ->orWhere('phone', 'like', "%".$searchString."%")
+                ->orWhere('email', 'like', "%".$searchString."%")
+                ->WhereNull('deleted_at')
+                ->get();
+        return $this->renderHTML('/stores/storeList.html.twig', [
+            'stores' => $store
+        ]);
+    }
     
     public function getStoreDataAction($request)
     {                
         $responseMessage = null;
         if($request->getMethod() == 'POST')
         {
-            $postData = $request->getParsedBody();
-            
-            $storeValidator = v::key('name', v::stringType()->notEmpty())             
-            ->key('address', v::notEmpty());           
-            try{
+            $postData = $request->getParsedBody();            
+            $storeValidator = v::key('name', v::stringType()->notEmpty());           
+            try
+            {
                 $storeValidator->assert($postData); // true 
                 $store = new Store();
-                $store->id = $postData['id'];
-                if($store->id)
-                {
-                    $temp_store = Store::find($store->id)->first();
-                }
+                $store->id = $postData['id'];                
+                $temp_store = Store::find($store->id)->first();
                 if(isset($temp_store))
                 {
-                    $store = $temp_store;
-                }
-                $store->name = $postData['name'];                
-                $store->address = $postData['address'];
-                $store->city = $postData['city'];
-                $store->postal_code = $postData['postal_code'];
-                $store->state = $postData['state'];
-                $store->country = $postData['country'];
-                $store->phone = $postData['phone'];
-                $store->email = $postData['email'];   
-                if(isset($temp_store))
-                {
-                    $store->update();
+                    updateData($postData);
                     $responseMessage = 'Updated';
                 }
                 else
                 {
-                    $store->save();     
+                    saveData($postData);     
                     $responseMessage = 'Saved';  
-                }
-                   
+                }             
             }catch(\Exception $e){                
                 $responseMessage = $e->getMessage();
             }              
@@ -84,6 +81,34 @@ class StoreController extends BaseController
             'responseMessage' => $responseMessage,
             'store' => $storeSelected
         ]);
+    }
+    public function saveData($data)
+    {
+        $store = new Store();
+        $store->id = $data['id'];
+        $store->name = $data['name'];                
+        $store->address = $data['address'];
+        $store->city = $data['city'];
+        $store->postal_code = $data['postal_code'];
+        $store->state = $data['state'];
+        $store->country = $data['country'];
+        $store->phone = $data['phone'];
+        $store->email = $data['email'];
+        $store->save();         
+    }
+    public function updateData($data)
+    {
+        $store = new Store();
+        $store->id = $data['id'];
+        $store->name = $data['name'];                
+        $store->address = $data['address'];
+        $store->city = $data['city'];
+        $store->postal_code = $data['postal_code'];
+        $store->state = $data['state'];
+        $store->country = $data['country'];
+        $store->phone = $data['phone'];
+        $store->email = $data['email'];
+        $store->update(); 
     }
     public function deleteAction(ServerRequest $request)
     {

@@ -30,12 +30,14 @@
             <div class="col">
                 <table class="table">
                     <tr>
+                        <th>ID</th>
                         <th>Nombre</th>                        
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
                     {% for type in types %}
                         <tr>
+                            <td>{{ type.id }}</td>
                             <td>{{ type.name }}</td>                           
                             <td><a href="/intranet/vehicles/vehicleTypes/form?id={{type.id}}">Edit</td>
                             <td><a href="/intranet/vehicles/vehicleTypes/delete?id={{type.id}}">Delete</td>

@@ -1,6 +1,11 @@
 {% extends "dashboard.twig" %}
 {% block content %}
 <div class="container">
+    {% block javascripts %}
+            <script>
+                {{ include('js/vehicles.js')}}
+            </script>
+    {% endblock %}
     <div class="row">
         <div class="col-md-10">
             <h2> Vehiculo </h2>
@@ -114,17 +119,33 @@
                             </div>
                             <div class="tab-pane fade" id="buy" role="tabpanel" aria-labelledby="buy-tab">
                                 <div class="form-row mt-3">
-                                    <div class="form-group col-md-2">
+                                    <div class="form-group col-md-2 offset-md-6">
                                         <label for="inputCost">Precio Compra</label>
                                         <input type="text" name="cost" class="form-control" id="inputCost" placeholder="" value="{{ vehicle.cost }}">
-                                    </div> 
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="inputCost">Iva Compra</label>
+                                        <input type="text" name="tvaBuy" class="form-control" id="inputTvaCost" placeholder="" value="{{ vehicle.cost }}">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="inputCost">Total Compra</label>
+                                        <input type="text" name="totalBuy" class="form-control" id="inputTotalCost" placeholder="" value="{{ vehicle.cost }}">
+                                    </div>
                                 </div>
                             </div>
                           <div class="tab-pane fade" id="sale" role="tabpanel" aria-labelledby="sale-tab">
                               <div class="form-row mt-3">
-                                  <div class="form-group col-md-2">
+                                  <div class="form-group col-md-2 offset-md-6">
                                       <label for="inputPvp">Precio Venta</label>
                                       <input type="text" name="pvp" class="form-control" id="inputPvp" placeholder="" value="{{ vehicle.pvp }}">
+                                  </div>
+                                  <div class="form-group col-md-2">
+                                      <label for="inputPvp">Iva Venta</label>
+                                      <input type="text" name="tvaSell" class="form-control" id="inputTvaSell" placeholder="" value="{{ vehicle.pvp }}">
+                                  </div>
+                                  <div class="form-group col-md-2">
+                                      <label for="inputPvp">Total Venta</label>
+                                      <input type="text" name="totalSell" class="form-control" id="inputTotalSell" placeholder="" value="{{ vehicle.pvp }}">
                                   </div>
                               </div>
                           </div>

@@ -79,8 +79,8 @@ window.addEventListener('load', function()
 
    numeral.register('locale', 'es', {
         delimiters: {
-            thousands: '.',
-            decimal: ','
+            thousands: ',',
+            decimal: '.'
         },
         abbreviations: {
             thousand: 'k',
@@ -105,16 +105,17 @@ window.addEventListener('load', function()
     var discount = numeral(document.getElementById("inputDiscount").value);                
     var tva = numeral(document.getElementById("inputTva").value);
     var total = numeral(document.getElementById("inputTotal").value);
-    var price = numeral(document.getElementById("inputPrice").value);                
+    var price = numeral(document.getElementById("inputPrice").value); 
+    document.getElementById("inputPrice").value = price.format('0,00.00$');
     var base = 0;                                
 
     base = numeral(price.value() - discount.value());
-    document.getElementById("inputPrice").value = price.format('0,00.0$');
-    document.getElementById("inputDiscount").value = discount.format('0,00.0$');
+    
+    document.getElementById("inputDiscount").value = discount.format('0,00.00$');
     tva = numeral(base.value() * 0.21);
-    document.getElementById("inputTva").value = tva.format('0,00.0$');
+    document.getElementById("inputTva").value = tva.format('0,00.00$');
     total = numeral(base.value() + tva.value());  
-    document.getElementById("inputTotal").value = total.format('0,00.0$');
+    document.getElementById("inputTotal").value = total.format('0,00.00$');
 
     document.getElementById("inputPrice").addEventListener("change", function()
     {
@@ -133,24 +134,24 @@ window.addEventListener('load', function()
         price = numeral(document.getElementById("inputPrice").value);
         discount = numeral(document.getElementById("inputDiscount").value);
         base = numeral(price.value() - discount.value());                    
-        document.getElementById("inputDiscount").value = discount.format('0,00.0$');
+        document.getElementById("inputDiscount").value = discount.format('0,00.00$');
         tva = numeral(base.value() * 0.21);
-        document.getElementById("inputTva").value = tva.format('0,00.0$');
+        document.getElementById("inputTva").value = tva.format('0,00.00$');
         total = numeral(base.value() + tva.value());  
-        document.getElementById("inputTotal").value = total.format('0,00.0$');
-        document.getElementById("inputPrice").value = price.format('0,00.0$');
+        document.getElementById("inputTotal").value = total.format('0,00.00$');
+        document.getElementById("inputPrice").value = price.format('0,00.00$');
     });
     document.getElementById("inputTotal").addEventListener("change", function()
     {
         total = numeral(document.getElementById("inputTotal").value);
         discount = numeral(document.getElementById("inputDiscount").value);
         base = numeral(total.value() / 1.21);                    
-        document.getElementById("inputDiscount").value = discount.format('0,00.0$');
+        document.getElementById("inputDiscount").value = discount.format('0,00.00$');
         tva = numeral(base.value() * 0.21);
-        document.getElementById("inputTva").value = tva.format('0,00.0$');
+        document.getElementById("inputTva").value = tva.format('0,00.00$');
         price = numeral(base.value() - discount.value());  
-        document.getElementById("inputTotal").value = total.format('0,00.0$');
-        document.getElementById("inputPrice").value = price.format('0,00.0$');
+        document.getElementById("inputTotal").value = total.format('0,00.00$');
+        document.getElementById("inputPrice").value = price.format('0,00.00$');
     });
 
 });

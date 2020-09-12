@@ -10,15 +10,18 @@ namespace App\Controllers\Buys;
 
 use App\Controllers\BaseController;
 use App\Models\Brand;
+use App\Models\Location;
 use App\Models\ModelVh;
 use App\Models\Vehicle;
 use App\Models\VehicleTypes;
 use App\Services\Buys\VehicleService;
+use Illuminate\Database\Capsule\Manager as DB;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\ServerRequest;
+use PhpOffice\PhpSpreadsheet\Reader\Xls;
 use Respect\Validation\Validator as v;
-use Illuminate\Database\Capsule\Manager as DB;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpKernel\HttpCache\Store;
 
 /**
  * Description of VehiclesController
@@ -40,7 +43,10 @@ class VehicleController extends BaseController
                 ->join('brands', 'vehicles.brand', '=', 'brands.id')
                 ->join('models', 'vehicles.model', '=', 'models.id')
                 ->select('vehicles.id', 'brands.name as brand', 'models.name as model', 'vehicles.description', 'vehicles.plate', 'vehicles.vin')
-                ->whereNull('vehicles.deleted_at')
+                ->orderBy('brand', 'asc')
+                ->orderBy('model', 'asc')
+                ->orderBy('vehicles.plate', 'asc')                
+                ->whereNull('vehicles.deleted_at')                
                 ->get();       
         return $this->renderHTML('/vehicles/vehiclesList.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
@@ -60,6 +66,9 @@ class VehicleController extends BaseController
                         'vehicles.description as description', 'vehicles.location', 'vehicle_types.name as type', 
                         'brands.name as brand', 'models.name as model', 'vehicles.color', 'vehicles.places',
                         'vehicles.doors', 'vehicles.power', 'vehicles.cost', 'vehicles.pvp', 'vehicles.accesories')
+                ->orderBy('brand', 'asc')
+                ->orderBy('model', 'asc')
+                ->orderBy('vehicles.plate', 'asc')  
                 ->where("brands.name", "like", "%".$searchString."%" )
                 ->orWhere("models.name", "like", "%".$searchString."%")
                 ->orWhere("vehicles.description", "like", "%".$searchString."%")
@@ -110,14 +119,18 @@ class VehicleController extends BaseController
                 $vehicle->description = $postData['description'];
                 $vehicle->plate = $postData['plate'];
                 $vehicle->vin = $postData['vin'];
+                $vehicle->registry_date = date($postData['matriculacion']);
                 $type = VehicleTypes::where('name', '=', $postData['type'])->first();
                 $vehicle->type = $type->id;
-                $vehicle->location = $postData['location'];                
+                $store = Store::where('name', '=', $postData['store'])->first();
+                $vehicle->store = $store->id;
+                $location = Location::where('name', '=', $postData['location'])->first();
+                $vehicle->location = $location->id;                
                 $vehicle->power = $postData['power'];
                 $vehicle->places = $postData['places'];
                 $vehicle->color = $postData['color'];
                 $vehicle->km = $postData['km'];
-                $vehicle->cost = $postData['cost'];
+                $vehicle->cost = $postData['inputBuy'];
                 $vehicle->pvp = $postData['pvp'];                
                 $accesories = array_filter($postData , function($string){
                     $findString = 'acc-';
@@ -170,6 +183,59 @@ class VehicleController extends BaseController
             'vehicle' => $vehicleSelected,
             'accesories' => $accesories_withkeys
         ]);
+    }
+    
+    public function importExcel()
+    {
+        $responseMessage = null;
+        $reader = new Xls();
+        $reader->setLoadSheetsOnly('GENERAL');
+        $reader->setReadDataOnly(true);        
+        $spreadSheet = $reader->load('VEHICULOS 01-08-19 UBICACIONES.xls');
+        $vehiculos = $spreadSheet->getActiveSheet()->toArray();         
+//        var_dump($vehiculos);die();
+        try{
+            for($i = 1; $i < intval(count($vehiculos)); $i++)
+            {
+                $vehiculo = new Vehicle(); 
+                $vehiculo->brand = $vehiculos[$i][0];
+                $vehiculo->model = $vehiculos[$i][1];
+                $vehiculo->description = $vehiculos[$i][2];
+                $vehiculo->plate = $vehiculos[$i][3];
+                $vehiculo->vin = null;
+                $vehiculo->registry_date = date('D-M-YY', intval($vehiculos[$i][8]));            
+                $vehiculo->store = $vehiculos[$i][4];
+                $vehiculo->location = 0;
+                $vehiculo->type = $vehiculos[$i][5];
+                $vehiculo->color = null;
+                $vehiculo->places = 0;
+                $vehiculo->doors = 0;
+                $vehiculo->power = 0;
+                $vehiculo->km = $vehiculos[$i][7];
+                $vehiculo->cost = 0;
+                $vehiculo->pvp = intval($vehiculos[$i][10])/1.21;
+                $vehiculo->save(); 
+                $responseMessage = 'Saved';               
+            }
+        } 
+        catch (Exception $ex) 
+        {
+            $responseMessage = $ex->getMessage();            
+        }        
+        $vehicles = DB::table('vehicles')  
+                ->join('brands', 'vehicles.brand', '=', 'brands.id')
+                ->join('models', 'vehicles.model', '=', 'models.id')
+                ->select('vehicles.id', 'brands.name as brand', 'models.name as model', 'vehicles.description', 'vehicles.plate', 'vehicles.vin')
+                ->whereNull('vehicles.deleted_at')
+                ->orderBy('brand', 'asc')
+                ->orderBy('model', 'asc')
+                ->orderBy('vehicles.plate', 'asc')  
+                ->get();       
+        return $this->renderHTML('/vehicles/vehiclesList.html.twig', [
+            'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
+            'vehicles' => $vehicles
+        ]);
+        
     }
     
     public function deleteAction(ServerRequest $request)

@@ -182,8 +182,11 @@ $map->get('storesList', '/intranet/stores/form', [
 ]);
 $map->get('storesForm', '/intranet/stores/list', [
     'App\Controllers\Entitys\StoreController',
-    'getIndexAction'
-    
+    'getIndexAction'    
+]);
+$map->post('searchStore', '/intranet/stores/search', [
+    'App\Controllers\Entitys\StoreController',
+    'searchStore' 
 ]);
 $map->post('saveStore', '/intranet/stores/save', [
     'App\Controllers\Entitys\StoreController',
@@ -400,6 +403,10 @@ $map->get('vehicleList', '/intranet/vehicles/list', [
 $map->post('searchVehicle', '/intranet/vehicles/search', [
     'App\Controllers\Buys\VehicleController',
     'searchVehicleAction'
+]);
+$map->post('importVehicles', '/intranet/vehicles/import', [
+    'App\Controllers\Buys\VehicleController',
+    'importExcel'
 ]);
 $map->post('saveVehicle', '/intranet/vehicles/save', [
     'App\Controllers\Buys\VehicleController',

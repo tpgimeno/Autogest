@@ -30,6 +30,7 @@
             <div class="col">
                 <table class="table">
                     <tr>
+                        <th>ID</th>
                         <th>Marca</th>
                         <th>Nombre</th>                        
                         <th>Edit</th>
@@ -37,6 +38,7 @@
                     </tr>
                     {% for model in models %}
                         <tr>
+                            <td>{{ model.id }}
                             <td>{{ model.brand }}
                             <td>{{ model.name }}</td>                           
                             <td><a href="/intranet/vehicles/models/form?id={{model.id}}">Edit</td>
