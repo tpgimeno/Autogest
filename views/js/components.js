@@ -31,9 +31,6 @@ window.addEventListener('load', function()
     var total_pvc = 0;
     var total_pvp = 0;
     
-    var mader = document.getElementById('inputMader');
-    mader.value = '{{ supply.mader }}';
-    
     tva_pvc = numeral(pvc.value() * 0.21);
     tva_pvp = numeral(pvp.value() * 0.21);
     total_pvc = numeral(pvc.value() + tva_pvc.value());

@@ -27,6 +27,7 @@ use WoohooLabs\Harmony\Harmony;
 use WoohooLabs\Harmony\Middleware\DispatcherMiddleware;
 use WoohooLabs\Harmony\Middleware\LaminasEmitterMiddleware;
 
+
 session_start();
 
 $log = new Logger('app');
@@ -340,6 +341,38 @@ $map->get('selectVehicleSellOffers', '/intranet/crm/offers/vehicle/select', [
     'App\Controllers\Crm\SellOffersController',
     'selectVehicleSellOfferAction'
 ]);
+$map->post('searchComponentsSellOffers', '/intranet/crm/offers/components/search', [
+    'App\Controllers\Crm\SellOffersController',
+    'searchComponentsSellOffersAction'
+]);
+$map->get('selectComponentsSellOffers', '/intranet/crm/offers/components/select', [
+    'App\Controllers\Crm\SellOffersController',
+    'selectComponentsSellOffersAction'
+]);
+$map->post('addComponentsSellOffers', '/intranet/crm/offers/components/add', [
+    'App\Controllers\Crm\SellOffersController',
+    'addComponentsSellOffersAction'
+]);
+$map->post('searchSuppliesSellOffers', '/intranet/crm/offers/supplies/search', [
+    'App\Controllers\Crm\SellOffersController',
+    'searchSuppliesSellOffersAction'
+]);
+$map->get('selectSuppliesSellOffers', '/intranet/crm/offers/supplies/select', [
+    'App\Controllers\Crm\SellOffersController',
+    'selectSuppliesSellOffersAction'
+]);
+$map->post('addSuppliesSellOffers', '/intranet/crm/offers/supplies/add', [
+    'App\Controllers\Crm\SellOffersController',
+    'addSuppliesSellOffersAction'
+]);
+$map->post('searchWorksSellOffers', '/intranet/crm/offers/works/search', [
+    'App\Controllers\Crm\SellOffersController',
+    'searchWorksSellOffersAction'
+]);
+$map->get('selectWorksSellOffers', '/intranet/crm/offers/works/select', [
+    'App\Controllers\Crm\SellOffersController',
+    'selectWorksSellOffersAction'
+]);
 $map->post('saveSellOffers', '/intranet/crm/offers/save', [
     'App\Controllers\Crm\SellOffersController',
     'getSellOffersDataAction'
@@ -456,6 +489,26 @@ $map->get('deleteModel', '/intranet/vehicles/models/delete', [
     'App\Controllers\Entitys\ModelController',
     'deleteAction'   
 ]);
+$map->get('WorksForm', '/intranet/vehicles/works/form', [
+    'App\Controllers\Entitys\WorksController',
+    'getWorkDataAction'
+]);
+$map->get('WorksList', '/intranet/vehicles/works/list', [
+    'App\Controllers\Entitys\WorksController',
+    'getIndexAction'
+]);
+$map->post('searchWorks', '/intranet/vehicles/works/search', [
+    'App\Controllers\Entitys\WorksController',
+    'searchWorksAction'
+]);
+$map->post('saveWorks', '/intranet/vehicles/works/save', [
+    'App\Controllers\Entitys\WorksController',
+    'getWorksDataAction'
+]);
+$map->get('deleteWorks', '/intranet/vehicles/works/delete', [        
+    'App\Controllers\Entitys\WorksController',
+    'deleteAction'   
+]);
 $map->get('vehicleTypesForm', '/intranet/vehicles/vehicleTypes/form', [
     'App\Controllers\Buys\VehicleTypesController',
     'getVehicleTypesDataAction'
@@ -528,6 +581,7 @@ $map->post('searchComponents', '/intranet/buys/components/search', [
     'App\Controllers\Buys\ComponentsController',
     'searchComponentsAction'
 ]);
+
 $map->post('saveComponents', '/intranet/buys/components/save', [
     'App\Controllers\Buys\ComponentsController',
     'getComponentsDataAction'
@@ -633,10 +687,25 @@ $map->get('productionDelete', '/intranet/production/delete', [
     'deleteAction'
 ]);
 
+// REPORTS
+
+
 $map->get('pruebaReport', '/intranet/reports/prueba', [
     'App\Controllers\PruebaReportController',
     'getReportAction'
 ]);
+$map->post('SellOfferReport', '/intranet/reports/selloffer', [
+    'App\Controllers\Crm\SellOffersController',
+    'getReportAction'
+]);
+
+
+
+// FIN DE LAS RUTAS
+
+
+
+
 $builder = new ContainerBuilder();
 $container = $builder->build();
 

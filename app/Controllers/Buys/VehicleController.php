@@ -106,7 +106,7 @@ class VehicleController extends BaseController
                 $vehicle->id = $postData['id'];
                 if($vehicle->id)
                 {
-                    $vh_temp = Vehicle::find($vehicle->id)->first();
+                    $vh_temp = Vehicle::find($vehicle->id);
                     if($vh_temp)
                     {
                         $vehicle = $vh_temp;
