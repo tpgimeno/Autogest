@@ -13,6 +13,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class indexControllerTest extends WebTestCase 
 {
+   final public function createKernel(array $options = array()) {
+       parent::createKernel($options);
+   }
    public function testIndex()
    {
        $client = static::createClient();

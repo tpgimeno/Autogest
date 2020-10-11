@@ -373,6 +373,10 @@ $map->get('selectWorksSellOffers', '/intranet/crm/offers/works/select', [
     'App\Controllers\Crm\SellOffersController',
     'selectWorksSellOffersAction'
 ]);
+$map->post('addWorksSellOffers', '/intranet/crm/offers/works/add', [
+    'App\Controllers\Crm\SellOffersController',
+    'addWorksSellOffersAction'
+]);
 $map->post('saveSellOffers', '/intranet/crm/offers/save', [
     'App\Controllers\Crm\SellOffersController',
     'getSellOffersDataAction'
@@ -490,23 +494,23 @@ $map->get('deleteModel', '/intranet/vehicles/models/delete', [
     'deleteAction'   
 ]);
 $map->get('WorksForm', '/intranet/vehicles/works/form', [
-    'App\Controllers\Entitys\WorksController',
+    'App\Controllers\Buys\WorksController',
     'getWorkDataAction'
 ]);
 $map->get('WorksList', '/intranet/vehicles/works/list', [
-    'App\Controllers\Entitys\WorksController',
+    'App\Controllers\Buys\WorksController',
     'getIndexAction'
 ]);
 $map->post('searchWorks', '/intranet/vehicles/works/search', [
-    'App\Controllers\Entitys\WorksController',
+    'App\Controllers\Buys\WorksController',
     'searchWorksAction'
 ]);
 $map->post('saveWorks', '/intranet/vehicles/works/save', [
-    'App\Controllers\Entitys\WorksController',
-    'getWorksDataAction'
+    'App\Controllers\Buys\WorksController',
+    'getWorkDataAction'
 ]);
 $map->get('deleteWorks', '/intranet/vehicles/works/delete', [        
-    'App\Controllers\Entitys\WorksController',
+    'App\Controllers\Buys\WorksController',
     'deleteAction'   
 ]);
 $map->get('vehicleTypesForm', '/intranet/vehicles/vehicleTypes/form', [

@@ -396,15 +396,15 @@
                 <div class="form-row">
                     <div class="form-group col-md-1">
                         <label for="inputWorkId">ID</label>
-                        <input type="text" name="work_id" class="form-control" id="inputWorkId" placeholder="" value="">
+                        <input type="text" name="work_id" class="form-control" id="inputWorkId" placeholder="" value="{{ selected_work.id }}">
                     </div>
                     <div class="form-group col-md-5">
                         <label for="inputWorkDescription">Descripcion</label>
-                        <input type="text" name="work_name" class="form-control" id="inputWorkDescription" placeholder="" value="">
+                        <input type="text" name="work_name" class="form-control" id="inputWorkDescription" placeholder="" value="{{ selected_work.description }}">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputWorkPrice">Precio</label>
-                        <input type="text" name="work_price" class="form-control" id="inputWorkPrice" placeholder="" value="">
+                        <input type="text" name="work_price" class="form-control" id="inputWorkPrice" placeholder="" value="{{ selected_work.price }}">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputWorkCantity">Cantidad</label>
@@ -412,7 +412,7 @@
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputWorkTotal">Importe</label>
-                        <input type="text" name="work_reference" class="form-control" id="inputWorkTotal" placeholder="" value="">
+                        <input type="text" name="work_total" class="form-control" id="inputWorkTotal" placeholder="" value="">
                     </div>
                 </div>
                 <div class="form-row">
@@ -430,7 +430,7 @@
                                 <th>Cantidad</th>
                                 <th>Importe</th>
                             </tr>                           
-                            {% for work in works %}
+                            {% for work in offerWorks %}
                                  <tr>
                                      <td>{{ work.id }}</td>
                                      <td>{{ work.description }}</td>                                     
@@ -741,7 +741,7 @@
                                 </tr>                                
                                 {% for work in works %}                                    
                                     <tr id="datarow">
-                                        <td>{{ work.ref }}</td>
+                                        <td>{{ work.reference }}</td>
                                         <td>{{ work.description }}</td>
                                         <td>{{ work.cantity }}</td>                                        
                                         <td>{{ work.pvp }}</td>                                        

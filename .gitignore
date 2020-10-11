@@ -1,6 +1,5 @@
 .env
 vendor
-nbproject
 .vscode
 _mmServerScripts
 /public/images

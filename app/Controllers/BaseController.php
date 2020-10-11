@@ -10,7 +10,6 @@ use Laminas\Diactoros\Response\HtmlResponse;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Extra\Intl\IntlExtension;
-use Twig\Extension\CoreExtension;
 use Twig\Loader\FilesystemLoader;
 
 
@@ -33,7 +32,7 @@ class BaseController
         $this->errorService = new ErrorService();
         $this->templateEngine->addExtension(new DebugExtension());
         $this->templateEngine->addExtension(new IntlExtension());
-        $this->templateEngine->addExtension(new CoreExtension());
+        
     }
     public function renderHTML($fileName, $data = [])
     {      

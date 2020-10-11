@@ -19,6 +19,7 @@ use App\Models\SellOffersSupplies;
 use App\Models\Supplies;
 use App\Models\Vehicle;
 use App\Models\VehicleTypes;
+use App\Models\Works;
 use App\Reports\SellOfferReport;
 use App\Services\Crm\SellOfferService;
 use Illuminate\Database\Capsule\Manager as DB;
@@ -168,6 +169,11 @@ class SellOffersController extends BaseController
             ->select('selloffers_components.id', 'components.ref as reference', 'components.name as name', 'selloffers_components.cantity as cantity', 'selloffers_components.price as price')
             ->where('selloffers_components.selloffer_id', '=', $params['offer_id'])
             ->get();
+        $offerWorks = DB::table('selloffers_works')
+                ->join('works', 'selloffers_works.work_id', '=', 'works.id')               
+                ->select('selloffers_works.id', 'works.description as description', 'selloffers_works.cantity as cantity', 'selloffers_works.price as price')
+                ->where('selloffers_works.selloffer_id', '=', $params['offer_id'])                
+                ->get();
         $customers = Customer::All();
         $vehicles = Vehicle::All();
         $types = VehicleTypes::All();
@@ -186,6 +192,7 @@ class SellOffersController extends BaseController
             'components' => $components,
             'offerSupplies' => $offerSupplies,
             'offerComponents' => $offerComponents,
+            'offerWorks' => $offerWorks,
             'new_selloffer' => $new_offer,
             'selected_tab' => 'vehicle',
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
@@ -252,7 +259,12 @@ class SellOffersController extends BaseController
             ->join('maders', 'components.mader', '=', 'maders.id')
             ->select('selloffers_components.id', 'components.ref as reference', 'components.name as name', 'selloffers_components.cantity as cantity', 'selloffers_components.price as price')
             ->where('selloffers_components.selloffer_id', '=', $params['offer_id'])
-            ->get();        
+            ->get();   
+        $offerWorks = DB::table('selloffers_works')
+                ->join('works', 'selloffers_works.work_id', '=', 'works.id')               
+                ->select('selloffers_works.id', 'works.description as description', 'selloffers_works.cantity as cantity', 'selloffers_works.price as price')
+                ->where('selloffers_works.selloffer_id', '=', $params['offer_id'])                
+                ->get();
         $customers = Customer::All();
         $vehicles = Vehicle::All();
         $types = VehicleTypes::All();
@@ -271,6 +283,7 @@ class SellOffersController extends BaseController
             'components' => $components,
             'offerSupplies' => $offerSupplies,
             'offerComponents' => $offerComponents,
+            'offerWorks' => $offerWorks,
             'accesory' => $accesory,
             'new_selloffer' => $new_offer,
             'selected_tab' => 'customer',
@@ -402,6 +415,11 @@ class SellOffersController extends BaseController
                 ->where('selloffers_components.selloffer_id', '=', $params['offer_id'])
                 ->where('selloffers_components.component_id', '=', "%".$params['component_id']."%")
                 ->get();
+            $offerWorks = DB::table('selloffers_works')
+                ->join('works', 'selloffers_works.work_id', '=', 'works.id')               
+                ->select('selloffers_works.id', 'works.description as description', 'selloffers_works.cantity as cantity', 'selloffers_works.price as price')
+                ->where('selloffers_works.selloffer_id', '=', $params['offer_id'])                
+                ->get();
             $selected_supply = null;
             
             if($params['supply_id'])
@@ -427,6 +445,7 @@ class SellOffersController extends BaseController
                 'selected_tab' => 'supplies',
                 'components' => $components,                
                 'offerSupplies' => $offerSupplies,
+                'offerWorks' => $offerSupplies,
                 'new_selloffer' => $new_offer,
                 'offerComponents' => $offerComponents,
                 'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
@@ -497,8 +516,7 @@ class SellOffersController extends BaseController
             $responseMessage = 'Component Saved';
         }
         $response = new JsonResponse($responseMessage);
-        return $response;
-       
+        return $response;       
         
     }
     public function selectComponentsSellOffersAction($request)
@@ -577,6 +595,11 @@ class SellOffersController extends BaseController
                 ->select('selloffers_components.id', 'components.ref as reference', 'components.name as name', 'selloffers_components.cantity as cantity', 'selloffers_components.price as price')
                 ->where('selloffers_components.selloffer_id', '=', $params['offer_id'])                
                 ->get();
+            $offerWorks = DB::table('selloffers_works')
+                ->join('works', 'selloffers_works.work_id', '=', 'works.id')               
+                ->select('selloffers_works.id', 'works.description as description', 'selloffers_works.cantity as cantity', 'selloffers_works.price as price')
+                ->where('selloffers_works.selloffer_id', '=', $params['offer_id'])                
+                ->get();
             if(isset($params['component_id']))
             {
                 $selected_component = Components::find($params['component_id'])->first();
@@ -601,6 +624,7 @@ class SellOffersController extends BaseController
                 'accesory' => $accesory,
                 'selected_component' => $selected_component,
                 'offerSupplies' => $offerSupplies,
+                'offerWorks' => $offerWorks,
                 'new_selloffer' => $new_offer,
                 'offerComponents' => $offerComponents,
                 'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
@@ -611,7 +635,177 @@ class SellOffersController extends BaseController
               $responseMessage = $ex->getMessage();         
         }
     }
-    
+     public function searchWorksSellOffersAction($request)
+    {
+        $responseMessage = null;
+        $searchString = null;
+        $postData = $request->getParsedBody();
+        if(isset($postData['searchFilter'])){
+            $searchString = $postData['searchFilter'];
+        }        
+        if($searchString == null)
+        {
+            $works = Components::All();
+        }
+        else
+        {
+            $works = DB::table('works')                 
+                 ->select('works.id', 'works.reference', 'works.description', 'works.pvp')
+                 ->where('works.id', 'like', "%".$searchString."$")
+                 ->orWhere('works.description', 'like', "$".$searchString."$")                
+                 ->orWhere('works.reference', 'like', "$".$searchString."$")
+                 ->whereNull('deleted_at')
+                 ->get();
+        }
+        $response = new JsonResponse($components);        
+        return $response;
+    }
+    public function addWorksSellOffersAction($request)
+    {
+        $responseMessage = null;
+        $postData = $request->getParsedBody();
+        $data = explode(',', $postData['works']);
+        $work = new SellOffersComponents();
+        $temp_work = SellOffersComponents::where('work_id', '=', $data[1])
+                ->where('selloffer_id', '=', $data[0])
+                ->first();
+        if($temp_work)
+        {
+            $work = $temp_work;
+        }        
+        $work->work_id = $data[1];
+        $work->selloffer_id = $data[0];
+        $work->cantity = $data[5];
+        $work->price = $data[4];
+        if($temp_work)
+        {
+            $work->update();
+            $responseMessage = 'Component Updated';
+        }
+        else
+        {
+            $work->save();
+            $responseMessage = 'Component Saved';
+        }
+        $response = new JsonResponse($responseMessage);
+        return $response;       
+        
+    }
+    public function selectWorksSellOffersAction($request)
+    {
+        $responseMessage = null;        
+        $params = $request->getQueryParams();
+        $offer = new SellOffer();
+        $accesory = 'works';
+        if(isset($params['offer_id']))
+        {
+            if($params['offer_id'])
+            {
+                $offer = SellOffer::find($params['offer_id']);                
+                if($offer)
+                {
+                    $offer = SellOffer::find($params['offer_id'])->first();  
+                }
+            }
+        }
+        if($offer === null)
+        {
+            $last_offer = SellOffer::All()->last();
+            if($last_offer === null)
+            {
+                $new_offer = 1;
+            }
+            else
+            {
+                $new_offer = $last_offer->id + 1;
+            }
+        }
+        else
+        {
+            $new_offer = $offer->id;
+        }
+        $component = null;
+        if(isset($params['component_id']))
+        {
+            if($params['component_id'])
+            {
+                $component = Components::find($params['component_id'])->first();
+            }
+        }
+        $customer = null;
+        if(isset($params['customer_id']))
+        {
+            if($params['customer_id'])
+            {
+                $customer = Customer::find($params['customer_id'])->first();
+            }
+        }
+        $vehicle = null;
+        $brand = null;
+        $model = null;
+        if(isset($params['vehicle_id']))
+        {
+            if($params['vehicle_id'])
+            {
+                $vehicle = Vehicle::find($params['vehicle_id'])->first();
+                $brand = Brand::find($vehicle->brand)->first();
+                $model = ModelVh::find($vehicle->model)->first();
+            }
+        }
+        try
+        {
+            $offerSupplies = DB::table('selloffers_supplies')                
+                ->join('supplies', 'selloffers_supplies.supply_id', '=', 'supplies.id')
+                ->join('maders', 'supplies.mader', '=', 'maders.id')
+                ->select('supplies.id', 'supplies.ref as reference', 'maders.name as mader', 'supplies.name as name', 'selloffers_supplies.cantity as cantity', 'selloffers_supplies.price as price')
+                ->where('selloffers_supplies.selloffer_id', '=', $params['offer_id'])                              
+                ->get();
+            $offerComponents = DB::table('selloffers_components')
+                ->join('components', 'selloffers_components.component_id', '=', 'components.id')
+                ->join('maders', 'components.mader', '=', 'maders.id')
+                ->select('selloffers_components.id', 'components.ref as reference', 'components.name as name', 'selloffers_components.cantity as cantity', 'selloffers_components.price as price')
+                ->where('selloffers_components.selloffer_id', '=', $params['offer_id'])                
+                ->get();
+            $offerWorks = DB::table('selloffers_works')
+                ->join('works', 'selloffers_works.work_id', '=', 'works.id')               
+                ->select('selloffers_works.id', 'works.description as description', 'selloffers_works.cantity as cantity', 'selloffers_works.price as price')
+                ->where('selloffers_works.selloffer_id', '=', $params['offer_id'])                
+                ->get();
+            if(isset($params['work_id']))
+            {
+                $selected_work = Components::find($params['work_id'])->first();
+            }                        
+            $types = VehicleTypes::All();
+            $supplies = Supplies::All();
+            $components = Components::All();
+            $customers = Customer::All();
+            $vehicles = Vehicle::All();
+            return $this->renderHTML('/sells/offers/sellOffersForm.html.twig', [
+                'sellOffer' => $offer,
+                'customers' => $customers,
+                'customer' => $customer,
+                'vehicles' => $vehicles,
+                'vehicle' => $vehicle,
+                'brand' => $brand,
+                'model' => $model,
+                'types' => $types,
+                'supplies' => $supplies,               
+                'selected_tab' => 'supplies',
+                'components' => $components,
+                'accesory' => $accesory,
+                'selected_work' => $selected_work,
+                'offerSupplies' => $offerSupplies,
+                'offerWorks' => $offerWorks,
+                'new_selloffer' => $new_offer,
+                'offerComponents' => $offerComponents,
+                'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
+                'responseMessage' => $responseMessage
+            ]); 
+        } catch (Exception $ex) 
+        {
+              $responseMessage = $ex->getMessage();         
+        }
+    }
     public function searchSellOffersAction($request)
     {
         $postData = $request->getParsedBody();
@@ -714,8 +908,9 @@ class SellOffersController extends BaseController
         
         $selected_customer = null;
         $selected_vehicle = null;
-        $selected_supplies = null;
-        $selected_components = null;
+        $selectedSupplies = null;
+        $selectedComponents = null;
+        $selectedWorks = null;
         $brand = null;
         $model = null;
         if($selected_offer)
@@ -724,21 +919,27 @@ class SellOffersController extends BaseController
             $selected_vehicle = Vehicle::find($selected_offer->vehicle_id)->first();
             $brand = Brand::find($selected_vehicle->brand)->first();
             $model = ModelVh::find($selected_vehicle->model)->first();
-            $selected_supplies = DB::table('selloffers_supplies')
+            $selectedSupplies = DB::table('selloffers_supplies')
                 ->join('supplies', 'selloffers_supplies.supply_id', '=', 'supplies.id')
                 ->select('selloffers_supplies.id', 'supplies.ref', 'supplies.name', 'supplies.pvp')
                 ->where('selloffers_supplies.selloffer_id', '=', $selected_offer->id)
                 ->get();
-            $selected_components = DB::table('selloffers_components')
+            $selectedComponents = DB::table('selloffers_components')
                     ->join('components', 'selloffers_components.component_id', '=', 'components.id')
                     ->select('selloffers_components.id', 'components.ref', 'components.name', 'components.pvp')
                     ->where('selloffers_components.selloffer_id', '=', $selected_offer->id)
                     ->get();
+            $selectedWorks = DB::table('selloffers_works')
+                ->join('works', 'selloffers_works.work_id', '=', 'works.id')               
+                ->select('selloffers_works.id', 'works.description as description', 'selloffers_works.cantity as cantity', 'selloffers_works.price as price')
+                ->where('selloffers_works.selloffer_id', '=', $params['offer_id'])                
+                ->get();
         }
         
         $types = VehicleTypes::All();
         $supplies = Supplies::All();
         $components = Components::All();
+        $works = Works::All();
         $customers = Customer::All();
         $vehicles = Vehicle::All();
         return $this->renderHTML('/sells/offers/sellOffersForm.html.twig', [
@@ -751,10 +952,12 @@ class SellOffersController extends BaseController
             'model' => $model,
             'types' => $types,
             'supplies' => $supplies,
-            'selected_supplies' => $selected_supplies,
-            'selected_components' => $selected_components,
-            'new_selloffer' => $new_offer,
             'components' => $components,
+            'works' => $works,
+            'offerSupplies' => $selectedSupplies,
+            'offerComponents' => $selectedComponents,
+            'offerWorks' => $selectedWorks,
+            'new_selloffer' => $new_offer,            
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage
         ]);
