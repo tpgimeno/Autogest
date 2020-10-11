@@ -13,6 +13,12 @@ var offer_works = new Array();
 var price_supplies = null;
 var tva_supplies = null;
 var total_supplies = null;
+var price_components = null;
+var tva_components = null;
+var total_components = null;
+var price_works = null;
+var tva_works = null;
+var total_works = null;
 
 window.addEventListener('load', function()
 {            
@@ -215,24 +221,25 @@ window.addEventListener('load', function()
     var total_vehicle = numeral(document.getElementById('inputVehicleTotal').value);
     
     var price_supply = numeral(document.getElementById('inputSupplyPrice').value);
-    var base_supply = numeral(0);    
+    var base_supply = numeral(0);
+    var cantity_supply = numeral(0);
     var total_supply = numeral(document.getElementById('inputSupplyTotal').value);
     
     var price_component = numeral(document.getElementById('inputComponentPrice').value);
     var base_component = numeral(0);    
     var total_component = numeral(document.getElementById('inputComponentTotal').value);
     
-    var price_supplies = numeral(document.getElementById('inputSuppliesBase').value);
-    var tva_supplies = numeral(document.getElementById('inputSuppliesTva').value);
-    var total_supplies = numeral(document.getElementById('inputSuppliesTotal').value);
+    price_supplies = numeral(document.getElementById('inputSuppliesBase').value);
+    tva_supplies = numeral(document.getElementById('inputSuppliesTva').value);
+    total_supplies = numeral(document.getElementById('inputSuppliesTotal').value);
     
-    var price_components = numeral(document.getElementById('inputComponentsBase').value);
-    var tva_components = numeral(document.getElementById('inputComponentsTva').value);
-    var total_components = numeral(document.getElementById('inputComponentsTotal').value);
+    price_components = numeral(document.getElementById('inputComponentsBase').value);
+    tva_components = numeral(document.getElementById('inputComponentsTva').value);
+    total_components = numeral(document.getElementById('inputComponentsTotal').value);
     
-    var price_works = numeral(document.getElementById('inputWorksBase').value);
-    var tva_works = numeral(document.getElementById('inputWorksTva').value);
-    var total_works = numeral(document.getElementById('inputWorksTotal').value);
+    price_works = numeral(document.getElementById('inputWorksBase').value);
+    tva_works = numeral(document.getElementById('inputWorksTva').value);
+    total_works = numeral(document.getElementById('inputWorksTotal').value);
     
     var price_work = numeral(document.getElementById('inputWorkPrice').value);
     var cantity_work = numeral(document.getElementById('inputWorkCantity').value);    
@@ -333,22 +340,16 @@ window.addEventListener('load', function()
     {        
         price_supply = numeral(document.getElementById('inputSupplyPrice').value);
         document.getElementById('inputSupplyPrice').value = price_supply.format('(0,00.00$)');        
-        tva_supply = numeral(document.getElementById('inputSupplyTva').value);
-        tva_supply = numeral(price_supply.value() * 0.21);        
-        document.getElementById('inputSupplyTva').value = tva_supply.format('(0,00.00$)');
-        total_supply = numeral(document.getElementById('inputSupplyTotal').value);
-        total_supply = numeral(price_supply.value() + tva_supply.value());
+        cantity_supply = numeral(document.getElementById('inputSupplyCantity').value);        
+        total_supply = numeral(price_supply.value() * cantity_supply.value());
         document.getElementById('inputSupplyTotal').value = total_supply.format('(0,00.00$)');
     });
     document.getElementById('inputWorkPrice').addEventListener("change", function () 
     {        
         price_work = numeral(document.getElementById('inputWorkPrice').value);
         document.getElementById('inputWorkPrice').value = price_work.format('(0,00.00$)');        
-        tva_work = numeral(document.getElementById('inputWorkTva').value);
-        tva_work = numeral(price_work.value() * 0.21);        
-        document.getElementById('inputWorkTva').value = tva_work.format('(0,00.00$)');
-        total_work = numeral(document.getElementById('inputWorkTotal').value);
-        total_work = numeral(price_work.value() + tva_work.value());
+        cantity_work = numeral(document.getElementById('inputWorkCantity').value);        
+        total_work = numeral(price_work.value() * cantity_work.value());
         document.getElementById('inputWorkTotal').value = total_work.format('(0,00.00$)');
     });
     document.getElementById('inputSupplyTotal').addEventListener("change", function ()
@@ -356,14 +357,9 @@ window.addEventListener('load', function()
         total_supply = numeral(document.getElementById('inputSupplyTotal').value);
         document.getElementById('inputSupplyTotal').value = total_supply.format('(0,00.00$)');
         price_supply = numeral(document.getElementById('inputSupplyPrice').value);
-        price_supply = numeral(total_supply.value() / 1.21);         
-        document.getElementById('inputSupplyPrice').value = price_supply.format('(0,00.00$)');
-        supply_discount = numeral(document.getElementById('inputSupplyDiscount').value);
-        supply_discount = numeral(0);
-        document.getElementById('inputSupplyDiscount').value = supply_discount.format('(0,00.00$)');
-        tva_supply = numeral(document.getElementById('inputSupplyTva').value);
-        tva_supply = numeral((price_supply.value() - supply_discount.value()) * 0.21);
-        document.getElementById('inputSupplyTva').value = tva_supply.format('(0,00.00$)');        
+        cantity_supply = numeral(document.getElementById('inputSupplyCantity').value);
+        price_supply = numeral(total_supply.value() / cantity_supply.value());
+        document.getElementById('inputSupplyPrice').value = price_supply.format('(0,00.00$)');             
     });
     document.getElementById('inputWorkTotal').addEventListener("change", function ()
     {
@@ -418,10 +414,10 @@ window.addEventListener('load', function()
     });
     document.getElementById('inputWorkCantity').addEventListener("change", function()
     {
-        price_work = numeral(document.getElementById('inputWorkBase').value);
+        price_work = numeral(document.getElementById('inputWorkPrice').value);
         cantity_work = numeral(document.getElementById('inputWorkCantity').value);
         total_work = numeral(price_work.value() * cantity_work.value());
-        document.getElementById('inputWorkTotal').value = total.work.format('(0,00.00$)');
+        document.getElementById('inputWorkTotal').value = total_work.format('(0,00.00$)');
     });
     document.getElementById('inputSupplyCantity').addEventListener("change", function()
     {
@@ -456,11 +452,11 @@ window.addEventListener('load', function()
         total_supplies = numeral(price_supplies.value() + tva_supplies.value());
         document.getElementById('inputSuppliesTotal').value = total_supplies.format('(0,00.00$)');
     }
-    var json_components_response = '{{offerComponents|raw}}';
+    var json_components_response = '{{offerWorks|raw}}';
     if(json_components_response)
     {
         offer_components = JSON.parse(json_components_response);    
-        var table_components = document.getElementById("ComponentsTable");
+        var table_components = document.getElementById("WorksTable");
         while(table_components.childElementCount > 0)
         {
             table_components.removeChild(table_components.firstChild);
@@ -474,11 +470,35 @@ window.addEventListener('load', function()
             suma_prices_components = numeral(price_components).value() + numeral(offer_components[i]['total']).value();           
         }        
         price_components = numeral(suma_prices_components);
-        document.getElementById('inputComponentsBase').value = price_components.format('(0,00.00$)');
+        document.getElementById('inputWorksBase').value = price_components.format('(0,00.00$)');
         tva_components = numeral(price_components.value() * 0.21);
-        document.getElementById('inputComponentsTva').value = tva_components.format('(0,00.00$)');
+        document.getElementById('inputWorksTva').value = tva_components.format('(0,00.00$)');
         total_components = numeral(price_components.value() + tva_components.value());
-        document.getElementById('inputComponentsTotal').value = total_components.format('(0,00.00$)');
+        document.getElementById('inputWorksTotal').value = total_components.format('(0,00.00$)');
+    }
+    var json_works_response = '{{offerWorks|raw}}';
+    if(json_works_response)
+    {
+        offer_works = JSON.parse(json_works_response);    
+        var table_works = document.getElementById("WorksTable");
+        while(table_works.childElementCount > 0)
+        {
+            table_works.removeChild(table_works.firstChild);
+        }
+        table_works.innerHTML = "<tr><th>ID</th><th>Referencia</th><th>Nombre</th><th>Precio</th><th>Cantidad</th><th>Importe</th><th>Editar</th><th>Eliminar</th></tr>"
+
+        for(let i = 0; i < offer_works.length ; i++)
+        {            
+            offer_works[i]['total'] = numeral(numeral(offer_works[i]['cantity']).value() * numeral(offer_works[i]['price']).value()).value();
+            table_works.innerHTML += "<tr><td>"+offer_works[i]['id']+"</td><td>"+offer_works[i]['reference']+"</td><td>"+offer_works[i]['name']+"</td><td>"+offer_works[i]['price']+"</td><td>"+offer_works[i]['cantity']+"</td><td>"+offer_works[i]['total']+"</td><td><a href=/intranet/crm/offers/works/edit?supply_id="+offer_works[i][1]+"&offer_id={{offer.id}}&vehicle_id={{vehicle.id}}&customer_id={{customer.id}}>Edit</a></td><td><a href= id=deleteAccesory"+offer_works[i][1]+">Eliminar</a></td>";
+            suma_prices_works = numeral(price_works).value() + numeral(offer_works[i]['total']).value();           
+        }        
+        price_works = numeral(suma_prices_works);
+        document.getElementById('inputWorksBase').value = price_works.format('(0,00.00$)');
+        tva_works = numeral(price_works.value() * 0.21);
+        document.getElementById('inputWorksTva').value = tva_works.format('(0,00.00$)');
+        total_works = numeral(price_works.value() + tva_works.value());
+        document.getElementById('inputWorksTotal').value = total_components.format('(0,00.00$)');
     }
  
 });
@@ -623,6 +643,79 @@ function addComponent()
     request.open('POST', '/intranet/crm/offers/components/add', true);
     request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");    
     request.send('components=' + offer_components);    
+    function reqListener()
+    {
+        var response = request.responseText;
+        var alert = document.getElementById('alert');
+        alert.innerHTML = response;
+    }
+    request.addEventListener("load", reqListener);
+}
+function addWork()
+{
+    var offer = document.getElementById('inputId');
+    var id_work = document.getElementById('inputWorkId');
+    var ref_work = document.getElementById('inputWorkReference');
+    var name_work = document.getElementById('inputWorkName');
+    var price_work = numeral(document.getElementById('inputWorkPrice').value);
+    var cantity_work = numeral(document.getElementById('inputWorkCantity').value);    
+    price_works = numeral(document.getElementById('inputWorksBase').value);
+    tva_works = numeral(document.getElementById('inputWorksTva').value);
+    total_works = numeral(document.getElementById('inputWorksTotal').value);
+    var importe = 0;
+    importe = numeral(price_work.value() * cantity_work.value());
+    
+    var offer_work = new Array();
+    offer_work = [offer.value,id_work.value,ref_work.value,name_work.value,price_work.value(),cantity_work.value(),importe.value()];
+    if(offer_works.length > 0)
+    {
+        for(let i=0;i < offer_works.length; i++)
+        {
+            if(offer_work[1] === offer_works[i][1])
+            {
+                offer_works[i][5] = numeral(numeral(offer_works[i][5]).value() + numeral(offer_work[5]).value()).value();
+                offer_works[i][6] = numeral(numeral(offer_works[i][4]).value() * numeral(offer_works[i][5]).value()).value();
+            }
+            else
+            {
+               offer_works.push(offer_work);
+            }
+        }
+        
+    }
+    else
+    {       
+        offer_works.push(offer_work);         
+    }    
+    var suma_prices_works = 0;    
+    var table_works = document.getElementById("WorksTable");
+    while(table_works.childElementCount > 0)
+    {
+        table_works.removeChild(table_works.firstChild);
+    }
+    table_works.innerHTML = "<tr><th>ID</th><th>Referencia</th><th>Nombre</th><th>Precio</th><th>Cantidad</th><th>Importe</th><th>Editar</th><th>Eliminar</th></tr> "
+    if(offer_works.length === 0)
+    {
+        table_works.innerHTML += "<tr><td> No hay datos </td></tr>";        
+    }
+    else
+    {
+        for(let i = 0; i < offer_works.length ; i++)
+        {            
+            table_works.innerHTML += "<tr><td>"+offer_works[i][1]+"</td><td>"+offer_works[i][2]+"</td><td>"+offer_works[i][3]+"</td><td>"+offer_works[i][4]+"</td><td>"+offer_works[i][5]+"</td><td>"+offer_works[i][6]+"</td><td><a href=/intranet/crm/offers/works/edit?work_id="+offer_works[i][1]+"&offer_id={{offer.id}}&vehicle_id={{vehicle.id}}&customer_id={{customer.id}}>Edit</a></td><td><a href= id=deleteAccesory"+offer_works[i][1]+">Eliminar</a></td>";
+            suma_prices_works = numeral(price_works).value() + numeral(offer_works[i][4]).value();           
+        }  
+    }       
+    price_works = numeral(suma_prices_works).value();
+    tva_works = numeral(numeral(price_works).value() * 0.21);
+    total_works = numeral(price_works).value() + numeral(tva_works).value();
+    document.getElementById('inputWorksBase').value = numeral(price_works).format('(0,00.00$)');
+    document.getElementById('inputWorksTva').value = numeral(tva_works).format('(0,00.00$)');
+    document.getElementById('inputWorksTotal').value = numeral(total_works).format('(0,00.00$)');
+    var request = new XMLHttpRequest();    
+    request.open('POST', '/intranet/crm/offers/works/add', true);
+    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");    
+    request.send('works=' + offer_works);    
     function reqListener()
     {
         var response = request.responseText;

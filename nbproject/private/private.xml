@@ -5,6 +5,7 @@
         <group>
             <file>file:/C:/xampp/htdocs/Intranet/app/Controllers/Crm/SellOffersController.php</file>
             <file>file:/C:/xampp/htdocs/Intranet/views/sells/offers/sellOffersForm.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Intranet/views/js/sellOffers.js</file>
             <file>file:/C:/xampp/htdocs/Intranet/logs/app.log</file>
             <file>file:/C:/xampp/htdocs/Intranet/public/index.php</file>
         </group>

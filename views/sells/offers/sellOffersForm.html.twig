@@ -417,7 +417,7 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col text-right">
-                        <button type="submit" formaction="" formmethod="post"  class="btn btn-primary">Añadir</button>
+                        <button onclick="addWork()" class="btn btn-primary">Añadir</button>
                     </div>
                 </div>
                 <div class="form-row">
@@ -735,16 +735,14 @@
                             <table id="worksTable" class="table">
                                 <tr>
                                     <th>Referencia</th>
-                                    <th>Descripcion</th>
-                                    <th>Cantidad</th>                                                                      
+                                    <th>Descripcion</th>                                                                                                         
                                     <th>Pvp</th>                                    
                                 </tr>                                
                                 {% for work in works %}                                    
                                     <tr id="datarow">
                                         <td>{{ work.reference }}</td>
-                                        <td>{{ work.description }}</td>
-                                        <td>{{ work.cantity }}</td>                                        
-                                        <td>{{ work.pvp }}</td>                                        
+                                        <td>{{ work.description }}</td>                                                                               
+                                        <td>{{ work.price }}</td>                                        
                                         <td><a href="/intranet/crm/offers/works/select?work_id={{work.id}}&offer_id={{new_selloffer}}&vehicle_id={{ vehicle.id }}&supply_id={{ supply.id }}&component_id={{ component.id }}&offer_supplies={{ offer_supplies }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
