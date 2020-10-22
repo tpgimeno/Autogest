@@ -353,6 +353,14 @@ $map->post('addComponentsSellOffers', '/intranet/crm/offers/components/add', [
     'App\Controllers\Crm\SellOffersController',
     'addComponentsSellOffersAction'
 ]);
+$map->get('editComponentsSellOffers', '/intranet/crm/offers/components/edit', [
+    'App\Controllers\Crm\SellOffersController',
+    'editComponentsSellOffersAction'
+]);
+$map->get('delComponentsSellOffers', '/intranet/crm/offers/components/del', [
+    'App\Controllers\Crm\SellOffersController',
+    'delComponentsSellOffersAction'
+]);
 $map->post('searchSuppliesSellOffers', '/intranet/crm/offers/supplies/search', [
     'App\Controllers\Crm\SellOffersController',
     'searchSuppliesSellOffersAction'
@@ -365,6 +373,14 @@ $map->post('addSuppliesSellOffers', '/intranet/crm/offers/supplies/add', [
     'App\Controllers\Crm\SellOffersController',
     'addSuppliesSellOffersAction'
 ]);
+$map->get('editSuppliesSellOffers', '/intranet/crm/offers/supplies/edit', [
+    'App\Controllers\Crm\SellOffersController',
+    'editSuppliesSellOffersAction'
+]);
+$map->get('delSuppliesSellOffers', '/intranet/crm/offers/supplies/del', [
+    'App\Controllers\Crm\SellOffersController',
+    'delSuppliesSellOffersAction'
+]);
 $map->post('searchWorksSellOffers', '/intranet/crm/offers/works/search', [
     'App\Controllers\Crm\SellOffersController',
     'searchWorksSellOffersAction'
@@ -376,6 +392,14 @@ $map->get('selectWorksSellOffers', '/intranet/crm/offers/works/select', [
 $map->post('addWorksSellOffers', '/intranet/crm/offers/works/add', [
     'App\Controllers\Crm\SellOffersController',
     'addWorksSellOffersAction'
+]);
+$map->get('editWorksSellOffers', '/intranet/crm/offers/works/edit', [
+    'App\Controllers\Crm\SellOffersController',
+    'editWorksSellOffersAction'
+]);
+$map->get('delWorksSellOffers', '/intranet/crm/offers/works/del', [
+    'App\Controllers\Crm\SellOffersController',
+    'delWorksSellOffersAction'
 ]);
 $map->post('saveSellOffers', '/intranet/crm/offers/save', [
     'App\Controllers\Crm\SellOffersController',
@@ -451,6 +475,26 @@ $map->post('saveVehicle', '/intranet/vehicles/save', [
 ]);
 $map->get('deleteVehicle', '/intranet/vehicles/delete', [        
     'App\Controllers\Buys\VehicleController',
+    'deleteAction'   
+]);
+$map->get('accesoryForm', '/intranet/vehicles/accesories/form', [
+    'App\Controllers\Buys\AccesoriesController',
+    'getAccesoryDataAction'
+]);
+$map->get('accesoryList', '/intranet/vehicles/accesories/list', [
+    'App\Controllers\Buys\AccesoriesController',
+    'getIndexAction'
+]);
+$map->post('searchAccesory', '/intranet/vehicles/accesories/search', [
+    'App\Controllers\Buys\AccesoriesController',
+    'searchAccesoryAction'
+]);
+$map->post('saveAccsory', '/intranet/vehicles/accesories/save', [
+    'App\Controllers\Buys\AccesoriesController',
+    'getAccesoryDataAction'
+]);
+$map->get('deleteAccesory', '/intranet/vehicles/accesories/delete', [        
+    'App\Controllers\Buys\AccesoryController',
     'deleteAction'   
 ]);
 $map->get('brandForm', '/intranet/vehicles/brands/form', [

@@ -43,6 +43,6 @@ window.addEventListener('load', function()
     {
         var pvp = numeral(document.getElementById("inputPvp").value);
         document.getElementById("inputPvp").value = pvp.format('(0,00.00$)');
-    });
+    });   
     
 });

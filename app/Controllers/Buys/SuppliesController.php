@@ -49,7 +49,7 @@ class SuppliesController extends BaseController
     public function getSuppliesDataAction($request)
     {
         $responseMessage = null;
-        $supplie_temp = null;
+        $supply_temp = null;
         $mader = null;
         if($request->getMethod() == 'POST')
         {
@@ -59,33 +59,33 @@ class SuppliesController extends BaseController
                     ->key('name', v::stringType()->notEmpty());
             try{
                 $suppliesValidator->assert($postData);
-                $supplie = new Supplies();
-                $supplie->id = $postData['id'];
-                if($supplie->id)
+                $supply = new Supplies();
+                $supply->id = $postData['id'];
+                if($supply->id)
                 {
-                    $supplie_temp = Supplies::find($supplie->id);
-                    if($supplie_temp)
+                    $supply_temp = Supplies::find($supply->id);
+                    if($supply_temp)
                     {
-                        $supplie = $supplie_temp;
+                        $supply = $supply_temp;
                     }
                 }                
-                $supplie->ref = $postData['ref'];
-                $supplie->name = $postData['name'];
+                $supply->ref = $postData['ref'];
+                $supply->name = $postData['name'];
                 $mader = Mader::where('name', '=', $postData['mader'])->first();
-                $supplie->mader = $mader->id;
-                $supplie->mader_code = $postData['mader_code'];
-                $supplie->stock = $postData['stock'];
-                $supplie->pvc = $this->tofloat($postData['pvc']);
-                $supplie->pvp = $this->tofloat($postData['pvp']);
-                $supplie->observations = $postData['observations'];                
-                if($supplie_temp)
+                $supply->mader = $mader->id;
+                $supply->mader_code = $postData['mader_code'];
+                $supply->stock = $postData['stock'];
+                $supply->pvc = $this->tofloat($postData['pvc']);
+                $supply->pvp = $this->tofloat($postData['pvp']);
+                $supply->observations = $postData['observations'];                
+                if($supply_temp)
                 {
-                    $supplie->update();
+                    $supply->update();
                     $responseMessage = 'Updated';
                 }
                 else
                 {
-                    $supplie->save();
+                    $supply->save();
                     $responseMessage = 'Saved';
                 }
                 

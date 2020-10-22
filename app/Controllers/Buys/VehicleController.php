@@ -12,6 +12,7 @@ use App\Controllers\BaseController;
 use App\Models\Brand;
 use App\Models\Location;
 use App\Models\ModelVh;
+use App\Models\Store;
 use App\Models\Vehicle;
 use App\Models\VehicleTypes;
 use App\Services\Buys\VehicleService;
@@ -21,7 +22,6 @@ use Laminas\Diactoros\ServerRequest;
 use PhpOffice\PhpSpreadsheet\Reader\Xls;
 use Respect\Validation\Validator as v;
 use Symfony\Component\Config\Definition\Exception\Exception;
-use Symfony\Component\HttpKernel\HttpCache\Store;
 
 /**
  * Description of VehiclesController
@@ -103,6 +103,7 @@ class VehicleController extends BaseController
             try{
                 $vehicleValidator->assert($postData); // true 
                 $vehicle = new Vehicle();
+                
                 $vehicle->id = $postData['id'];
                 if($vehicle->id)
                 {
@@ -112,25 +113,39 @@ class VehicleController extends BaseController
                         $vehicle = $vh_temp;
                     }
                 } 
-                $brand = Brand::where('name', '=', $postData['brand'])->first();
+                $brand = Brand::where('name', 'like', "%".$postData['brand']."%")->first();
+                
                 $vehicle->brand = $brand->id;
-                $model = ModelVh::where('name', '=', $postData['model'])->first();
-                $vehicle->model = $model->id;               
+                
+                $model = ModelVh::where('name', 'like', "%".$postData['model']."%")->first();
+                
+                $vehicle->model = $model->id; 
+                
                 $vehicle->description = $postData['description'];
                 $vehicle->plate = $postData['plate'];
                 $vehicle->vin = $postData['vin'];
-                $vehicle->registry_date = date($postData['matriculacion']);
-                $type = VehicleTypes::where('name', '=', $postData['type'])->first();
-                $vehicle->type = $type->id;
-                $store = Store::where('name', '=', $postData['store'])->first();
-                $vehicle->store = $store->id;
-                $location = Location::where('name', '=', $postData['location'])->first();
-                $vehicle->location = $location->id;                
+                $vehicle->registry_date = date($postData['registry_date']); 
+                
+                $type = VehicleTypes::where('name', 'like', "%".$postData['type']."%")->first(); 
+                
+                $vehicle->type = $type->id; 
+                
+                $store = Store::where('name', 'like', "%".$postData['store']."%")->first();
+                if($store)
+                {
+                    $vehicle->store = $store->id;
+                    
+                }                
+                $location = Location::where('name', 'like', "%".$postData['location']."%")->first();
+                if($location)
+                {
+                    $vehicle->location = $location->id;
+                }                                
                 $vehicle->power = $postData['power'];
                 $vehicle->places = $postData['places'];
                 $vehicle->color = $postData['color'];
                 $vehicle->km = $postData['km'];
-                $vehicle->cost = $postData['inputBuy'];
+                $vehicle->cost = $postData['cost'];
                 $vehicle->pvp = $postData['pvp'];                
                 $accesories = array_filter($postData , function($string){
                     $findString = 'acc-';
@@ -141,8 +156,7 @@ class VehicleController extends BaseController
                 });    
                 $accesories_ord = \array_unique($accesories);
                 $vehicle->accesories = implode(", ", $accesories_ord);
-                $vehicle->doors = $postData['doors'];  
-                
+                $vehicle->doors = $postData['doors'];                
                 if($vh_temp)
                 {
                     $vehicle->update();
@@ -159,26 +173,44 @@ class VehicleController extends BaseController
                 $responseMessage = $this->errorService->getError($e);
             }              
         }
-        $vehicleSelected = null;   
+        $vehicleSelected = null;
+        $store_selected = null;
+        $location_selected = null;
         $accesories_withkeys = null;
         if($request->getQueryParams())
         {
             $vehicleSelected = Vehicle::find($request->getQueryParams('id'))->first();
-            $accesories = explode(", ", $vehicleSelected->accesories);            
-            foreach($accesories as $key => $acc)
-            {            
-               $key = $acc;  
-               $accesories_withkeys[$key] = $acc;
-            }      
+            if($vehicleSelected)
+            {
+                $accesories = explode(", ", $vehicleSelected->accesories);            
+                foreach($accesories as $key => $acc)
+                {            
+                   $key = $acc;  
+                   $accesories_withkeys[$key] = $acc;
+                }
+                if($vehicleSelected->store)
+                {
+                    $store_selected = Store::find($vehicleSelected->store)->name;
+                }  
+                if($vehicleSelected->location)
+                {
+                    $location_selected = Location::find($vehicleSelected->location)->name;
+                }
+            }                 
         }
         $brands = Brand::All();
         $models = ModelVh::All();
-        $types = VehicleTypes::All();                 
+        $types = VehicleTypes::All(); 
+        $stores = Store::All();
+        $locations = Location::All();
         return $this->renderHTML('/vehicles/vehiclesForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
             'brands' => $brands,
             'models' => $models,
+            'stores' => $stores,
+            'locations' => $locations,
+            'store_selected' => $store_selected,
             'types' => $types,
             'vehicle' => $vehicleSelected,
             'accesories' => $accesories_withkeys
@@ -187,12 +219,13 @@ class VehicleController extends BaseController
     
     public function importExcel()
     {
+        setlocale(LC_ALL, 'es_ES');
         $responseMessage = null;
         $reader = new Xls();
-        $reader->setLoadSheetsOnly('GENERAL');
-        $reader->setReadDataOnly(true);        
+        $reader->setLoadSheetsOnly('GENERAL'); 
+//        $reader->setReadDataOnly(true);
         $spreadSheet = $reader->load('VEHICULOS 01-08-19 UBICACIONES.xls');
-        $vehiculos = $spreadSheet->getActiveSheet()->toArray();         
+        $vehiculos = $spreadSheet->getActiveSheet()->toArray();
 //        var_dump($vehiculos);die();
         try{
             for($i = 1; $i < intval(count($vehiculos)); $i++)
@@ -203,7 +236,8 @@ class VehicleController extends BaseController
                 $vehiculo->description = $vehiculos[$i][2];
                 $vehiculo->plate = $vehiculos[$i][3];
                 $vehiculo->vin = null;
-                $vehiculo->registry_date = date('D-M-YY', intval($vehiculos[$i][8]));            
+                $time = strtotime($vehiculos[$i][8]);                
+                $vehiculo->registry_date = date('Y/m/d', $time);                
                 $vehiculo->store = $vehiculos[$i][4];
                 $vehiculo->location = 0;
                 $vehiculo->type = $vehiculos[$i][5];
@@ -213,7 +247,7 @@ class VehicleController extends BaseController
                 $vehiculo->power = 0;
                 $vehiculo->km = $vehiculos[$i][7];
                 $vehiculo->cost = 0;
-                $vehiculo->pvp = intval($vehiculos[$i][10])/1.21;
+                $vehiculo->pvp = $this->tofloat($vehiculos[$i][10]);                
                 $vehiculo->save(); 
                 $responseMessage = 'Saved';               
             }
@@ -243,5 +277,20 @@ class VehicleController extends BaseController
         $this->vehicleService->deleteVehicle($request->getQueryParams('id'));               
         return new RedirectResponse('/intranet/vehicles/list');
     }
-    
+    public function tofloat($num) 
+    {
+        $dotPos = strrpos($num, '.');
+        $commaPos = strrpos($num, ',');
+        $sep = (($dotPos > $commaPos) && $dotPos) ? $dotPos :
+            ((($commaPos > $dotPos) && $commaPos) ? $commaPos : false);
+
+        if (!$sep) {
+            return floatval(preg_replace("/[^0-9]/", "", $num));
+        }
+
+        return floatval(
+            preg_replace("/[^0-9]/", "", substr($num, 0, $sep)) . '.' .
+            preg_replace("/[^0-9]/", "", substr($num, $sep+1, strlen($num)))
+        );
+    }
 }

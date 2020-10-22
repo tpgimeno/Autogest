@@ -47,7 +47,7 @@
                     </div>
                     <div class="form-group col-md-2 offset-md-6">
                           <label for="inputOfferNumber">Numero de Oferta</label>                        
-                          <input type="text" name="offer_number" class="form-control" id="inputOfferNumber" placeholder="" value="{{ sellOffer.offer_number }}">
+                          <input type="text" name="offer_number" class="form-control" id="inputOfferNumber" placeholder="" value="{{ offer_number }}">
                     </div>
                     <div class="form-group col-md-2">
                           <label for="inputOfferDate">Fecha</label>                        
@@ -69,19 +69,19 @@
                 <div class="form-row">
                     <div class="form-group col-md-2 offset-md-4">
                         <label for="inputPrice">P.V.P.</label>
-                        <input type="text" name="price" step="0.01" class="euros form-control" id="inputPrice" placeholder="" value="{{ vehicle.pvp }}">
+                        <input type="text" name="price" class="form-control" id="inputPrice" placeholder="" value="{{ vehicle.pvp }}">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputDiscount">Descuento</label>
-                        <input type="text" name="discount" step="0.01" class="euros form-control" id="inputDiscount" placeholder="" value="{{ sellOffer.discount }}">
+                        <input type="text" name="discount" class="form-control" id="inputDiscount" placeholder="" value="{{ sellOffer.discount }}">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputTva">I.V.A.</label>
-                        <input type="text" name="tva" step="0.01" class="euros form-control" id="inputTva" placeholder="" value="{{ sellOffer.tva }}">
+                        <input type="text" name="tva" class="form-control" id="inputTva" placeholder="" value="{{ sellOffer.tva }}">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputTotal">Total</label>
-                        <input type="text" name="total" class="euros form-control" id="inputTotal" placeholder="" value="{{ sellOffer.total}}">
+                        <input type="text" name="total" class="form-control" id="inputTotal" placeholder="" value="{{ sellOffer.total}}">
                     </div>
                 </div>
             </div>
@@ -96,51 +96,51 @@
                 <div class="form-row">
                     <div class="form-group col-md-2">
                           <label for="inputCustomerID">ID</label>                        
-                          <input type="text" name="customer_id" class="form-control" id="inputCustomerId" placeholder="" value="{{ customer.id }}">
+                          <input type="text" name="customer_id" class="form-control" id="inputCustomerId" placeholder="" value="{{ selected_customer.id }}">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-9">
                         <label for="inputName">Nombre</label>                        
-                        <input type="text" name="name" class="form-control" id="inputName" placeholder="" value="{{ customer.name }}">
+                        <input type="text" name="name" class="form-control" id="inputName" placeholder="" value="{{ selected_customer.name }}">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputFiscalId">DNI/CIF</label>
-                        <input type="text" name="fiscal_id" class="form-control" id="inputFiscalId" placeholder="" value="{{ customer.fiscal_id }}">
+                        <input type="text" name="fiscal_id" class="form-control" id="inputFiscalId" placeholder="" value="{{ selected_customer.fiscal_id }}">
                     </div>                    
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-10">
                         <label for="inputAddress">Dirección</label>
-                        <input type="text" name="address" class="form-control" id="inputAddress" placeholder="" value="{{ customer.address }}">
+                        <input type="text" name="address" class="form-control" id="inputAddress" placeholder="" value="{{ selected_customer.address }}">
                     </div>
                      <div class="form-group col-md-2">
                         <label for="inputPostalCode">C.P.</label>
-                        <input type="text" name="cp" class="form-control" id="inputCp" placeholder="" value="{{ customer.postal_code }}">
+                        <input type="text" name="cp" class="form-control" id="inputCp" placeholder="" value="{{ selected_customer.postal_code }}">
                     </div>                    
                 </div>
                 <div class="form-row mb-3">  
                     <div class="form-group col-md-3">
                         <label for="inputCity">Población</label>
-                        <input type="text" name="city" class="form-control" id="inputCity" placeholder="" value="{{ customer.city }}">
+                        <input type="text" name="city" class="form-control" id="inputCity" placeholder="" value="{{ selected_customer.city }}">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputState">Provincia</label>
-                        <input type="text" name="state" class="form-control" id="inputState" placeholder="" value="{{ customer.state }}">
+                        <input type="text" name="state" class="form-control" id="inputState" placeholder="" value="{{ selected_customer.state }}">
                     </div>                                       
                     <div class="form-group col-md-3">
                         <label for="inputCountry">Pais</label>
-                        <input type="text" name="country" class="form-control" id="inputCountry" placeholder="" value="{{ customer.country }}">
+                        <input type="text" name="country" class="form-control" id="inputCountry" placeholder="" value="{{ selected_customer.country }}">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputPhone">Teléfono</label>                        
-                        <input type="text" name="phone" class="form-control" id="inputPhone" placeholder="" value="{{ customer.phone }}">
+                        <input type="text" name="phone" class="form-control" id="inputPhone" placeholder="" value="{{ selected_customer.phone }}">
                     </div>
                 </div>
                 <div class="form-row">                    
                     <div class="form-group col-md-6">
                         <label for="inputFiscalId">Email</label>
-                        <input type="text" name="email" class="form-control" id="inputEmail" placeholder="" value="{{ customer.email }}">
+                        <input type="text" name="email" class="form-control" id="inputEmail" placeholder="" value="{{ selected_customer.email }}">
                     </div>                    
                 </div>
             </div>                        
@@ -155,43 +155,49 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-1">
+                    <div class="form-group col-md-2">
                           <label for="inputVehicleID">ID</label>                        
-                          <input type="text" name="vehicle_id" class="form-control" id="inputVehicleId" placeholder="" value="{{ vehicle.id }}">
+                          <input type="text" name="vehicle_id" class="form-control" id="inputVehicleId" placeholder="" value="{{ selected_vehicle.id }}">
                     </div>                    
-                    <div class="form-group col-md-2">                          
+                    <div class="form-group col-md-3">                          
                         <label for="inputPlate">Matricula</label>
-                        <input type="text" name="plate" class="form-control" id="inputPlate" placeholder="" value="{{ vehicle.plate }}">
-                    </div>
+                        <input type="text" name="plate" class="form-control" id="inputPlate" placeholder="" value="{{ selected_vehicle.plate }}">
+                    </div>                    
                     <div class="form-group col-md-3">
                         <label for="inputBrand">Marca</label>
                         <input type="text" name="brand" class="form-control" id="inputBrand" placeholder="" value="{{ brand.name }}">
                     </div>                                
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-4">
                         <label for="inputModelVh">Modelo</label>
                         <input type="text" name="model" class="form-control" id="inputModel" placeholder="" value="{{ model.name }}">
-                    </div>                    
-                    <div class="form-group col-md-4">
+                    </div> 
+                </div>
+                <div class="form-row"> 
+                    <div class="form-group col-md-3">                          
+                        <label for="inputVin">Bastidor</label>
+                        <input type="text" name="vin" class="form-control" id="inputVin" placeholder="" value="{{ selected_vehicle.vin }}">
+                    </div>
+                    <div class="form-group col-md-9">
                         <label for="inputDescription">Descripcion</label>
-                        <input type="text" name="description" class="form-control text-center" id="inputDescription" placeholder="130cv" value="{{ vehicle.description }}">
+                        <input type="text" name="description" class="form-control" id="inputDescription" placeholder="130cv" value="{{ selected_vehicle.description }}">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label for="inputColor">Color</label>
-                        <input type="text" name="color" class="form-control text-center" id="inputColor" placeholder="" value="{{ vehicle.color }}">
+                        <input type="text" name="color" class="form-control text-center" id="inputColor" placeholder="" value="{{ selected_vehicle.color }}">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputDoors">Puertas</label>
-                        <input type="text" name="doors" class="form-control text-center" id="inputDoors" placeholder="" value="{{ vehicle.doors }}">
+                        <input type="text" name="doors" class="form-control text-center" id="inputDoors" placeholder="" value="{{ selected_vehicle.doors }}">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputPlazas">Plazas</label>
-                        <input type="text" name="places" class="form-control" id="inputPlaces" placeholder="" value="{{ vehicle.places }}">
+                        <input type="text" name="places" class="form-control" id="inputPlaces" placeholder="" value="{{ selected_vehicle.places }}">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputPower">Potencia</label>
-                        <input type="text" name="power" class="form-control" id="inputPower" placeholder="" value="{{ vehicle.power }}">
+                        <input type="text" name="power" class="form-control" id="inputPower" placeholder="" value="{{ selected_vehicle.power }}">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputType">Tipo Vehículo</label>
@@ -202,10 +208,166 @@
                         </select>
                     </div>
                 </div>
+                <div class="form-row mt-3">
+                        <div class="form-check col-md-3">
+                            <input class="form-check-input" name="acc-A/C" type="checkbox" value="acc-A/C" id="a/c" {% if "acc-A/C" in accesories %} checked {% endif %}>                                                  
+                           <label class="form-check-label" for="defaultCheck1">
+                             Aire Acondicionado
+                           </label>
+                        </div>
+                            <div class="form-check col-md-3">
+                              <input class="form-check-input" name="acc-clima" type="checkbox" value="acc-clima" id="clima" {% if "acc-clima" in accesories %} checked {% endif %}>
+                              <label class="form-check-label" for="defaultCheck1">
+                                Climatizador
+                              </label>
+                           </div>
+                            <div class="form-check col-md-3">
+                              <input class="form-check-input" name="acc-clima-pasaje" type="checkbox" value="acc-clima-pasaje" id="clima-pasaje" {% if "acc-clima-pasaje" in accesories %} checked {% endif %}>
+                              <label class="form-check-label" for="defaultCheck1">
+                                Climatización Pasajeros
+                              </label>
+                           </div>
+                            <div class="form-check col-md-3">
+                              <input class="form-check-input" name="acc-start&stop" type="checkbox" value="acc-start&stop" id="startstop" {% if "acc-start&stop" in accesories %} checked {% endif %}>
+                              <label class="form-check-label" for="defaultCheck1">
+                                Start & Stop
+                              </label>
+                           </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-check col-md-3">
+                          <input class="form-check-input" name="acc-volantemulti" type="checkbox" value="acc-volantemulti" id="volantemulti" {% if "acc-volantemulti" in accesories %} checked {% endif %}>
+                          <label class="form-check-label" for="defaultCheck1">
+                            Volante Multifunción
+                          </label>
+                        </div>
+                        <div class="form-check col-md-3">
+                          <input class="form-check-input" name="acc-usb" type="checkbox" value="acc-usb" id="usb" {% if "acc-usb" in accesories %} checked {% endif %}>
+                          <label class="form-check-label" for="defaultCheck1">
+                            Radio USB
+                          </label>
+                        </div>
+                        <div class="form-check col-md-3">
+                          <input class="form-check-input" name="acc-tactil" type="checkbox" value="acc-tactil" id="tactil" {% if "acc-tactil" in accesories %} checked {% endif %}>
+                          <label class="form-check-label" for="defaultCheck1">
+                            Pantalla Táctil
+                          </label>
+                        </div>
+                        <div class="form-check col-md-3">
+                          <input class="form-check-input" name="acc-carplay" type="checkbox" value="acc-carplay" id="carplay" {% if "acc-carplay" in accesories %} checked {% endif %}>
+                          <label class="form-check-label" for="defaultCheck1">
+                            Apple Car-Play / Android Auto
+                          </label>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-check col-md-3">
+                          <input class="form-check-input" name="acc-dobleairbag" type="checkbox" value="acc-dobleairbag" id="dobleairbag" {% if "acc-dobleairbag" in accesories %} checked {% endif %}>
+                          <label class="form-check-label" for="defaultCheck1">
+                            AirBag Pasajero
+                          </label>
+                        </div>
+                        <div class="form-check col-md-3">
+                          <input class="form-check-input" name="acc-airbaglat" type="checkbox" value="acc-airbaglat" id="airbaglat" {% if "acc-airbaglat" in accesories %} checked {% endif %}>
+                          <label class="form-check-label" for="defaultCheck1">
+                            AirBag Laterales
+                          </label>
+                        </div>
+                        <div class="form-check col-md-3">
+                          <input class="form-check-input" name="acc-tempomat" type="checkbox" value="acc-tempomat" id="tempomat" {% if "acc-tempomat" in accesories %} checked {% endif %}>
+                          <label class="form-check-label" for="defaultCheck1">
+                            Control y Limitador de velocidad
+                          </label>
+                        </div>
+                        <div class="form-check col-md-3">
+                          <input class="form-check-input" name="acc-espejoselec" type="checkbox" value="acc-espejoselec" id="espejoselec" {% if "acc-espejoselec" in accesories %} checked {% endif %}>
+                          <label class="form-check-label" for="defaultCheck1">
+                            Espejos electricos
+                          </label>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-check col-md-3">
+                          <input class="form-check-input" name="acc-espejosretrac" type="checkbox" value="acc-espejosretrac" id="espejosretrac" {% if "acc-espejosretrac" in accesories %} checked {% endif %}>
+                          <label class="form-check-label" for="defaultCheck1">
+                            Espejos retractiles
+                          </label>
+                        </div>
+                        <div class="form-check col-md-3">
+                          <input class="form-check-input" name="acc-espejoscalef" type="checkbox" value="acc-espejoscalef" id="espejoscalef" {% if "acc-espejoscalef" in accesories %} checked {% endif %}>
+                          <label class="form-check-label" for="defaultCheck1">
+                            Espejos Calefactables
+                          </label>
+                        </div>
+                        <div class="form-check col-md-3">
+                          <input class="form-check-input" name="acc-antiniebla" type="checkbox" value="acc-antiniebla" id="antiniebla" {% if "acc-antiniebla" in accesories %} checked {% endif %}>
+                          <label class="form-check-label" for="defaultCheck1">
+                            Faros anti-niebla
+                          </label>
+                        </div>
+                        <div class="form-check col-md-3">
+                          <input class="form-check-input" name="acc-gps" type="checkbox" value="acc-gps" id="gps" {% if "acc-gps" in accesories %} checked {% endif %}>
+                          <label class="form-check-label" for="defaultCheck1">
+                            Navegador GPS
+                          </label>
+                        </div>
+                      </div>
+                    <div class="form-row">
+                        <div class="form-check col-md-3">
+                          <input class="form-check-input" name="acc-reposabrazos" type="checkbox" value="acc-reposabrazos" id="reposabrazos" {% if "acc-reposabrazos" in accesories %} checked {% endif %}>
+                          <label class="form-check-label" for="defaultCheck1">
+                            Reposabrazos
+                          </label>
+                        </div>
+                        <div class="form-check col-md-3">
+                          <input class="form-check-input" name="acc-suspconfort" type="checkbox" value="acc-suspconfort" id="suspconfort" {% if "acc-suspconfort" in accesories %} checked {% endif %}>
+                          <label class="form-check-label" for="defaultCheck1">
+                            Suspensión Confort
+                          </label>
+                        </div>
+                        <div class="form-check col-md-3">
+                          <input class="form-check-input" name="acc-lucesauto" type="checkbox" value="acc-lucesauto" id="lucesauto" {% if "acc-lucesauto" in accesories %} checked {% endif %}>
+                          <label class="form-check-label" for="defaultCheck1">
+                            Luces Automáticas
+                          </label>
+                        </div>
+                        <div class="form-check col-md-3">
+                          <input class="form-check-input" name="acc-mandos" type="checkbox" value="acc-mandos" id="mandos" {% if "acc-mandos" in accesories %} checked {% endif %}>
+                          <label class="form-check-label" for="defaultCheck1">
+                            Mandos al volante
+                          </label>
+                        </div>
+                    </div>
+                    <div class="form-row mb-3">
+                        <div class="form-check col-md-3">
+                          <input class="form-check-input" name="acc-auto" type="checkbox" value="acc-auto" id="auto" {% if "acc-auto" in accesories %} checked {% endif %}>
+                          <label class="form-check-label" for="defaultCheck1">
+                            Cambio Automático
+                          </label>
+                        </div>
+                        <div class="form-check col-md-3">
+                          <input class="form-check-input" name="acc-parktr" type="checkbox" value="acc-parktr" id="parktr" {% if "acc-parktr" in accesories %} checked {% endif %}>
+                          <label class="form-check-label" for="defaultCheck1">
+                            Parktronic trasero
+                          </label>
+                        </div>
+                        <div class="form-check col-md-3">
+                          <input class="form-check-input" name="acc-parkdel" type="checkbox" value="acc-parkdel" id="parkdel" {% if "acc-parkdel" in accesories %} checked {% endif %}>
+                          <label class="form-check-label" for="defaultCheck1">
+                            Parktronic delantero
+                          </label>
+                        </div>
+                        <div class="form-check col-md-3">
+                          <input class="form-check-input" name="acc-cam" type="checkbox" value="acc-cam" id="cam" {% if "acc-cam" in accesories %} checked {% endif %}>
+                          <label class="form-check-label" for="defaultCheck1">
+                            Camara visión trasera
+                          </label>
+                        </div>
+                    </div>
                 <div class="form-row">
                     <div class="form-group col-md-2 offset-md-4">
                         <label for="inputPriceVehicle">P.V.P.</label>
-                        <input type="text" name="price_vehicle" step="0.01" class="euros form-control" id="inputVehiclePrice" placeholder="" value="{{ vehicle.pvp }}">
+                        <input type="text" name="price_vehicle" step="0.01" class="euros form-control" id="inputVehiclePrice" placeholder="" value="{{ selected_vehicle.pvp }}">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputVehicleDiscount">Descuento</label>
@@ -213,11 +375,11 @@
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputVehicleTva">I.V.A.</label>
-                        <input type="text" name="vehicle_tva" step="0.01" class="euros form-control" id="inputVehicleTva" placeholder="" value="{{ vehicle.tva }}">
+                        <input type="text" name="vehicle_tva" step="0.01" class="euros form-control" id="inputVehicleTva" placeholder="" value="{{ selected_vehicle.tva }}">
                     </div>  
                     <div class="form-group col-md-2">
                         <label for="inputVehicleTotal">Total</label>
-                        <input type="text" name="vehicle_total" class="euros form-control" id="inputVehicleTotal" placeholder="" value="{{ vehicle.total }}">
+                        <input type="text" name="vehicle_total" class="euros form-control" id="inputVehicleTotal" placeholder="" value="{{ selected_vehicle.total }}">
                     </div>
                 </div>
                 <div class="form-row">
@@ -250,11 +412,11 @@
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputSupplyPrice">Precio</label>
-                        <input type="text" name="supply_price" class="form-control" id="inputSupplyPrice" placeholder="" value="{{ selected_supply.pvp }}">
+                        <input type="text" name="supply_price" class="form-control" id="inputSupplyPrice" placeholder="" value="{{ edit_price_supply }}">
                     </div>
                     <div class="form-group col-md-1">
                         <label for="inputSupplyCantity">Cantidad</label>
-                        <input type="text" name="supply_cantity" class="form-control" id="inputSupplyCantity" placeholder="" value="">
+                        <input type="text" name="supply_cantity" class="form-control" id="inputSupplyCantity" placeholder="" value="{{ edit_cantity_supply }}">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputSupplyTotal">Importe</label>
@@ -295,15 +457,15 @@
                 <div class="form-row">
                     <div class="form-group col-md-2 offset-md-6">
                         <label for="inputSuppliesPrice">P.V.P.</label>
-                        <input type="text" name="price" step="0.01" class="euros form-control" id="inputSuppliesBase" placeholder="" value="">
+                        <input type="text" name="supplies_price" step="0.01" class="euros form-control" id="inputSuppliesBase" placeholder="" value="">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputSuppliesTva">I.V.A.</label>
-                        <input type="text" name="tva" step="0.01" class="euros form-control" id="inputSuppliesTva" placeholder="" value="">
+                        <input type="text" name="supplies_tva" step="0.01" class="euros form-control" id="inputSuppliesTva" placeholder="" value="">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputSuppliesTotal">Total</label>
-                        <input type="text" name="total" class="euros form-control" id="inputSuppliesTotal" placeholder="" value="">
+                        <input type="text" name="supplies_total" class="euros form-control" id="inputSuppliesTotal" placeholder="" value="">
                     </div>
                 </div>
                         <div class="form-row mt-3">
@@ -328,11 +490,11 @@
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputComponentPrice">Precio</label>
-                        <input type="text" name="component_price" class="form-control" id="inputComponentPrice" placeholder="" value="{{ selected_component.pvp }}">
+                        <input type="text" name="component_price" class="form-control" id="inputComponentPrice" placeholder="" value="{{ edit_price_component }}">
                     </div>
                     <div class="form-group col-md-1">
                         <label for="inputComponentCantity">Cantidad</label>
-                        <input type="text" name="component_cantity" class="form-control" id="inputComponentCantity" placeholder="" value="">
+                        <input type="text" name="component_cantity" class="form-control" id="inputComponentCantity" placeholder="" value="{{ edit_cantity_component }}">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputComponentTotal">Importe</label>
@@ -373,15 +535,15 @@
                 <div class="form-row">
                     <div class="form-group col-md-2 offset-md-6">
                         <label for="inputComponentsPrice">P.V.P.</label>
-                        <input type="text" name="price" step="0.01" class="euros form-control" id="inputComponentsBase" placeholder="" value="">
+                        <input type="text" name="components_price" step="0.01" class="euros form-control" id="inputComponentsBase" placeholder="" value="">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputComponentsTva">I.V.A.</label>
-                        <input type="text" name="tva" step="0.01" class="euros form-control" id="inputComponentsTva" placeholder="" value="">
+                        <input type="text" name="components_tva" step="0.01" class="euros form-control" id="inputComponentsTva" placeholder="" value="">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputComponentsTotal">Total</label>
-                        <input type="text" name="total" class="euros form-control" id="inputComponentsTotal" placeholder="" value="">
+                        <input type="text" name="components_total" class="euros form-control" id="inputComponentsTotal" placeholder="" value="">
                     </div>
                 </div>
             </div>
@@ -404,11 +566,11 @@
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputWorkPrice">Precio</label>
-                        <input type="text" name="work_price" class="form-control" id="inputWorkPrice" placeholder="" value="{{ selected_work.price }}">
+                        <input type="text" name="work_price" class="form-control" id="inputWorkPrice" placeholder="" value="{{ edit_price_work }}">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputWorkCantity">Cantidad</label>
-                        <input type="text" name="work_cantity" class="form-control" id="inputWorkCantity" placeholder="" value="">
+                        <input type="text" name="work_cantity" class="form-control" id="inputWorkCantity" placeholder="" value="{{ edit_cantity_work }}">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputWorkTotal">Importe</label>
@@ -417,12 +579,12 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col text-right">
-                        <button onclick="addWork()" class="btn btn-primary">Añadir</button>
+                        <button type="button" onclick="addWork()" class="btn btn-primary">Añadir</button>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col">
-                        <table class="table table-bordered">
+                        <table id="WorksTable" class="table table-bordered">
                             <tr>
                                 <th>ID</th>
                                 <th>Descripcion</th>                                
@@ -445,15 +607,15 @@
                 <div class="form-row">
                     <div class="form-group col-md-2 offset-md-6">
                         <label for="inputWorksPrice">P.V.P.</label>
-                        <input type="text" name="price" step="0.01" class="euros form-control" id="inputWorksBase" placeholder="" value="">
+                        <input type="text" name="works_price" step="0.01" class="euros form-control" id="inputWorksBase" placeholder="" value="">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputWorksTva">I.V.A.</label>
-                        <input type="text" name="tva" step="0.01" class="euros form-control" id="inputWorksTva" placeholder="" value="">
+                        <input type="text" name="works_tva" step="0.01" class="euros form-control" id="inputWorksTva" placeholder="" value="">
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputWorksTotal">Total</label>
-                        <input type="text" name="total" class="euros form-control" id="inputWorksTotal" placeholder="" value="">
+                        <input type="text" name="works_total" class="euros form-control" id="inputWorksTotal" placeholder="" value="">
                     </div>
                 </div>                            
             </div>            
@@ -502,15 +664,14 @@
                                     <th>Teléfono</th>
                                     <th>Email</th>
                                     <th>Edit</th>                                    
-                                </tr>
-                                
+                                </tr>                                
                                 {% for customer in customers %}                                    
                                     <tr id="datarow">
                                         <td>{{ customer.name }}</td>
                                         <td>{{ customer.city }}</td>
                                         <td>{{ customer.phone }}</td>
                                         <td>{{ customer.email }}</td>
-                                        <td><a href="/intranet/crm/offers/customer/select?customer_id={{customer.id}}&offer_id={{ new_selloffer }}&vehicle_id={{ vehicle.id }}&work_id={{work.id}}&supply_id={{ supply.id }}&component_id={{ component.id }}">Select</a></td>                                        
+                                        <td><a href="/intranet/crm/offers/customer/select?customer_id={{ customer.id }}&offer_id={{ new_selloffer }}&vehicle_id={{selected_vehicle.id}}&work_id={{selected_work.id}}&supply_id={{ selected_supply.id }}&component_id={{ selected_component.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>
@@ -573,7 +734,7 @@
                                         <td>{{ vehicle.brand }}</td>
                                         <td>{{ vehicle.model }}</td>
                                         <td>{{ vehicle.description }}</td>
-                                        <td><a href="/intranet/crm/offers/vehicle/select?vehicle_id={{vehicle.id}}&offer_id={{ new_selloffer }}&work_id={{work.id}}&customer_id={{ customer.id }}&supply_id={{ supply.id }}&component_id={{ component.id }}">Select</a></td>                                        
+                                        <td><a href="/intranet/crm/offers/vehicle/select?vehicle_id={{vehicle.id}}&offer_id={{ new_selloffer }}&work_id={{selected_work.id}}&customer_id={{ selected_customer.id }}&supply_id={{ selected_supply.id }}&component_id={{ selected_component.id }}">Select</a></td>                                        
                                     </tr>
                                 {% endfor %}                
                             </table>
@@ -632,7 +793,7 @@
                                         <td>{{ supply.name }}</td>
                                         <td>{{ supply.stock }}</td>
                                         <td>{{ supply.pvp }}</td>
-                                        <td><a href="/intranet/crm/offers/supplies/select?supply_id={{ supply.id }}&offer_id={{ new_selloffer }}&work_id={{work.id}}&vehicle_id={{ vehicle.id }}&customer_id={{ customer.id }}&component_id={{ component.id }}">Select</a></td>                                        
+                                        <td><a href="/intranet/crm/offers/supplies/select?supply_id={{ supply.id }}&offer_id={{ new_selloffer }}&work_id={{selected_work.id}}&vehicle_id={{ selected_vehicle.id }}&customer_id={{ selected_customer.id }}&component_id={{ selected_component.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>
@@ -690,7 +851,7 @@
                                         <td>{{ component.name }}</td>
                                         <td>{{ component.stock }}</td>
                                         <td>{{ component.pvp }}</td>                                        
-                                        <td><a href="/intranet/crm/offers/components/select?component_id={{component.id}}&offer_id={{new_selloffer}}&work_id={{work.id}}&vehicle_id={{ vehicle.id }}&supply_id={{ supply.id }}&offer_supplies={{ offer_supplies }}">Select</a></td>                                        
+                                        <td><a href="/intranet/crm/offers/components/select?component_id={{component.id}}&offer_id={{new_selloffer}}&work_id={{selected_work.id}}&vehicle_id={{ selected_vehicle.id }}&supply_id={{ selected_supply.id }}&customer_id={{ selected_customer.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>
@@ -743,7 +904,7 @@
                                         <td>{{ work.reference }}</td>
                                         <td>{{ work.description }}</td>                                                                               
                                         <td>{{ work.price }}</td>                                        
-                                        <td><a href="/intranet/crm/offers/works/select?work_id={{work.id}}&offer_id={{new_selloffer}}&vehicle_id={{ vehicle.id }}&supply_id={{ supply.id }}&component_id={{ component.id }}&offer_supplies={{ offer_supplies }}">Select</a></td>                                        
+                                        <td><a href="/intranet/crm/offers/works/select?work_id={{work.id}}&offer_id={{new_selloffer}}&vehicle_id={{ selected_vehicle.id }}&supply_id={{ selected_supply.id }}&component_id={{ selected_component.id }}&customer_id={{ selected_customer.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>

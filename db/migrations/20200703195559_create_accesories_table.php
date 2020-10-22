@@ -21,8 +21,7 @@ final class CreateAccesoriesTable extends AbstractMigration
         $table = $this->table('accesories');
         $table->addColumn('name', 'string')                
                 ->addColumn('created_at', 'datetime')
-                ->addColumn('updated_at', 'datetime')
-                ->addColumn('deleted_at', 'datetime')
+                ->addColumn('updated_at', 'datetime')                
                 ->create();      
     }
 }

@@ -43,15 +43,19 @@
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
-                          <div class="tab-pane fade show active" id="data" role="tabpanel" aria-labelledby="data-tab">
-                              <div class="form-row mt-3">
-                                  <div class="form-group col-md-3">
+                            <div class="tab-pane fade show active" id="data" role="tabpanel" aria-labelledby="data-tab">
+                                <div class="form-row mt-3">
+                                    <div class="form-group col-md-3">
                                         <label for="inputId">Id</label>                        
                                         <input type="text" name="id" class="form-control" id="inputId" placeholder="" value="{{ vehicle.id }}">
                                     </div>
-                              </div>
-                              <div class="form-row mt-3">
-                                  <div class="form-group col-md-3">
+                                    <div class="form-group col-md-3 offset-md-6">
+                                            <label for="inputRegistryDate">Fecha Matriculación</label>                        
+                                            <input type="date" name="registry_date" class="form-control" id="inputRegistryDate" placeholder="" value="{{ vehicle.registry_date }}">
+                                    </div>
+                                </div>
+                                <div class="form-row mt-3">
+                                    <div class="form-group col-md-3">
                                         <label for="inputPlate">Matricula</label>                        
                                         <input type="text" name="plate" class="form-control" id="inputPlate" placeholder="" value="{{ vehicle.plate }}">
                                     </div>
@@ -75,9 +79,9 @@
                                             {% endfor %}
                                         </select>
                                     </div>
-                              </div>
-                              <div class="form-row">                    
-                                    <div class="form-group col-md-6">
+                                </div>
+                                <div class="form-row">                    
+                                    <div class="form-group col-md-9">
                                         <label for="inputDescription">Descripción</label>
                                         <input type="text" name="description" class="form-control" id="inputDescription" placeholder="" value="{{ vehicle.description }}">
                                     </div>
@@ -89,74 +93,88 @@
                                             {% endfor %}                            
                                         </select>
                                     </div>
+                                </div>
+                                <div class="form-row">                                    
                                     <div class="form-group col-md-3">
-                                        <label for="inputLocation">Ubicación</label>
-                                        <input type="text" name="location" class="form-control" id="inputLocation" placeholder="" value="{{ vehicle.location }}">
+                                        <label for="inputStore">Almacen</label>
+                                        <select name="store" class="form-control" id="selectType" value="{{ store_selected }}">
+                                            {% for store in stores %}
+                                                <option>{{ store.name }}</option>
+                                            {% endfor %}                            
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="inputLocation">Ubicacion</label>
+                                        <select name="location" class="form-control" id="selectType" value="{{ location_selected }}">
+                                            {% for location in locations %}
+                                                <option>{{ location.name }}</option>
+                                            {% endfor %}                            
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="form-row"> 
-                                    <div class="form-group col-md-2">
-                                        <label for="inputKm">Kilómetros</label>
-                                        <input type="text" name="km" class="form-control" id="inputKm" placeholder="50000" value="{{ vehicle.km }}">
-                                    </div>                    
-                                    <div class="form-group col-md-2">
-                                        <label for="inputPower">Potencia</label>
-                                        <input type="text" name="power" class="form-control text-center" id="inputPower" placeholder="130cv" value="{{ vehicle.power }}">
-                                    </div>                          
-                                    <div class="form-group col-md-2">
-                                        <label for="inputPlaces">Plazas</label>
-                                        <input type="text" name="places" class="form-control text-center" id="inputPlaces" placeholder="3" value="{{ vehicle.places }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputDoors">Puertas</label>
-                                        <input type="text" name="doors" class="form-control text-center" id="inputDoors" placeholder="4" value="{{ vehicle.doors }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputColor">Color</label>
-                                        <input type="text" name="color" class="form-control" id="inputColor" placeholder="Blanco" value="{{ vehicle.color }}">
-                                    </div>                    
+                            <div class="form-row">                                    
+                                <div class="form-group col-md-2">
+                                    <label for="inputKm">Kilómetros</label>
+                                    <input type="text" name="km" class="form-control" id="inputKm" placeholder="50000" value="{{ vehicle.km }}">
+                                </div>                    
+                                <div class="form-group col-md-2">
+                                    <label for="inputPower">Potencia</label>
+                                    <input type="text" name="power" class="form-control text-center" id="inputPower" placeholder="130cv" value="{{ vehicle.power }}">
+                                </div>                          
+                                <div class="form-group col-md-2">
+                                    <label for="inputPlaces">Plazas</label>
+                                    <input type="text" name="places" class="form-control text-center" id="inputPlaces" placeholder="3" value="{{ vehicle.places }}">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="inputDoors">Puertas</label>
+                                    <input type="text" name="doors" class="form-control text-center" id="inputDoors" placeholder="4" value="{{ vehicle.doors }}">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="inputColor">Color</label>
+                                    <input type="text" name="color" class="form-control" id="inputColor" placeholder="Blanco" value="{{ vehicle.color }}">
+                                </div>                    
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="buy" role="tabpanel" aria-labelledby="buy-tab">
+                            <div class="form-row mt-3">
+                                <div class="form-group col-md-2 offset-md-6">
+                                    <label for="inputCost">Precio Compra</label>
+                                    <input type="text" name="cost" class="form-control" id="inputCost" placeholder="" value="{{ vehicle.cost }}">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="inputCost">Iva Compra</label>
+                                    <input type="text" name="tvaBuy" class="form-control" id="inputTvaCost" placeholder="" value="{{ vehicle.tva }}">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="inputCost">Total Compra</label>
+                                    <input type="text" name="totalBuy" class="form-control" id="inputTotalCost" placeholder="" value="{{ vehicle.total }}">
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="buy" role="tabpanel" aria-labelledby="buy-tab">
-                                <div class="form-row mt-3">
-                                    <div class="form-group col-md-2 offset-md-6">
-                                        <label for="inputCost">Precio Compra</label>
-                                        <input type="text" name="cost" class="form-control" id="inputCost" placeholder="" value="{{ vehicle.cost }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputCost">Iva Compra</label>
-                                        <input type="text" name="tvaBuy" class="form-control" id="inputTvaCost" placeholder="" value="{{ vehicle.tva }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputCost">Total Compra</label>
-                                        <input type="text" name="totalBuy" class="form-control" id="inputTotalCost" placeholder="" value="{{ vehicle.total }}">
-                                    </div>
+                        </div>
+                        <div class="tab-pane fade" id="sale" role="tabpanel" aria-labelledby="sale-tab">
+                            <div class="form-row mt-3">
+                                <div class="form-group col-md-2 offset-md-6">
+                                    <label for="inputPvp">Precio Venta</label>
+                                    <input type="text" name="pvp" class="form-control" id="inputPvp" placeholder="" value="{{ vehicle.pvp }}">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="inputPvp">Iva Venta</label>
+                                    <input type="text" name="tvaSell" class="form-control" id="inputTvaSell" placeholder="" value="{{ vehicle.pvp }}">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="inputPvp">Total Venta</label>
+                                    <input type="text" name="totalSell" class="form-control" id="inputTotalSell" placeholder="" value="{{ vehicle.pvp }}">
                                 </div>
                             </div>
-                          <div class="tab-pane fade" id="sale" role="tabpanel" aria-labelledby="sale-tab">
-                              <div class="form-row mt-3">
-                                  <div class="form-group col-md-2 offset-md-6">
-                                      <label for="inputPvp">Precio Venta</label>
-                                      <input type="text" name="pvp" class="form-control" id="inputPvp" placeholder="" value="{{ vehicle.pvp }}">
-                                  </div>
-                                  <div class="form-group col-md-2">
-                                      <label for="inputPvp">Iva Venta</label>
-                                      <input type="text" name="tvaSell" class="form-control" id="inputTvaSell" placeholder="" value="{{ vehicle.pvp }}">
-                                  </div>
-                                  <div class="form-group col-md-2">
-                                      <label for="inputPvp">Total Venta</label>
-                                      <input type="text" name="totalSell" class="form-control" id="inputTotalSell" placeholder="" value="{{ vehicle.pvp }}">
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="tab-pane fade" id="accesories" role="tabpanel" aria-labelledby="accesories-tab">
-                              <div class="form-row mt-3">
-                                    <div class="form-check col-md-3">
-                                        <input class="form-check-input" name="acc-A/C" type="checkbox" value="acc-A/C" id="a/c" {% if "acc-A/C" in accesories %} checked {% endif %}>                                                  
-                                       <label class="form-check-label" for="defaultCheck1">
-                                         Aire Acondicionado
-                                       </label>
-                                    </div>
+                        </div>
+                        <div class="tab-pane fade" id="accesories" role="tabpanel" aria-labelledby="accesories-tab">
+                            <div class="form-row mt-3">
+                                <div class="form-check col-md-3">
+                                    <input class="form-check-input" name="acc-A/C" type="checkbox" value="acc-A/C" id="a/c" {% if "acc-A/C" in accesories %} checked {% endif %}>                                                  
+                                   <label class="form-check-label" for="defaultCheck1">
+                                     Aire Acondicionado
+                                   </label>
+                                </div>
                                     <div class="form-check col-md-3">
                                       <input class="form-check-input" name="acc-clima" type="checkbox" value="acc-clima" id="clima" {% if "acc-clima" in accesories %} checked {% endif %}>
                                       <label class="form-check-label" for="defaultCheck1">
