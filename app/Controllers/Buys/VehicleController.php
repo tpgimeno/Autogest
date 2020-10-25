@@ -9,14 +9,17 @@
 namespace App\Controllers\Buys;
 
 use App\Controllers\BaseController;
+use App\Models\Accesories;
 use App\Models\Brand;
 use App\Models\Location;
 use App\Models\ModelVh;
 use App\Models\Store;
 use App\Models\Vehicle;
+use App\Models\VehicleAccesories;
 use App\Models\VehicleTypes;
 use App\Services\Buys\VehicleService;
 use Illuminate\Database\Capsule\Manager as DB;
+use Laminas\Diactoros\Response\JsonResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\ServerRequest;
 use PhpOffice\PhpSpreadsheet\Reader\Xls;
@@ -113,23 +116,16 @@ class VehicleController extends BaseController
                         $vehicle = $vh_temp;
                     }
                 } 
-                $brand = Brand::where('name', 'like', "%".$postData['brand']."%")->first();
-                
-                $vehicle->brand = $brand->id;
-                
-                $model = ModelVh::where('name', 'like', "%".$postData['model']."%")->first();
-                
-                $vehicle->model = $model->id; 
-                
+                $brand = Brand::where('name', 'like', "%".$postData['brand']."%")->first();                
+                $vehicle->brand = $brand->id;                
+                $model = ModelVh::where('name', 'like', "%".$postData['model']."%")->first();                
+                $vehicle->model = $model->id;                
                 $vehicle->description = $postData['description'];
                 $vehicle->plate = $postData['plate'];
                 $vehicle->vin = $postData['vin'];
-                $vehicle->registry_date = date($postData['registry_date']); 
-                
-                $type = VehicleTypes::where('name', 'like', "%".$postData['type']."%")->first(); 
-                
-                $vehicle->type = $type->id; 
-                
+                $vehicle->registry_date = date($postData['registry_date']);                
+                $type = VehicleTypes::where('name', 'like', "%".$postData['type']."%")->first();                
+                $vehicle->type = $type->id;                
                 $store = Store::where('name', 'like', "%".$postData['store']."%")->first();
                 if($store)
                 {
@@ -146,16 +142,8 @@ class VehicleController extends BaseController
                 $vehicle->color = $postData['color'];
                 $vehicle->km = $postData['km'];
                 $vehicle->cost = $postData['cost'];
-                $vehicle->pvp = $postData['pvp'];                
-                $accesories = array_filter($postData , function($string){
-                    $findString = 'acc-';
-                    if(stripos($string, $findString) === 0)
-                    {
-                        return $string;
-                    }
-                });    
-                $accesories_ord = \array_unique($accesories);
-                $vehicle->accesories = implode(", ", $accesories_ord);
+                $vehicle->pvp = $postData['pvp'];         
+                
                 $vehicle->doors = $postData['doors'];                
                 if($vh_temp)
                 {
@@ -175,19 +163,18 @@ class VehicleController extends BaseController
         }
         $vehicleSelected = null;
         $store_selected = null;
-        $location_selected = null;
-        $accesories_withkeys = null;
+        $location_selected = null;        
         if($request->getQueryParams())
         {
             $vehicleSelected = Vehicle::find($request->getQueryParams('id'))->first();
             if($vehicleSelected)
-            {
-                $accesories = explode(", ", $vehicleSelected->accesories);            
-                foreach($accesories as $key => $acc)
-                {            
-                   $key = $acc;  
-                   $accesories_withkeys[$key] = $acc;
-                }
+            {                          
+                $selected_accesories = DB::table('vehicle_accesories')
+                        ->join('accesories', 'vehicle_accesories.accesory_id', '=', 'accesories.id')
+                        ->select('vehicle_accesories.accesory_id','vehicle_accesories.id', 'accesories.keystring', 'accesories.name')
+                        ->where('vehicle_accesories.vehicle_id', '=', $vehicleSelected->id)
+                        ->get()->toArray();
+//                var_dump($selected_accesories);die();
                 if($vehicleSelected->store)
                 {
                     $store_selected = Store::find($vehicleSelected->store)->name;
@@ -198,6 +185,7 @@ class VehicleController extends BaseController
                 }
             }                 
         }
+        $accesories = Accesories::All();
         $brands = Brand::All();
         $models = ModelVh::All();
         $types = VehicleTypes::All(); 
@@ -213,10 +201,49 @@ class VehicleController extends BaseController
             'store_selected' => $store_selected,
             'types' => $types,
             'vehicle' => $vehicleSelected,
-            'accesories' => $accesories_withkeys
+            'accesories' => $accesories,
+            'selected_accesories' => $selected_accesories
         ]);
     }
-    
+    public function addAccesoryAction($request)
+    {
+        $responseMessage = null;
+        $vehicle_accesory = null;
+        $postData = $request->getParsedBody();        
+        $getaccesory = json_decode($postData['vhaccesory']);        
+        $accesory = Accesories::where('keystring', 'like', "%".$getaccesory->accesory."%")->first();               
+        $vehicle_accesory = VehicleAccesories::where('vehicle_id', '=', $getaccesory->vehicle_id)
+                ->where('accesory_id', '=', $accesory->id)
+                ->first();        
+        if($vehicle_accesory === null)
+        {
+            $vehicle_accesory = new VehicleAccesories();
+        }        
+        $vehicle_accesory->vehicle_id = $getaccesory->vehicle_id;
+        $vehicle_accesory->accesory_id = $accesory->id;
+        $vehicle_accesory->save();
+        $responseMessage = 'Accesory Saved';
+        $response = new JsonResponse($responseMessage);
+        return $response;
+    }
+    public function deleteAccesoryAction($request)
+    {
+        $responseMessage = null;
+        $vehicle_accesory = null;
+        $postData = $request->getParsedBody();
+        $getaccesory = json_decode($postData['vhaccesory']);        
+        $accesory = Accesories::where('keystring', 'like', "%".$getaccesory->accesory."%")->first();               
+        $vehicle_accesory = VehicleAccesories::where('vehicle_id', '=', $getaccesory->vehicle_id)
+                ->where('accesory_id', '=', $accesory->id)
+                ->first();        
+        if($vehicle_accesory !== null)
+        {
+            $responseMessage = 'Accesory Deleted';
+            $vehicle_accesory->delete();
+        }             
+        $response = new JsonResponse($responseMessage);
+        return $response;
+    }
     public function importExcel()
     {
         setlocale(LC_ALL, 'es_ES');
@@ -268,8 +295,7 @@ class VehicleController extends BaseController
         return $this->renderHTML('/vehicles/vehiclesList.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'vehicles' => $vehicles
-        ]);
-        
+        ]);        
     }
     
     public function deleteAction(ServerRequest $request)
@@ -292,5 +318,5 @@ class VehicleController extends BaseController
             preg_replace("/[^0-9]/", "", substr($num, 0, $sep)) . '.' .
             preg_replace("/[^0-9]/", "", substr($num, $sep+1, strlen($num)))
         );
-    }
+    }    
 }

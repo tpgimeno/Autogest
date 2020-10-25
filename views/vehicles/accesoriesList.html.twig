@@ -29,16 +29,17 @@
             <div class="col">
                 <table class="table">
                     <tr>
+                        <th>ID</th>
                         <th>Nombre</th>                                               
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
                     {% for accesory in accesories %}
                         <tr>
-                            
+                            <td>{{ accesory.id }}</td>
                             <td>{{ accesory.name }}</td>                           
-                            <td><a href="/intranet/locations/form?id={{accesory.id}}">Edit</td>
-                            <td><a href="/intranet/locations/delete?id={{accesory.id}}">Delete</td>
+                            <td><a href="/intranet/vehicles/accesories/form?id={{accesory.id}}">Edit</td>
+                            <td><a href="/intranet/vehicles/accesories/delete?id={{accesory.id}}">Delete</td>
                         </tr>
                     {% endfor %}                
                 </table>

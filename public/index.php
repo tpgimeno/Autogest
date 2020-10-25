@@ -497,6 +497,14 @@ $map->get('deleteAccesory', '/intranet/vehicles/accesories/delete', [
     'App\Controllers\Buys\AccesoryController',
     'deleteAction'   
 ]);
+$map->post('addVehicleAccesory', '/intranet/vehicles/accesories/add', [        
+    'App\Controllers\Buys\VehicleController',
+    'addAccesoryAction'   
+]);
+$map->post('deleteVehicleAccesory', '/intranet/vehicles/accesories/del', [        
+    'App\Controllers\Buys\VehicleController',
+    'deleteAccesoryAction'   
+]);
 $map->get('brandForm', '/intranet/vehicles/brands/form', [
     'App\Controllers\Entitys\BrandController',
     'getBrandDataAction'

@@ -45,15 +45,15 @@ class AccesoriesController extends BaseController
     public function getAccesoryDataAction($request)
     {
         $responseMessage = null;
-        $accesory_temp = null;       
+        $accesory_temp = null;
+        $keystring = null;
         if($request->getMethod() == 'POST')
         {
             $postData = $request->getParsedBody();           
             $accesoriesValidator = v::key('name', v::stringType()->notEmpty());
             try{
                 $accesoriesValidator->assert($postData);
-                $accesory = new Accesories();
-                
+                $accesory = new Accesories();                
                 $accesory->id = $postData['id'];
                 if($accesory->id)
                 {
@@ -63,7 +63,18 @@ class AccesoriesController extends BaseController
                         $accesory = $accesory_temp;
                     }
                 }                
-                $accesory->name = $postData['name'];                               
+                $accesory->name = $postData['name'];                
+                $words = str_word_count($postData['name']);
+                if($words > 1)
+                {
+                    $keystring = str_replace(" ", "-", $postData['name']);
+                }
+                else
+                {
+                    $keystring = $postData['name'];
+                }
+                $keystring = "acc-".strtolower($keystring);
+                $accesory->keystring = $keystring;
                 if($accesory_temp)
                 {
                     $accesory->update();
@@ -84,14 +95,11 @@ class AccesoriesController extends BaseController
         $params = $request->getQueryParams();
         if($request->getQueryParams('id'))
         {            
-            $selected_accesory = DB::table('accesories')
-                    
-                    ->select('accesories.id','accesories.name')
-                    ->where('accesories.id', '=', $params['id'])
-                   
+            $selected_accesory = DB::table('accesories')                    
+                    ->select('accesories.id', 'accesories.keystring', 'accesories.name')
+                    ->where('accesories.id', '=', $params['id'])                   
                     ->first();
-        }    
-        
+        }        
         return $this->renderHTML('/vehicles/accesoriesForm.html.twig', [
             'selected_accesory' => $selected_accesory,            
             'responseMessage' => $responseMessage

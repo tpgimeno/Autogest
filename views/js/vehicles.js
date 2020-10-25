@@ -25,6 +25,63 @@ window.addEventListener('load', function()
     });
     numeral.locale('es');
     
+    var data = document.getElementById('data');
+    var data_tab = document.getElementById('data-tab');
+    var buy = document.getElementById('buy');
+    var buy_tab = document.getElementById('buy-tab');
+    var sell = document.getElementById('sell');
+    var sell_tab = document.getElementById('sell-tab');
+    var accesories = document.getElementById('accesories');
+    var accesories_tab = document.getElementById('accesories-tab');
+    var selected_tab = "{{ selected_tab }}";
+    
+    switch(selected_tab)
+    {
+        case 'data':
+            data.classList.add('show', 'active');
+            data_tab.classList.add('active');
+            buy.classList.remove('show', 'active');
+            buy_tab.classList.remove('active');
+            sell.classList.remove('show', 'active');
+            sell_tab.classList.remove('active');
+            accesories.classList.remove('show', 'active');
+            accesories_tab.classList.remove('active');
+            break;
+        case 'buy':
+            data.classList.remove('show', 'active');
+            data_tab.classList.remove('active');
+            buy.classList.add('show', 'active');
+            buy_tab.classList.add('active');
+            sell.classList.remove('show', 'active');
+            sell_tab.classList.remove('active');
+            accesories.classList.remove('show', 'active');
+            accesories_tab.classList.remove('active');
+            break;
+        case 'sell':
+            data.classList.remove('show', 'active');
+            data_tab.classList.remove('active');
+            buy.classList.remove('show', 'active');
+            buy_tab.classList.remove('active');
+            sell.classList.add('show', 'active');
+            sell_tab.classList.add('active');
+            accesories.classList.remove('show', 'active');
+            accesories_tab.classList.remove('active');
+            break;
+        case 'accesories':
+            data.classList.remove('show', 'active');
+            data_tab.classList.remove('active');
+            buy.classList.remove('show', 'active');
+            buy_tab.classList.remove('active');
+            sell.classList.remove('show', 'active');
+            sell_tab.classList.remove('active');
+            accesories.classList.add('show', 'active');
+            accesories_tab.classList.add('active');
+            break;
+    }
+    
+    
+    
+    
     var pvp = numeral(document.getElementById("inputPvp").value);
     document.getElementById("inputPvp").value = pvp.format('(0,00.00$)'); 
     var pvc = numeral(document.getElementById("inputCost").value);
@@ -44,5 +101,41 @@ window.addEventListener('load', function()
         var pvp = numeral(document.getElementById("inputPvp").value);
         document.getElementById("inputPvp").value = pvp.format('(0,00.00$)');
     });   
-    
+    var checkboxes = document.getElementsByClassName('form-check-input');
+    for(let i = 0; i < checkboxes.length;i++)
+    {
+        checkboxes[i].addEventListener("change", function()
+        {
+            var vehicle = document.getElementById('inputId'); 
+            var sender = {'accesory': this.value, 'accesory': this.name, 'vehicle_id':numeral(vehicle.value).value()};            
+            if(this.checked)
+            {
+                var request = new XMLHttpRequest();
+                request.open('POST', '/intranet/vehicles/accesories/add', true);
+                request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');                 
+                request.send("vhaccesory=" + JSON.stringify(sender));
+                function reqListener()
+                {
+                   var alert = document.getElementById('alert');
+                   var response = request.responseText;
+                   alert.innerHTML = response;                   
+                }
+                request.addEventListener("load", reqListener);
+            }
+            else
+            {
+                var request = new XMLHttpRequest();
+                request.open('POST', '/intranet/vehicles/accesories/del', true);
+                request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');                
+                request.send("vhaccesory=" + JSON.stringify(sender));
+                function reqListener()
+                {
+                   var alert = document.getElementById('alert');
+                   var response = request.responseText;
+                   alert.innerHTML = response;  
+                }
+                request.addEventListener("load", reqListener);
+            }
+        });
+    }
 });
