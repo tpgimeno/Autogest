@@ -1,10 +1,10 @@
 {% extends "layout.twig" %}  
 {% block loginForm %}
-<form action="/intranet/login" method="post">
+<form id="login" action="/intranet/login" method="post">
     <div class="form-group text-right">        
         <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Email">         
         <input type="password" name="password" class="form-control" id="password" placeholder="Password">  
-        <button type="submit" class="btn btn-primary">Enviar</button>    
+        <button type="submit" name="Submit" class="btn btn-primary">Enviar</button>    
     </div>      
     
 </form>
