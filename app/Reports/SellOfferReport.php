@@ -9,7 +9,6 @@
 namespace App\Reports;
 
 use FPDF;
-use function mb_convert_encoding;
 use function utf8_decode;
 
 define('EURO', chr(128));
@@ -36,7 +35,7 @@ class SellOfferReport extends FPDF{
     }     
     public function Body($data)
     {       
-        var_dump($data);die();
+//        var_dump($data);die();
         $this->SetFont('Arial', 'B', 12);
         $this->SetFillColor(130,130,130);
         $this->SetTextColor(255, 255 ,255);
