@@ -11,8 +11,14 @@ modules:
         # add a framework module here
         - PhpBrowser:
             browser: chrome
-            url: http://127.0.0.1/intranet
-        - \Helper\Functional         
-    step_decorators: ~   
+            url: http://localhost/intranet
+        - \Helper\Functional  
+        - Db:
+            dsn: 'mysql:host=localhost;dbname=automotive'
+            user: 'root'
+            password: ''
+            
+    step_decorators: ~ 
+    
  
      

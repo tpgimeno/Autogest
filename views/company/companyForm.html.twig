@@ -19,7 +19,7 @@
     </div>
     <div class="row">
         <div class="col">
-            <form action="/intranet/company/save" method="post">
+            <form id="CompanyForm" action="/intranet/company/save" method="post">
                 <div class="form-row">
                     <div class="form-group col-md-2">
                         <label for="inputId">ID</label>                        
@@ -29,7 +29,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-9">
                         <label for="inputName">Nombre</label>                        
-                        <input type="name" name="name" class="form-control" id="inputName" placeholder="Nombre" value="{{ company.name }}">
+                        <input type="text" name="name" class="form-control" id="inputName" placeholder="Nombre" value="{{ company.name }}">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputNif">NIF/CIF</label>
@@ -39,7 +39,7 @@
                 <div class="row">
                     <div class="form-group col">
                         <label for="inputSocialName">Razon Social</label>
-                        <input type="socialName" name="fiscal_name" class="form-control" id="inputSocialName" placeholder="Razón Social" value="{{ company.fiscal_name }}">
+                        <input type="text" name="fiscal_name" class="form-control" id="inputSocialName" placeholder="Razón Social" value="{{ company.fiscal_name }}">
                     </div>
                 </div>
                 <div class="form-group">

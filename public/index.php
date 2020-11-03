@@ -87,8 +87,11 @@ $map->get('dashboard', '/intranet/admin', [
     'App\Controllers\AdminController',
     'getDashBoardAction'
 ]);
-
-$map->get('companyForm', '/intranet/company/form', [
+$map->post('companyFormGet', '/intranet/company/form', [
+    'App\Controllers\Entitys\CompanyController',
+    'getCompanyDataAction'
+]);
+$map->get('companyFormPost', '/intranet/company/form', [
     'App\Controllers\Entitys\CompanyController',
     'getCompanyDataAction'
 ]);

@@ -1,0 +1,8 @@
+I WANT TO CREATE A NEW COMPANY
+
+I am on page '/intranet/admin' 
+I click 'Empresas'," '.list-group-item' 
+I see current url equals '/intranet/company/list' 
+I click '#submit'," '#addCompany' 
+I see current url equals '/intranet/company/form'
+
