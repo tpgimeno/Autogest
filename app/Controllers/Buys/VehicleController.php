@@ -163,7 +163,8 @@ class VehicleController extends BaseController
         }
         $vehicleSelected = null;
         $store_selected = null;
-        $location_selected = null;        
+        $location_selected = null; 
+        $selected_accesories = null;
         if($request->getQueryParams())
         {
             $vehicleSelected = Vehicle::find($request->getQueryParams('id'))->first();
@@ -207,8 +208,6 @@ class VehicleController extends BaseController
     }
     public function addAccesoryAction($request)
     {
-        $responseMessage = null;
-        $vehicle_accesory = null;
         $postData = $request->getParsedBody();        
         $getaccesory = json_decode($postData['vhaccesory']);        
         $accesory = Accesories::where('keystring', 'like', "%".$getaccesory->accesory."%")->first();               

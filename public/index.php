@@ -497,7 +497,7 @@ $map->post('saveAccsory', '/intranet/vehicles/accesories/save', [
     'getAccesoryDataAction'
 ]);
 $map->get('deleteAccesory', '/intranet/vehicles/accesories/delete', [        
-    'App\Controllers\Buys\AccesoryController',
+    'App\Controllers\Buys\AccesoriesController',
     'deleteAction'   
 ]);
 $map->post('addVehicleAccesory', '/intranet/vehicles/accesories/add', [        

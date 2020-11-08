@@ -2,7 +2,6 @@
 
 namespace App\Tests;
 
-use Codeception\Util\Locator;
 use FunctionalTester;
 use homeCest;
 
@@ -42,34 +41,23 @@ class companyCest
         $I->canSeeCurrentUrlEquals('/intranet/company/save');
         $I->canSee('Saved');        
     }
-    public function UpdateCompanyTest(\FunctionalTester $I){
+    public function UpdateCompanyTest(FunctionalTester $I){
         $I->amOnPage('/intranet/admin');
         $I->click('Empresas', '.list-group-item');
         $I->seeCurrentUrlEquals('/intranet/company/list');
-        $I->wantTo('Create a new Company');
-        $I->click('#submit', '#addCompany');
-        $I->seeCurrentUrlEquals('/intranet/company/form');        
+        $I->wantTo('Update Company');
+        $I->amOnPage('/intranet/company/form?id='.$this->id);
+        $I->see('Empresas');
         $I->submitForm('#CompanyForm', 
-                array ('id' => $this->id,
-                    'name' => 'Lorem Ipsum S.L.', 
-                    'fiscal_id' => '987654321B', 
-                    'fiscal_name' => 'Lorem Ipsum S.L.',
-                    'address' => 'Avenida Lorem Ipsum, 5',
-                    'city' => 'LOREM',
-                    'postal_code' => '12345',
-                    'state' => 'IPSUM',
-                    'country' => 'LOREMIPSUM',
-                    'phone' => '1234-4546565',
-                    'email' => 'loremipsum@loremipsum.com',
-                    'site' => 'loremipsum.com' 
+                array ('postal_code' => '54321'                    
                     ));        
         $I->canSee('Updated');
     }
-    public function DeleteCompanyTest(\FunctionalTester $I){
+    public function DeleteCompanyTest(FunctionalTester $I){
         $I->amOnPage('/intranet/admin');
         $I->click('Empresas', '.list-group-item');
         $I->seeCurrentUrlEquals('/intranet/company/list');
-        $I->amOnPage('/intranet/company/delete?id='.$this->id);
+        $I->amOnPage('/intranet/company/delete?id='.$this->id);        
     }
             
 }

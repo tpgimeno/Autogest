@@ -17,6 +17,7 @@ modules:
             dsn: 'mysql:host=localhost;dbname=automotive'
             user: 'root'
             password: ''
+        
             
     step_decorators: ~ 
     

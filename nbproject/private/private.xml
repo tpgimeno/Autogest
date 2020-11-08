@@ -12,14 +12,13 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Intranet/tests/functional/dashboardTestCest.php</file>
+            <file>file:/C:/xampp/htdocs/Intranet/app/Controllers/Crm/SellOffersController.php</file>
+            <file>file:/C:/xampp/htdocs/Intranet/views/sells/offers/sellOffersForm.html.twig</file>
             <file>file:/C:/xampp/htdocs/Intranet/views/dashboard.twig</file>
-            <file>file:/C:/xampp/htdocs/Intranet/app/Controllers/Entitys/CompanyController.php</file>
-            <file>file:/C:/xampp/htdocs/Intranet/tests/functional/companyCest.php</file>
-            <file>file:/C:/xampp/htdocs/Intranet/views/company/companyForm.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Intranet/tests/functional.suite.yml</file>
+            <file>file:/C:/xampp/htdocs/Intranet/tests/functional/SellOffersCest.php</file>
+            <file>file:/C:/xampp/htdocs/Intranet/views/sells/offers/sellOffersList.html.twig</file>
             <file>file:/C:/xampp/htdocs/Intranet/public/index.php</file>
-            <file>file:/C:/xampp/htdocs/Intranet/app/Services/CompanyService.php</file>
+            <file>file:/C:/xampp/htdocs/Intranet/tests/functional/CustomerCest.php</file>
         </group>
     </open-files>
 </project-private>
