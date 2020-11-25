@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace App\Controllers\Buys;
+namespace App\Controllers\Vehicle;
 
 use App\Controllers\BaseController;
 use App\Models\Accesories;
@@ -43,57 +43,54 @@ class AccesoriesController extends BaseController
     }
     
     public function getAccesoryDataAction($request)
-    {
-        $responseMessage = null;
-        $accesory_temp = null;
-        $keystring = null;
-        if($request->getMethod() == 'POST')
-        {
-            $postData = $request->getParsedBody();           
-            $accesoriesValidator = v::key('name', v::stringType()->notEmpty());
-            try{
-                $accesoriesValidator->assert($postData);
-                $accesory = new Accesories();                
-                $accesory->id = $postData['id'];
-                if($accesory->id)
-                {
-                    $accesory_temp = Accesories::find($accesory->id);
-                    if($accesory_temp)
-                    {
-                        $accesory = $accesory_temp;
-                    }
-                }                
-                $accesory->name = $postData['name'];                
-                $words = str_word_count($postData['name']);
-                if($words > 1)
-                {
-                    $keystring = str_replace(" ", "-", $postData['name']);
-                }
-                else
-                {
-                    $keystring = $postData['name'];
-                }
-                $keystring = "acc-".strtolower($keystring);
-                $accesory->keystring = $keystring;
-                if($accesory_temp)
-                {
-                    $accesory->update();
-                    $responseMessage = 'Updated';
-                }
-                else
-                {
-                    $accesory->save();
-                    $responseMessage = 'Saved';
-                }
-                
-            } catch (Exception $ex) {
-                $responseMessage = $ex->getMessage();
+    {               
+        $keystring = null;        
+        $postData = $request->getParsedBody();           
+        $accesoriesValidator = v::key('name', v::stringType()->notEmpty());
+        try{
+            $accesoriesValidator->assert($postData);
+            $accesory = new Accesories();
+            if(isset($postData['id']) && $postData['id'])
+            {
+                $accesory = Accesories::find($postData['id']);
+            }                              
+            $accesory->name = $postData['name'];                
+            $words = str_word_count($postData['name']);
+            if($words > 1)
+            {
+                $keystring = str_replace(" ", "-", $postData['name']);
             }
+            else
+            {
+                $keystring = $postData['name'];
+            }
+            $keystring = "acc-".strtolower($keystring);
+            $accesory->keystring = $keystring;
+            $responseMessage = $this->saveAccesory($accesory);
+        } catch (Exception $ex) {
+            $responseMessage = $ex->getMessage();
+        }              
+        $this->renderAccesory($request, $responseMessage);
+    }
+    public function saveAccesory($accesory)
+    {
+        if(Accesories::find($accesory->id))
+        {
+            $accesory->update();
+            $responseMessage = 'Updated';
         }
+        else
+        {
+            $accesory->save();
+            $responseMessage = 'Saved';
+        }
+        return $responseMessage;
+    }
+    public function renderAccesory($request, $responseMessage)
+    {
         $selected_accesory = null;
-       
         $params = $request->getQueryParams();
-        if($request->getQueryParams('id'))
+        if(isset($params['id']) && $params['id'])
         {            
             $selected_accesory = DB::table('accesories')                    
                     ->select('accesories.id', 'accesories.keystring', 'accesories.name')

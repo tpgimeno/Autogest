@@ -479,7 +479,7 @@ $map->get('deleteVehicle', '/intranet/vehicles/delete', [
 ]);
 $map->get('accesoryForm', '/intranet/vehicles/accesories/form', [
     'App\Controllers\Buys\AccesoriesController',
-    'getAccesoryDataAction'
+    'renderAccesory'
 ]);
 $map->get('accesoryList', '/intranet/vehicles/accesories/list', [
     'App\Controllers\Buys\AccesoriesController',
