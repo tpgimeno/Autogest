@@ -15,6 +15,7 @@ final class CreateWorksTable extends AbstractMigration
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime')
                 ->addColumn('deleted_at', 'datetime')
+                ->addIndex('reference' , ['unique' => true])
                 ->create();
     }
 }

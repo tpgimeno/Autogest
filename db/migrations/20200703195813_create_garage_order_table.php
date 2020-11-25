@@ -19,22 +19,23 @@ final class CreateGarageOrderTable extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('garage_orders');
-        $table->addColumn('order_number', 'string')
-                ->addColumn('date_in', 'date')
-                ->addColumn('date_out', 'date')
-                ->addColumn('vehicle_id', 'integer')
-                ->addColumn('customer_id', 'integer')
-                ->addColumn('km_in', 'integer')
-                ->addColumn('km_out', 'integer')
+        $table->addColumn('orderNumber', 'string')
+                ->addColumn('dateIn', 'date')
+                ->addColumn('dateOut', 'date')
+                ->addColumn('vehicleId', 'integer')
+                ->addColumn('customerId', 'integer')
+                ->addColumn('kmIn', 'integer')
+                ->addColumn('kmOut', 'integer')
                 ->addColumn('works', 'string')
                 ->addColumn('articles', 'string')
-                ->addColumn('price_works', 'string')
-                ->addColumn('price_articles', 'string')
+                ->addColumn('priceWorks', 'string')
+                ->addColumn('priceArticles', 'string')
                 ->addColumn('observations', 'string')
                 ->addColumn('text', 'string')
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime')
                 ->addColumn('deleted_at', 'datetime')
+                ->addIndex('orderNumber', ['unique' => true])
                 ->create();
     }
 }

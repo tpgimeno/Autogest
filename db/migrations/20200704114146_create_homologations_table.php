@@ -20,23 +20,24 @@ final class CreateHomologationsTable extends AbstractMigration
     {
         $table = $this->table('homologations');
         $table->addColumn('description', 'string')
-                ->addColumn('homologation_code', 'string')
-                ->addColumn('prototype_id', 'string')
+                ->addColumn('homologationCode', 'string')
+                ->addColumn('prototypeId', 'string')
                 ->addColumn('large', 'integer')
                 ->addColumn('width', 'integer')
                 ->addColumn('height', 'integer')
-                ->addColumn('doors_number', 'integer')
-                ->addColumn('height_rear_door', 'integer')
-                ->addColumn('width_rear_door', 'integer')
-                ->addColumn('height_lateral_door', 'integer') 
-                ->addColumn('width_lateral_door', 'integer')
+                ->addColumn('doorsNumber', 'integer')
+                ->addColumn('heightRearDoor', 'integer')
+                ->addColumn('widthRearDoor', 'integer')
+                ->addColumn('heightLateralDoor', 'integer') 
+                ->addColumn('widthLateralDoor', 'integer')
                 ->addColumn('weight', 'integer')
-                ->addColumn('coeficient_k', 'float')
+                ->addColumn('coeficientK', 'float')
                 ->addColumn('essay', 'string')
-                ->addColumn('date_essay', 'date')
+                ->addColumn('dateEssay', 'date')
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime')
                 ->addColumn('deleted_at', 'datetime')
+                ->addIndex('homologationCode', ['unique' => true])
                 ->create();
     }
 }

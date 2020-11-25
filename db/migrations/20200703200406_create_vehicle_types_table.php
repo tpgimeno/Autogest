@@ -18,7 +18,7 @@ final class CreateVehicleTypesTable extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('vehicle_types');
+        $table = $this->table('vehicleTypes');
         $table->addColumn('name', 'string')  
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime')

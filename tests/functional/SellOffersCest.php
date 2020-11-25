@@ -23,24 +23,11 @@ class SellOffersCest
         $I->click('#submit', '#addSellOffer');
         $I->click('#searchCustomer');
         $I->canSee('Clientes');
-        $I->click('#edit', Locator::lastElement('//table/tr'));
-        $I->submitForm('#SellOfferForm', 
-                array('fiscal_id' => $fiscal_id,
-                    'name' => 'Lorem Ipsum',
-                    'type' => 'Particular',
-                    'address' => 'C/ Lorem ipsum, 5',
-                    'city' => 'Lorem ipsum',
-                    'postal_code' => '12345',
-                    'state' => 'Lorem',
-                    'country' => 'LoremIpsum',
-                    'phone' => '65451386',
-                    'email' => 'loremipsum@loremipsum.com',
-                    'birth' => '12/06/1995'
-                    ));   
+        $I->click('#select', Locator::lastElement('//table/tr'));           
         $this->id = $I->grabFromDatabase('customers', 'id', array('fiscal_id' => $fiscal_id));
         $I->canSee('Saved');
     }
-    public function UpdateCustomerTest(FunctionalTester $I)
+    public function UpdateSellOfferTest(FunctionalTester $I)
     {
         $I->amOnPage('/intranet/admin');
         $I->click('Clientes', '.list-group-item');
@@ -50,7 +37,7 @@ class SellOffersCest
         $I->click('#submit');
         $I->canSee('Updated');     
     }
-    public function DeleteCustomerTest(FunctionalTester $I)
+    public function DeleteSellOfferTest(FunctionalTester $I)
     {
         $I->amOnPage('/intranet/admin');
         $I->click('Clientes', '.list-group-item');

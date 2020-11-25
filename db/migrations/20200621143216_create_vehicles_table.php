@@ -49,8 +49,9 @@ class CreateVehiclesTable extends AbstractMigration
                 ->addColumn('pvp', 'string')
                 ->addColumn('accesories', 'string')
                 ->addColumn('created_at', 'datetime')
-                ->addColumn('updated_at', 'datetime')
+                ->addColumn('cpdated_at', 'datetime')
                 ->addColumn('deleted_at', 'datetime')
+                ->addIndex('vin', ['unique' => true])
                 ->create();                
     }
 }
