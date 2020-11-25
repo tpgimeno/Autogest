@@ -9,12 +9,14 @@
 namespace App\Controllers\Buys;
 
 use App\Controllers\BaseController;
-use App\Models\Mader;
 use App\Models\Components;
+use App\Models\Mader;
 use App\Services\Buys\ComponentsService;
+use Illuminate\Database\Capsule\Manager as DB;
+use Laminas\Diactoros\ServerRequest;
 use Respect\Validation\Validator as v;
 use Symfony\Component\Config\Definition\Exception\Exception;
-use Illuminate\Database\Capsule\Manager as DB;
+use Laminas\Diactoros\Response\RedirectResponse;
 
 /**
  * Description of ComponentsController
@@ -42,8 +44,7 @@ class ComponentsController extends BaseController
         ]);
     }    
     public function getComponentsDataAction($request)
-    {
-       
+    {       
         $responseMessage = null;
         $component_temp = null;
         $mader = null;
@@ -57,20 +58,16 @@ class ComponentsController extends BaseController
             try{
                 $componentsValidator->assert($postData);
                 $component = new Components();
-                $component_temp = null;
-                $component->id = $postData['id'];                
-                if($component->id)
+                $component_temp = null;                               
+                if(Components::find($postData['id']))
                 {
-                    $component_temp = Components::find($component->id);                    
-                    if($component_temp)
-                    {
-                        $component = $component_temp;
-                    }
+                    $component_temp = Components::find($postData['id']);                    
+                    $component = $component_temp;                    
                 }               
                 $component->name = $postData['name'];
                 $component->ref = $postData['ref'];   
                 $component->serial_number = $postData['serial_number'];
-                $mader = Mader::where('name', '=', "%".$postData['mader']);
+                $mader = Mader::where('name', 'like', "%".$postData['mader']."%")->first();               
                 $component->mader = $mader->id;                
                 $component->pvc = $this->tofloat($postData['pvc']);                
                 $component->pvp = $this->tofloat($postData['pvp']);
@@ -115,5 +112,10 @@ class ComponentsController extends BaseController
             'maders' => $maders,
             'responseMessage' => $responseMessage
         ]);
-    }    
+    } 
+    public function deleteAction(ServerRequest $request)
+    {         
+        $this->componentsService->deleteComponents($request->getQueryParams('id'));               
+        return new RedirectResponse('/intranet/buys/components/list');
+    } 
 }

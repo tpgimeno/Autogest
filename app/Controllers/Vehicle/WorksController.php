@@ -35,7 +35,7 @@ class WorksController extends BaseController
     public function getIndexAction()
     {
         $works = DB::table('works')                
-                ->select('works.id', 'works.reference', 'works.description', 'works.price', 'works.cantity')
+                ->select('works.id', 'works.reference', 'works.description', 'works.price')
                 ->whereNull('works.deleted_at')
                 ->get();
         
@@ -54,15 +54,11 @@ class WorksController extends BaseController
             $worksValidator = v::key('description', v::stringType()->notEmpty());
             try{
                 $worksValidator->assert($postData);
-                $work = new Works();
-                $work->id = $postData['id'];
-                if($work->id)
+                $work = new Works();                
+                if(Works::find($postData['id']))
                 {
-                    $work_temp = Works::find($work->id);
-                    if($work_temp)
-                    {
-                        $work = $work_temp;
-                    }
+                    $work_temp = Works::find($postData['id']);                    
+                    $work = $work_temp;                    
                 }                
                 $work->reference = $postData['reference'];
                 $work->description = $postData['description'];
@@ -87,8 +83,8 @@ class WorksController extends BaseController
         $params = $request->getQueryParams();
         if($request->getQueryParams('id'))
         {            
-            $selected_supply = DB::table('works')                   
-                    ->select('works.id', 'works.reference', 'works.description', 'works.cantity', 'works.price')
+            $selected_work = DB::table('works')                   
+                    ->select('works.id', 'works.reference', 'works.description', 'works.price')
                     ->where('works.id', '=', $params['id'])
                     ->whereNull('works.deleted_at')
                     ->first();

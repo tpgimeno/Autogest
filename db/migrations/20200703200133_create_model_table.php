@@ -20,7 +20,7 @@ final class CreateModelTable extends AbstractMigration
     {
         $table = $this->table('models');
         $table->addColumn('name', 'string')
-                ->addColumn('brand_id', 'integer')
+                ->addColumn('brandId', 'integer')
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime')
                 ->addColumn('deleted_at', 'datetime')

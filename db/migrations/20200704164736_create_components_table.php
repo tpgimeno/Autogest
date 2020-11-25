@@ -21,7 +21,7 @@ final class CreateComponentsTable extends AbstractMigration
         $table = $this->table('components');
         $table->addColumn('name', 'string')
                 ->addColumn('ref', 'string')
-                ->addColumn('serial_number', 'string')
+                ->addColumn('serialNumber', 'string')
                 ->addColumn('mader', 'integer')
                 ->addColumn('pvc', 'float')
                 ->addColumn('pvp', 'float')
@@ -30,6 +30,7 @@ final class CreateComponentsTable extends AbstractMigration
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime')
                 ->addColumn('deleted_at', 'datetime')
+                ->addIndex('serialNumber', ['unique' => true])
                 ->create();
     }
 }

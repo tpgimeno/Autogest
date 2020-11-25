@@ -699,7 +699,8 @@ class SellOffersController extends BaseController {
         $offer_number = $offerString.$offerStringNumber;
         return $offer_number;         
     }
-    public function getNewSellOfferNumber($last_offer){                
+    public function getNewSellOfferNumber($last_offer){  
+        $offerString = '2020OF';
         $offer_string = substr($last_offer->offer_number, 6, 4);
         $offer_integer = intval($offer_string) + 1;
         $stringNumber = strval($offer_integer);                

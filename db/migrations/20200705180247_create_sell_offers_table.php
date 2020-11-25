@@ -19,22 +19,23 @@ final class CreateSellOffersTable extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('selloffers');
-        $table->addColumn('offer_number', 'string')
+        $table->addColumn('offerNumber', 'string')
                 ->addColumn('customer_id', 'string')
-                ->addColumn('vehicle_id', 'string')
-                ->addColumn('vehicle_pvp', 'float')
-                ->addColumn('vehicle_tva', 'float')
-                ->addColumn('vehicle_total', 'float')                
+                ->addColumn('vehicleId', 'string')
+                ->addColumn('vehiclePvp', 'float')
+                ->addColumn('vehicleTva', 'float')
+                ->addColumn('vehicleTotal', 'float')                
                 ->addColumn('pvp', 'float')
                 ->addColumn('discount', 'float')
                 ->addColumn('tva', 'float')
                 ->addColumn('total', 'float')
                 ->addColumn('observations', 'string')
                 ->addColumn('texts', 'string')  
-                ->addColumn('vehicle_comments', 'string') 
+                ->addColumn('vehicleComments', 'string') 
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime')
                 ->addColumn('deleted_at', 'datetime')
+                ->addIndex('offerNumber', ['unique' => true])
                 ->create();
     }
 }

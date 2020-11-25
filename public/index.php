@@ -87,8 +87,11 @@ $map->get('dashboard', '/intranet/admin', [
     'App\Controllers\AdminController',
     'getDashBoardAction'
 ]);
-
-$map->get('companyForm', '/intranet/company/form', [
+$map->post('companyFormGet', '/intranet/company/form', [
+    'App\Controllers\Entitys\CompanyController',
+    'getCompanyDataAction'
+]);
+$map->get('companyFormPost', '/intranet/company/form', [
     'App\Controllers\Entitys\CompanyController',
     'getCompanyDataAction'
 ]);
@@ -494,7 +497,7 @@ $map->post('saveAccsory', '/intranet/vehicles/accesories/save', [
     'getAccesoryDataAction'
 ]);
 $map->get('deleteAccesory', '/intranet/vehicles/accesories/delete', [        
-    'App\Controllers\Buys\AccesoryController',
+    'App\Controllers\Buys\AccesoriesController',
     'deleteAction'   
 ]);
 $map->post('addVehicleAccesory', '/intranet/vehicles/accesories/add', [        

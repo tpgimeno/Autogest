@@ -64,11 +64,14 @@ class CustomerController extends BaseController
                 $customer = new Customer();
                 $customer->id = $postData['id'];
                 $selected = false;
-                if($customer->id)
+                
+                if(Customer::find($postData['id']))
                 {
-                    $customer = Customer::find($postData['id'])->first();
+                    
+                    $customer = Customer::find($postData['id']);
                     $selected = true;
                 }
+               
                 $customer->name = $postData['name'];
                 $customer->fiscal_id = $postData['fiscal_id'];               
                 $customer->address = $postData['address'];
@@ -79,11 +82,12 @@ class CustomerController extends BaseController
                 $customer->phone = $postData['phone'];
                 $customer->email = $postData['email'];
                 $customer->birth_date = $postData['birth'];
-                $customer->customer_type = $postData['type'];
+                $type = CustomerTypes::where('name', 'like', "%".$postData['type']."%")->first();                
+                $customer->customer_type = $type->id;
                 if($selected == true)
                 {
                     $customer->update();     
-                    $responseMessage = 'Update'; 
+                    $responseMessage = 'Updated'; 
                 }
                 else
                 {
@@ -95,19 +99,22 @@ class CustomerController extends BaseController
             }              
         }
         $customerSelected = null;
-        if($request->getqueryParams())
-        {
-            $customerSelected = Customer::find($request->getQueryParams('id'));
+        $params = $request->getQueryParams();
+        if($params)
+        {            
+            $customerSelected = Customer::find($params['id']);            
         }
         $types = CustomerTypes::All();
+        $CustomerType = null;
         if($customerSelected)
         {
-            $types = CustomerTypes::find($customerSelected->customer_type)->first();
+            $CustomerType = CustomerTypes::find($customerSelected->customer_type);            
         }
         return $this->renderHTML('/customers/customerForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
             'customer' => $customerSelected,
+            'customer_type' => $CustomerType,
             'types' => $types
         ]);
     }

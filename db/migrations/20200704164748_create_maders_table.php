@@ -22,7 +22,7 @@ final class CreateMadersTable extends AbstractMigration
         $table->addColumn('name', 'string')               
                 ->addColumn('address', 'string')
                 ->addColumn('city', 'string')
-                ->addColumn('postal_code', 'integer')
+                ->addColumn('postalCode', 'integer')
                 ->addColumn('state', 'string')
                 ->addColumn('country', 'string')
                 ->addColumn('phone', 'string')

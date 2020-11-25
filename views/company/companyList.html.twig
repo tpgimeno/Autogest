@@ -27,7 +27,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <table class="table">
+                <table id="companyTable" class="table">
                     <tr>
                         <th>ID</th>
                         <th>Nombre</th>
@@ -44,8 +44,8 @@
                             <td>{{ comp.city }}</td>
                             <td>{{ comp.phone }}</td>
                             <td>{{ comp.email }}</td>
-                            <td><a href="/intranet/company/form?id={{comp.id}}">Edit</td>
-                            <td><a href="/intranet/company/delete?id={{comp.id}}">Delete</td>
+                            <td><a id="edit" href="/intranet/company/form?id={{comp.id}}">Edit</td>
+                            <td><a id="delete" href="/intranet/company/delete?id={{comp.id}}">Delete</td>
                         </tr>
                     {% endfor %}                
                 </table>
@@ -53,9 +53,9 @@
         </div>
         <div class="row">
             <div class="col d-flex justify-content-end">
-                <form action="/intranet/company/form" method="get">
+                <form id="addCompany" action="/intranet/company/form" method="get">
                     <div class="form-group">
-                        <input type="submit" class="btn btn-primary" value="Añadir">
+                        <input id="submit" type="submit" class="btn btn-primary" value="Añadir">
                         <a href="/intranet/admin" class="btn btn-primary">Cancelar</a>
                     </div>
                 </form>

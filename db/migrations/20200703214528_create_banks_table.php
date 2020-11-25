@@ -20,12 +20,12 @@ final class CreateBanksTable extends AbstractMigration
     {
         $table = $this->table('banks');
         $table->addColumn('name', 'string')
-                ->addColumn('fiscal_id', 'string')
-                ->addColumn('fiscal_name', 'string')
-                ->addColumn('bank_code', 'string')
+                ->addColumn('fiscalId', 'string')
+                ->addColumn('fiscalName', 'string')
+                ->addColumn('bankCode', 'string')
                 ->addColumn('address', 'string')
                 ->addColumn('city', 'string')
-                ->addColumn('postal_code', 'integer')
+                ->addColumn('postalCode', 'integer')
                 ->addColumn('state', 'string')
                 ->addColumn('country', 'string')
                 ->addColumn('phone', 'string')
@@ -34,6 +34,7 @@ final class CreateBanksTable extends AbstractMigration
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime')
                 ->addColumn('deleted_at', 'datetime')
+                ->addIndex('fiscalId', ['unique' => true])
                 ->create();
     }
 }

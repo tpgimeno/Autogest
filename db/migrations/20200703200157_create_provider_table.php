@@ -20,8 +20,8 @@ final class CreateProviderTable extends AbstractMigration
     {
         $table = $this->table('providers');
         $table->addColumn('name', 'string')
-                ->addColumn('fiscal_id', 'string')
-                ->addColumn('fiscal_name', 'string')
+                ->addColumn('fiscalId', 'string')
+                ->addColumn('fiscalName', 'string')
                 ->addColumn('address', 'string')
                 ->addColumn('city', 'string')
                 ->addColumn('postal_code', 'integer')
@@ -33,6 +33,7 @@ final class CreateProviderTable extends AbstractMigration
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime')
                 ->addColumn('deleted_at', 'datetime')
+                ->addIndex('fiscalId', ['unique' => true])
                 ->create();
     }
 }

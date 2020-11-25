@@ -20,11 +20,11 @@ final class CreateFinanceTable extends AbstractMigration
     {
         $table = $this->table('finance');
         $table->addColumn('name', 'string')
-                ->addColumn('fiscal_id', 'string')
-                ->addColumn('fiscal_name', 'string')
+                ->addColumn('fiscalId', 'string')
+                ->addColumn('fiscalName', 'string')
                 ->addColumn('address', 'string')
                 ->addColumn('city', 'string')
-                ->addColumn('postal_code', 'integer')
+                ->addColumn('postalCode', 'integer')
                 ->addColumn('state', 'string')
                 ->addColumn('country', 'string')
                 ->addColumn('phone', 'string')
@@ -33,6 +33,7 @@ final class CreateFinanceTable extends AbstractMigration
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime')
                 ->addColumn('deleted_at', 'datetime')
+                ->addIndex('fiscalId' , ['unique' => true])
                 ->create();
     }
 }

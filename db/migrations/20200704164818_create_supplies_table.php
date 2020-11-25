@@ -22,7 +22,7 @@ final class CreateSuppliesTable extends AbstractMigration
         $table->addColumn('name', 'string')
                 ->addColumn('ref', 'string')
                 ->addColumn('mader', 'integer')
-                ->addColumn('mader_code', 'string')
+                ->addColumn('maderCode', 'string')
                 ->addColumn('pvc', 'float')
                 ->addColumn('pvp', 'float')
                 ->addColumn('observations', 'string')
@@ -30,6 +30,7 @@ final class CreateSuppliesTable extends AbstractMigration
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime')
                 ->addColumn('deleted_at', 'datetime')
+                ->addIndex('ref' , ['unique' => true])
                 ->create();
     }
 }

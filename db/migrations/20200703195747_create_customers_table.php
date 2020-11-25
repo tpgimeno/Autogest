@@ -20,19 +20,20 @@ final class CreateCustomersTable extends AbstractMigration
     {
         $table = $this->table('customers');
         $table->addColumn('name', 'string')
-                ->addColumn('fiscal_id', 'string')                
+                ->addColumn('fiscalId', 'string')                
                 ->addColumn('address', 'string')
                 ->addColumn('city', 'string')
-                ->addColumn('postal_code', 'integer')
+                ->addColumn('postalCode', 'integer')
                 ->addColumn('state', 'string')
                 ->addColumn('country', 'string')
                 ->addColumn('phone', 'string')
                 ->addColumn('email', 'string')
-                ->addColumn('birth_date', 'date')
-                ->addColumn('customer_type', 'integer')
+                ->addColumn('birthDate', 'date')
+                ->addColumn('customerType', 'integer')
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime')
                 ->addColumn('deleted_at', 'datetime')
+                ->addIndex('fiscalId' , ['unique' => true])
                 ->create();
     }
 }

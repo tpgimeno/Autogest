@@ -18,10 +18,10 @@ final class CreateBuyDeliveryTable extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('buy_delivery');
-        $table->addColumn('delivery_number', 'string')
+        $table = $this->table('buyDelivery');
+        $table->addColumn('deliveryNumber', 'string')
                 ->addColumn('date', 'date')
-                ->addColumn('providor_id', 'integer')
+                ->addColumn('providorId', 'integer')
                 ->addColumn('articles', 'string')
                 ->addColumn('base', 'float')
                 ->addColumn('tva', 'float')
@@ -31,6 +31,7 @@ final class CreateBuyDeliveryTable extends AbstractMigration
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime')
                 ->addColumn('deleted_at', 'datetime')
+                ->addIndex('deliveryNumber', ['unique' => true])
                 ->create();
     }
 }

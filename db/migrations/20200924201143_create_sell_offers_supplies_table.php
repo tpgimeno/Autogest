@@ -18,9 +18,9 @@ final class CreateSellOffersSuppliesTable extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('selloffers_supplies');
-        $table->addColumn('selloffer_id', 'integer')
-                ->addColumn('supply_id', 'integer')
+        $table = $this->table('selloffersSupplies');
+        $table->addColumn('sellofferId', 'integer')
+                ->addColumn('supplyId', 'integer')
                 ->addColumn('cantity', 'integer')
                 ->addColumn('price', 'float')
                 ->addColumn('created_at', 'datetime')

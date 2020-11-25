@@ -16,7 +16,7 @@
             </div>
         </div>
     </div>              
-    <div class="form-row">
+    <div class="row">
         <div class="col">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -37,7 +37,7 @@
             </ul>
         </div>
     </div>      
-    <form action="/intranet/crm/offers/save" method="post" class="form">
+    <form id="SellOfferForm" action="/intranet/crm/offers/save" method="post" class="form">
         <div class="tab-content" id="myTabContent">    
             <div class="tab-pane fade show active" id="offer" role="tabpanel" aria-labelledby="offer-tab">
                 <div class="form-row mt-3">
@@ -88,7 +88,7 @@
             <div class="tab-pane fade" id="customer" role="tabpanel" aria-labelledby="customer-tab">
                 <div class="form-row mt-3">
                     <div class="form-group col text-right">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchCustomerModal">
+                        <button id="searchCustomer" type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchCustomerModal">
                             Buscar Cliente
                         </button>
                     </div>
@@ -148,7 +148,7 @@
                 <div class="form-row mt-3">                                                      
                     <div class="form-group col">
                         <div class="form-group col text-right">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchVehicleModal">
+                        <button id="searchVehicle" type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchVehicleModal">
                             Buscar Vehículo
                         </button>
                     </div>
@@ -246,7 +246,7 @@
             <div class="tab-pane fade" id="supplies" role="tabpanel" aria-labelledby="supplies-tab">
                 <div class="form-row mt-3">
                     <div class="form-group col text-right">
-                        <button type="button" formmethod="get" class="btn btn-primary" data-toggle="modal" data-target="#searchSuppliesModal">
+                        <button id="searchSupplies" type="button" formmethod="get" class="btn btn-primary" data-toggle="modal" data-target="#searchSuppliesModal">
                             Buscar Recambios
                         </button>                        
                     </div>
@@ -324,7 +324,7 @@
                 </div>
                         <div class="form-row mt-3">
                     <div class="form-group col text-right">                        
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchComponentsModal">
+                        <button id="searchComponents" type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchComponentsModal">
                             Buscar Componentes
                         </button>
                     </div>
@@ -404,7 +404,7 @@
             <div class="tab-pane fade" id="works" role="tabpanel" aria-labelledby="works-tab">
                 <div class="form-row mt-3">
                     <div class="form-group col text-right">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchWorksModal">
+                        <button id="searchWorks" type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchWorksModal">
                             Buscar Trabajos
                         </button>                        
                     </div>
@@ -477,7 +477,7 @@
         <div class="form-row">
             <div class="form-group col text-right">
                 <button type="submit" formaction="/intranet/reports/selloffer" formmethod="post"  class="btn btn-primary">Imprimir</button>
-                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button id="submit" type="submit" class="btn btn-primary">Guardar</button>
                 <a href="/intranet/admin" class="btn btn-primary">Cancelar</a>
             </div>
         </div> 
@@ -525,7 +525,7 @@
                                         <td>{{ customer.city }}</td>
                                         <td>{{ customer.phone }}</td>
                                         <td>{{ customer.email }}</td>
-                                        <td><a href="/intranet/crm/offers/customer/select?customer_id={{ customer.id }}&offer_id={{ new_selloffer }}&vehicle_id={{selected_vehicle.id}}&work_id={{selected_work.id}}&supply_id={{ selected_supply.id }}&component_id={{ selected_component.id }}">Select</a></td>                                        
+                                        <td><a id="edit" href="/intranet/crm/offers/customer/select?customer_id={{ customer.id }}&offer_id={{ new_selloffer }}&vehicle_id={{selected_vehicle.id}}&work_id={{selected_work.id}}&supply_id={{ selected_supply.id }}&component_id={{ selected_component.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>
@@ -588,7 +588,7 @@
                                         <td>{{ vehicle.brand }}</td>
                                         <td>{{ vehicle.model }}</td>
                                         <td>{{ vehicle.description }}</td>
-                                        <td><a href="/intranet/crm/offers/vehicle/select?vehicle_id={{vehicle.id}}&offer_id={{ new_selloffer }}&work_id={{selected_work.id}}&customer_id={{ selected_customer.id }}&supply_id={{ selected_supply.id }}&component_id={{ selected_component.id }}">Select</a></td>                                        
+                                        <td><a id="edit" href="/intranet/crm/offers/vehicle/select?vehicle_id={{vehicle.id}}&offer_id={{ new_selloffer }}&work_id={{selected_work.id}}&customer_id={{ selected_customer.id }}&supply_id={{ selected_supply.id }}&component_id={{ selected_component.id }}">Select</a></td>                                        
                                     </tr>
                                 {% endfor %}                
                             </table>
@@ -647,7 +647,7 @@
                                         <td>{{ supply.name }}</td>
                                         <td>{{ supply.stock }}</td>
                                         <td>{{ supply.pvp }}</td>
-                                        <td><a href="/intranet/crm/offers/supplies/select?supply_id={{ supply.id }}&offer_id={{ new_selloffer }}&work_id={{selected_work.id}}&vehicle_id={{ selected_vehicle.id }}&customer_id={{ selected_customer.id }}&component_id={{ selected_component.id }}">Select</a></td>                                        
+                                        <td><a id="select" href="/intranet/crm/offers/supplies/select?supply_id={{ supply.id }}&offer_id={{ new_selloffer }}&work_id={{selected_work.id}}&vehicle_id={{ selected_vehicle.id }}&customer_id={{ selected_customer.id }}&component_id={{ selected_component.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>
@@ -705,7 +705,7 @@
                                         <td>{{ component.name }}</td>
                                         <td>{{ component.stock }}</td>
                                         <td>{{ component.pvp }}</td>                                        
-                                        <td><a href="/intranet/crm/offers/components/select?component_id={{component.id}}&offer_id={{new_selloffer}}&work_id={{selected_work.id}}&vehicle_id={{ selected_vehicle.id }}&supply_id={{ selected_supply.id }}&customer_id={{ selected_customer.id }}">Select</a></td>                                        
+                                        <td><a id="select" href="/intranet/crm/offers/components/select?component_id={{component.id}}&offer_id={{new_selloffer}}&work_id={{selected_work.id}}&vehicle_id={{ selected_vehicle.id }}&supply_id={{ selected_supply.id }}&customer_id={{ selected_customer.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>
@@ -758,7 +758,7 @@
                                         <td>{{ work.reference }}</td>
                                         <td>{{ work.description }}</td>                                                                               
                                         <td>{{ work.price }}</td>                                        
-                                        <td><a href="/intranet/crm/offers/works/select?work_id={{work.id}}&offer_id={{new_selloffer}}&vehicle_id={{ selected_vehicle.id }}&supply_id={{ selected_supply.id }}&component_id={{ selected_component.id }}&customer_id={{ selected_customer.id }}">Select</a></td>                                        
+                                        <td><a id="select" href="/intranet/crm/offers/works/select?work_id={{work.id}}&offer_id={{new_selloffer}}&vehicle_id={{ selected_vehicle.id }}&supply_id={{ selected_supply.id }}&component_id={{ selected_component.id }}&customer_id={{ selected_customer.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>

@@ -25,6 +25,7 @@ final class CreateCountersTable extends AbstractMigration
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime')
                 ->addColumn('deleted_at', 'datetime')
+                ->addIndex('Reference', ['unique' => true])
                 ->create();  
     }
 }

@@ -7,7 +7,6 @@
  */
 
 namespace App\Controllers\Buys;
-
 /**
  * Description of PaymentWaysController
  *
