@@ -39,11 +39,10 @@ class ModelController extends BaseController
                 ->select('models.id', 'brands.name as brand', 'models.name')
                 ->whereNull('models.deleted_at')
                 ->get();    
-        $brands = Brand::All();
+        
         return $this->renderHTML('/vehicles/models/modelsList.html.twig', [
             'currentUser' => $this->currentUser->getCurrentUserEmailAction(),
-            'models' => $models,
-            'brands' => $brands
+            'models' => $models
         ]);
     }
     public function searchModelAction($request)

@@ -6,12 +6,12 @@
  * and open the template in the editor.
  */
 
-namespace App\Controllers\Buys;
+namespace App\Controllers\Vehicle;
 
 use App\Controllers\BaseController;
 use App\Models\Mader;
 use App\Models\Supplies;
-use App\Services\Buys\SuppliesService;
+use App\Services\Vehicle\SuppliesService;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\ServerRequest;
 use ZipStream\Exception;
@@ -37,11 +37,11 @@ class SuppliesController extends BaseController
     {
         $supplies = DB::table('supplies')
                 ->join('maders', 'supplies.mader', '=', 'maders.id')
-                ->select('supplies.id', 'supplies.ref', 'maders.name as mader', 'supplies.name', 'supplies.stock', 'supplies.mader_code', 'supplies.pvc', 'supplies.pvp')
+                ->select('supplies.id', 'supplies.ref', 'maders.name as mader', 'supplies.name', 'supplies.stock', 'supplies.maderCode', 'supplies.pvc', 'supplies.pvp')
                 ->whereNull('supplies.deleted_at')
                 ->get();
         
-        return $this->renderHTML('/buys/suppliesList.html.twig', [
+        return $this->renderHTML('/vehicles/supplies/suppliesList.html.twig', [
             'supplies' => $supplies
         ]);
     }
@@ -106,7 +106,7 @@ class SuppliesController extends BaseController
                     ->first();
         }    
         
-        return $this->renderHTML('/buys/suppliesForm.html.twig', [
+        return $this->renderHTML('/vehicles/supplies/suppliesForm.html.twig', [
             'supply' => $selected_supply,
             'maders' => $maders,
             'responseMessage' => $responseMessage

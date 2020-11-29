@@ -121,12 +121,17 @@ class VehicleController extends BaseController
         if($request->getMethod() == 'GET')
         {
             $vehicleSelected = $this->setVehicle($request);
-            $brandSelected = $this->setBrand($vehicleSelected);
-            $modelSelected = $this->setModel($vehicleSelected);
-            $storeSelected = $this->setStore($vehicleSelected);
-            $locationSelected = $this->setLocation($vehicleSelected);
-            $selectedAccesories = $this->setAccesories($vehicleSelected);
-            $typeSelected = $this->setVehicleType($vehicleSelected);
+            
+            if($vehicleSelected)
+            {
+                $brandSelected = $this->setBrand($vehicleSelected);
+                $modelSelected = $this->setModel($vehicleSelected);
+                $storeSelected = $this->setStore($vehicleSelected);
+                $locationSelected = $this->setLocation($vehicleSelected);
+                $selectedAccesories = $this->setAccesories($vehicleSelected);
+                
+                $typeSelected = $this->setVehicleType($vehicleSelected);
+            }            
         }        
         $accesories = Accesories::All();
         $brands = Brand::All();
@@ -226,8 +231,7 @@ class VehicleController extends BaseController
                     ->join('accesories', 'vehicleaccesories.accesoryId', '=', 'accesories.id')
                     ->select('vehicleaccesories.accesoryId','vehicleaccesories.id', 'accesories.keystring', 'accesories.name')
                     ->where('vehicleaccesories.vehicleId', '=', $vehicleSelected->id)
-                    ->get()->toArray();
-//                var_dump($selected_accesories);die();
+                    ->get()->toArray();            
         }
         return $selected_accesories;
     }
@@ -249,7 +253,15 @@ class VehicleController extends BaseController
         }                        
         $vehicle->description = $postData['description'];
         $vehicle->plate = $postData['plate'];
-        $vehicle->vin = $postData['vin'];
+        if(isset($postData['vin']) && $postData['vin'])
+        {
+            $vehicle->vin = $postData['vin'];
+        }
+        else
+        {
+            $vehicle->vin = null;
+        }
+        
         $vehicle->registryDate = date($postData['registry_date']);                
         $type = VehicleTypes::where('name', 'like', "%".$postData['type']."%")->first();         
         if($type)
@@ -293,8 +305,7 @@ class VehicleController extends BaseController
             $vehicle_accesory = new VehicleAccesories();
         }        
         $vehicle_accesory->vehicleId = $getaccesory->vehicle_id;
-        $vehicle_accesory->accesoryId = $accesory->id;
-        
+        $vehicle_accesory->accesoryId = $accesory->id;        
         $vehicle_accesory->save();
         $responseMessage = 'Accesory Saved';
         $response = new JsonResponse($responseMessage);
@@ -306,9 +317,9 @@ class VehicleController extends BaseController
         $vehicle_accesory = null;
         $postData = $request->getParsedBody();
         $getaccesory = json_decode($postData['vhaccesory']);        
-        $accesory = Accesories::where('keystring', 'like', "%".$getaccesory->accesory."%")->first();               
-        $vehicle_accesory = VehicleAccesories::where('vehicle_id', '=', $getaccesory->vehicleId)
-                ->where('accesory_id', '=', $accesory->id)
+        $accesory = Accesories::where('name', 'like', "%".$getaccesory->accesory."%")->first();               
+        $vehicle_accesory = VehicleAccesories::where('vehicleId', '=', $getaccesory->vehicle_id)
+                ->where('accesoryId', '=', $accesory->id)
                 ->first();        
         if($vehicle_accesory !== null)
         {
@@ -411,17 +422,13 @@ class VehicleController extends BaseController
         $reader->setLoadSheetsOnly('MODELOS'); 
         $spreadSheet = $reader->load('VEHICULOS 01-08-19 UBICACIONES.xls');
         $modelos = $spreadSheet->getActiveSheet()->toArray();
-//         var_dump($modelos);die();
+//        var_dump($modelos);die();
         try{
             for($i = 1; $i < intval(count($modelos)); $i++)
             {
-                 $modelo = new ModelVh();                 
-                 $brand = Brand::where('name', 'like', "%".$modelos[$i][1]."%")->first(); 
-                 if($brand)
-                 {
-                     $modelo->brandId = $brand->id;
-                 }                 
+                 $modelo = new ModelVh();                                  
                  $modelo->name = $modelos[$i][0];
+                 $modelo->brandId = $modelos[$i][3];
                  $modelo->save();                 
             }           
         } catch (QueryException $ex) {

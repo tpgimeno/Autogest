@@ -6,9 +6,9 @@
  * and open the template in the editor.
  */
 
-namespace App\Services\Buys;
+namespace App\Services\Vehicle;
 
-use App\Models\VehiclesType;
+use App\Models\VehicleTypes;
 
 /**
  * Description of VehicleService
@@ -19,7 +19,7 @@ class VehicleTypeService
 {
     public function deleteVehicleType($id)
     {
-        $vehicle = VehiclesType::find($id)->first();
+        $vehicle = VehicleTypes::find($id)->first();
         $vehicle->delete();
     }
 }

@@ -6,11 +6,11 @@
  * and open the template in the editor.
  */
 
-namespace App\Controllers\Crm;
+namespace App\Controllers\Sells;
 
 use App\Controllers\BaseController;
 use App\Models\CustomerTypes;
-use App\Services\Crm\CustomerTypesService;
+use App\Services\Sells\CustomerTypesService;
 use Respect\Validation\Validator as v;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
@@ -27,7 +27,7 @@ class CustomerTypesController extends BaseController
     public function getIndexAction()
     {
         $customerTypes = CustomerTypes::All();
-        return $this->renderHTML('/customers/customerTypesList.html.twig', [
+        return $this->renderHTML('/sells/customers/customerTypesList.html.twig', [
             'currentUser' => $this->currentUser->getCurrentUserEmailAction(),
             'customer_types' => $customerTypes
         ]);
@@ -39,7 +39,7 @@ class CustomerTypesController extends BaseController
         $customer_types = CustomerTypes::Where("name", "like", "%".$searchString."%")                
                 ->get(); 
         
-        return $this->renderHTML('/customers/customerTypesList.html.twig', [
+        return $this->renderHTML('/sells/customers/customerTypesList.html.twig', [
             'currentUser' => $this->currentUser->getCurrentUserEmailAction(),
             'customer_types' => $customer_types
         ]);
@@ -63,7 +63,7 @@ class CustomerTypesController extends BaseController
                 $responseMessage = $e->getMessage();
             }            
         }
-        return $this->renderHTML('/customers/customerTypesForm.html.twig', [
+        return $this->renderHTML('/sells/customers/customerTypesForm.html.twig', [
             'currentUser' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage
         ]);

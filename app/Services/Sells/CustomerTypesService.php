@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace App\Services\Crm;
+namespace App\Services\Sells;
 
 /**
  * Description of CustomerTypesService
