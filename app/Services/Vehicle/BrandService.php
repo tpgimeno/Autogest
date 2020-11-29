@@ -6,21 +6,20 @@
  * and open the template in the editor.
  */
 
-namespace App\Services\Buys;
+namespace App\Services\Vehicle;
 
-
-use App\Models\Vehicle;
+use App\Models\Brand;
 
 /**
- * Description of VehicleService
+ * Description of BrandService
  *
  * @author tonyl
  */
-class VehicleService 
+class BrandService 
 {
-    public function deleteVehicle($id)
-    {
-        $vehicle = Vehicle::find($id)->first();
-        $vehicle->delete();
+    public function deleteBrand($id)
+    {        
+        $customer = Brand::find($id)->first();
+        $customer->delete();
     }
 }

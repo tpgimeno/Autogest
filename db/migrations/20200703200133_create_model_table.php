@@ -24,6 +24,7 @@ final class CreateModelTable extends AbstractMigration
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime')
                 ->addColumn('deleted_at', 'datetime')
+                ->addIndex('name', ['unique' => true])
                 ->create(); 
     }
 }

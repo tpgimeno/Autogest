@@ -1,27 +1,26 @@
 <?php
 
-use App\Models\Brand;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
-namespace App\Services;
+namespace App\Services\Vehicle;
+
+
+use App\Models\Vehicle;
 
 /**
- * Description of BrandService
+ * Description of VehicleService
  *
  * @author tonyl
  */
-class BrandService 
+class VehicleService 
 {
-    public function deleteBrand($id)
+    public function deleteVehicle($id)
     {
-        
-        $customer = Brand::find($id)->first();
-        $customer->delete();        
-
+        $vehicle = Vehicle::find($id)->first();
+        $vehicle->delete();
     }
 }

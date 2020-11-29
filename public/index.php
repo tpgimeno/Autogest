@@ -457,135 +457,135 @@ $map->get('deleteSellInvoices', '/intranet/sells/invoices/delete', [
  */
 
 $map->get('vehicleForm', '/intranet/vehicles/form', [
-    'App\Controllers\Buys\VehicleController',
+    'App\Controllers\Vehicle\VehicleController',
     'getVehicleDataAction'
 ]);
 $map->get('vehicleList', '/intranet/vehicles/list', [
-    'App\Controllers\Buys\VehicleController',
+    'App\Controllers\Vehicle\VehicleController',
     'getIndexAction'
 ]);
 $map->post('searchVehicle', '/intranet/vehicles/search', [
-    'App\Controllers\Buys\VehicleController',
+    'App\Controllers\Vehicle\VehicleController',
     'searchVehicleAction'
 ]);
 $map->post('importVehicles', '/intranet/vehicles/import', [
-    'App\Controllers\Buys\VehicleController',
-    'importExcel'
+    'App\Controllers\Vehicle\VehicleController',
+    'importVehiclesExcel'
 ]);
 $map->post('saveVehicle', '/intranet/vehicles/save', [
-    'App\Controllers\Buys\VehicleController',
+    'App\Controllers\Vehicle\VehicleController',
     'getVehicleDataAction'
 ]);
 $map->get('deleteVehicle', '/intranet/vehicles/delete', [        
-    'App\Controllers\Buys\VehicleController',
+    'App\Controllers\Vehicle\VehicleController',
     'deleteAction'   
 ]);
 $map->get('accesoryForm', '/intranet/vehicles/accesories/form', [
-    'App\Controllers\Buys\AccesoriesController',
-    'renderAccesory'
+    'App\Controllers\Vehicle\AccesoriesController',
+    'getAccesoryDataAction'
 ]);
 $map->get('accesoryList', '/intranet/vehicles/accesories/list', [
-    'App\Controllers\Buys\AccesoriesController',
+    'App\Controllers\Vehicle\AccesoriesController',
     'getIndexAction'
 ]);
 $map->post('searchAccesory', '/intranet/vehicles/accesories/search', [
-    'App\Controllers\Buys\AccesoriesController',
+    'App\Controllers\Vehicle\AccesoriesController',
     'searchAccesoryAction'
 ]);
-$map->post('saveAccsory', '/intranet/vehicles/accesories/save', [
-    'App\Controllers\Buys\AccesoriesController',
+$map->post('saveAccesory', '/intranet/vehicles/accesories/save', [
+    'App\Controllers\Vehicle\AccesoriesController',
     'getAccesoryDataAction'
 ]);
 $map->get('deleteAccesory', '/intranet/vehicles/accesories/delete', [        
-    'App\Controllers\Buys\AccesoriesController',
+    'App\Controllers\Vehicles\AccesoriesController',
     'deleteAction'   
 ]);
 $map->post('addVehicleAccesory', '/intranet/vehicles/accesories/add', [        
-    'App\Controllers\Buys\VehicleController',
+    'App\Controllers\Vehicle\VehicleController',
     'addAccesoryAction'   
 ]);
 $map->post('deleteVehicleAccesory', '/intranet/vehicles/accesories/del', [        
-    'App\Controllers\Buys\VehicleController',
+    'App\Controllers\Vehicle\VehicleController',
     'deleteAccesoryAction'   
 ]);
 $map->get('brandForm', '/intranet/vehicles/brands/form', [
-    'App\Controllers\Entitys\BrandController',
+    'App\Controllers\Vehicle\BrandController',
     'getBrandDataAction'
 ]);
 $map->get('brandList', '/intranet/vehicles/brands/list', [
-    'App\Controllers\Entitys\BrandController',
+    'App\Controllers\Vehicle\BrandController',
     'getIndexAction'
 ]);
 $map->post('searchBrand', '/intranet/vehicles/brands/search', [
-    'App\Controllers\Entitys\BrandController',
+    'App\Controllers\Vehicle\BrandController',
     'searchBrandAction'
 ]);
 $map->post('saveBrand', '/intranet/vehicles/brands/save', [
-    'App\Controllers\Entitys\BrandController',
+    'App\Controllers\Vehicle\BrandController',
     'getBrandDataAction'
 ]);
 $map->get('deleteBrand', '/intranet/vehicles/brands/delete', [        
-    'App\Controllers\Entitys\BrandController',
+    'App\Controllers\Vehicle\BrandController',
     'deleteAction'   
 ]);
 $map->get('modelForm', '/intranet/vehicles/models/form', [
-    'App\Controllers\Entitys\ModelController',
+    'App\Controllers\Vehicle\ModelController',
     'getModelDataAction'
 ]);
 $map->get('modelList', '/intranet/vehicles/models/list', [
-    'App\Controllers\Entitys\ModelController',
+    'App\Controllers\Vehicle\ModelController',
     'getIndexAction'
 ]);
 $map->post('searchModel', '/intranet/vehicles/models/search', [
-    'App\Controllers\Entitys\ModelController',
+    'App\Controllers\Vehicle\ModelController',
     'searchModelAction'
 ]);
 $map->post('saveModel', '/intranet/vehicles/models/save', [
-    'App\Controllers\Entitys\ModelController',
+    'App\Controllers\Vehicle\ModelController',
     'getModelDataAction'
 ]);
 $map->get('deleteModel', '/intranet/vehicles/models/delete', [        
-    'App\Controllers\Entitys\ModelController',
+    'App\Controllers\Vehicle\ModelController',
     'deleteAction'   
 ]);
 $map->get('WorksForm', '/intranet/vehicles/works/form', [
-    'App\Controllers\Buys\WorksController',
+    'App\Controllers\Vehicle\WorksController',
     'getWorkDataAction'
 ]);
 $map->get('WorksList', '/intranet/vehicles/works/list', [
-    'App\Controllers\Buys\WorksController',
+    'App\Controllers\Vehicle\WorksController',
     'getIndexAction'
 ]);
 $map->post('searchWorks', '/intranet/vehicles/works/search', [
-    'App\Controllers\Buys\WorksController',
+    'App\Controllers\Vehicle\WorksController',
     'searchWorksAction'
 ]);
 $map->post('saveWorks', '/intranet/vehicles/works/save', [
-    'App\Controllers\Buys\WorksController',
+    'App\Controllers\Vehicle\WorksController',
     'getWorkDataAction'
 ]);
 $map->get('deleteWorks', '/intranet/vehicles/works/delete', [        
-    'App\Controllers\Buys\WorksController',
+    'App\Controllers\Vehicle\WorksController',
     'deleteAction'   
 ]);
 $map->get('vehicleTypesForm', '/intranet/vehicles/vehicleTypes/form', [
-    'App\Controllers\Buys\VehicleTypesController',
+    'App\Controllers\Vehicle\VehicleTypesController',
     'getVehicleTypesDataAction'
 ]);
 $map->get('vehicleTypesList', '/intranet/vehicles/vehicleTypes/list', [
-    'App\Controllers\Buys\VehicleTypesController',
+    'App\Controllers\Vehicle\VehicleTypesController',
     'getIndexAction'
 ]);
 $map->post('searchVehicleTypes', '/intranet/vehicles/vehicleTypes/search', [
-    'App\Controllers\Buys\VehicleTypesController',
+    'App\Controllers\Vehicle\VehicleTypesController',
     'searchVehicleTypesAction'
 ]);
 $map->post('saveVehicleTypes', '/intranet/vehicles/vehicleTypes/save', [
-    'App\Controllers\Buys\VehicleTypesController',
+    'App\Controllers\Vehicle\VehicleTypesController',
     'getVehicleTypesDataAction'
 ]);
 $map->get('deleteVehicleTypes', '/intranet/vehicles/vehicleTypes/delete', [        
-    'App\Controllers\Buys\VehicleTypesController',
+    'App\Controllers\Vehicle\VehicleTypesController',
     'deleteAction'   
 ]);
 $map->get('deliveriesForm', '/intranet/buys/buyDeliveries/form', [

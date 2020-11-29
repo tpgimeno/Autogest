@@ -9,5 +9,5 @@ class VehicleTypes extends Model
 {
     use SoftDeletes;
 
-    protected $table = "vehicle_types";
+    protected $table = "vehicletypes";
 }

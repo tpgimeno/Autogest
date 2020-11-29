@@ -7,6 +7,34 @@ namespace App\Services;
 /**
  * Description of ErrorService:
  * This is a service to handle all errors from MySqlServer
+ * 1062     "El valor duplicado ya existe en la base de datos"
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
  * @author tonyl
  */
 class ErrorService {
@@ -18,14 +46,13 @@ class ErrorService {
             switch($ex->errorInfo[1])
             {
             case('1062'):
-                return 'El valor está duplicado';
-                break;
+                return 'El valor ya existe en la base de datos';
+                break;            
             default:
-                return $info[2]; 
+                return $ex->errorInfo[2]; 
                 break;
             }
-        }
-       
+        }       
         return $ex->getMessages()['name'];
     }    
    

@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace App\Services;
+namespace App\Services\Vehicle;
 
 use App\Models\ModelVh;
 

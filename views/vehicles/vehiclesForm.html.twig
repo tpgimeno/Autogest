@@ -48,7 +48,7 @@
                             </div>
                             <div class="form-group col-md-3 offset-md-6">
                                     <label for="inputRegistryDate">Fecha Matriculación</label>                        
-                                    <input type="date" name="registry_date" class="form-control" id="inputRegistryDate" placeholder="" value="{{ vehicle.registry_date }}">
+                                    <input type="date" name="registry_date" class="form-control" id="inputRegistryDate" placeholder="" value="{{ vehicle.registryDate }}">
                             </div>
                         </div>
                         <div class="form-row mt-3">
@@ -62,7 +62,7 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="selectBrand">Marca</label>
-                                <select name="brand" class="form-control" id="selectBrand">
+                                <select name="brand" class="form-control" id="selectBrand" value="{{ brand_selected }}">
                                     {% for brand in brands %}
                                         <option>{{ brand.name }}</option>
                                     {% endfor %}
@@ -70,7 +70,7 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="inputModel">Modelo</label>
-                                <select name="model" class="form-control" id="selectModel">
+                                <select name="model" class="form-control" id="selectModel" value="{{ model_selected }}">
                                     {% for model in models %}
                                         <option>{{ model.name }}</option>
                                     {% endfor %}
@@ -84,9 +84,9 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="inputType">Tipo Vehículo</label>
-                                <select name="type" class="form-control" id="selectType">
+                                <select name="type" class="form-control" id="selectType" value="{{ type_selected }}">
                                     {% for type in types %}
-                                        <option>{{ type.name }}</option>
+                                        <option value="{{ type.name }}">{{ type.name }}</option>
                                     {% endfor %}                            
                                 </select>
                             </div>
@@ -102,7 +102,7 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="inputLocation">Ubicacion</label>
-                                <select name="location" class="form-control" id="selectType" value="{{ location_selected }}">
+                                <select name="location" class="form-control" id="selectLocation" value="{{ location_selected }}">
                                     {% for location in locations %}
                                         <option>{{ location.name }}</option>
                                     {% endfor %}                            
