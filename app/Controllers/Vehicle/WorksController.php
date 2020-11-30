@@ -6,11 +6,11 @@
  * and open the template in the editor.
  */
 
-namespace App\Controllers\Buys;
+namespace App\Controllers\Vehicle;
 
 use App\Controllers\BaseController;
 use App\Models\Works;
-use App\Services\Buys\WorksService;
+use App\Services\Vehicle\WorksService;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\ServerRequest;
 use ZipStream\Exception;
@@ -26,8 +26,7 @@ use Illuminate\Database\Capsule\Manager as DB;
  */
 class WorksController extends BaseController
 {
-    protected $worksService;
-    
+    protected $worksService;    
     public function __construct(WorksService $worksService) {
         parent::__construct();
         $this->worksService = $worksService;
@@ -35,64 +34,89 @@ class WorksController extends BaseController
     public function getIndexAction()
     {
         $works = DB::table('works')                
-                ->select('works.id', 'works.reference', 'works.description', 'works.price')
+                ->select('works.id', 'works.reference', 'works.description', 'works.pvp')
                 ->whereNull('works.deleted_at')
-                ->get();
-        
-        return $this->renderHTML('/works/worksList.html.twig', [
+                ->get();        
+        return $this->renderHTML('/vehicles/works/worksList.html.twig', [
             'works' => $works
         ]);
-    }
-    
+    }    
     public function getWorkDataAction($request)
     {
-        $responseMessage = null;
-        $work_temp = null;        
+        $responseMessage = null;             
         if($request->getMethod() == 'POST')
         {
-            $postData = $request->getParsedBody();           
-            $worksValidator = v::key('description', v::stringType()->notEmpty());
-            try{
-                $worksValidator->assert($postData);
-                $work = new Works();                
-                if(Works::find($postData['id']))
-                {
-                    $work_temp = Works::find($postData['id']);                    
-                    $work = $work_temp;                    
-                }                
-                $work->reference = $postData['reference'];
-                $work->description = $postData['description'];
-                $work->price = $this->tofloat($postData['price']);
-                $work->observations = $postData['observations'];                
-                if($work_temp)
-                {
-                    $work->update();
-                    $responseMessage = 'Updated';
-                }
-                else
-                {
-                    $work->save();
-                    $responseMessage = 'Saved';
-                }
-                
-            } catch (Exception $ex) {
-                $responseMessage = $ex->getMessage();
-            }
+           $postData = $request->getParsedBody();           
+           if($this->validateData($postData))
+           {
+               $responseMessage = $this->validateData($postData);
+           }
+           $work = $this->addWorkData($postData);
+           $responseMessage = $this->saveWork($work);           
         }
-        $selected_work = null;       
+            
         $params = $request->getQueryParams();
-        if($request->getQueryParams('id'))
+        $selectedWork = $this->setWork($params);                  
+        return $this->renderHTML('/vehicles/works/worksForm.html.twig', [
+            'work' => $selectedWork,            
+            'responseMessage' => $responseMessage
+        ]);
+    }
+    public function validateData($postData)
+    {
+        $responseMessage = null;
+        $worksValidator = v::key('description', v::stringType()->notEmpty());
+        try{
+            $worksValidator->assert($postData);                
+        } catch (Exception $ex) {
+            $responseMessage = $ex->getMessage();
+        }
+        return $responseMessage;
+    }
+    public function setWork($params)
+    {
+        $selectedWork = null;
+        if(isset($params['id']) && $params['id'])
         {            
-            $selected_work = DB::table('works')                   
-                    ->select('works.id', 'works.reference', 'works.description', 'works.price')
+            $selectedWork = DB::table('works')                   
+                    ->select('works.id', 'works.reference', 'works.description', 'works.pvp')
                     ->where('works.id', '=', $params['id'])
                     ->whereNull('works.deleted_at')
                     ->first();
-        }          
-        return $this->renderHTML('/works/worksForm.html.twig', [
-            'work' => $selected_work,            
-            'responseMessage' => $responseMessage
-        ]);
+        }
+        return $selectedWork;
+    }
+    public function addWorkData($postData)
+    {
+        $work = new Works();                
+        if(isset($postData['id']) && $postData['id'])
+        {
+            $work = Works::find($postData['id'])->first();                                
+        }                
+        $work->reference = $postData['reference'];
+        $work->description = $postData['description'];
+        $work->pvp = $this->tofloat($postData['price']);
+        $work->observations = $postData['observations']; 
+        return $work;
+    }
+    public function saveWork($work)
+    {
+        $responseMessage = null;
+        try{
+            if(Works::find($work->id))
+            {
+                $work->update();
+                $responseMessage = 'Updated';
+            }
+            else
+            {
+                $work->save();
+                $responseMessage = 'Saved';
+            }
+        } catch (QueryException $ex) {
+            $responseMessage = $this->errorService->getError($ex);
+        }
+        return $responseMessage;
     }
     public function deleteAction(ServerRequest $request)
     {         

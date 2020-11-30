@@ -12,7 +12,8 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Intranet/app/Controllers/Vehicle/VehicleController.php</file>
+            <file>file:/C:/xampp/htdocs/Intranet/app/Controllers/Vehicle/WorksController.php</file>
+            <file>file:/C:/xampp/htdocs/Intranet/app/Services/Vehicle/WorksService.php</file>
             <file>file:/C:/xampp/htdocs/Intranet/logs/app.log</file>
             <file>file:/C:/xampp/htdocs/Intranet/public/index.php</file>
         </group>

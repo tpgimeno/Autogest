@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Buys;
+namespace App\Services\Vehicle;
 
 
 use App\Models\Components;
