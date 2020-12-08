@@ -51,7 +51,7 @@
                     </div>
                     <div class="form-group col-md-2">
                           <label for="inputOfferDate">Fecha</label>                        
-                          <input type="date" name="date" class="form-control" id="inputDate" placeholder="" value="{{ sellOffer.offer_date }}">
+                          <input type="date" name="date" class="form-control" id="inputDate" placeholder="" value="{{ sellOffer.offerDate }}">
                     </div>
                 </div>
                 <div class="form-row">
@@ -106,7 +106,7 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputFiscalId">DNI/CIF</label>
-                        <input type="text" name="fiscal_id" class="form-control" id="inputFiscalId" placeholder="" value="{{ selected_customer.fiscal_id }}">
+                        <input type="text" name="fiscal_id" class="form-control" id="inputFiscalId" placeholder="" value="{{ selected_customer.fiscalId }}">
                     </div>                    
                 </div>
                 <div class="form-row">
@@ -116,7 +116,7 @@
                     </div>
                      <div class="form-group col-md-2">
                         <label for="inputPostalCode">C.P.</label>
-                        <input type="text" name="cp" class="form-control" id="inputCp" placeholder="" value="{{ selected_customer.postal_code }}">
+                        <input type="text" name="cp" class="form-control" id="inputCp" placeholder="" value="{{ selected_customer.postalCode }}">
                     </div>                    
                 </div>
                 <div class="form-row mb-3">  
@@ -239,7 +239,7 @@
                 <div class="form-row">
                     <div class="form-group col">
                         <label for="vehicle_comments">Comentarios</label>
-                        <textarea class="form-control" name="vehicle_comments" id="vehicle_comments" rows="6">{{ sellOffer.vehicle_comments }}</textarea>
+                        <textarea class="form-control" name="vehicle_comments" id="vehicle_comments" rows="6">{{ sellOffer.vehicleComments }}</textarea>
                     </div>
                 </div>
             </div>

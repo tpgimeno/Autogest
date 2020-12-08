@@ -20,7 +20,7 @@ final class CreateTableSellOffersComponents extends AbstractMigration
     {
         $table = $this->table('selloffersComponents');
         $table->addColumn('sellofferId', 'integer')
-                ->addColumn('somponentId', 'integer')
+                ->addColumn('componentId', 'integer')
                 ->addColumn('cantity', 'integer')
                 ->addColumn('price', 'float')
                 ->addColumn('created_at', 'datetime')

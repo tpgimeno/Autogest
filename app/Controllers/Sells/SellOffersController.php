@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Controllers\Crm;
+namespace App\Controllers\Sells;
 
 use App\Controllers\BaseController;
 use App\Models\Accesories;
@@ -18,7 +18,7 @@ use App\Models\Vehicle;
 use App\Models\VehicleTypes;
 use App\Models\Works;
 use App\Reports\SellOfferReport;
-use App\Services\Crm\SellOfferService;
+use App\Services\Sells\SellOfferService;
 use Illuminate\Database\Capsule\Manager as DB;
 use Laminas\Diactoros\Response\JsonResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
@@ -31,7 +31,8 @@ use Respect\Validation\Validator as v;
  *
  * @author tonyl
  */
-class SellOffersController extends BaseController {    
+class SellOffersController extends BaseController {  
+    
     protected $sellOfferService;    
     public function __construct(SellOfferService $sellOfferService){
         parent::__construct();
@@ -40,11 +41,11 @@ class SellOffersController extends BaseController {
 //    Funcion que muestra la lista de ofertas
     public function getIndexAction(){
         $offers = DB::table('selloffers')
-                ->join('customers', 'selloffers.customer_id', '=', 'customers.id')
-                ->join('vehicles', 'selloffers.vehicle_id', '=', 'vehicles.id')
+                ->join('customers', 'selloffers.customerId', '=', 'customers.id')
+                ->join('vehicles', 'selloffers.vehicleId', '=', 'vehicles.id')
                 ->join('brands', 'vehicles.brand', '=', 'brands.id')
                 ->join('models', 'vehicles.model', '=', 'models.id')
-                ->select('selloffers.id', 'selloffers.offer_number', 'selloffers.offer_date', 'customers.name as name', 'brands.name as brand', 'models.name as model')
+                ->select('selloffers.id', 'selloffers.offerNumber', 'selloffers.offerDate', 'customers.name as name', 'brands.name as brand', 'models.name as model')
                 ->whereNull('selloffers.deleted_at')
                 ->get();        
         return $this->renderHTML('/sells/offers/sellOffersList.html.twig', [
@@ -76,65 +77,76 @@ class SellOffersController extends BaseController {
     }
     public function getSellOffersDataAction($request){
         $responseMessage = null;
-        if($request->getMethod() === 'POST')
+        if($request->getMethod() == 'POST')
         {
             $postData = $request->getParsedBody();            
-            $offerValidator = v::key('offer_number', v::stringType()->notEmpty())
-                    ->key('customer_id', v::notEmpty())
-                    ->key('vehicle_id', v::notEmpty());
-            try
+            if($this->validateData($postData))
             {
-                 $offerValidator->assert($postData);
-                 $offer = new SellOffer();
-                 $this->saveSellOffersDataAction($offer, $postData);                             
-            } 
-            catch (Exception $ex) 
-            {
-                $responseMessage = $ex->getMessage();
+                $responseMessage = $this->validateData($postData);
             }
+            $offer = $this->getPostDataSellOffer($postData);
+            $responseMessage = $this->saveSellOffersDataAction($offer);            
         }                        
         $params = $request->getQueryParams();
         $selected_tab = 'offer';                
         return $this->getRenderAgain($params, $selected_tab, $responseMessage);
-    }   
-    public function saveSellOffersDataAction($offer, $postData){        
-        $offer->id = $postData['id'];                 
-        $offer_selected = false;
-        if(SellOffer::find($offer->id)->first())
-        {                     
-           $offer = SellOffer::find($offer->id);
-           $offer_selected = true;                                         
-        }
-        $this->getPostDataSellOffer($offer);                
-        if($offer_selected === true)
+    }  
+    public function validateData($postData)
+    {
+        $responseMessage = null;
+        $offerValidator = v::key('offer_number', v::stringType()->notEmpty())
+                    ->key('customer_id', v::notEmpty())
+                    ->key('vehicle_id', v::notEmpty());
+        try
         {
-            $offer->update();
-            $responseMessage = 'Updated';
-        }
-        else
+             $offerValidator->assert($postData);
+
+        } 
+        catch (Exception $ex) 
         {
-            $offer->save();
-            $responseMessage = 'Saved';
+            $responseMessage = $ex->getMessage();
         }
+        return $responseMessage;
     }
-    public function getPostDataSellOffer($offer){
-        $offer->offer_number = $postData['offer_number'];
-        $time = strtotime($postData['date']);
-        $offer->offer_date = Date('y/m/d', $time);
+    public function saveSellOffersDataAction($offer)
+    {               
+        try{
+            if(SellOffer::find($offer->id))
+            {                     
+                $offer->update();
+                $responseMessage = 'Updated';                                      
+            }
+            else
+            {
+                $offer->save();
+                $responseMessage = 'Saved';
+            }
+        } catch (QueryException $ex) {
+            $responseMessage = $this->errorService->getError($ex);
+        }  
+        return $responseMessage;
+    }
+    public function getPostDataSellOffer($postData)
+    {
+        $offer = new SellOffer();
+        if(isset($postData['id']) && $postData['id'])
+        {
+            $offer = SellOffer::find($postData['id'])->first();
+        }
+        $offer->offerNumber = $postData['offer_number'];
+        $offer->offerDate = Date('y/m/d', strtotime($postData['date']));
         $offer->texts = $postData['texts'];
-        $offer->observations = $postData['observations'];                 
-        $customer = Customer::find($postData['customer_id']);                 
-        $offer->customer_id = $customer->id;
-        $vehicle = Vehicle::find($postData['vehicle_id']);
-        $offer->vehicle_id = $vehicle->id;                 
+        $offer->observations = $postData['observations'];                       
+        $offer->customerId = Customer::find($postData['customer_id'])->first()->id;
+        $offer->vehicleId = Vehicle::find($postData['vehicle_id'])->first()->id;                 
         $offer->discount = $this->tofloat($postData['discount']);                 
         $offer->pvp = $this->tofloat($postData['price']);
         $offer->tva = $this->tofloat($postData['tva']);
         $offer->total = $this->tofloat($postData['total']);
-        $offer->vehicle_pvp = $this->tofloat($postData['price_vehicle']) - $this->tofloat($postData['vehicle_discount']);                
-        $offer->vehicle_tva = $this->tofloat($postData['vehicle_tva']);
-        $offer->vehicle_total = $this->tofloat($postData['vehicle_total']);
-        $offer->vehicle_comments = $postData['vehicle_comments'];
+        $offer->vehiclePvp = $this->tofloat($postData['price_vehicle']) - $this->tofloat($postData['vehicle_discount']);                
+        $offer->vehicleTva = $this->tofloat($postData['vehicle_tva']);
+        $offer->vehicleTotal = $this->tofloat($postData['vehicle_total']);
+        $offer->vehicleComments = $postData['vehicle_comments'];
         return $offer;
     }
     public function deleteAction(ServerRequest $request){
@@ -166,7 +178,7 @@ class SellOffersController extends BaseController {
     public function selectCustomerSellOfferAction($request) {
         $responseMessage = null;
         $selected_tab = 'customer';
-        $params = $request->getQueryParams();
+        $params = $request->getQueryParams();        
         return $this->getRenderAgain($params, $selected_tab, $responseMessage);        
     }
     public function searchVehicleSellOfferAction($request)
@@ -185,7 +197,7 @@ class SellOffersController extends BaseController {
                 ->join('models', 'vehicles.model', '=', 'models.id')
                 ->join('vehicle_types', 'vehicles.type', '=', 'vehicle_types.id')
                 ->select('vehicles.id', 'vehicles.plate', 'vehicles.vin', 
-                        'vehicles.description as description', 'vehicles.location', 'vehicle_types.name as type', 
+                        'vehicles.description as description', 'vehicles.location', 'vehicleTypes.name as type', 
                         'brands.name as brand', 'models.name as model', 'vehicles.color', 'vehicles.places',
                         'vehicles.doors', 'vehicles.power', 'vehicles.cost', 'vehicles.pvp', 'vehicles.accesories')
                 ->where("brands.name", "like", "%".$searchString."%" )
@@ -273,12 +285,12 @@ class SellOffersController extends BaseController {
         $selected_tab = 'supplies';
         $params = $request->getQueryParams();  
         
-        $supply = DB::table('selloffers_supplies')                
-                ->join('supplies', 'selloffers_supplies.supply_id', '=', 'supplies.id')
+        $supply = DB::table('sellofferssupplies')                
+                ->join('supplies', 'sellofferssupplies.supply_id', '=', 'supplies.id')
                 ->join('maders', 'supplies.mader', '=', 'maders.id')
-                ->select('selloffers_supplies.id', 'selloffers_supplies.selloffer_id', 'selloffers_supplies.supply_id', 'supplies.ref as reference', 'maders.name as mader', 'supplies.name as name', 'selloffers_supplies.cantity as cantity', 'selloffers_supplies.price as price')
-                ->where('selloffers_supplies.selloffer_id', '=', $params['offer_id'])
-                ->where('selloffers_supplies.supply_id', '=', $params['supply_id'])
+                ->select('sellofferssupplies.id', 'sellofferssupplies.selloffer_id', 'sellofferssupplies.supply_id', 'supplies.ref as reference', 'maders.name as mader', 'supplies.name as name', 'sellofferssupplies.cantity as cantity', 'sellofferssupplies.price as price')
+                ->where('sellofferssupplies.selloffer_id', '=', $params['offer_id'])
+                ->where('sellofferssupplies.supply_id', '=', $params['supply_id'])
                 ->first();//        
         if($supply !== null)
         {
@@ -371,12 +383,12 @@ class SellOffersController extends BaseController {
         $responseMessage = 'Editando Component';
         $selected_tab = 'supplies';
         $params = $request->getQueryParams();       
-        $component = DB::table('selloffers_components')                
-                ->join('components', 'selloffers_components.component_id', '=', 'components.id')
+        $component = DB::table('sellofferscomponents')                
+                ->join('components', 'sellofferscomponents.component_id', '=', 'components.id')
                 ->join('maders', 'components.mader', '=', 'maders.id')
-                ->select('selloffers_components.id', 'selloffers_components.selloffer_id', 'selloffers_components.component_id', 'components.ref as reference', 'maders.name as mader', 'components.name as name', 'selloffers_components.cantity as cantity', 'selloffers_components.price as price')
-                ->where('selloffers_components.selloffer_id', '=', $params['offer_id'])
-                ->where('selloffers_components.component_id', '=', $params['component_id'])
+                ->select('sellofferscomponents.id', 'sellofferscomponents.selloffer_id', 'sellofferscomponents.component_id', 'components.ref as reference', 'maders.name as mader', 'components.name as name', 'sellofferscomponents.cantity as cantity', 'sellofferscomponents.price as price')
+                ->where('sellofferscomponents.selloffer_id', '=', $params['offer_id'])
+                ->where('sellofferscomponents.component_id', '=', $params['component_id'])
                 ->first();    
         if($component)
         {
@@ -408,8 +420,7 @@ class SellOffersController extends BaseController {
     public function selectWorksSellOffersAction($request)
     {
         $responseMessage = null;
-        $params = $request->getQueryParams();
-        
+        $params = $request->getQueryParams();        
         $selected_tab = 'works';
         return $this->getRenderAgain($params, $selected_tab, $responseMessage);
     }    
@@ -473,11 +484,11 @@ class SellOffersController extends BaseController {
         $responseMessage = 'Editando Trabajo';
         $selected_tab = 'works';
         $params = $request->getQueryParams();        
-        $work = DB::table('selloffers_works')                
-                ->join('works', 'selloffers_works.work_id', '=', 'works.id')                
-                ->select('selloffers_works.id', 'selloffers_works.selloffer_id', 'selloffers_works.work_id', 'works.reference', 'works.description', 'selloffers_works.cantity', 'selloffers_works.price')
-                ->where('selloffers_works.selloffer_id', '=', $params['offer_id'])
-                ->where('selloffers_works.work_id', '=', $params['work_id'])
+        $work = DB::table('selloffersworks')                
+                ->join('works', 'selloffersworks.work_id', '=', 'works.id')                
+                ->select('selloffersworks.id', 'selloffersworks.selloffer_id', 'selloffersworks.work_id', 'works.reference', 'works.description', 'selloffersworks.cantity', 'selloffersworks.price')
+                ->where('selloffersworks.selloffer_id', '=', $params['offer_id'])
+                ->where('selloffersworks.work_id', '=', $params['work_id'])
                 ->first();         
         if($work)
         {
@@ -517,63 +528,144 @@ class SellOffersController extends BaseController {
         $report->AddPage();
         $report->Body($postData);        
         $report->Output();
-    }
+    }   
     public function getRenderAgain($params, $selected_tab, $responseMessage)
     {        
-        $selected_offer = null;
-        $last_offer = null;
-        $new_offer= null;
-        $offer_number = null;               
-        if(isset($params['offer_id'])&& $params['offer_id'])
-        {           
-            $selected_offer = SellOffer::find($params['offer_id']);            
-        }        
-        if($selected_offer === null)
+        $selected_offer = $this->getSelectedOfferData($params, $selected_tab);        
+        $offerGroup = $this->getSellOfferNumber($selected_offer);
+        $new_offer = $offerGroup[0];
+        $offer_number = $offerGroup[1];
+        $suppliesGroup = $this->getSelectedOfferSupplies($params);
+        $selectedSupply = $suppliesGroup[0];
+        $editPriceSupply = $suppliesGroup[1];
+        $editCantitySupply = $suppliesGroup[2]; 
+        $componentsGroup = $this->getSelectedOfferComponents($params);
+        $selected_component = $componentsGroup[0];
+        $editPriceComponent = $componentsGroup[1];
+        $editCantityComponent = $componentsGroup[2];  
+        $worksGroup = $this->getSelectedOfferWorks($params);
+        $selected_work = $worksGroup[0];        
+        $editPriceWork = $worksGroup[1];
+        $editCantityWork = $worksGroup[2];        
+        $selected_customer = $this->getSelectedOfferCustomer($params);        
+        $vehicleGroup = $this->getSelectedOfferVehicle($params);
+        $selected_vehicle = $vehicleGroup[0];
+        $brand = $vehicleGroup[1];
+        $model = $vehicleGroup[2];
+        $selected_accesories = $vehicleGroup[3];                   
+        $offerSupplies = $this->getSellOfferSupplies($new_offer);
+        $offerComponents = $this->getSellOfferComponents($new_offer);
+        $offerWorks = $this->getSellOfferWorks($new_offer);         
+        $types = VehicleTypes::All();
+        $supplies = Supplies::All();
+        $components = Components::All();
+        $works = Works::All();
+        $customers = Customer::All();
+        $vehicles = Vehicle::All();
+        $accesories = Accesories::All();
+        return $this->renderHTML('/sells/offers/sellOffersForm.html.twig', [
+            'sellOffer' => $selected_offer,
+            'offer_number' => $offer_number,
+            'customers' => $customers,
+            'selected_customer' => $selected_customer,
+            'vehicles' => $vehicles,
+            'selected_vehicle' => $selected_vehicle,
+            'brand' => $brand,
+            'model' => $model,
+            'types' => $types,
+            'accesories' => $accesories,
+            'selected_accesories' => $selected_accesories,
+            'supplies' => $supplies,
+            'selected_supply' => $selectedSupply,
+            'offerSupplies' => $offerSupplies,
+            'edit_price_supply' => $editPriceSupply,
+            'edit_cantity_supply' => $editCantitySupply,
+            'selected_component' => $selected_component,
+            'components' => $components, 
+            'offerComponents' => $offerComponents,
+            'edit_price_component' => $editPriceComponent,
+            'edit_cantity_component' => $editCantityComponent,
+            'selected_work' => $selected_work,
+            'selected_tab' => $selected_tab,                
+            'works' => $works,                
+            'offerWorks' => $offerWorks,
+            'edit_price_work' => $editPriceWork,
+            'edit_cantity_work' => $editCantityWork,
+            'new_selloffer' => $new_offer,                
+            'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
+            'responseMessage' => $responseMessage
+        ]);         
+    }
+    public function getFirstSellOfferNumber() 
+    {        
+        $offerString = '2020OF';        
+        $offer_integer = 1;
+        $offerStringNumber = strval($offer_integer);        
+        while(strlen($offerStringNumber) < 4)
         {
-            $last_offer = DB::table('selloffers')
-                    ->get()->last();            
-            if($last_offer === null)
-            {
-                $new_offer = 1;
-                $offer_number = $this->getFirstSellOfferNumber();                                  
-            }
-            else
-            {
-                $new_offer = $last_offer->id + 1;
-                $offer_number = $this->getNewSellOfferNumber($last_offer);                             
-            }
-            if($selected_tab === 'offer')
-            {
-                $this->resetOffer($new_offer);
-            }   
+            $offerStringNumber = "0".$offerStringNumber;                    
         }
-        else
+        $offer_number = $offerString.$offerStringNumber;
+        return $offer_number;         
+    }
+    public function getNewSellOfferNumber($last_offer)
+    {  
+        $offerString = '2020OF';
+        $offer_string = substr($last_offer->offerNumber, 6, 4);
+        $offer_integer = intval($offer_string) + 1;
+        $stringNumber = strval($offer_integer);                
+        while(strlen($stringNumber) < 4)
         {
-            $new_offer = $selected_offer->id;
-            $offer_number = $selected_offer->offer_number;
+            $stringNumber = "0".$stringNumber;
+        }
+        return $offerString.$stringNumber;
+    }
+    public function resetOffer($offer_id)
+    {
+        if(!SellOffer::find($offer_id))
+        {
+            $this->cleanSupplies($offer_id);
+            $this->cleanComponents($offer_id);
+            $this->cleanWorks($offer_id);              
         }        
-        $selected_supply = null;  
-        $editPriceSupply = null;
-        $editCantitySupply = null;        
+    }
+    public function getSelectedOfferData($params)
+    {                 
+        $selected_offer = null;
+        if(isset($params['offer_id'])&& $params['offer_id'] && intval($params['offer_id']) > 1)
+        {           
+            $selected_offer = SellOffer::find($params['offer_id'])->first();            
+        } 
+        return $selected_offer;          
+    }
+    public function getSelectedOfferSupplies($params)
+    {               
+        $selectedSupply = null;
+        $editPriceSupply = null; 
+        $editCantitySupply = null;
         if(isset($params['supply_id']) && $params['supply_id'])
         {                
             if($params['supply_id'] !== 'null')
             {                    
-                $selected_supply = Supplies::find($params['supply_id']);
+                $selectedSupply = Supplies::find($params['supply_id']);
             }            
             if(isset($params['supply_price']) && $params['supply_price'] !== 'null')
             {               
                 $editPriceSupply = $params['supply_price'];                
             }
-            else if($selected_supply)
+            else if($selectedSupply)
             {               
-                $editPriceSupply = $selected_supply->pvp;                                
+                $editPriceSupply = $selectedSupply->pvp;                                
             }
             if(isset($params['supply_cantity']) && $params['supply_cantity'] !== 'null')
             {               
                 $editCantitySupply = $params['supply_cantity'];                
             }            
-        } 
+        }
+        return array($selectedSupply, $editPriceSupply, $editCantitySupply);
+    }
+    public function getSelectedOfferComponents($params)
+    {
         $selected_component = null;
         $editPriceComponent = null;
         $editCantityComponent = null;
@@ -593,6 +685,10 @@ class SellOffersController extends BaseController {
                $editCantityComponent = $params['component_cantity'];                
             }
         }
+        return array($selected_component, $editPriceComponent, $editCantityComponent);
+    }
+    public function getSelectedOfferWorks($params)
+    {
         $selected_work = null;        
         $editPriceWork = null;
         $editCantityWork = null;
@@ -612,11 +708,19 @@ class SellOffersController extends BaseController {
                 $editCantityWork = $params['work_cantity'];             
             }
         }
+        return array($selected_work, $editPriceWork, $editCantityWork);
+    }
+    public function getSelectedOfferCustomer($params)
+    {
         $selected_customer = null;
         if(isset($params['customer_id']) && $params['customer_id'])
         { 
-            $selected_customer = Customer::find($params['customer_id']);            
+            $selected_customer = Customer::find($params['customer_id'])->first();            
         }
+        return $selected_customer;
+    }
+    public function getSelectedOfferVehicle($params)
+    {
         $selected_vehicle = null;
         $brand = null;
         $model = null;
@@ -628,104 +732,39 @@ class SellOffersController extends BaseController {
                 $model = ModelVh::find($selected_vehicle->model); 
                 $selected_accesories = $this->getSellOfferVehicleAccesories($params['vehicle_id'])->toArray();
             
-        }               
-        if($selected_offer)
-        {
-            $selected_vehicle = Vehicle::find($selected_offer->vehicle_id);
-            $brand = Brand::find($selected_vehicle->brand);
-            $model = ModelVh::find($selected_vehicle->model);
-            $selected_customer = Customer::find($selected_offer->customer_id);
-            $selected_accesories = $this->getSellOfferVehicleAccesories($selected_offer->vehicle_id)->toArray();            
-        }      
-        try
-        {            
-            $offerSupplies = $this->getSellOfferSupplies($new_offer);
-            $offerComponents = $this->getSellOfferComponents($new_offer);
-            $offerWorks = $this->getSellOfferWorks($new_offer);         
-            $types = VehicleTypes::All();
-            $supplies = Supplies::All();
-            $components = Components::All();
-            $works = Works::All();
-            $customers = Customer::All();
-            $vehicles = Vehicle::All();
-            $accesories = Accesories::All();
-            return $this->renderHTML('/sells/offers/sellOffersForm.html.twig', [
-                'sellOffer' => $selected_offer,
-                'offer_number' => $offer_number,
-                'customers' => $customers,
-                'selected_customer' => $selected_customer,
-                'vehicles' => $vehicles,
-                'selected_vehicle' => $selected_vehicle,
-                'brand' => $brand,
-                'model' => $model,
-                'types' => $types,
-                'accesories' => $accesories,
-                'selected_accesories' => $selected_accesories,
-                'supplies' => $supplies,
-                'selected_supply' => $selected_supply,
-                'offerSupplies' => $offerSupplies,
-                'edit_price_supply' => $editPriceSupply,
-                'edit_cantity_supply' => $editCantitySupply,
-                'selected_component' => $selected_component,
-                'components' => $components, 
-                'offerComponents' => $offerComponents,
-                'edit_price_component' => $editPriceComponent,
-                'edit_cantity_component' => $editCantityComponent,
-                'selected_work' => $selected_work,
-                'selected_tab' => $selected_tab,                
-                'works' => $works,                
-                'offerWorks' => $offerWorks,
-                'edit_price_work' => $editPriceWork,
-                'edit_cantity_work' => $editCantityWork,
-                'new_selloffer' => $new_offer,                
-                'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
-                'responseMessage' => $responseMessage
-            ]); 
-        } catch (Exception $ex) 
-        {
-              $responseMessage = $ex->getMessage();         
         }
+        return array($selected_vehicle, $brand, $model, $selected_accesories);
     }
-    public function getFirstSellOfferNumber() {
-        
-        $stringNumber = null;
-        $offerString = '2020OF';        
-        $offer_integer = 1;
-        $offerStringNumber = strval($offer_integer);                
-        while(strlen($offerStringNumber) < 4)
+    public function getSellOfferNumber($selected_offer)
+    {        
+        if($selected_offer === null)
         {
-            $offerStringNumber = "0".$stringNumber;                    
+            $last_offer = DB::table('selloffers')->get()->last();            
+            if($last_offer === null)
+            {
+                $new_offer = 1;                
+                $offer_number = $this->getFirstSellOfferNumber();                
+            }
+            else
+            {
+                $new_offer = $last_offer->id + 1;
+                $offer_number = $this->getNewSellOfferNumber($last_offer);                             
+            }              
         }
-        $offer_number = $offerString.$offerStringNumber;
-        return $offer_number;         
-    }
-    public function getNewSellOfferNumber($last_offer){  
-        $offerString = '2020OF';
-        $offer_string = substr($last_offer->offer_number, 6, 4);
-        $offer_integer = intval($offer_string) + 1;
-        $stringNumber = strval($offer_integer);                
-        while(strlen($stringNumber) < 4)
+        else
         {
-            $stringNumber = "0".$stringNumber;
+            $new_offer = $selected_offer->id;
+            $offer_number = $selected_offer->offerNumber;
         }
-        return $offerString.$stringNumber;
-    }
-    public function resetOffer($offer_id)
-    {
-        if(!SellOffer::find($offer_id))
-        {
-            $this->cleanSupplies($offer_id);
-            $this->cleanComponents($offer_id);
-            $this->cleanWorks($offer_id);              
-        }        
+        return array($new_offer, $offer_number);
     }
     public function getSellOfferSupplies($offer_id)
     {
-        $offerSupplies = DB::table('selloffers_supplies')                
-            ->join('supplies', 'selloffers_supplies.supply_id', '=', 'supplies.id')
+        $offerSupplies = DB::table('sellofferssupplies')                
+            ->join('supplies', 'sellofferssupplies.supplyId', '=', 'supplies.id')
             ->join('maders', 'supplies.mader', '=', 'maders.id')
-            ->select('selloffers_supplies.id', 'selloffers_supplies.selloffer_id', 'selloffers_supplies.supply_id', 'supplies.ref as reference', 'maders.name as mader', 'supplies.name as name', 'selloffers_supplies.cantity as cantity', 'selloffers_supplies.price as price')
-            ->where('selloffers_supplies.selloffer_id', '=', $offer_id)
+            ->select('sellofferssupplies.id', 'sellofferssupplies.sellofferId', 'sellofferssupplies.supplyId', 'supplies.ref as reference', 'maders.name as mader', 'supplies.name as name', 'sellofferssupplies.cantity as cantity', 'sellofferssupplies.price as price')
+            ->where('sellofferssupplies.sellofferId', '=', $offer_id)
             ->get();
         return $offerSupplies;
     }
@@ -743,11 +782,11 @@ class SellOffersController extends BaseController {
     }
     public function getSellOfferComponents($offer_id)
     {
-        $offerComponents = DB::table('selloffers_components')
-            ->join('components', 'selloffers_components.component_id', '=', 'components.id')
+        $offerComponents = DB::table('sellofferscomponents')
+            ->join('components', 'sellofferscomponents.componentId', '=', 'components.id')
             ->join('maders', 'components.mader', '=', 'maders.id')
-            ->select('selloffers_components.id', 'selloffers_components.selloffer_id', 'selloffers_components.component_id', 'components.ref as reference', 'components.name as name', 'selloffers_components.cantity as cantity', 'selloffers_components.price as price')
-            ->where('selloffers_components.selloffer_id', '=', $offer_id)                
+            ->select('sellofferscomponents.id', 'sellofferscomponents.sellofferId', 'sellofferscomponents.componentId', 'components.ref as reference', 'components.name as name', 'sellofferscomponents.cantity as cantity', 'sellofferscomponents.price as price')
+            ->where('sellofferscomponents.sellofferId', '=', $offer_id)                
             ->get();
         return $offerComponents;
     }
@@ -763,10 +802,10 @@ class SellOffersController extends BaseController {
         }
     }
     public function getSellOfferWorks($offer_id){
-        $offerWorks = DB::table('selloffers_works')
-            ->join('works', 'selloffers_works.work_id', '=', 'works.id')               
-            ->select('selloffers_works.id', 'selloffers_works.selloffer_id', 'selloffers_works.work_id', 'works.description as description', 'selloffers_works.cantity as cantity', 'selloffers_works.price as price')
-            ->where('selloffers_works.selloffer_id', '=', $offer_id)                
+        $offerWorks = DB::table('selloffersworks')
+            ->join('works', 'selloffersworks.workId', '=', 'works.id')               
+            ->select('selloffersworks.id', 'selloffersworks.sellofferId', 'selloffersworks.workId', 'works.description as description', 'selloffersworks.cantity as cantity', 'selloffersworks.price as price')
+            ->where('selloffersworks.sellofferId', '=', $offer_id)                
             ->get();
         return $offerWorks;
     }            
@@ -783,10 +822,10 @@ class SellOffersController extends BaseController {
     } 
     public function getSellOfferVehicleAccesories($vehicle_id)
     {
-        $selected_accesories = DB::table('vehicle_accesories')
-                ->join('accesories', 'vehicle_accesories.accesory_id', '=', 'accesories.id')
-                ->select('vehicle_accesories.accesory_id','vehicle_accesories.id', 'accesories.keystring', 'accesories.name')
-                ->where('vehicle_accesories.vehicle_id', '=', $vehicle_id)
+        $selected_accesories = DB::table('vehicleaccesories')
+                ->join('accesories', 'vehicleaccesories.accesoryId', '=', 'accesories.id')
+                ->select('vehicleaccesories.accesoryId','vehicleaccesories.id', 'accesories.keystring', 'accesories.name')
+                ->where('vehicleaccesories.vehicleId', '=', $vehicle_id)
                 ->get();
         return $selected_accesories;
     }

@@ -12,11 +12,12 @@ use App\Controllers\BaseController;
 use App\Models\Mader;
 use App\Models\Supplies;
 use App\Services\Vehicle\SuppliesService;
+use Illuminate\Database\Capsule\Manager as DB;
+use Illuminate\Database\QueryException;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\ServerRequest;
-use ZipStream\Exception;
 use Respect\Validation\Validator as v;
-use Illuminate\Database\Capsule\Manager as DB;
+use ZipStream\Exception;
 
 
 
@@ -48,55 +49,43 @@ class SuppliesController extends BaseController
     
     public function getSuppliesDataAction($request)
     {
-        $responseMessage = null;
-        $supply_temp = null;
-        $mader = null;
+        $responseMessage = null;        
         if($request->getMethod() == 'POST')
         {
-            $postData = $request->getParsedBody();           
-            $suppliesValidator = v::key('ref', v::stringType()->notEmpty())
-                    ->key('mader_code', v::stringType())
-                    ->key('name', v::stringType()->notEmpty());
-            try{
-                $suppliesValidator->assert($postData);
-                $supply = new Supplies();
-                $supply->id = $postData['id'];
-                if($supply->id)
-                {
-                    $supply_temp = Supplies::find($supply->id);
-                    if($supply_temp)
-                    {
-                        $supply = $supply_temp;
-                    }
-                }                
-                $supply->ref = $postData['ref'];
-                $supply->name = $postData['name'];
-                $mader = Mader::where('name', '=', $postData['mader'])->first();
-                $supply->mader = $mader->id;
-                $supply->mader_code = $postData['mader_code'];
-                $supply->stock = $postData['stock'];
-                $supply->pvc = $this->tofloat($postData['pvc']);
-                $supply->pvp = $this->tofloat($postData['pvp']);
-                $supply->observations = $postData['observations'];                
-                if($supply_temp)
-                {
-                    $supply->update();
-                    $responseMessage = 'Updated';
-                }
-                else
-                {
-                    $supply->save();
-                    $responseMessage = 'Saved';
-                }
-                
-            } catch (Exception $ex) {
-                $responseMessage = $ex->getMessage();
+            $postData = $request->getParsedBody();
+            if($this->validateData($postData))
+            {
+                $responseMessage = $this->validateData($postData);
             }
-        }
-        $selected_supply = null;
+            $supply = $this->getSupplyData($postData);
+            $responseMessage = $this->saveSupply($supply);           
+            
+        }        
         $maders = Mader::All();
         $params = $request->getQueryParams();
-        if($request->getQueryParams('id'))
+        $selected_supply = $this->setSupplyData($params);      
+        return $this->renderHTML('/vehicles/supplies/suppliesForm.html.twig', [
+            'supply' => $selected_supply,
+            'maders' => $maders,
+            'responseMessage' => $responseMessage
+        ]);
+    }
+    public function validateData($postData)
+    {
+        $responseMessage = null;
+        $suppliesValidator = v::key('ref', v::stringType()->notEmpty())
+                    ->key('mader_code', v::stringType())
+                    ->key('name', v::stringType()->notEmpty());
+        try{
+            $suppliesValidator->assert($postData);               
+        } catch (Exception $ex) {
+            $responseMessage = $ex->getMessage();
+        }
+        return $responseMessage;
+    }
+    public function setSupplyData($params)
+    {
+        if(isset($params['id']) && $params['id'])
         {            
             $selected_supply = DB::table('supplies')
                     ->join('maders', 'supplies.mader', '=', 'maders.id')
@@ -104,13 +93,45 @@ class SuppliesController extends BaseController
                     ->where('supplies.id', '=', $params['id'])
                     ->whereNull('supplies.deleted_at')
                     ->first();
-        }    
+        }
+        return $selected_supply;
+    }
+    public function getSupplyData($postData)
+    {
+        $supply = new Supplies();        
+        if(Supplies::find($postData['id']))
+        {
+            $supply = Supplies::find($postData['id'])->first();                   
+        }                
+        $supply->ref = $postData['ref'];
+        $supply->name = $postData['name'];
+        $mader = Mader::where('name', '=', $postData['mader'])->first();
+        $supply->mader = $mader->id;
+        $supply->maderCode = $postData['mader_code'];
+        $supply->stock = $postData['stock'];
+        $supply->pvc = $this->tofloat($postData['pvc']);
+        $supply->pvp = $this->tofloat($postData['pvp']);
+        $supply->observations = $postData['observations'];
+        return $supply;
+    }
+    public function saveSupply($supply)
+    {
+        try{
+            if(Supplies::find($supply->id)->first())
+            {
+                $supply->update();
+                $responseMessage = 'Updated';
+            }
+            else
+            {
+                $supply->save();
+                $responseMessage = 'Saved';
+            }
+        } catch (QueryException $ex) {
+            $responseMessage = $this->errorService->getError($ex);
+        }
         
-        return $this->renderHTML('/vehicles/supplies/suppliesForm.html.twig', [
-            'supply' => $selected_supply,
-            'maders' => $maders,
-            'responseMessage' => $responseMessage
-        ]);
+        return $responseMessage;
     }
     public function deleteAction(ServerRequest $request)
     {         

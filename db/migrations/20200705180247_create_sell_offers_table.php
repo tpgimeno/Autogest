@@ -20,7 +20,8 @@ final class CreateSellOffersTable extends AbstractMigration
     {
         $table = $this->table('selloffers');
         $table->addColumn('offerNumber', 'string')
-                ->addColumn('customer_id', 'string')
+                ->addColumn('offerDate', 'date')
+                ->addColumn('customerId', 'string')
                 ->addColumn('vehicleId', 'string')
                 ->addColumn('vehiclePvp', 'float')
                 ->addColumn('vehicleTva', 'float')

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Crm;
+namespace App\Services\Sells;
 
 use App\Models\SellOffer;
 /* 
