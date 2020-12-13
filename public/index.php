@@ -753,9 +753,21 @@ $map->get('pruebaReport', '/intranet/reports/prueba', [
     'App\Controllers\PruebaReportController',
     'getReportAction'
 ]);
-$map->post('SellOfferReport', '/intranet/reports/selloffer', [
-    'App\Controllers\Crm\SellOffersController',
-    'getReportAction'
+$map->post('SellOfferDetailedReport', '/intranet/reports/sellofferDetailed', [
+    'App\Controllers\Sells\SellOffersController',
+    'getDetailedReportAction'
+]);
+$map->post('SellOfferVehicleReport', '/intranet/reports/sellofferVehicle', [
+    'App\Controllers\Sells\SellOffersController',
+    'getVehicleReportAction'
+]);
+$map->post('SellOfferVehicleExportReport', '/intranet/reports/sellofferVehicleExport', [
+    'App\Controllers\Sells\SellOffersController',
+    'getVehicleExportReportAction'
+]);
+$map->post('SellOfferVehicleIntraReport', '/intranet/reports/sellofferVehicleIntra', [
+    'App\Controllers\Sells\SellOffersController',
+    'getVehicleIntraReportAction'
 ]);
 
 

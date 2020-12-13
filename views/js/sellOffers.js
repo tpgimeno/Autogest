@@ -125,7 +125,7 @@ window.addEventListener('load', function()
         var request = new XMLHttpRequest();
         request.open('POST', '/intranet/crm/offers/customer/search', true);
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        if(document.getElementById('searchCustomerField').value == "")
+        if(document.getElementById('searchCustomerField').value === "")
         {
         }
         else
@@ -159,7 +159,7 @@ window.addEventListener('load', function()
         var request = new XMLHttpRequest();
         request.open('POST', '/intranet/crm/offers/vehicle/search', true);
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        if(document.getElementById('searchVehicleField').value == "")
+        if(document.getElementById('searchVehicleField').value === "")
         {                        
         }
         else
@@ -267,7 +267,7 @@ window.addEventListener('load', function()
     document.getElementById('inputSupplyTotal').value = base_supply.format('(0.0,$)');
     
     document.getElementById('inputComponentPrice').value = price_component.format('(0.0,$)'); 
-    base_component = numeral(price_component.value());    
+    base_component = numeral(price_component.value()*cantity_component.value());    
     document.getElementById('inputComponentTotal').value = base_component.format('(0.0,$)');
     
     document.getElementById('inputSuppliesBase').value = price_supplies.format('(0.0,$)');
@@ -295,15 +295,13 @@ window.addEventListener('load', function()
     document.getElementById('inputWorkTotal').value = total_work.format('(0.0,$)');    
        
 
-    base = numeral(price_vehicle.value() + price_supplies.value() + price_works.value() + price_components.value() - discount.value());
-    console.log(base.value());
+    base = numeral(price_vehicle.value() + price_supplies.value() + price_works.value() + price_components.value() - discount.value());    
     document.getElementById("inputPrice").value = base.format('(0.0,$)');
     document.getElementById("inputDiscount").value = discount.format('(0.0,$)');
     tva = numeral(base.value() * 0.21);
     document.getElementById("inputTva").value = tva.format('(0.0,$)');
     total = numeral(base.value() + tva.value());  
-    document.getElementById("inputTotal").value = total.format('(0.0,$)');
-    
+    document.getElementById("inputTotal").value = total.format('(0.0,$)');    
     document.getElementById('inputVehiclePrice').addEventListener("change", function () 
     {        
         price_vehicle = numeral(document.getElementById('inputVehiclePrice').value);
@@ -380,20 +378,11 @@ window.addEventListener('load', function()
     });
     document.getElementById('inputComponentCantity').addEventListener("change", function()
     {
-        price_component = numeral(document.getElementById('inputComponentPrice').value);
-        document.getElementById('inputComponentPrice').value = price_component.format('(0.0,$)');
+        price_component = numeral(document.getElementById('inputComponentPrice').value);        
         cantity_component = numeral(document.getElementById('inputComponentCantity').value);
-        base_component = numeral(price_component.value() * cantity_component.value());
-        total_component.value  = numeral(base_component.value()).format('(0.0,$)');
-    });
-    document.getElementById('inputComponentTotal').addEventListener("change", function()
-    {
-        total_component = numeral(document.getElementById('inputComponentTotal').value);
-        document.getElementById('inputComponentTotal').value = total_component.format('(0.0,$)');
-        cantity_component = numeral(document.getElementById('inputComponentCantity').value);
-        price_component = numeral(total_component.value() / cantity_component.value());
-        document.getElementById('inputComponentPrice').value = price_component.format('(0.0,$)');        
-    });
+        base_component = numeral(price_component.value() * cantity_component.value());        
+        document.getElementById('inputComponentTotal').value  = base_component.format('(0.0,$)');
+    });    
     document.getElementById('inputComponentsBase').addEventListener('change', function()
     {
         base = numeral(price_vehicle.value() + price_supplies.value() + price_works.value() + price_components.value() - discount.value());
@@ -495,7 +484,7 @@ window.addEventListener('load', function()
         for(let i = 0; i < offer_supplies.length ; i++)
         {            
             offer_supplies[i]['total'] = numeral(numeral(offer_supplies[i]['cantity']).value() * numeral(offer_supplies[i]['price']).value()).value();
-            table_supplies.innerHTML += "<tr><td>"+offer_supplies[i]['supply_id']+"</td><td>"+offer_supplies[i]['reference']+"</td><td>"+offer_supplies[i]['name']+"</td><td>"+offer_supplies[i]['price']+"</td><td>"+offer_supplies[i]['cantity']+"</td><td>"+offer_supplies[i]['total']+"</td><td><a href=/intranet/crm/offers/supplies/edit?supply_id="+offer_supplies[i]['supply_id']+"&offer_id="+numeral(offer.value).value()+"&vehicle_id="+numeral(id_vehicle.value).value()+"&component_id="+numeral(id_component.value).value()+"&work_id="+numeral(id_work.value).value()+"&customer_id="+numeral(id_customer.value).value()+">Edit</a></td><td><a href=/intranet/crm/offers/supplies/del?supply_id="+offer_supplies[i]['supply_id']+"&offer_id="+numeral(offer.value).value()+"&vehicle_id="+numeral(id_vehicle.value).value()+"&component_id="+numeral(id_component.value).value()+"&work_id="+numeral(id_work.value).value()+"&customer_id="+numeral(id_customer.value).value()+">Eliminar</a></td>";
+            table_supplies.innerHTML += "<tr><td>"+offer_supplies[i]['supplyId']+"</td><td>"+offer_supplies[i]['reference']+"</td><td>"+offer_supplies[i]['name']+"</td><td>"+numeral(offer_supplies[i]['price']).format('(0.0,$)')+"</td><td>"+offer_supplies[i]['cantity']+"</td><td>"+numeral(offer_supplies[i]['total']).format('(0.0,$)')+"</td><td><a href=/intranet/crm/offers/supplies/edit?supply_id="+offer_supplies[i]['supplyId']+"&offer_id="+numeral(offer.value).value()+"&vehicle_id="+numeral(id_vehicle.value).value()+"&component_id="+numeral(id_component.value).value()+"&work_id="+numeral(id_work.value).value()+"&customer_id="+numeral(id_customer.value).value()+">Edit</a></td><td><a href=/intranet/crm/offers/supplies/del?supply_id="+offer_supplies[i]['supplyId']+"&offer_id="+numeral(offer.value).value()+"&vehicle_id="+numeral(id_vehicle.value).value()+"&component_id="+numeral(id_component.value).value()+"&work_id="+numeral(id_work.value).value()+"&customer_id="+numeral(id_customer.value).value()+">Eliminar</a></td>";
             suma_prices_supplies += numeral(price_supplies).value() + numeral(offer_supplies[i]['total']).value();           
         } 
         price_supplies = numeral(suma_prices_supplies);
@@ -526,7 +515,7 @@ window.addEventListener('load', function()
         for(let i = 0; i < offer_components.length ; i++)
         {            
             offer_components[i]['total'] = numeral(numeral(offer_components[i]['cantity']).value() * numeral(offer_components[i]['price']).value()).value();
-            table_components.innerHTML += "<tr><td>"+offer_components[i]['component_id']+"</td><td>"+offer_components[i]['reference']+"</td><td>"+offer_components[i]['name']+"</td><td>"+numeral(offer_components[i]['price']).format('(0.0,$)')+"</td><td>"+offer_components[i]['cantity']+"</td><td>"+numeral(offer_components[i]['total']).format('(0.0,$)')+"</td><td><a href=/intranet/crm/offers/components/edit?component_id="+numeral(offer_components[i]['component_id']).value()+"&offer_id="+numeral(offer.value).value()+"&vehicle_id="+numeral(id_vehicle.value).value()+"&customer_id="+numeral(id_customer.value).value()+"&supply_id="+numeral(id_supply.value).value()+"&work_id="+numeral(id_work.value).value()+">Edit</a></td><td><a href=/intranet/crm/offers/components/del?component_id="+numeral(offer_components[i]['component_id']).value()+"&offer_id="+numeral(offer.value).value()+"&vehicle_id="+numeral(id_vehicle.value).value()+"&customer_id="+numeral(id_customer.value).value()+"&supply_id="+numeral(id_supply.value).value()+"&work_id="+numeral(id_work.value).value()+">Eliminar</a></td>";
+            table_components.innerHTML += "<tr><td>"+offer_components[i]['componentId']+"</td><td>"+offer_components[i]['reference']+"</td><td>"+offer_components[i]['name']+"</td><td>"+numeral(offer_components[i]['price']).format('(0.0,$)')+"</td><td>"+offer_components[i]['cantity']+"</td><td>"+numeral(offer_components[i]['total']).format('(0.0,$)')+"</td><td><a href=/intranet/crm/offers/components/edit?component_id="+numeral(offer_components[i]['componentId']).value()+"&offer_id="+numeral(offer.value).value()+"&vehicle_id="+numeral(id_vehicle.value).value()+"&customer_id="+numeral(id_customer.value).value()+"&supply_id="+numeral(id_supply.value).value()+"&work_id="+numeral(id_work.value).value()+">Edit</a></td><td><a href=/intranet/crm/offers/components/del?component_id="+numeral(offer_components[i]['componentId']).value()+"&offer_id="+numeral(offer.value).value()+"&vehicle_id="+numeral(id_vehicle.value).value()+"&customer_id="+numeral(id_customer.value).value()+"&supply_id="+numeral(id_supply.value).value()+"&work_id="+numeral(id_work.value).value()+">Eliminar</a></td>";
             suma_prices_components += numeral(price_components).value() + numeral(offer_components[i]['total']).value();           
         }        
         price_components = numeral(suma_prices_components);        
@@ -558,7 +547,7 @@ window.addEventListener('load', function()
         for(let i = 0; i < offer_works.length ; i++)
         {            
             offer_works[i]['total'] = numeral(numeral(offer_works[i]['cantity']).value() * numeral(offer_works[i]['price']).value()).value();
-            table_works.innerHTML += "<tr><td>"+offer_works[i]['work_id']+"</td><td>"+offer_works[i]['description']+"</td><td>"+numeral(offer_works[i]['price']).format('(0.0,$)')+"</td><td>"+offer_works[i]['cantity']+"</td><td>"+numeral(offer_works[i]['total']).format('(0.0,$)')+"</td><td><a href=/intranet/crm/offers/works/edit?work_id="+numeral(offer_works[i]['work_id']).value()+"&offer_id="+numeral(offer.value).value()+"&vehicle_id="+numeral(id_vehicle.value).value()+"&customer_id="+numeral(id_customer.value).value()+"&supply_id="+numeral(id_supply.value).value()+"&component_id="+numeral(id_component.value).value()+">Edit</a></td><td><a href=/intranet/crm/offers/works/del?work_id="+numeral(offer_works[i]['work_id']).value()+"&offer_id="+numeral(offer.value).value()+"&vehicle_id="+numeral(id_vehicle.value).value()+"&customer_id="+numeral(id_customer.value).value()+"&supply_id="+numeral(id_supply.value).value()+"&component_id="+numeral(id_component.value).value()+">Eliminar</a></td>";
+            table_works.innerHTML += "<tr><td>"+offer_works[i]['workId']+"</td><td>"+offer_works[i]['description']+"</td><td>"+numeral(offer_works[i]['price']).format('(0.0,$)')+"</td><td>"+offer_works[i]['cantity']+"</td><td>"+numeral(offer_works[i]['total']).format('(0.0,$)')+"</td><td><a href=/intranet/crm/offers/works/edit?work_id="+numeral(offer_works[i]['workId']).value()+"&offer_id="+numeral(offer.value).value()+"&vehicle_id="+numeral(id_vehicle.value).value()+"&customer_id="+numeral(id_customer.value).value()+"&supply_id="+numeral(id_supply.value).value()+"&component_id="+numeral(id_component.value).value()+">Edit</a></td><td><a href=/intranet/crm/offers/works/del?work_id="+numeral(offer_works[i]['workId']).value()+"&offer_id="+numeral(offer.value).value()+"&vehicle_id="+numeral(id_vehicle.value).value()+"&customer_id="+numeral(id_customer.value).value()+"&supply_id="+numeral(id_supply.value).value()+"&component_id="+numeral(id_component.value).value()+">Eliminar</a></td>";
             suma_prices_works += numeral(numeral(price_works).value() + offer_works[i]['total']).value();           
         }        
         price_works = numeral(suma_prices_works);        
@@ -603,14 +592,14 @@ function addSupply()
     var importe = 0;
     importe = numeral(price_supply.value() * cantity_supply.value());    
     var offer_supply = new Array(); 
-    offer_supply = {'selloffer_id':numeral(offer.value).value(),'supply_id':numeral(id_supply.value).value(),'reference':ref_supply.value,'name':name_supply.value,'price':price_supply.value(),'cantity':cantity_supply.value(),'total':importe.value()};
+    offer_supply = {'sellofferId':numeral(offer.value).value(),'supplyId':numeral(id_supply.value).value(),'reference':ref_supply.value,'name':name_supply.value,'price':price_supply.value(),'cantity':cantity_supply.value(),'total':importe.value()};
     
     var exists = false;
     if(offer_supplies.length > 0)
     {        
         for(let i=0;i < offer_supplies.length; i++)
         {
-            if(offer_supply['supply_id'] === offer_supplies[i]['supply_id'])
+            if(offer_supply['supplyId'] === offer_supplies[i]['supplyId'])
             {                
                 offer_supplies[i]['cantity'] = numeral(numeral(offer_supplies[i]['cantity']).value() + numeral(offer_supply['cantity']).value()).value();
                 offer_supplies[i]['total'] = numeral(numeral(offer_supplies[i]['price']).value() * numeral(offer_supplies[i]['cantity']).value()).value();
@@ -642,8 +631,9 @@ function addSupply()
     {
         for(let i = 0; i < offer_supplies.length ; i++)
         {            
-            table_supplies.innerHTML += "<tr><td>"+offer_supplies[i]['supply_id']+"</td><td>"+offer_supplies[i]['reference']+"</td><td>"+offer_supplies[i]['name']+"</td><td>"+offer_supplies[i]['price']+"</td><td>"+offer_supplies[i]['cantity']+"</td><td>"+offer_supplies[i]['total']+"</td><td><a href=/intranet/crm/offers/supplies/edit?supply_id="+offer_supplies[i]['supply_id']+"&offer_id="+numeral(offer.value).value()+"&vehicle_id="+numeral(id_vehicle.value).value()+"&component_id="+numeral(id_component.value).value()+"&work_id="+numeral(id_work.value).value()+"&customer_id="+numeral(id_customer.value).value()+">Edit</a></td><td><a href=/intranet/crm/offers/supplies/del?supply_id="+offer_supplies[i]['supply_id']+"&offer_id="+numeral(offer.value).value()+"&vehicle_id="+numeral(id_vehicle.value).value()+"&component_id="+numeral(id_component.value).value()+"&work_id="+numeral(id_work.value).value()+"&customer_id="+numeral(id_customer.value).value()+">Eliminar</a></td>";
-            suma_prices_supplies += numeral(offer_supplies[i]['total']).value();           
+            table_supplies.innerHTML += "<tr><td>"+offer_supplies[i]['supplyId']+"</td><td>"+offer_supplies[i]['reference']+"</td><td>"+offer_supplies[i]['name']+"</td><td>"+numeral(offer_supplies[i]['price']).format('(0.0,$)')+"</td><td>"+offer_supplies[i]['cantity']+"</td><td>"+numeral(offer_supplies[i]['total']).format('(0.0,$)')+"</td><td><a href=/intranet/crm/offers/supplies/edit?supply_id="+offer_supplies[i]['supplyId']+"&offer_id="+numeral(offer.value).value()+"&vehicle_id="+numeral(id_vehicle.value).value()+"&component_id="+numeral(id_component.value).value()+"&work_id="+numeral(id_work.value).value()+"&customer_id="+numeral(id_customer.value).value()+">Edit</a></td><td><a href=/intranet/crm/offers/supplies/del?supply_id="+offer_supplies[i]['supplyId']+"&offer_id="+numeral(offer.value).value()+"&vehicle_id="+numeral(id_vehicle.value).value()+"&component_id="+numeral(id_component.value).value()+"&work_id="+numeral(id_work.value).value()+"&customer_id="+numeral(id_customer.value).value()+">Eliminar</a></td>";
+            suma_prices_supplies += numeral(offer_supplies[i]['total']).value(); 
+            console.log(offer_supplies[i]);
         }  
     }       
     price_supplies = numeral(suma_prices_supplies).value();
@@ -674,6 +664,7 @@ function addSupply()
     request.addEventListener("load", reqListener);
     
 }
+
 function addComponent()
 {
     var offer = document.getElementById('inputId');
@@ -692,12 +683,12 @@ function addComponent()
     var importe = 0;
     importe = numeral(price_component.value() * cantity_component.value());    
     var offer_component = new Array();
-    offer_component = {'selloffer_id':numeral(offer.value).value(),'component_id':numeral(id_component.value).value(),'reference':ref_component.value,'name':name_component.value,'price':price_component.value(),'cantity':cantity_component.value(),'total':importe.value()};
+    offer_component = {'sellofferId':numeral(offer.value).value(),'componentId':numeral(id_component.value).value(),'reference':ref_component.value,'name':name_component.value,'price':price_component.value(),'cantity':cantity_component.value(),'total':importe.value()};
     if(offer_components.length > 0)
     {
         for(let i=0;i < offer_components.length; i++)
         {
-            if(offer_component['component_id'] === offer_components[i]['component_id'])
+            if(offer_component['componentId'] === offer_components[i]['componentId'])
             {
                 offer_components[i]['cantity'] = numeral(numeral(offer_components[i]['cantity']).value() + numeral(offer_component['cantity']).value()).value();
                 offer_components[i]['total'] = numeral(numeral(offer_components[i]['price']).value() * numeral(offer_components[i]['cantity']).value()).value();
@@ -727,7 +718,7 @@ function addComponent()
     {
         for(let i = 0; i < offer_components.length ; i++)
         {            
-            table_components.innerHTML += "<tr><td>"+offer_components[i]['component_id']+"</td><td>"+offer_components[i]['reference']+"</td><td>"+offer_components[i]['name']+"</td><td>"+numeral(offer_components[i]['price']).format('(0.0,$)')+"</td><td>"+offer_components[i]['cantity']+"</td><td>"+numeral(offer_components[i]['total']).format('(0.0,$)')+"</td><td><a href=/intranet/crm/offers/components/edit?component_id="+numeral(offer_components[i]['component_id']).value()+"&offer_id="+numeral(offer.value).value()+"&vehicle_id="+numeral(id_vehicle.value).value()+"&customer_id="+numeral(id_customer.value).value()+"&supply_id="+numeral(id_supply.value).value()+"&work_id="+numeral(id_work.value).value()+">Edit</a></td><td><a href=/intranet/crm/offers/components/del?component_id="+numeral(offer_components[i]['component_id']).value()+"&offer_id="+numeral(offer.value).value()+"&vehicle_id="+numeral(id_vehicle.value).value()+"&customer_id="+numeral(id_customer.value).value()+"&supply_id="+numeral(id_supply.value).value()+"&work_id="+numeral(id_work.value).value()+">Eliminar</a></td>";
+            table_components.innerHTML += "<tr><td>"+offer_components[i]['componentId']+"</td><td>"+offer_components[i]['reference']+"</td><td>"+offer_components[i]['name']+"</td><td>"+numeral(offer_components[i]['price']).format('(0.0,$)')+"</td><td>"+offer_components[i]['cantity']+"</td><td>"+numeral(offer_components[i]['total']).format('(0.0,$)')+"</td><td><a href=/intranet/crm/offers/components/edit?component_id="+numeral(offer_components[i]['componentId']).value()+"&offer_id="+numeral(offer.value).value()+"&vehicle_id="+numeral(id_vehicle.value).value()+"&customer_id="+numeral(id_customer.value).value()+"&supply_id="+numeral(id_supply.value).value()+"&work_id="+numeral(id_work.value).value()+">Edit</a></td><td><a href=/intranet/crm/offers/components/del?component_id="+numeral(offer_components[i]['componentId']).value()+"&offer_id="+numeral(offer.value).value()+"&vehicle_id="+numeral(id_vehicle.value).value()+"&customer_id="+numeral(id_customer.value).value()+"&supply_id="+numeral(id_supply.value).value()+"&work_id="+numeral(id_work.value).value()+">Eliminar</a></td>";
             suma_prices_components += numeral(price_components).value() + numeral(offer_components[i]['total']).value();           
         }  
     }       
@@ -774,13 +765,13 @@ function addWork()
     var importe = 0;
     importe = numeral(price_work.value() * cantity_work.value());    
     var offer_work = new Array();    
-    offer_work = {'selloffer_id':numeral(offer.value).value(),'work_id':numeral(id_work.value).value(),'description': name_work.value,'price': price_work.value(),'cantity':cantity_work.value(),'total':importe.value()};
+    offer_work = {'sellofferId':numeral(offer.value).value(),'workId':numeral(id_work.value).value(),'description': name_work.value,'price': price_work.value(),'cantity':cantity_work.value(),'total':importe.value()};
     
     if(offer_works.length > 0)
     {
         for(let i=0;i < offer_works.length; i++)
         {
-            if(offer_work['id'] === offer_works[i]['id'])
+            if(offer_work['workId'] === offer_works[i]['workId'])
             {
                 offer_works[i]['cantity'] = numeral(numeral(offer_works[i]['cantity']).value() + numeral(offer_work['cantity']).value()).value();
                 offer_works[i]['total'] = numeral(numeral(offer_works[i]['price']).value() * numeral(offer_works[i]['cantity']).value()).value();
@@ -810,7 +801,7 @@ function addWork()
     {
         for(let i = 0; i < offer_works.length ; i++)
         {            
-            table_works.innerHTML += "<tr><td>"+offer_works[i]['work_id']+"</td><td>"+offer_works[i]['description']+"</td><td>"+numeral(offer_works[i]['price']).format('(0.0,$)')+"</td><td>"+offer_works[i]['cantity']+"</td><td>"+numeral(offer_works[i]['total']).format('(0.0,$)')+"</td><td><a href=/intranet/crm/offers/works/edit?work_id="+offer_works[i]['work_id']+"&offer_id="+numeral(offer.value).value()+"&vehicle_id="+numeral(id_vehicle.value).value()+"&customer_id="+numeral(id_customer.value).value()+"&supply_id="+numeral(id_supply.value).value()+"&component_id="+numeral(id_component.value).value()+">Edit</a></td><td><a href=/intranet/crm/offers/works/del?work_id="+numeral(offer_works[i]['work_id']).value()+"&offer_id="+numeral(offer.value).value()+"&vehicle_id="+numeral(id_vehicle.value).value()+"&customer_id="+numeral(id_customer.value).value()+"&supply_id="+numeral(id_supply.value).value()+"&component_id="+numeral(id_component.value).value()+">Eliminar</a></td>";
+            table_works.innerHTML += "<tr><td>"+offer_works[i]['workId']+"</td><td>"+offer_works[i]['description']+"</td><td>"+numeral(offer_works[i]['price']).format('(0.0,$)')+"</td><td>"+offer_works[i]['cantity']+"</td><td>"+numeral(offer_works[i]['total']).format('(0.0,$)')+"</td><td><a href=/intranet/crm/offers/works/edit?work_id="+offer_works[i]['workId']+"&offer_id="+numeral(offer.value).value()+"&vehicle_id="+numeral(id_vehicle.value).value()+"&customer_id="+numeral(id_customer.value).value()+"&supply_id="+numeral(id_supply.value).value()+"&component_id="+numeral(id_component.value).value()+">Edit</a></td><td><a href=/intranet/crm/offers/works/del?work_id="+numeral(offer_works[i]['workId']).value()+"&offer_id="+numeral(offer.value).value()+"&vehicle_id="+numeral(id_vehicle.value).value()+"&customer_id="+numeral(id_customer.value).value()+"&supply_id="+numeral(id_supply.value).value()+"&component_id="+numeral(id_component.value).value()+">Eliminar</a></td>";
             suma_prices_works += numeral(numeral(price_works).value() + offer_works[i]['total']).value();           
         }  
     }       

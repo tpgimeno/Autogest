@@ -85,6 +85,7 @@ class SuppliesController extends BaseController
     }
     public function setSupplyData($params)
     {
+        $selected_supply = null;        
         if(isset($params['id']) && $params['id'])
         {            
             $selected_supply = DB::table('supplies')
@@ -105,7 +106,7 @@ class SuppliesController extends BaseController
         }                
         $supply->ref = $postData['ref'];
         $supply->name = $postData['name'];
-        $mader = Mader::where('name', '=', $postData['mader'])->first();
+        $mader = Mader::where('name', 'like', "%".$postData['mader']."%")->first();        
         $supply->mader = $mader->id;
         $supply->maderCode = $postData['mader_code'];
         $supply->stock = $postData['stock'];
@@ -117,7 +118,7 @@ class SuppliesController extends BaseController
     public function saveSupply($supply)
     {
         try{
-            if(Supplies::find($supply->id)->first())
+            if(Supplies::find($supply->id))
             {
                 $supply->update();
                 $responseMessage = 'Updated';
@@ -129,8 +130,7 @@ class SuppliesController extends BaseController
             }
         } catch (QueryException $ex) {
             $responseMessage = $this->errorService->getError($ex);
-        }
-        
+        }       
         return $responseMessage;
     }
     public function deleteAction(ServerRequest $request)

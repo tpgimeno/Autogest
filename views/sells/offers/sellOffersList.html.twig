@@ -38,8 +38,8 @@
                     </tr>
                     {% for offer in offers %}
                         <tr>
-                            <td>{{ offer.offer_number }}</td>
-                            <td>{{ offer.offer_date }}</td>
+                            <td>{{ offer.offerNumber }}</td>
+                            <td>{{ offer.offerDate }}</td>
                             <td>{{ offer.name }}</td>
                             <td>{{ offer.brand }} {{ offer.model }}</td>                           
                             <td><a href="/intranet/crm/offers/form?offer_id={{offer.id}}">Edit</td>

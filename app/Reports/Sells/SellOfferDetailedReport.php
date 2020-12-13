@@ -6,10 +6,10 @@
  * and open the template in the editor.
  */
 
-namespace App\Reports;
+namespace App\Reports\Sells;
 
 use FPDF;
-use function mb_convert_encoding;
+use const EURO;
 use function utf8_decode;
 
 define('EURO', chr(128));
@@ -19,8 +19,8 @@ define('EURO', chr(128));
  *
  * @author tonyl
  */
-class SellOfferReport extends FPDF{
-    
+class SellOfferDetailedReport extends FPDF
+{    
     public function Header()
     {
         $this->Image('images/pngs/logo-correo-transparente.png', 10, 10, 80);  
@@ -31,12 +31,11 @@ class SellOfferReport extends FPDF{
         $this->Cell(0, 35, 'BENICARLO 12580 CASTELLON', 0, 0, 'R', null, false);
         $this->Cell(0, 45, 'TEL: 964471950', 0, 0, 'R', null, false);
         $this->Cell(0, 55, 'EMAIL: adm@automotiveservices.es', 0, 0, 'R',null, false); 
-        $this->Ln();   
-        
+        $this->Ln();        
     }     
     public function Body($data)
     {       
-        var_dump($data);die();
+//        var_dump($data);die();
         $this->SetFont('Arial', 'B', 12);
         $this->SetFillColor(130,130,130);
         $this->SetTextColor(255, 255 ,255);
@@ -307,12 +306,10 @@ class SellOfferReport extends FPDF{
         $dotPos = strrpos($num, '.');
         $commaPos = strrpos($num, ',');
         $sep = (($dotPos > $commaPos) && $dotPos) ? $dotPos :
-            ((($commaPos > $dotPos) && $commaPos) ? $commaPos : false);
-
+        ((($commaPos > $dotPos) && $commaPos) ? $commaPos : false);
         if (!$sep) {
             return floatval(preg_replace("/[^0-9]/", "", $num));
         }
-
         return floatval(
             preg_replace("/[^0-9]/", "", substr($num, 0, $sep)) . '.' .
             preg_replace("/[^0-9]/", "", substr($num, $sep+1, strlen($num)))
