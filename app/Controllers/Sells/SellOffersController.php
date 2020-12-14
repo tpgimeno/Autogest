@@ -625,7 +625,7 @@ class SellOffersController extends BaseController {
         $selectedVehicle = $this->getSelectedOfferVehicle($params, $selected_offer); 
         $brand = Brand::find($selectedVehicle->brand);
         $model = ModelVh::find($selectedVehicle->model);
-        $selectedAccesories = VehicleAccesories::where('vehicleId', '=', $selectedVehicle->id)->get()->toArray();
+        $selectedAccesories = $this->getSellOfferVehicleAccesories($selectedVehicle->id);
         $offerSupplies = $this->getSellOfferSupplies($new_offer);
         $offerComponents = $this->getSellOfferComponents($new_offer);
         $offerWorks = $this->getSellOfferWorks($new_offer);         

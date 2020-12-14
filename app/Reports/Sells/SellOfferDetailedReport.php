@@ -118,7 +118,25 @@ class SellOfferDetailedReport extends FPDF
         $this->SetFillColor(130, 130, 130);
         $this->Cell(0,1,'', 0, 1, 'C', 1);
         $this->SetFillColor(255); 
+        $this->SetFont('Arial', 'B', 14);        
+        $this->Cell(30, 6, utf8_decode('Equipamiento: '), 0, 1, 'L', 1);
+        
+        $accesories = $data['selected_accesories'];
+        for($i = 0; $i < count($accesories);$i++)
+        {
+            $this->SetFont('Arial','', 9);
+            $this->Cell(40, 6 , utf8_decode($accesories[$i]->name), 0,0,'L', 1);
+        }
+        $this->Ln(8);
+        $this->SetFont('Arial', 'B', 12);        
+        $this->Cell(30, 6, utf8_decode('Adicional: '), 0, 1, 'L', 1);
+        $this->SetFont('Arial','', 9);
         $this->Cell(0,1,'', 0, 1, 'C', 1);
+        $this->MultiCell(0, 6, utf8_decode($data['postData']['equipment']), 0, 1, 'L', 1);
+        $this->Ln('20');
+        $this->SetFillColor(130, 130, 130);
+        $this->Cell(0,1,'', 0, 1, 'C', 1);
+        $this->SetFillColor(255);
         $this->SetFont('Arial', 'B', 10);
         $this->Cell(40, 6, utf8_decode('PVP: '), 0, 0, 'L', 1);
         $this->SetFont('Arial','', 9);        
@@ -288,6 +306,14 @@ class SellOfferDetailedReport extends FPDF
         $this->Cell(30, 10, utf8_decode('Total Oferta: '), 0, 0, 'L', 1);
         $this->SetFont('Arial','', 12);        
         $this->Cell(30, 10 , number_format($this->tofloat($data['total']),2,'.',',')." ".EURO, 0,1,'R', 1);
+        $this->Ln();
+        $this->SetFillColor(130, 130, 130);
+        $this->Cell(0,1,'', 0, 1, 'C', 1); 
+        $this->SetFillColor(255);
+        $this->Cell(0,1,'', 0, 1, 'C', 1);
+        $this->SetFont('Arial','', 8); 
+        $this->MultiCell(0, 3, utf8_decode('Los datos personales serán incorporados a un fichero titularidad de AUTOMOTIVE SERVICES 2014 SLU, cuya finalidad es la elaboración del presupuesto por usted solicitado, así como el seguimiento del mismo. Asimismo, una finalidad es la de poder enviar, de manera periódica, información y publicidad sobre nuestros productos y servicios. Si en el plazo de 30 días, usted no nos manifiesta su negativa, entenderemos que presta su consentimiento para el tratamiento de los datos facilitados.
+De acuerdo con la Ley Orgánica 15/1999, de Protección de Datos de Carácter Personal, puede ejercer los derechos de acceso, rectificación, cancelación y, en su caso, oposición, enviando una solicitud por escrito acompañada de la fotocopia de su DNI a la siguiente dirección: AUTOMOTIVE SERVICES 2014 SLU, N-340 Km 1043, Benicarló, 12580 Castellón.'), 0,1,'C', 1);
         
     }
     public function Footer()

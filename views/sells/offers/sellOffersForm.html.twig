@@ -216,9 +216,9 @@
                     </div>
                 </div>
                 <div class="form-row mt-3 ml-3 mb-3">                                
-                    {% for accesory in accesories %}
+                    {% for accesory in accesories %}                        
                         <div class="form-check col-md-3 pl-3">                                    
-                            <input class="form-check-input" name="{{ accesory.name }}" type="checkbox" value="{{ accesory.keystring }}" id="{{accesory.keystring}}" {% for selected_accesory in selected_accesories %}{% if accesory.keystring in selected_accesory.keystring %} checked {% endif %}{% endfor %}>                                                  
+                            <input class="form-check-input" name="{{ accesory.name }}" type="checkbox" value="{{ accesory.keystring }}" id="{{accesory.keystring}}" {% for selected_accesory in selected_accesories %}{% if accesory.keyString in selected_accesory.keystring %} checked {% endif %}{% endfor %}>                                                  
                             <label class="form-check-label" for="defaultCheck1">
                               {{ accesory.name }}
                             </label>
