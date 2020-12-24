@@ -9,8 +9,8 @@ environments:
         adapter: mysql
         host: localhost
         name: production_db
-        user: root
-        pass: ''
+        user: tonyl
+        pass: 'password'
         port: 3306
         charset: utf8
 
@@ -18,8 +18,8 @@ environments:
         adapter: mysql
         host: localhost
         name: automotive
-        user: root
-        pass: ''
+        user: tonyl
+        pass: 'password'
         port: 3306
         charset: utf8
 
@@ -27,8 +27,8 @@ environments:
         adapter: mysql
         host: localhost
         name: testing_db
-        user: root
-        pass: ''
+        user: tonyl
+        pass: 'password'
         port: 3306
         charset: utf8
 
