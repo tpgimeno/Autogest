@@ -6,12 +6,12 @@
                 <h2> Vehiculos </h2>
             </div>   
             <div class="col-md-2 d-flex justify-content-end align-items-end">
-                <a class="link " href="/intranet/admin">Volver</a> 
+                <a class="link " href="/admin">Volver</a> 
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <form id="importForm" action="/intranet/vehicles/import" method="post" class="form">
+                <form id="importForm" action="/vehicles/import" method="post" class="form">
                     <div class="form-row">
                         <div class="col-2 offset-10">                            
                             <button type="submit" class="btn btn-primary mb-2">Importar</button>
@@ -22,7 +22,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <form id="searchForm" action="/intranet/vehicles/search" method="post" class="form">
+                <form id="searchForm" action="/vehicles/search" method="post" class="form">
                     <div class="container">
                         <div id="formRow" class="form-row text-right">
                             <div class="col-11">                                                                                
@@ -53,8 +53,8 @@
                             <td>{{ vehicle.brand }}</td>
                             <td>{{ vehicle.model }}</td>
                             <td>{{ vehicle.description }}</td>
-                            <td><a href="/intranet/vehicles/form?id={{vehicle.id}}">Edit</td>
-                            <td><a href="/intranet/vehicles/delete?id={{vehicle.id}}">Delete</td>
+                            <td><a href="/vehicles/form?id={{vehicle.id}}">Edit</td>
+                            <td><a href="/vehicles/delete?id={{vehicle.id}}">Delete</td>
                         </tr>
                     {% endfor %}                
                 </table>
@@ -62,10 +62,10 @@
         </div>
         <div class="row">
             <div class="col d-flex justify-content-end">
-                <form action="/intranet/vehicles/form" method="get">
+                <form action="/vehicles/form" method="get">
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary" value="Añadir">
-                        <a href="/intranet/admin" class="btn btn-primary">Cancelar</a>
+                        <a href="/admin" class="btn btn-primary">Cancelar</a>
                     </div>
                 </form>
             </div>

@@ -6,12 +6,12 @@
                 <h2> Company </h2>
             </div>   
             <div class="col-md-2 d-flex justify-content-end align-items-end">
-                <a class="link " href="/intranet/admin">Volver</a> 
+                <a class="link " href="/admin">Volver</a> 
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <form id="searchForm" action="/intranet/company/search" method="post" class="form">
+                <form id="searchForm" action="/company/search" method="post" class="form">
                     <div class="container">
                         <div id="formRow" class="form-row text-right">
                             <div class="col-11">                                                                                
@@ -44,8 +44,8 @@
                             <td>{{ comp.city }}</td>
                             <td>{{ comp.phone }}</td>
                             <td>{{ comp.email }}</td>
-                            <td><a href="/intranet/company/form?id={{comp.id}}">Edit</td>
-                            <td><a href="/intranet/company/delete?id={{comp.id}}">Delete</td>
+                            <td><a href="/company/form?id={{comp.id}}">Edit</td>
+                            <td><a href="/company/delete?id={{comp.id}}">Delete</td>
                         </tr>
                     {% endfor %}                
                 </table>
@@ -53,10 +53,10 @@
         </div>
         <div class="row">
             <div class="col d-flex justify-content-end">
-                <form action="/intranet/company/form" method="get">
+                <form action="/company/form" method="get">
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary" value="Añadir">
-                        <a href="/intranet/admin" class="btn btn-primary">Cancelar</a>
+                        <a href="/admin" class="btn btn-primary">Cancelar</a>
                     </div>
                 </form>
             </div>

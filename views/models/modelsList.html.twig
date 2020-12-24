@@ -7,12 +7,12 @@
                 <h2> Modelos </h2>
             </div>   
             <div class="col-md-2 d-flex justify-content-end align-items-end">
-                <a class="link " href="/intranet/admin">Volver</a> 
+                <a class="link " href="/admin">Volver</a> 
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <form id="searchForm" action="/intranet/vehicles/models/search" method="post" class="form">
+                <form id="searchForm" action="/vehicles/models/search" method="post" class="form">
                     <div class="container">
                         <div id="formRow" class="form-row text-right">
                             <div class="col-11">                                                                                
@@ -41,8 +41,8 @@
                             <td>{{ model.id }}
                             <td>{{ model.brand }}
                             <td>{{ model.name }}</td>                           
-                            <td><a href="/intranet/vehicles/models/form?id={{model.id}}">Edit</td>
-                            <td><a href="/intranet/vehicles/models/delete?id={{model.id}}">Delete</td>
+                            <td><a href="/vehicles/models/form?id={{model.id}}">Edit</td>
+                            <td><a href="/vehicles/models/delete?id={{model.id}}">Delete</td>
                         </tr>
                     {% endfor %}                
                 </table>
@@ -50,10 +50,10 @@
         </div>
         <div class="row">
             <div class="col d-flex justify-content-end">
-                <form action="/intranet/vehicles/models/form" method="get">
+                <form action="/vehicles/models/form" method="get">
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary" value="Añadir">
-                        <a href="/intranet/admin" class="btn btn-primary">Cancelar</a>
+                        <a href="/admin" class="btn btn-primary">Cancelar</a>
                     </div>
                 </form>
             </div>
