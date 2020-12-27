@@ -31,12 +31,11 @@ class CreateVehiclesTable extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('vehicles');
-        $table->addColumn('brand', 'integer')
+        $table = $this->table('vehicles')
+                ->addColumn('brand', 'integer')
                 ->addColumn('model', 'integer')
                 ->addColumn('description', 'string')
-<<<<<<< HEAD
-                ->addColumn('plate', 'string')
+                ->addColumn('plate', 'string', ['null' => true])
                 ->addColumn('vin', 'string', ['null' => true, 'default' => null])
                 ->addColumn('store', 'integer', ['null' => true, 'default' => null])
                 ->addColumn('location', 'string', ['null' => true, 'default' => null])
@@ -52,26 +51,7 @@ class CreateVehiclesTable extends AbstractMigration
                 ->addColumn('created_at', 'datetime', ['null' => true, 'default' => null])
                 ->addColumn('updated_at', 'datetime', ['null' => true, 'default' => null])
                 ->addColumn('deleted_at', 'datetime', ['null' => true, 'default' => null])
-=======
-                ->addColumn('registryDate', 'date', ['null' => true])
-                ->addColumn('plate', 'string', ['null' => true])
-                ->addColumn('vin', 'string', ['null' => true])
-                ->addColumn('store', 'integer', ['null' => true])
-                ->addColumn('location', 'string', ['null' => true])
-                ->addColumn('type', 'integer', ['null' => true])
-                ->addColumn('color', 'string', ['null' => true])
-                ->addColumn('places', 'string', ['null' => true])
-                ->addColumn('doors', 'string', ['null' => true])
-                ->addColumn('power', 'string', ['null' => true])
-                ->addColumn('km', 'string', ['null' => true])
-                ->addColumn('cost', 'string', ['null' => true])
-                ->addColumn('pvp', 'string' , ['null' => true])
-                ->addColumn('accesories', 'string' , ['null' => true])
-                ->addColumn('created_at', 'datetime', ['null' => true])
-                ->addColumn('updated_at', 'datetime', ['null' => true])
-                ->addColumn('deleted_at', 'datetime', ['null' => true])
                 ->addIndex('vin', ['unique' => true])
->>>>>>> RepairMigrations
                 ->create();                
     }
 }

@@ -87,16 +87,11 @@ $map->get('dashboard', '/admin', [
     'App\Controllers\AdminController',
     'getDashBoardAction'
 ]);
-<<<<<<< HEAD
-
-$map->get('companyForm', '/company/form', [
-=======
 $map->post('companyFormGet', '/intranet/company/form', [
     'App\Controllers\Entitys\CompanyController',
     'getCompanyDataAction'
 ]);
 $map->get('companyFormPost', '/intranet/company/form', [
->>>>>>> RepairMigrations
     'App\Controllers\Entitys\CompanyController',
     'getCompanyDataAction'
 ]);
@@ -281,7 +276,6 @@ $map->get('repicesDelete', '/sells/repices/delete', [
  * SELLS ROUTES
  */
 
-<<<<<<< HEAD
 $map->get('customerForm', '/customers/form', [
     'App\Controllers\Entitys\CustomerController',
     'getCustomerDataAction'
@@ -416,7 +410,6 @@ $map->post('saveSellOffers', '/crm/offers/save', [
 ]);
 $map->get('deleteSellOffers', '/crm/offers/delete', [        
     'App\Controllers\Crm\SellOffersController',
-=======
 $map->get('customerForm', '/intranet/customers/form', [
     'App\Controllers\Sells\CustomerController',
     'getCustomerDataAction'
@@ -551,7 +544,6 @@ $map->post('saveSellOffers', '/intranet/crm/offers/save', [
 ]);
 $map->get('deleteSellOffers', '/intranet/crm/offers/delete', [        
     'App\Controllers\Sells\SellOffersController',
->>>>>>> RepairMigrations
     'deleteAction'   
 ]);
 $map->get('sellDeliveriesForm', '/sells/sellDeliveries/form', [
@@ -598,7 +590,6 @@ $map->get('deleteSellInvoices', '/sells/invoices/delete', [
  * BUYS ROUTES
  */
 
-<<<<<<< HEAD
 $map->get('vehicleForm', '/vehicles/form', [
     'App\Controllers\Buys\VehicleController',
     'getVehicleDataAction'
@@ -729,7 +720,6 @@ $map->post('saveVehicleTypes', '/vehicles/vehicleTypes/save', [
 ]);
 $map->get('deleteVehicleTypes', '/vehicles/vehicleTypes/delete', [        
     'App\Controllers\Buys\VehicleTypesController',
-=======
 $map->get('vehicleForm', '/intranet/vehicles/form', [
     'App\Controllers\Vehicle\VehicleController',
     'getVehicleDataAction'
@@ -860,7 +850,6 @@ $map->post('saveVehicleTypes', '/intranet/vehicles/vehicleTypes/save', [
 ]);
 $map->get('deleteVehicleTypes', '/intranet/vehicles/vehicleTypes/delete', [        
     'App\Controllers\Vehicle\VehicleTypesController',
->>>>>>> RepairMigrations
     'deleteAction'   
 ]);
 $map->get('deliveriesForm', '/buys/buyDeliveries/form', [
@@ -903,7 +892,6 @@ $map->get('deleteBuyInvoices', '/buys/buyInvoices/delete', [
     'App\Controllers\Buys\BuyInvoicesController',
     'deleteAction'  
 ]);
-<<<<<<< HEAD
 $map->get('componentsForm', '/buys/components/form', [
     'App\Controllers\Buys\ComponentsController',
     'getComponentsDataAction'
@@ -943,7 +931,6 @@ $map->post('saveSupplies', '/buys/supplies/save', [
 ]);
 $map->get('deleteSupplies', '/buys/supplies/delete', [        
     'App\Controllers\Buys\SuppliesController',
-=======
 $map->get('componentsForm', '/intranet/buys/components/form', [
     'App\Controllers\Vehicle\ComponentsController',
     'getComponentsDataAction'
@@ -983,7 +970,6 @@ $map->post('saveSupplies', '/intranet/buys/supplies/save', [
 ]);
 $map->get('deleteSupplies', '/intranet/buys/supplies/delete', [        
     'App\Controllers\Vehicle\SuppliesController',
->>>>>>> RepairMigrations
     'deleteAction'  
 ]);
 $map->get('providersList', '/buys/providers/form', [
@@ -1070,11 +1056,9 @@ $map->get('pruebaReport', '/reports/prueba', [
     'App\Controllers\PruebaReportController',
     'getReportAction'
 ]);
-<<<<<<< HEAD
 $map->post('SellOfferReport', '/reports/selloffer', [
     'App\Controllers\Crm\SellOffersController',
     'getReportAction'
-=======
 $map->post('SellOfferDetailedReport', '/intranet/reports/sellofferDetailed', [
     'App\Controllers\Sells\SellOffersController',
     'getDetailedReportAction'
@@ -1090,7 +1074,6 @@ $map->post('SellOfferVehicleExportReport', '/intranet/reports/sellofferVehicleEx
 $map->post('SellOfferVehicleIntraReport', '/intranet/reports/sellofferVehicleIntra', [
     'App\Controllers\Sells\SellOffersController',
     'getVehicleIntraReportAction'
->>>>>>> RepairMigrations
 ]);
 
 
