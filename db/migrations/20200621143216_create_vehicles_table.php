@@ -35,7 +35,7 @@ class CreateVehiclesTable extends AbstractMigration
         $table->addColumn('brand', 'integer')
                 ->addColumn('model', 'integer')
                 ->addColumn('description', 'string')
-                ->addColumn('registryDate', 'date')
+                ->addColumn('registryDate', 'date', ['null' => true])
                 ->addColumn('plate', 'string', ['null' => true])
                 ->addColumn('vin', 'string', ['null' => true])
                 ->addColumn('store', 'integer', ['null' => true])
@@ -49,9 +49,9 @@ class CreateVehiclesTable extends AbstractMigration
                 ->addColumn('cost', 'string', ['null' => true])
                 ->addColumn('pvp', 'string' , ['null' => true])
                 ->addColumn('accesories', 'string' , ['null' => true])
-                ->addColumn('created_at', 'datetime')
-                ->addColumn('updated_at', 'datetime')
-                ->addColumn('deleted_at', 'datetime')
+                ->addColumn('created_at', 'datetime', ['null' => true])
+                ->addColumn('updated_at', 'datetime', ['null' => true])
+                ->addColumn('deleted_at', 'datetime', ['null' => true])
                 ->addIndex('vin', ['unique' => true])
                 ->create();                
     }

@@ -28,11 +28,11 @@ final class CreateGarageTable extends AbstractMigration
                 ->addColumn('state', 'string')
                 ->addColumn('country', 'string')
                 ->addColumn('phone', 'string')
-                ->addColumn('email', 'string')
-                ->addColumn('site', 'string')
+                ->addColumn('email', 'string', ['null' => true])
+                ->addColumn('site', 'string', ['null' => true])
                 ->addColumn('created_at', 'datetime')
-                ->addColumn('updated_at', 'datetime')
-                ->addColumn('deleted_at', 'datetime')
+                ->addColumn('updated_at', 'datetime', ['null' => true])
+                ->addColumn('deleted_at', 'datetime', ['null' => true])
                 ->addIndex('fiscalId' , ['unique' => true])
                 ->create();
     }

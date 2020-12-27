@@ -24,8 +24,8 @@ final class CreateSellOffersSuppliesTable extends AbstractMigration
                 ->addColumn('cantity', 'integer')
                 ->addColumn('price', 'float')
                 ->addColumn('created_at', 'datetime')
-                ->addColumn('updated_at', 'datetime')
-                ->addColumn('deleted_at', 'datetime')
+                ->addColumn('updated_at', 'datetime', ['null' => true])
+                ->addColumn('deleted_at', 'datetime', ['null' => true])
                 ->create();
     }
 }

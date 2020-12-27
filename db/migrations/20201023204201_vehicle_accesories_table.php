@@ -22,7 +22,7 @@ final class VehicleAccesoriesTable extends AbstractMigration
         $table->addColumn('vehicleId', 'integer')
                 ->addColumn('accesoryId', 'integer')                            
                 ->addColumn('created_at', 'datetime')
-                ->addColumn('updated_at', 'datetime')               
+                ->addColumn('updated_at', 'datetime', ['null' => true])               
                 ->create();
     }
 }
