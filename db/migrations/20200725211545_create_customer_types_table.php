@@ -21,8 +21,8 @@ final class CreateCustomerTypesTable extends AbstractMigration
         $table = $this->table('customer_types');
         $table->addColumn('name', 'string')  
                 ->addColumn('created_at', 'datetime')
-                ->addColumn('updated_at', 'datetime')
-                ->addColumn('deleted_at', 'datetime')
+                ->addColumn('updated_at', 'datetime', ['null' => true, 'default' => null])
+                ->addColumn('deleted_at', 'datetime', ['null' => true, 'default' => null])
                 ->create();
     }
 }
