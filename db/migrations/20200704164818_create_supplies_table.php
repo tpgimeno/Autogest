@@ -22,14 +22,15 @@ final class CreateSuppliesTable extends AbstractMigration
         $table->addColumn('name', 'string')
                 ->addColumn('ref', 'string')
                 ->addColumn('mader', 'integer')
-                ->addColumn('mader_code', 'string')
-                ->addColumn('pvc', 'float')
-                ->addColumn('pvp', 'float')
-                ->addColumn('observations', 'string')
-                 ->addColumn('stock', 'integer')
+                ->addColumn('maderCode', 'string', ['null' => true])
+                ->addColumn('pvc', 'float', ['null' => true])
+                ->addColumn('pvp', 'float', ['null' => true])
+                ->addColumn('observations', 'string', ['null' => true])
+                 ->addColumn('stock', 'integer', ['null' => true])
                 ->addColumn('created_at', 'datetime')
-                ->addColumn('updated_at', 'datetime')
-                ->addColumn('deleted_at', 'datetime')
+                ->addColumn('updated_at', 'datetime', ['null' => true])
+                ->addColumn('deleted_at', 'datetime', ['null' => true])
+                ->addIndex('ref' , ['unique' => true])
                 ->create();
     }
 }

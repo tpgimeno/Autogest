@@ -1,0 +1,81 @@
+{% extends "dashboard.twig" %}
+{% block content %}
+<div class="container">
+    {% block javascripts %}
+            <script>
+                {{ include('js/works.js')}}
+            </script>
+    {% endblock %}
+    <div class="row">
+        <div class="col-md-10">
+            <h2> Trabajos </h2>
+        </div>   
+        <div class="col-md-2 d-flex justify-content-end align-items-end">
+            <a class="link pr-4" href="/vehicles/works/list">Lista</a> 
+            <a class="link " href="/admin">Volver</a> 
+        </div>        
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-dark" role="alert">
+                {{ responseMessage }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+<<<<<<< HEAD:views/works/WorksForm.html.twig
+            <form action="/vehicles/works/save" method="post">
+                
+=======
+            <form id="WorkForm" action="/intranet/vehicles/works/save" method="post">                
+>>>>>>> RepairMigrations:views/vehicles/works/WorksForm.html.twig
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="inputId">ID</label>                        
+                        <input type="text" name="id" class="form-control" id="inputId" placeholder="" value="{{ work.id }}">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputName">REFERENCIA</label>                        
+                        <input type="text" name="reference" class="form-control" id="inputRef" placeholder="Referencia" value="{{ work.reference }}">
+                    </div>                                        
+                    <div class="form-group col-md-6">
+                        <label for="inputName">Descripcion</label>
+                        <input type="text" name="description" class="form-control" id="inputDescription" placeholder="Nombre" value="{{ work.description }}">
+                    </div>
+                </div>                                                                      
+                <div class="form-row">                         
+                    <div class="form-group col">
+                        <label for="observations">Observaciones</label>
+                        <textarea class="form-control" name="observations" id="observations" rows="6">{{ work.observations }}</textarea>
+                    </div>                                  
+                </div>
+                <div class="form-row">                    
+                    <div class="form-group col-md-3 offset-md-9">
+                        <label for="inputPvc">Precio Venta</label>
+                        <input type="text" name="price" class="form-control" id="inputPvp" placeholder="" value="{{ work.pvp }}">
+                    </div>
+                </div>
+                <div class="form-row">                   
+                    <div class="form-group col-md-3 offset-md-9">
+                        <label for="inputTvaSell">Iva Venta</label>
+                        <input type="text" name="tva_sell" class="form-control" id="inputTvaSell" placeholder="" value="" disabled>
+                    </div>
+                </div>
+                <div class="form-row">                  
+                    <div class="form-group col-md-3 offset-md-9">
+                        <label for="inputTotalSell">Total Venta</label>
+                        <input type="text" name="total_sell" class="form-control" id="inputTotalSell" placeholder="" value="">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col text-right">
+                        <button id="submit" type="submit" class="btn btn-primary">Guardar</button>
+                        <button type="reset" class="btn btn-primary">Cancelar</button>
+                    </div>
+                </div>
+            </form>
+        </div>        
+    </div>
+</div>    
+{% endblock %}

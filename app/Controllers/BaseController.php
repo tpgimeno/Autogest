@@ -40,8 +40,8 @@ class BaseController
     }
     function tofloat($num) 
     {
-        $dotPos = strrpos($num, '.');
-        $commaPos = strrpos($num, ',');
+        $dotPos = strrpos($num, ',');
+        $commaPos = strrpos($num, '.');
         $sep = (($dotPos > $commaPos) && $dotPos) ? $dotPos :
             ((($commaPos > $dotPos) && $commaPos) ? $commaPos : false);
 

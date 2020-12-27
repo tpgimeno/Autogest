@@ -1,0 +1,71 @@
+{% extends "dashboard.twig" %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+               
+                <h2> Clientes </h2>
+            </div>   
+            <div class="col-md-2 d-flex justify-content-end align-items-end">
+                <a class="link " href="/admin">Volver</a> 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <form id="searchForm" action="/customers/search" method="post" class="form">
+                    <div class="container">
+                        <div id="formRow" class="form-row text-right">
+                            <div class="col-11">                                                                                
+                                <input id="searchField" type="text" name="searchFilter" class="form-control mb-2 mr-sm-2" id="inlineFormSearchFilter" placeholder="Nombre / Cif / Telefono / email">
+                            </div>
+                            <div class="col-1">
+                                <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <table class="table">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Población</th>
+                        <th>Teléfono</th>
+                        <th>Email</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    {% for customer in customers %}
+                        <tr>
+                            <td>{{ customer.name }}</td>
+                            <td>{{ customer.city }}</td>
+                            <td>{{ customer.phone }}</td>
+                            <td>{{ customer.email }}</td>
+                            <td><a href="/customers/form?id={{customer.id}}">Edit</td>
+                            <td><a href="/customers/delete?id={{customer.id}}">Delete</td>
+                        </tr>
+                    {% endfor %}                
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col d-flex justify-content-end">
+<<<<<<< HEAD:views/customers/customerList.html.twig
+                <form action="/customers/form" method="get">
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary" value="Añadir">
+                        <a href="/admin" class="btn btn-primary">Cancelar</a>
+=======
+                <form id="addCustomer" action="/intranet/customers/form" method="get">
+                    <div class="form-group">
+                        <input id="submit" type="submit" class="btn btn-primary" value="Añadir">
+                        <a href="/intranet/admin" class="btn btn-primary">Cancelar</a>
+>>>>>>> RepairMigrations:views/sells/customers/customerList.html.twig
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

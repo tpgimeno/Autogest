@@ -18,11 +18,11 @@ final class VehicleAccesoriesTable extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('vehicle_accesories');
-        $table->addColumn('vehicle_id', 'integer')
-                ->addColumn('accesory_id', 'integer')                            
+        $table = $this->table('vehicleAccesories');
+        $table->addColumn('vehicleId', 'integer')
+                ->addColumn('accesoryId', 'integer')                            
                 ->addColumn('created_at', 'datetime')
-                ->addColumn('updated_at', 'datetime')               
+                ->addColumn('updated_at', 'datetime', ['null' => true])               
                 ->create();
     }
 }

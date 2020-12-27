@@ -1,0 +1,52 @@
+{% extends "dashboard.twig" %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                <h2> Componentes </h2>
+            </div>   
+            <div class="col-md-2 d-flex justify-content-end align-items-end">
+                <a class="link " href="/admin">Volver</a> 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <table class="table">
+                    <tr>
+                        <th>Referencia</th>
+                        <th>Fabricante</th>
+                        <th>Nombre</th>                        
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    {% for component in components %}
+                        <tr>
+                            <td>{{ component.ref }}</td>
+                            <td>{{ component.mader }}</td>
+                            <td>{{ component.name }}</td>                            
+                            <td><a href="/buys/components/form?id={{component.id}}">Edit</td>
+                            <td><a href="/buys/components/delete?id={{component.id}}">Delete</td>
+                        </tr>
+                    {% endfor %}                
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col d-flex justify-content-end">
+<<<<<<< HEAD:views/buys/componentsList.html.twig
+                <form action="/buys/components/form" method="get">
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary" value="Añadir">
+                        <a href="/admin" class="btn btn-primary">Cancelar</a>
+=======
+                <form id="addComponent" action="/intranet/buys/components/form" method="get">
+                    <div class="form-group">
+                        <input id="submit" type="submit" class="btn btn-primary" value="Añadir">
+                        <a href="/intranet/admin" class="btn btn-primary">Cancelar</a>
+>>>>>>> RepairMigrations:views/vehicles/components/componentsList.html.twig
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

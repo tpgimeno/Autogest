@@ -22,8 +22,8 @@ final class CreateSettingsTable extends AbstractMigration
         $table->addColumn('name', 'string')
                 ->addColumn('value', 'string')
                 ->addColumn('created_at', 'datetime')
-                ->addColumn('updated_at', 'datetime')
-                ->addColumn('deleted_at', 'datetime')
+                ->addColumn('updated_at', 'datetime', ['null' => true])
+                ->addColumn('deleted_at', 'datetime', ['null' => true])
                 ->create();
     }
 }

@@ -19,17 +19,18 @@ final class CreateProductionTable extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('productions');
-        $table->addColumn('vehicle_id', 'integer')
-                ->addColumn('homologation_id', 'integer')
-                ->addColumn('production_number', 'string')
+        $table->addColumn('vehicleId', 'integer')
+                ->addColumn('homologationId', 'integer')
+                ->addColumn('productionNumber', 'string')
                 ->addColumn('description', 'string')
-                ->addColumn('date_in', 'date')
-                ->addColumn('date_out', 'date')
-                ->addColumn('accesories', 'string')
-                ->addColumn('observations', 'string')
+                ->addColumn('dateIn', 'date', ['null' => true])
+                ->addColumn('dateOut', 'date', ['null' => true])
+                ->addColumn('accesories', 'string', ['null' => true])
+                ->addColumn('observations', 'string', ['null' => true])
                 ->addColumn('created_at', 'datetime')
-                ->addColumn('updated_at', 'datetime')
-                ->addColumn('deleted_at', 'datetime')
+                ->addColumn('updated_at', 'datetime', ['null' => true])
+                ->addColumn('deleted_at', 'datetime', ['null' => true])
+                ->addIndex('productionNumber', ['unique' => true])
                 ->create();
     }
 }

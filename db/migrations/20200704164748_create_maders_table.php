@@ -20,17 +20,17 @@ final class CreateMadersTable extends AbstractMigration
     {
         $table = $this->table('maders');
         $table->addColumn('name', 'string')               
-                ->addColumn('address', 'string')
-                ->addColumn('city', 'string')
-                ->addColumn('postal_code', 'integer')
-                ->addColumn('state', 'string')
-                ->addColumn('country', 'string')
-                ->addColumn('phone', 'string')
-                ->addColumn('email', 'string')
-                ->addColumn('site', 'string')
+                ->addColumn('address', 'string', ['null' => true])
+                ->addColumn('city', 'string', ['null' => true])
+                ->addColumn('postalCode', 'integer', ['null' => true])
+                ->addColumn('state', 'string', ['null' => true])
+                ->addColumn('country', 'string', ['null' => true])
+                ->addColumn('phone', 'string', ['null' => true])
+                ->addColumn('email', 'string', ['null' => true])
+                ->addColumn('site', 'string', ['null' => true])
                 ->addColumn('created_at', 'datetime')
-                ->addColumn('updated_at', 'datetime')
-                ->addColumn('deleted_at', 'datetime')
+                ->addColumn('updated_at', 'datetime', ['null' => true])
+                ->addColumn('deleted_at', 'datetime', ['null' => true])
                 ->create();
     }
 }

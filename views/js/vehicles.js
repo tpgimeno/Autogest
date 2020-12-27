@@ -138,4 +138,15 @@ window.addEventListener('load', function()
             }
         });
     }
+    var type = "{{ type_selected }}";
+    document.getElementById("selectType").value = type;
+    var brand = "{{ brand_selected }}";
+    document.getElementById("selectBrand").value = brand;
+    var model = "{{ model_selected}}";
+    document.getElementById("selectModel").value = model;
+    var store = "{{ store_selected}}";
+    document.getElementById("selectStore").value = store;
+    var location = "{{ location_selected }}";
+    document.getElementById("selectLocation").value = location;
+    
 });

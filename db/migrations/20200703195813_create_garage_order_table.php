@@ -19,22 +19,23 @@ final class CreateGarageOrderTable extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('garage_orders');
-        $table->addColumn('order_number', 'string')
-                ->addColumn('date_in', 'date')
-                ->addColumn('date_out', 'date')
-                ->addColumn('vehicle_id', 'integer')
-                ->addColumn('customer_id', 'integer')
-                ->addColumn('km_in', 'integer')
-                ->addColumn('km_out', 'integer')
-                ->addColumn('works', 'string')
-                ->addColumn('articles', 'string')
-                ->addColumn('price_works', 'string')
-                ->addColumn('price_articles', 'string')
-                ->addColumn('observations', 'string')
-                ->addColumn('text', 'string')
+        $table->addColumn('orderNumber', 'string')
+                ->addColumn('dateIn', 'date', ['null' => true])
+                ->addColumn('dateOut', 'date', ['null' => true])
+                ->addColumn('vehicleId', 'integer', ['null' => true])
+                ->addColumn('customerId', 'integer', ['null' => true])
+                ->addColumn('kmIn', 'integer', ['null' => true])
+                ->addColumn('kmOut', 'integer', ['null' => true])
+                ->addColumn('works', 'string', ['null' => true])
+                ->addColumn('articles', 'string', ['null' => true])
+                ->addColumn('priceWorks', 'string', ['null' => true])
+                ->addColumn('priceArticles', 'string', ['null' => true])
+                ->addColumn('observations', 'string', ['null' => true])
+                ->addColumn('text', 'string', ['null' => true])
                 ->addColumn('created_at', 'datetime')
-                ->addColumn('updated_at', 'datetime')
-                ->addColumn('deleted_at', 'datetime')
+                ->addColumn('updated_at', 'datetime', ['null' => true])
+                ->addColumn('deleted_at', 'datetime', ['null' => true])
+                ->addIndex('orderNumber', ['unique' => true])
                 ->create();
     }
 }

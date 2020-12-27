@@ -11,10 +11,11 @@ final class CreateWorksTable extends AbstractMigration
         $table->addColumn('reference', 'string')
                 ->addColumn('description', 'string')               
                 ->addColumn('pvp', 'float')
-                ->addColumn('observations', 'string')                
+                ->addColumn('observations', 'string', ['null' => true])                
                 ->addColumn('created_at', 'datetime')
-                ->addColumn('updated_at', 'datetime')
-                ->addColumn('deleted_at', 'datetime')
+                ->addColumn('updated_at', 'datetime', ['null' => true])
+                ->addColumn('deleted_at', 'datetime', ['null' => true])
+                ->addIndex('reference' , ['unique' => true])
                 ->create();
     }
 }

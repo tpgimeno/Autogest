@@ -43,11 +43,9 @@ class CompanyController extends BaseController
 
         return $this->renderHTML('/company/companyList.html.twig', [
             'currentUser' => $this->currentUser->getCurrentUserEmailAction(),
-            'customers' => $customer
-                
+            'customers' => $customer                
         ]);
-    }
-    
+    }    
     public function getCompanyDataAction($request)
     {                
         $responseMessage = null;
@@ -60,44 +58,13 @@ class CompanyController extends BaseController
             ->key('email', v::stringType()->notEmpty());            
             try{
                 $companyValidator->assert($postData); // true 
-                $company = new Company();
-                $company->id = $postData['id'];
-                if($company->id)
-                {
-                    $temp_company = Company::find($company->id)->first();
-                    if(isset($temp_company))
-                    {
-                        $company = $temp_company;
-                    }   
-                }                
-                             
-                $company->name = $postData['name'];
-                $company->fiscal_id = $postData['fiscal_id'];
-                $company->fiscal_name = $postData['fiscal_name'];
-                $company->address = $postData['address'];
-                $company->city = $postData['city'];
-                $company->postal_code = $postData['postal_code'];
-                $company->state = $postData['state'];
-                $company->country = $postData['country'];
-                $company->phone = $postData['phone'];
-                $company->email = $postData['email'];
-                $company->site = $postData['site'];
-                if(isset($temp_company))
-                {
-                    $company->update();
-                    $responseMessage = 'Updated';
-                }
-                else
-                {
-                    $company->save();     
-                    $responseMessage = 'Saved'; 
-                }                    
+                $responseMessage = $this->saveCompanyData($postData);                   
             }catch(\Exception $e){                
                 $responseMessage = $e->getMessage();
             }              
         }
         $companySelected = null;
-        if($request->getQueryParams())
+        if($request->getQueryParams() && Company::find($request->getQueryParams('id')))
         {
             $companySelected = Company::find($request->getQueryParams('id'))->first();
         }
@@ -107,14 +74,44 @@ class CompanyController extends BaseController
             'company' => $companySelected
         ]);
     }
-
-    public function deleteAction(ServerRequest $request)
+    public function saveCompanyData($postData)
     {
-         
+        $company = new Company();   
+        $update = false;
+        if(Company::find($postData['id']))
+        {
+            $company->id = Company::find($postData['id'])->first();   
+            $update = true;
+        }                            
+        $company->name = $postData['name'];
+        $company->fiscal_id = $postData['fiscal_id'];
+        $company->fiscal_name = $postData['fiscal_name'];
+        $company->address = $postData['address'];
+        $company->city = $postData['city'];
+        $company->postal_code = $postData['postal_code'];
+        $company->state = $postData['state'];
+        $company->country = $postData['country'];
+        $company->phone = $postData['phone'];
+        $company->email = $postData['email'];
+        $company->site = $postData['site'];
+        if($update === true)
+        {
+            $company->update();
+            $responseMessage = 'Updated';
+        }
+        else
+        {
+            $company->save();     
+            $responseMessage = 'Saved'; 
+        } 
+        return $responseMessage;
+    }
+    public function deleteAction(ServerRequest $request)
+    {         
         $this->companyService->deleteCompany($request->getQueryParams('id'));               
         return new RedirectResponse('/intranet/company/list');
     }
-
+    
    
 
 }

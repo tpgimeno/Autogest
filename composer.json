@@ -40,6 +40,9 @@
         "phpunit/phpunit": "^9.4",
         "codeception/codeception": "^4.1",
         "codeception/module-phpbrowser": "^1.0.0",
-        "codeception/module-asserts": "^1.0.0"
+        "codeception/module-asserts": "^1.0.0",
+        "codeception/module-laravel5": "^1.1",
+        "codeception/module-webdriver": "^1.1",
+        "codeception/module-db": "^1.0"
     }
 }

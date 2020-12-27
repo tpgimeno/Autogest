@@ -22,8 +22,8 @@ final class CreateUsersTable extends AbstractMigration
         $table->addColumn('email', 'string')
                 ->addColumn('password', 'string')
                 ->addColumn('created_at', 'datetime')
-                ->addColumn('updated_at', 'datetime')
-                ->addColumn('deleted_at', 'datetime')
+                ->addColumn('updated_at', 'datetime', ['null' => true])
+                ->addColumn('deleted_at', 'datetime', ['null' => true])
                 ->addIndex('email', ['unique' => true])
                 ->create();           
     }
