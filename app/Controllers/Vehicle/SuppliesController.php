@@ -109,7 +109,7 @@ class SuppliesController extends BaseController
         $mader = Mader::where('name', 'like', "%".$postData['mader']."%")->first();        
         $supply->mader = $mader->id;
         $supply->maderCode = $postData['mader_code'];
-        $supply->stock = $postData['stock'];
+        $supply->stock = intval($postData['stock']);
         $supply->pvc = $this->tofloat($postData['pvc']);
         $supply->pvp = $this->tofloat($postData['pvp']);
         $supply->observations = $postData['observations'];

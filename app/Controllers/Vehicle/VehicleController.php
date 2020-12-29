@@ -353,6 +353,7 @@ class VehicleController extends BaseController
         {
             $responseMessage = $this->importVehicleTypes();
         }
+        
         try{
             for($i = 1; $i < intval(count($vehiculos)); $i++)
             {
@@ -373,14 +374,16 @@ class VehicleController extends BaseController
                 $vehiculo->power = 0;
                 $vehiculo->km = $vehiculos[$i][10];
                 $vehiculo->cost = 0;
-                $vehiculo->pvp = $this->tofloat($vehiculos[$i][13]);                
+                $vehiculo->pvp = $this->tofloat($vehiculos[$i][13]); 
+                           
                 $vehiculo->save(); 
                 $responseMessage = 'Saved';               
             }
         } 
         catch (QueryException $ex) 
         {
-            $responseMessage = $this->errorService->getError($ex);            
+            $responseMessage = $this->errorService->getError($ex);
+                        
         }        
         $vehicles = DB::table('vehicles')  
                 ->join('brands', 'vehicles.brand', '=', 'brands.id')
@@ -422,7 +425,7 @@ class VehicleController extends BaseController
         $reader->setLoadSheetsOnly('MODELOS'); 
         $spreadSheet = $reader->load('VEHICULOS 01-08-19 UBICACIONES.xls');
         $modelos = $spreadSheet->getActiveSheet()->toArray();
-//        var_dump($modelos);die();
+    //    var_dump($modelos);die();
         try{
             for($i = 1; $i < intval(count($modelos)); $i++)
             {
@@ -443,7 +446,7 @@ class VehicleController extends BaseController
         $reader->setLoadSheetsOnly('TIPOS'); 
         $spreadSheet = $reader->load('VEHICULOS 01-08-19 UBICACIONES.xls');
         $types = $spreadSheet->getActiveSheet()->toArray();
-//         var_dump($modelos);die();
+        // var_dump($types);die();
         try{
             for($i = 1; $i < intval(count($types)); $i++)
             {
@@ -463,7 +466,7 @@ class VehicleController extends BaseController
         $reader->setLoadSheetsOnly('ALMACENES'); 
         $spreadSheet = $reader->load('VEHICULOS 01-08-19 UBICACIONES.xls');
         $stores = $spreadSheet->getActiveSheet()->toArray();
-//         var_dump($modelos);die();
+        // var_dump($stores);die();
         try{
             for($i = 1; $i < intval(count($stores)); $i++)
             {

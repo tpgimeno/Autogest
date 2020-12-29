@@ -82,7 +82,7 @@ class MadersController extends BaseController
         $mader->name = $postData['name'];                
         $mader->address = $postData['address'];
         $mader->city = $postData['city'];
-        $mader->postalCode = $postData['postal_code'];
+        $mader->postalCode = intval($postData['postal_code']);
         $mader->state = $postData['state'];
         $mader->country = $postData['country'];
         $mader->phone = $postData['phone'];

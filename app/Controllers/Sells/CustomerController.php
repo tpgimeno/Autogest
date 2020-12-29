@@ -86,8 +86,7 @@ class CustomerController extends BaseController
     }
     public function addCustomerData($postData)
     {
-        $customer = new Customer();
-        $customer->id = $postData['id'];                      
+        $customer = new Customer();                             
         if(Customer::find($postData['id']))
         {
             $customer = Customer::find($postData['id']);           

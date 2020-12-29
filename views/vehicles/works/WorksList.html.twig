@@ -23,15 +23,9 @@
                         <tr>
                             <td>{{ work.reference }}</td>
                             <td>{{ work.description }}</td>
-<<<<<<< HEAD:views/works/WorksList.html.twig
                             <td>{{ work.price }}</td>                            
                             <td><a href="/vehicles/works/form?id={{work.id}}">Edit</td>
                             <td><a href="/vehicles/works/delete?id={{work.id}}">Delete</td>
-=======
-                            <td>{{ work.pvp }}</td>                            
-                            <td><a href="/intranet/vehicles/works/form?id={{work.id}}">Edit</td>
-                            <td><a href="/intranet/vehicles/works/delete?id={{work.id}}">Delete</td>
->>>>>>> RepairMigrations:views/vehicles/works/WorksList.html.twig
                         </tr>
                     {% endfor %}                
                 </table>
@@ -39,17 +33,10 @@
         </div>
         <div class="row">
             <div class="col d-flex justify-content-end">
-<<<<<<< HEAD:views/works/WorksList.html.twig
                 <form action="/vehicles/works/form" method="get">
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary" value="Añadir">
                         <a href="/admin" class="btn btn-primary">Cancelar</a>
-=======
-                <form id="addWork" action="/intranet/vehicles/works/form" method="get">
-                    <div class="form-group">
-                        <input id="submit" type="submit" class="btn btn-primary" value="Añadir">
-                        <a href="/intranet/admin" class="btn btn-primary">Cancelar</a>
->>>>>>> RepairMigrations:views/vehicles/works/WorksList.html.twig
                     </div>
                 </form>
             </div>
