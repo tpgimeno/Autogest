@@ -11,7 +11,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <form id="searchForm" action="/crm/offers/search" method="post" class="form">
+                <form id="searchForm" action="/sells/offers/search" method="post" class="form">
                     <div class="container">
                         <div id="formRow" class="form-row text-right">
                             <div class="col-11">                                                                                
@@ -42,8 +42,8 @@
                             <td>{{ offer.offerDate }}</td>
                             <td>{{ offer.name }}</td>
                             <td>{{ offer.brand }} {{ offer.model }}</td>                           
-                            <td><a href="/crm/offers/form?offer_id={{offer.id}}">Edit</td>
-                            <td><a href="/crm/offers/delete?offer_id={{offer.id}}">Delete</td>
+                            <td><a href="/sells/offers/form?offer_id={{offer.id}}">Edit</td>
+                            <td><a href="/sells/offers/delete?offer_id={{offer.id}}">Delete</td>
                         </tr>
                     {% endfor %}                
                 </table>
@@ -51,17 +51,10 @@
         </div>
         <div class="row">
             <div class="col d-flex justify-content-end">
-<<<<<<< HEAD
-                <form action="/crm/offers/form" method="get">
+                <form action="/sells/offers/form" method="get">
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary" value="Añadir">
                         <a href="/admin" class="btn btn-primary">Cancelar</a>
-=======
-                <form id="addSellOffer" action="/intranet/crm/offers/form" method="get">
-                    <div class="form-group">
-                        <input id="submit" type="submit" class="btn btn-primary" value="Añadir">
-                        <a href="/intranet/admin" class="btn btn-primary">Cancelar</a>
->>>>>>> RepairMigrations
                     </div>
                 </form>
             </div>

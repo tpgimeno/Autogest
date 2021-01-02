@@ -31,7 +31,7 @@
             </ul>
         </div>
     </div>      
-    <form action="/crm/offers/save" method="post" class="form">
+    <form action="/sells/offers/save" method="post" class="form">
         <div class="tab-content" id="myTabContent">        
             <div class="tab-pane fade show active" id="customer" role="tabpanel" aria-labelledby="customer-tab">
                 <div class="form-row mt-3">
@@ -218,7 +218,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
-                            <form id="searchCustomerForm" action="/crm/offers/customer/search" method="post" class="form">
+                            <form id="searchCustomerForm" action="/sells/offers/customer/search" method="post" class="form">
                                 <div class="container">
                                     <div id="formRow" class="form-row text-right">
                                         <div class="col-11">                                                                                
@@ -249,7 +249,7 @@
                                         <td>{{ customer.city }}</td>
                                         <td>{{ customer.phone }}</td>
                                         <td>{{ customer.email }}</td>
-                                        <td><a href="/crm/offers/customer/select?customer_id={{customer.id}}&offer_id={{ offer.id }}&vehicle_id{{ vehicle.id }}">Select</a></td>                                        
+                                        <td><a href="/sells/offers/customer/select?customer_id={{customer.id}}&offer_id={{ offer.id }}&vehicle_id{{ vehicle.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>
@@ -281,7 +281,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
-                            <form id="searchVehicleForm" action="/crm/offers/vehicle/search" method="post" class="form">
+                            <form id="searchVehicleForm" action="/sells/offers/vehicle/search" method="post" class="form">
                                 <div class="container">
                                     <div id="formRow" class="form-row text-right">
                                         <div class="col-11">                                                                                
@@ -313,7 +313,7 @@
                                         <td>{{ vehicle.brand }}</td>
                                         <td>{{ vehicle.model }}</td>
                                         <td>{{ vehicle.description }}</td>
-                                        <td><a href="/crm/offers/vehicle/select?vehicle_id={{vehicle.id}}&offer_id={{ offer.id }}&customer_id={{ customer.id }}">Select</a></td>                                        
+                                        <td><a href="/sells/offers/vehicle/select?vehicle_id={{vehicle.id}}&offer_id={{ offer.id }}&customer_id={{ customer.id }}">Select</a></td>                                        
                                     </tr>
                                 {% endfor %}                
                             </table>

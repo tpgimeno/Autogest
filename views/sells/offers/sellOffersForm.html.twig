@@ -5,7 +5,7 @@
             <h2> Oferta </h2>
         </div>   
         <div class="col-md-2 d-flex justify-content-end align-items-end">
-            <a class="link pr-4" href="/crm/offers/list">Lista</a> 
+            <a class="link pr-4" href="/sells/offers/list">Lista</a> 
             <a class="link " href="/admin">Volver</a> 
         </div>        
     </div>
@@ -40,11 +40,7 @@
             </ul>
         </div>
     </div>      
-<<<<<<< HEAD
-    <form action="/crm/offers/save" method="post" class="form">
-=======
-    <form id="SellOfferForm" action="/intranet/crm/offers/save" method="post" class="form">
->>>>>>> RepairMigrations
+    <form action="/sells/offers/save" method="post" class="form">
         <div class="tab-content" id="myTabContent">    
             <div class="tab-pane fade show active" id="offer" role="tabpanel" aria-labelledby="offer-tab">
                 <div class="form-row mt-3">
@@ -494,33 +490,27 @@
             <div class="tab-pane fade" id="reports" role="tabpanel" aria-labelledby="reports-tab">                
                 <div class="form-row mt-4 mb-5 justify-content-center">
                     <div class="form-group col-md-3 text-center">
-                        <button type="submit" formaction="/intranet/reports/sellofferDetailed" formmethod="post"  class="btn btn-primary">OFERTA DETALLADA</button>
+                        <button type="submit" formaction="/reports/sellofferDetailed" formmethod="post"  class="btn btn-primary">OFERTA DETALLADA</button>
                     </div>
                     <div class="form-group col-md-3 text-center">
-                        <button type="submit" formaction="/intranet/reports/sellofferVehicle" formmethod="post"  class="btn btn-primary">OFERTA VEHICULO</button>
+                        <button type="submit" formaction="/reports/sellofferVehicle" formmethod="post"  class="btn btn-primary">OFERTA VEHICULO</button>
                     </div>
                 </div>
                 <div class="form-row mt-4 mb-5 justify-content-center">
                     <div class="form-group col-md-3 text-center">
-                        <button type="submit" formaction="/intranet/reports/sellofferVehicleExport" formmethod="post"  class="btn btn-primary">OFERTA VH EXPORTACION</button>
+                        <button type="submit" formaction="/reports/sellofferVehicleExport" formmethod="post"  class="btn btn-primary">OFERTA VH EXPORTACION</button>
                     </div>
                     <div class="form-group col-md-3 text-center">
-                        <button type="submit" formaction="/intranet/reports/sellofferVehicleIntra" formmethod="post"  class="btn btn-primary">OFERTA VH INTRACOMUNITARIA</button>
+                        <button type="submit" formaction="/reports/sellofferVehicleIntra" formmethod="post"  class="btn btn-primary">OFERTA VH INTRACOMUNITARIA</button>
                     </div>
                 </div>
                 
             </div>  
         </div>
         <div class="form-row">
-            <div class="form-group col text-right">
-<<<<<<< HEAD
-                <button type="submit" formaction="/reports/selloffer" formmethod="post"  class="btn btn-primary">Imprimir</button>
+            <div class="form-group col text-right">                
                 <button type="submit" class="btn btn-primary">Guardar</button>
                 <a href="/admin" class="btn btn-primary">Cancelar</a>
-=======
-                <button id="submit" type="submit" class="btn btn-primary">Guardar</button>
-                <a href="/intranet/admin" class="btn btn-primary">Cancelar</a>
->>>>>>> RepairMigrations
             </div>
         </div> 
     </form>         
@@ -537,7 +527,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
-                            <form id="searchCustomerForm" action="/crm/offers/customer/search" method="post" class="form">
+                            <form id="searchCustomerForm" action="/sells/offers/customer/search" method="post" class="form">
                                 <div class="container">
                                     <div id="formRow" class="form-row text-right">
                                         <div class="col-11">                                                                                
@@ -567,11 +557,7 @@
                                         <td>{{ customer.city }}</td>
                                         <td>{{ customer.phone }}</td>
                                         <td>{{ customer.email }}</td>
-<<<<<<< HEAD
-                                        <td><a href="/crm/offers/customer/select?customer_id={{ customer.id }}&offer_id={{ new_selloffer }}&vehicle_id={{selected_vehicle.id}}&work_id={{selected_work.id}}&supply_id={{ selected_supply.id }}&component_id={{ selected_component.id }}">Select</a></td>                                        
-=======
-                                        <td><a id="edit" href="/intranet/crm/offers/customer/select?customer_id={{ customer.id }}&offer_id={{ new_selloffer }}&vehicle_id={{selected_vehicle.id}}&work_id={{selected_work.id}}&supply_id={{ selected_supply.id }}&component_id={{ selected_component.id }}">Select</a></td>                                        
->>>>>>> RepairMigrations
+                                        <td><a href="/sells/offers/customer/select?customer_id={{ customer.id }}&offer_id={{ new_selloffer }}&vehicle_id={{selected_vehicle.id}}&work_id={{selected_work.id}}&supply_id={{ selected_supply.id }}&component_id={{ selected_component.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>
@@ -586,7 +572,7 @@
     </div>                            
     {% block javascripts %}
         <script>
-            {{ include('js/sellOffers.js')}}
+            {{ include('/js/sellOffers.js')}}
          </script>
     {% endblock %}    
     <!-- Modal Vehicles -->
@@ -602,7 +588,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
-                            <form id="searchVehicleForm" action="/crm/offers/vehicle/search" method="post" class="form">
+                            <form id="searchVehicleForm" action="/sells/offers/vehicle/search" method="post" class="form">
                                 <div class="container">
                                     <div id="formRow" class="form-row text-right">
                                         <div class="col-11">                                                                                
@@ -634,11 +620,7 @@
                                         <td>{{ vehicle.brand }}</td>
                                         <td>{{ vehicle.model }}</td>
                                         <td>{{ vehicle.description }}</td>
-<<<<<<< HEAD
-                                        <td><a href="/crm/offers/vehicle/select?vehicle_id={{vehicle.id}}&offer_id={{ new_selloffer }}&work_id={{selected_work.id}}&customer_id={{ selected_customer.id }}&supply_id={{ selected_supply.id }}&component_id={{ selected_component.id }}">Select</a></td>                                        
-=======
-                                        <td><a id="edit" href="/intranet/crm/offers/vehicle/select?vehicle_id={{vehicle.id}}&offer_id={{ new_selloffer }}&work_id={{selected_work.workId}}&customer_id={{ selected_customer.id }}&supply_id={{ selected_supply.id }}&component_id={{ selected_component.id }}">Select</a></td>                                        
->>>>>>> RepairMigrations
+                                        <td><a href="/sells/offers/vehicle/select?vehicle_id={{vehicle.id}}&offer_id={{ new_selloffer }}&work_id={{selected_work.id}}&customer_id={{ selected_customer.id }}&supply_id={{ selected_supply.id }}&component_id={{ selected_component.id }}">Select</a></td>                                        
                                     </tr>
                                 {% endfor %}                
                             </table>
@@ -697,11 +679,7 @@
                                         <td>{{ supply.name }}</td>
                                         <td>{{ supply.stock }}</td>
                                         <td>{{ supply.pvp }}</td>
-<<<<<<< HEAD
-                                        <td><a href="/crm/offers/supplies/select?supply_id={{ supply.id }}&offer_id={{ new_selloffer }}&work_id={{selected_work.id}}&vehicle_id={{ selected_vehicle.id }}&customer_id={{ selected_customer.id }}&component_id={{ selected_component.id }}">Select</a></td>                                        
-=======
-                                        <td><a id="select" href="/intranet/crm/offers/supplies/select?supply_id={{ supply.id }}&offer_id={{ new_selloffer }}&work_id={{selected_work.workId}}&vehicle_id={{ selected_vehicle.id }}&customer_id={{ selected_customer.id }}&component_id={{ selected_component.componentId }}">Select</a></td>                                        
->>>>>>> RepairMigrations
+                                        <td><a href="/sells/offers/supplies/select?supply_id={{ supply.id }}&offer_id={{ new_selloffer }}&work_id={{selected_work.id}}&vehicle_id={{ selected_vehicle.id }}&customer_id={{ selected_customer.id }}&component_id={{ selected_component.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>
@@ -727,7 +705,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
-                            <form id="searchComponentsForm" action="/crm/offers/components/search" method="post" class="form">
+                            <form id="searchComponentsForm" action="/sells/offers/components/search" method="post" class="form">
                                 <div class="container">
                                     <div id="formRow" class="form-row text-right">
                                         <div class="col-11">                                                                                
@@ -759,11 +737,7 @@
                                         <td>{{ component.name }}</td>
                                         <td>{{ component.stock }}</td>
                                         <td>{{ component.pvp }}</td>                                        
-<<<<<<< HEAD
-                                        <td><a href="/crm/offers/components/select?component_id={{component.id}}&offer_id={{new_selloffer}}&work_id={{selected_work.id}}&vehicle_id={{ selected_vehicle.id }}&supply_id={{ selected_supply.id }}&customer_id={{ selected_customer.id }}">Select</a></td>                                        
-=======
-                                        <td><a id="select" href="/intranet/crm/offers/components/select?component_id={{component.id}}&offer_id={{new_selloffer}}&work_id={{selected_work.workId}}&vehicle_id={{ selected_vehicle.id }}&supply_id={{ selected_supply.supplyId }}&customer_id={{ selected_customer.id }}">Select</a></td>                                        
->>>>>>> RepairMigrations
+                                        <td><a href="/sells/offers/components/select?component_id={{component.id}}&offer_id={{new_selloffer}}&work_id={{selected_work.id}}&vehicle_id={{ selected_vehicle.id }}&supply_id={{ selected_supply.id }}&customer_id={{ selected_customer.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>
@@ -789,7 +763,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
-                            <form id="searchWorksForm" action="/crm/offers/works/search" method="post" class="form">
+                            <form id="searchWorksForm" action="/sells/offers/works/search" method="post" class="form">
                                 <div class="container">
                                     <div id="formRow" class="form-row text-right">
                                         <div class="col-11">                                                                                
@@ -816,11 +790,7 @@
                                         <td>{{ work.reference }}</td>
                                         <td>{{ work.description }}</td>                                                                               
                                         <td>{{ work.price }}</td>                                        
-<<<<<<< HEAD
-                                        <td><a href="/crm/offers/works/select?work_id={{work.id}}&offer_id={{new_selloffer}}&vehicle_id={{ selected_vehicle.id }}&supply_id={{ selected_supply.id }}&component_id={{ selected_component.id }}&customer_id={{ selected_customer.id }}">Select</a></td>                                        
-=======
-                                        <td><a id="select" href="/intranet/crm/offers/works/select?work_id={{work.id}}&offer_id={{new_selloffer}}&vehicle_id={{ selected_vehicle.id }}&supply_id={{ selected_supply.supplyId }}&component_id={{ selected_component.componentId }}&customer_id={{ selected_customer.id }}">Select</a></td>                                        
->>>>>>> RepairMigrations
+                                        <td><a href="/sells/offers/works/select?work_id={{work.id}}&offer_id={{new_selloffer}}&vehicle_id={{ selected_vehicle.id }}&supply_id={{ selected_supply.id }}&component_id={{ selected_component.id }}&customer_id={{ selected_customer.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>

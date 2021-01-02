@@ -586,6 +586,7 @@ class SellOffersController extends BaseController {
         $report->Body($newPostData);        
         $report->Output();
     }
+    
     public function getRenderAgain($params, $new_offer, $offer_number, $selected_tab, $responseMessage)
     {        
         $selected_offer = $this->getSelectedOfferData($params);        
@@ -811,8 +812,12 @@ class SellOffersController extends BaseController {
             $selected_customer = Customer::find($params['customer_id'])->first();            
         } 
         else
-        {            
-            $selected_customer = Customer::find($selected_offer->customerId)->first();
+        {   
+            if($selected_offer)
+            {
+                $selected_customer = Customer::find($selected_offer->customerId)->first();
+            }         
+            
         }
         return $selected_customer;
     }
@@ -828,7 +833,11 @@ class SellOffersController extends BaseController {
         }
         else
         {
-            $selected_vehicle = Vehicle::find($selected_offer->vehicleId)->first();
+            if($selected_offer)
+            {
+                $selected_vehicle = Vehicle::find($selected_offer->vehicleId)->first();
+            }
+            
         }       
         return $selected_vehicle;
     }  

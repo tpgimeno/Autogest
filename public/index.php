@@ -750,10 +750,15 @@ $map->get('pruebaReport', '/reports/prueba', [
     'App\Controllers\PruebaReportController',
     'getReportAction'
 ]);
-$map->post('SellOfferReport', '/reports/selloffer', [
+$map->post('SellOfferDetailedReport', '/reports/sellofferDetailed', [
     'App\Controllers\Sells\SellOffersController',
-    'getReportAction'
+    'getDetailedReportAction'
 ]);
+$map->post('SellOfferVehicleReport', '/reports/sellofferVehicle', [
+    'App\Controllers\Sells\SellOffersController',
+    'getVehicleReportAction'
+]);
+
 
 
 

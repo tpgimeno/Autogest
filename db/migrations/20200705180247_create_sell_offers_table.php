@@ -33,6 +33,7 @@ final class CreateSellOffersTable extends AbstractMigration
                 ->addColumn('observations', 'string', ['null' => true])
                 ->addColumn('texts', 'string', ['null' => true])  
                 ->addColumn('vehicleComments', 'string', ['null' => true]) 
+                ->addColumn('equipment', 'string', ['null' => true]) 
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime', ['null' => true])
                 ->addColumn('deleted_at', 'datetime', ['null' => true])

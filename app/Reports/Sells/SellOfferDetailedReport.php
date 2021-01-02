@@ -120,20 +120,26 @@ class SellOfferDetailedReport extends FPDF
         $this->SetFillColor(255); 
         $this->SetFont('Arial', 'B', 14);        
         $this->Cell(30, 6, utf8_decode('Equipamiento: '), 0, 1, 'L', 1);
-        
-        $accesories = $data['selected_accesories'];
-        for($i = 0; $i < count($accesories);$i++)
+        if(isset($data['selected_accesories']))
         {
-            $this->SetFont('Arial','', 9);
-            $this->Cell(40, 6 , utf8_decode($accesories[$i]->name), 0,0,'L', 1);
-        }
-        $this->Ln(8);
+            $accesories = $data['selected_accesories'];
+            for($i = 0; $i < count($accesories);$i++)
+            {
+                $this->SetFont('Arial','', 9);
+                $this->Cell(40, 6 , utf8_decode($accesories[$i]->name), 0,0,'L', 1);
+            }
+            $this->Ln(8);
+        }       
         $this->SetFont('Arial', 'B', 12);        
         $this->Cell(30, 6, utf8_decode('Adicional: '), 0, 1, 'L', 1);
         $this->SetFont('Arial','', 9);
         $this->Cell(0,1,'', 0, 1, 'C', 1);
-        $this->MultiCell(0, 6, utf8_decode($data['postData']['equipment']), 0, 1, 'L', 1);
-        $this->Ln('20');
+        if(isset($data['postData']))
+        {
+            $this->MultiCell(0, 6, utf8_decode($data['postData']['equipment']), 0, 1, 'L', 1);
+            $this->Ln('20');
+        }        
+        
         $this->SetFillColor(130, 130, 130);
         $this->Cell(0,1,'', 0, 1, 'C', 1);
         $this->SetFillColor(255);
