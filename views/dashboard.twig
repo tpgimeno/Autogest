@@ -1,6 +1,6 @@
 {% extends "layout.twig" %}
 {% block loginForm %}
-    <form class="form" action="/logout" method="post">
+    <form class="form" action="/intranet/logout" method="post">
         <div class="form-group">
            {{ userEmail }}        
             <input type="submit" value="Logout" class="form-control btn btn-link">
@@ -36,12 +36,12 @@
                                                 <li class="list-group-item">
                                                     <h4>Mantenimiento</h4>
                                                 </li>
-                                                <li class="list-group-item"><a href="/company/list">Empresas</a></li>
-                                                <li class="list-group-item"><a href="/users/list">Usuarios</a></li>
-                                                <li class="list-group-item"><a href="/sellers/list">Comerciales</a></li>
-                                                <li class="list-group-item"><a href="/banks/list">Entidades Bancarias</a></li>
-                                                <li class="list-group-item"><a href="/finance/list">Financieras</a></li>
-                                                <li class="list-group-item"><a href="/stores/list">Almacenes</a></li>                                               
+                                                <li class="list-group-item"><a href="/intranet/company/list">Empresas</a></li>
+                                                <li class="list-group-item"><a href="/intranet/users/list">Usuarios</a></li>
+                                                <li class="list-group-item"><a href="/intranet/sellers/list">Comerciales</a></li>
+                                                <li class="list-group-item"><a href="/intranet/banks/list">Entidades Bancarias</a></li>
+                                                <li class="list-group-item"><a href="/intranet/finance/list">Financieras</a></li>
+                                                <li class="list-group-item"><a href="/intranet/stores/list">Almacenes</a></li>                                               
                                             </ul>
                                         </div>
                                         <div class="card">
@@ -49,12 +49,12 @@
                                                 <li class="list-group-item">
                                                     <h4>Preferencias</h4>
                                                 </li>
-                                                <li class="list-group-item"><a href="/settings/form">Generales</a></li>
-                                                <li class="list-group-item"><a href="/reports">Listados</a></li>
-                                                <li class="list-group-item"><a href="/formats">Formatos</a></li>
-                                                <li class="list-group-item"><a href="/counters">Contadores</a></li>   
-                                                <li class="list-group-item"><a href="/taxes/list">Tipos Iva</a></li>
-                                                <li class="list-group-item"><a href="/texts">Textos Documentos</a></li>                                        
+                                                <li class="list-group-item"><a href="/intranet/settings/form">Generales</a></li>
+                                                <li class="list-group-item"><a href="/intranet/reports">Listados</a></li>
+                                                <li class="list-group-item"><a href="/intranet/formats">Formatos</a></li>
+                                                <li class="list-group-item"><a href="/intranet/counters">Contadores</a></li>   
+                                                <li class="list-group-item"><a href="/intranet/taxes/list">Tipos Iva</a></li>
+                                                <li class="list-group-item"><a href="/intranet/texts">Textos Documentos</a></li>                                        
                                             </ul>
                                         </div>
                                         <div class="card">                                        
@@ -62,11 +62,11 @@
                                                 <li class="list-group-item">
                                                     <h4>Fabricaciones</h4>
                                                 </li>                                                
-                                                <li class="list-group-item"><a href="/production/list">Producción</a></li>
-                                                <li class="list-group-item"><a href="/homologation/list">Homologaciones</a></li>
-                                                <li class="list-group-item"><a href="/components/list">Componentes</a></li>
-                                                <li class="list-group-item"><a href="/production_type/list">Tipos Fabricación</a></li>
-                                                <li class="list-group-item"><a href="/projects/list">Proyectos</a></li>
+                                                <li class="list-group-item"><a href="/intranet/production/list">Producción</a></li>
+                                                <li class="list-group-item"><a href="/intranet/homologation/list">Homologaciones</a></li>
+                                                <li class="list-group-item"><a href="/intranet/buys/components/list">Componentes</a></li>
+                                                <li class="list-group-item"><a href="/intranet/production_type/list">Tipos Fabricación</a></li>
+                                                <li class="list-group-item"><a href="/intranet/projects/list">Proyectos</a></li>
                                             </ul>
                                         </div>                                        
                                     </div>
@@ -84,12 +84,12 @@
                                                 <li class="list-group-item">
                                                     <h4>Proveedores</h4>
                                                 </li>
-                                                <li class="list-group-item"><a href="/buys/providers/list">Proveedores</a></li>
-                                                <li class="list-group-item"><a href="/buys/garages/list">Talleres</a></li>
-                                                <li class="list-group-item"><a href="/buys/deliveries/list">Albaranes Compra</a></li>
-                                                <li class="list-group-item"><a href="/buys/invoices/list">Facturas Compra</a></li>
-                                                <li class="list-group-item"><a href="/buys/orders/list">Ordenes Reparación</a></li>
-                                                <li class="list-group-item"><a href="/paymentWays/list">Formas de Pago</a></li>    
+                                                <li class="list-group-item"><a href="/intranet/buys/providers/list">Proveedores</a></li>
+                                                <li class="list-group-item"><a href="/intranet/buys/garages/list">Talleres</a></li>
+                                                <li class="list-group-item"><a href="/intranet/buys/deliveries/list">Albaranes Compra</a></li>
+                                                <li class="list-group-item"><a href="/intranet/buys/invoices/list">Facturas Compra</a></li>
+                                                <li class="list-group-item"><a href="/intranet/buys/orders/list">Ordenes Reparación</a></li>
+                                                <li class="list-group-item"><a href="/intranet/paymentWays/list">Formas de Pago</a></li>    
                                             </ul>
                                         </div>
                                         <div class="card">                                        
@@ -97,12 +97,12 @@
                                                 <li class="list-group-item">
                                                     <h4>Vehículos</h4>
                                                 </li>
-                                                <li class="list-group-item"><a href="/vehicles/list">Vehículos</a></li>
-                                                <li class="list-group-item"><a href="/vehicles/vehicleTypes/list">Tipos Vehículo</a></li>
-                                                <li class="list-group-item"><a href="/vehicles/brands/list">Marcas</a></li>
-                                                <li class="list-group-item"><a href="/vehicles/models/list">Modelos</a></li>
-                                                <li class="list-group-item"><a href="/vehicles/accesories/list">Accesorios</a></li> 
-                                                <li class="list-group-item"><a href="/vehicles/works/list">Trabajos</a></li>     
+                                                <li class="list-group-item"><a href="/intranet/vehicles/list">Vehículos</a></li>
+                                                <li class="list-group-item"><a href="/intranet/vehicles/vehicleTypes/list">Tipos Vehículo</a></li>
+                                                <li class="list-group-item"><a href="/intranet/vehicles/brands/list">Marcas</a></li>
+                                                <li class="list-group-item"><a href="/intranet/vehicles/models/list">Modelos</a></li>
+                                                <li class="list-group-item"><a href="/intranet/vehicles/accesories/list">Accesorios</a></li> 
+                                                <li class="list-group-item"><a href="/intranet/vehicles/works/list">Trabajos</a></li>     
                                             </ul>
                                         </div>
                                         <div class="card">
@@ -110,12 +110,12 @@
                                                 <li class="list-group-item">
                                                     <h4>Stock</h4>
                                                 </li>
-                                               <li class="list-group-item"><a href="/buys/supplies/list">Recambios</a></li>
-                                               <li class="list-group-item"><a href="/locations/list">Ubicaciones</a></li>
-                                                <li class="list-group-item"><a href="/stocks/list">Stock Vehículos</a></li>
-                                                <li class="list-group-item"><a href="/buys/components/list">Componentes</a></li> 
-                                                <li class="list-group-item"><a href="/products/list">Productos Fabricados</a></li> 
-                                                <li class="list-group-item"><a href="/buys/maders/list">Fabricantes</a></li>
+                                               <li class="list-group-item"><a href="/intranet/buys/supplies/list">Recambios</a></li>
+                                               <li class="list-group-item"><a href="/intranet/locations/list">Ubicaciones</a></li>
+                                                <li class="list-group-item"><a href="/intranet/stocks/list">Stock Vehículos</a></li>
+                                                <li class="list-group-item"><a href="/intranet/buys/components/list">Componentes</a></li> 
+                                                <li class="list-group-item"><a href="/intranet/products/list">Productos Fabricados</a></li> 
+                                                <li class="list-group-item"><a href="/intranet/buys/maders/list">Fabricantes</a></li>
                                             </ul>
                                         </div>                                        
                                     </div>
@@ -133,12 +133,12 @@
                                                 <li class="list-group-item">
                                                     <h4> CRM </h4>
                                                 </li>
-                                                <li class="list-group-item"><a href="/sells/offers/list">Ofertas</a></li>
-                                                <li class="list-group-item"><a href="/sells/contacts/list">Contactos</a></li>
-                                                <li class="list-group-item"><a href="/sells/apoints/list">Reservas</a></li>
-                                                <li class="list-group-item"><a href="/sells/financing/list">Financiaciones</a></li>
-                                                <li class="list-group-item"><a href="/sells/rents/list">Alquileres</a></li>
-                                                <li class="list-group-item"><a href="/sells/rentings/list">Rentings</a></li>
+                                                <li class="list-group-item"><a href="/intranet/crm/offers/list">Ofertas</a></li>
+                                                <li class="list-group-item"><a href="/intranet/crm/contacts/list">Contactos</a></li>
+                                                <li class="list-group-item"><a href="/intranet/crm/apoints/list">Reservas</a></li>
+                                                <li class="list-group-item"><a href="/intranet/crm/financing/list">Financiaciones</a></li>
+                                                <li class="list-group-item"><a href="/intranet/crm/rents/list">Alquileres</a></li>
+                                                <li class="list-group-item"><a href="/intranet/crm/rentings/list">Rentings</a></li>
                                             </ul>
                                         </div>
                                         <div class="card">
@@ -146,12 +146,12 @@
                                                 <li class="list-group-item">
                                                     <h4> Clientes </h4>
                                                 </li>
-                                                <li class="list-group-item"><a href="/customers/list">Clientes</a></li>
-                                                <li class="list-group-item"><a href="/customers/type/list">Tipos Clientes</a></li>
-                                                <li class="list-group-item"><a href="/customers/list">Formas de Cobro</a></li>
-                                                <li class="list-group-item"><a href="/customers/list">Recibos</a></li> 
-                                                <li class="list-group-item"><a href="/customers/list">Albaranes</a></li>
-                                                <li class="list-group-item"><a href="/customers/list">Facturas</a></li>                                         
+                                                <li class="list-group-item"><a href="/intranet/customers/list">Clientes</a></li>
+                                                <li class="list-group-item"><a href="/intranet/customers/type/list">Tipos Clientes</a></li>
+                                                <li class="list-group-item"><a href="/intranet/customers//list">Formas de Cobro</a></li>
+                                                <li class="list-group-item"><a href="/intranet/customers/list">Recibos</a></li> 
+                                                <li class="list-group-item"><a href="/intranet/customers/list">Albaranes</a></li>
+                                                <li class="list-group-item"><a href="/intranet/customers/list">Facturas</a></li>                                         
                                             </ul>
                                         </div>
                                         <div class="card">                                        
@@ -159,12 +159,12 @@
                                                 <li class="list-group-item">
                                                     <h4> Marketing </h4>
                                                 </li>
-                                                <li class="list-group-item"><a href="/marketing/promotions/list">Promociones</a></li>
-                                                <li class="list-group-item"><a href="/marketing/publications/list">Publicaciones</a></li>
-                                                <li class="list-group-item"><a href="/marketing/discounts/list">Descuentos Financiación</a></li>
-                                                <li class="list-group-item"><a href="/marketing/packs/list">Packs Alquiler</a></li>
-                                                <li class="list-group-item"><a href="/marketing/renting/list">Renting Flexible</a></li>
-                                                <li class="list-group-item"><a href="/marketing/brochures/list">Folletos</a></li>
+                                                <li class="list-group-item"><a href="/intranet/marketing/promotions/list">Promociones</a></li>
+                                                <li class="list-group-item"><a href="/intranet/marketing/publications/list">Publicaciones</a></li>
+                                                <li class="list-group-item"><a href="/intranet/marketing/discounts/list">Descuentos Financiación</a></li>
+                                                <li class="list-group-item"><a href="/intranet/marketing/packs/list">Packs Alquiler</a></li>
+                                                <li class="list-group-item"><a href="/intranet/marketing/renting/list">Renting Flexible</a></li>
+                                                <li class="list-group-item"><a href="/intranet/marketing/brochures/list">Folletos</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -183,11 +183,11 @@
                                                 <li class="list-group-item">
                                                     <h4> Listado Compras </h4>
                                                 </li>
-                                                <li class="list-group-item"><a href="/reports/prueba">Prueba</a></li>
-                                                <li class="list-group-item"><a href="/supplies/list">Listado Recambios</a></li>
-                                                <li class="list-group-item"><a href="/components/list">Listado Componentes</a></li>
-                                                <li class="list-group-item"><a href="/buys/list">Listado Compras</a></li>
-                                                <li class="list-group-item"><a href="/buys/history">Historial Compras</a></li>                                                
+                                                <li class="list-group-item"><a href="/intranet/reports/prueba">Prueba</a></li>
+                                                <li class="list-group-item"><a href="/intranet/supplies/list">Listado Recambios</a></li>
+                                                <li class="list-group-item"><a href="/intranet/components/list">Listado Componentes</a></li>
+                                                <li class="list-group-item"><a href="/intranet/buys/list">Listado Compras</a></li>
+                                                <li class="list-group-item"><a href="/intranet/buys/history">Historial Compras</a></li>                                                
                                             </ul>
                                         </div>
                                         <div class="card">
@@ -195,11 +195,11 @@
                                                 <li class="list-group-item">
                                                     <h4> Listados Clientes </h4>
                                                 </li>
-                                                <li class="list-group-item"><a href="/customers/list">Listado Clientes</a></li>
-                                                <li class="list-group-item"><a href="/customers/history">Historial Clientes</a></li>
-                                                <li class="list-group-item"><a href="/customers/operations/list">Operaciones Clientes</a></li>    
-                                                <li class="list-group-item"><a href="/customers/financing/list">Operaciones Financiacion</a></li> 
-                                                 <li class="list-group-item"><a href="/customers/financing/history">Financiaciones</a></li>                                                                                   
+                                                <li class="list-group-item"><a href="/intranet/customers/list">Listado Clientes</a></li>
+                                                <li class="list-group-item"><a href="/intranet/customers/history">Historial Clientes</a></li>
+                                                <li class="list-group-item"><a href="/intranet/customers/operations/list">Operaciones Clientes</a></li>    
+                                                <li class="list-group-item"><a href="/intranet/customers/financing/list">Operaciones Financiacion</a></li> 
+                                                 <li class="list-group-item"><a href="/intranet/customers/financing/history">Financiaciones</a></li>                                                                                   
                                             </ul>
                                         </div>
                                         <div class="card">                                        
@@ -207,11 +207,11 @@
                                                 <li class="list-group-item">
                                                     <h4> Listados Ventas </h4>
                                                 </li>
-                                                 <li class="list-group-item"><a href="/sells/list">Listado Ventas</a></li> 
-                                                 <li class="list-group-item"><a href="/operations/list">Estado Operaciones</a></li>                                                
-                                                 <li class="list-group-item"><a href="/rents/list">Listado Alquileres</a></li> 
-                                                 <li class="list-group-item"><a href="/renting/list">Listado Rentings</a></li> 
-                                                 <li class="list-group-item"><a href="/balances">Balances</a></li> 
+                                                 <li class="list-group-item"><a href="/intranet/sells/list">Listado Ventas</a></li> 
+                                                 <li class="list-group-item"><a href="/intranet/operations/list">Estado Operaciones</a></li>                                                
+                                                 <li class="list-group-item"><a href="/intranet/rents/list">Listado Alquileres</a></li> 
+                                                 <li class="list-group-item"><a href="/intranet/renting/list">Listado Rentings</a></li> 
+                                                 <li class="list-group-item"><a href="/intranet/balances">Balances</a></li> 
                                             </ul>
                                         </div>
                                     </div>

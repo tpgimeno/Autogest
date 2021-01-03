@@ -334,9 +334,10 @@ class VehicleController extends BaseController
         setlocale(LC_ALL, 'es_ES');
         $responseMessage = null;
         $reader = new Xls();
-        $reader->setLoadSheetsOnly('GENERAL');
-        $spreadSheet = $reader->load('VEHICULOS 01-08-19 UBICACIONES.xls');
+        $reader->setLoadSheetsOnly('VEHICULOS');
+        $spreadSheet = $reader->load('vehiculos.xls');
         $vehiculos = $spreadSheet->getActiveSheet()->toArray();
+        var_dump($vehiculos);die();
         if($this->importVehicleBrands())
         {
             $reponseMessage = $this->importVehicleBrands();

@@ -49,6 +49,7 @@ class CreateVehiclesTable extends AbstractMigration
                 ->addColumn('cost', 'string', ['null' => true, 'default' => null])
                 ->addColumn('pvp', 'string', ['null' => true, 'default' => null])
                 ->addColumn('accesories', 'string', ['null' => true, 'default' => null])
+                ->addColumn('state', 'string')
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime', ['null' => true, 'default' => null])
                 ->addColumn('deleted_at', 'datetime', ['null' => true, 'default' => null])
