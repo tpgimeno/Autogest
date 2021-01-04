@@ -117,7 +117,7 @@ class VehicleController extends BaseController
         $storeSelected = null;
         $locationSelected = null;
         $selectedAccesories = null;
-        $typeSelected = null;
+        $typeSelected = null;        
         if($request->getMethod() == 'GET')
         {
             $vehicleSelected = $this->setVehicle($request);
@@ -179,47 +179,53 @@ class VehicleController extends BaseController
         $params = $request->getQueryParams();
         if(isset($params['id']) && $params['id'])
         {
-            $vehicleSelected = Vehicle::find($request->getQueryParams('id'))->first();
-        }
+            $vehicleSelected = Vehicle::find($params['id'])->first();
+        }        
         return $vehicleSelected;        
     }  
     public function setBrand($vehicleSelected){
-        $brandSelected = null;       
-        if($vehicleSelected->brand)
+        $brandSelected = null; 
+        
+        if($vehicleSelected)
         {
-            $brandSelected = Brand::find($vehicleSelected->brand)->name;
+            $brandSelected = Brand::find($vehicleSelected->brand)->first()->name;
+            
         }
         return $brandSelected;
     }
     public function setModel($vehicleSelected){
         $modelSelected = null;
-        if($vehicleSelected->model)
+        if($vehicleSelected)
         {
-            $modelSelected = ModelVh::find($vehicleSelected->model)->name;
+            $modelSelected = ModelVh::find($vehicleSelected->model)->first()->name;
+            
         }
         return $modelSelected;
     }
     public function setStore($vehicleSelected){
         $store_selected = null;
-        if($vehicleSelected->store)
+        if($vehicleSelected)
         {
-            $store_selected = Store::find($vehicleSelected->store)->name;
+            $store_selected = Store::find($vehicleSelected->store)->first()->name;
+            
         } 
         return $store_selected;        
     }
     public function setLocation($vehicleSelected){
         $location_selected = null; 
-        if($vehicleSelected->location)
+        if($vehicleSelected && $vehicleSelected->location > 0)
         {
-            $location_selected = Location::find($vehicleSelected->location)->name;
+            $location_selected = Location::find($vehicleSelected->location)->first()->name;
+           
         }
         return $location_selected;
     }
     public function setVehicleType($vehicleSelected){
-        $typeSelected = null; 
-        if($vehicleSelected->type)
+        $typeSelected = null;
+        
+        if($vehicleSelected)
         {            
-            $typeSelected = VehicleTypes::find($vehicleSelected->type)->name;            
+            $typeSelected = VehicleTypes::find($vehicleSelected->type)->first()->name;            
         }
         return $typeSelected;
     }
@@ -335,9 +341,9 @@ class VehicleController extends BaseController
         $responseMessage = null;
         $reader = new Xls();
         $reader->setLoadSheetsOnly('VEHICULOS');
-        $spreadSheet = $reader->load('vehiculos.xls');
+        $spreadSheet = $reader->load('vehiculos.xls');        
         $vehiculos = $spreadSheet->getActiveSheet()->toArray();
-        var_dump($vehiculos);die();
+//        var_dump($vehiculos);die();
         if($this->importVehicleBrands())
         {
             $reponseMessage = $this->importVehicleBrands();
@@ -353,30 +359,28 @@ class VehicleController extends BaseController
         if($this->importVehicleTypes())
         {
             $responseMessage = $this->importVehicleTypes();
-        }
-        
+        }        
         try{
             for($i = 1; $i < intval(count($vehiculos)); $i++)
             {
                 $vehiculo = new Vehicle();                              
-                $vehiculo->brand = $vehiculos[$i][1];                             
-                $vehiculo->model = $vehiculos[$i][3];
-                $vehiculo->description = $vehiculos[$i][7];
-                $vehiculo->plate = $vehiculos[$i][6];
-                $vehiculo->vin = null;
+                $vehiculo->brand = $vehiculos[$i][3];                             
+                $vehiculo->model = $vehiculos[$i][5];
+                $vehiculo->description = $vehiculos[$i][6];
+                $vehiculo->plate = $vehiculos[$i][0];
+                $vehiculo->vin = $vehiculos[$i][1];
                 $time = strtotime($vehiculos[$i][11]);                
                 $vehiculo->registryDate = date('Y/m/d', $time);                
-                $vehiculo->store = $vehiculos[$i][9];
+                $vehiculo->store = $vehiculos[$i][13];
                 $vehiculo->location = 0;
-                $vehiculo->type = $vehiculos[$i][5];
-                $vehiculo->color = null;
-                $vehiculo->places = 0;
-                $vehiculo->doors = 0;
-                $vehiculo->power = 0;
+                $vehiculo->type = $vehiculos[$i][17];
+                $vehiculo->color = $vehiculos[$i][9];
+                $vehiculo->places = null;
+                $vehiculo->doors = $vehiculos[$i][8];
+                $vehiculo->power = $vehiculos[$i][7];
                 $vehiculo->km = $vehiculos[$i][10];
-                $vehiculo->cost = 0;
-                $vehiculo->pvp = $this->tofloat($vehiculos[$i][13]); 
-                           
+                $vehiculo->cost = $this->tofloat($vehiculos[$i][19]);
+                $vehiculo->pvp = $this->tofloat($vehiculos[$i][20]);                           
                 $vehiculo->save(); 
                 $responseMessage = 'Saved';               
             }
@@ -405,8 +409,9 @@ class VehicleController extends BaseController
         $responseMessage = null;
         $reader = new Xls();
         $reader->setLoadSheetsOnly('MARCAS'); 
-        $spreadSheet = $reader->load('VEHICULOS 01-08-19 UBICACIONES.xls');
+        $spreadSheet = $reader->load('vehiculos.xls');
         $marcas = $spreadSheet->getActiveSheet()->toArray();
+//        var_dump($marcas);die();
         try{
             for($i = 1; $i < intval(count($marcas)); $i++)
             {
@@ -424,15 +429,15 @@ class VehicleController extends BaseController
         $responseMessage = null;
         $reader = new Xls();
         $reader->setLoadSheetsOnly('MODELOS'); 
-        $spreadSheet = $reader->load('VEHICULOS 01-08-19 UBICACIONES.xls');
+        $spreadSheet = $reader->load('vehiculos.xls');
         $modelos = $spreadSheet->getActiveSheet()->toArray();
-    //    var_dump($modelos);die();
+//        var_dump($modelos);die();
         try{
             for($i = 1; $i < intval(count($modelos)); $i++)
             {
                  $modelo = new ModelVh();                                  
-                 $modelo->name = $modelos[$i][0];
-                 $modelo->brandId = $modelos[$i][3];
+                 $modelo->name = $modelos[$i][2];
+                 $modelo->brandId = $modelos[$i][1];
                  $modelo->save();                 
             }           
         } catch (QueryException $ex) {
@@ -443,11 +448,11 @@ class VehicleController extends BaseController
     public function importVehicleTypes(){
         setLocale(LC_ALL, 'es_ES');
         $responseMessage = null;
-        $reader = new Xls();
-        $reader->setLoadSheetsOnly('TIPOS'); 
-        $spreadSheet = $reader->load('VEHICULOS 01-08-19 UBICACIONES.xls');
+        $reader = new Xls();        
+        $reader->setLoadSheetsOnly('TIPOS');        
+        $spreadSheet = $reader->load('vehiculos.xls');         
         $types = $spreadSheet->getActiveSheet()->toArray();
-        // var_dump($types);die();
+//        var_dump($types);die(); 
         try{
             for($i = 1; $i < intval(count($types)); $i++)
             {
@@ -464,10 +469,10 @@ class VehicleController extends BaseController
         setLocale(LC_ALL, 'es_ES');
         $responseMessage = null;
         $reader = new Xls();
-        $reader->setLoadSheetsOnly('ALMACENES'); 
-        $spreadSheet = $reader->load('VEHICULOS 01-08-19 UBICACIONES.xls');
+        $reader->setLoadSheetsOnly('UBICACIONES'); 
+        $spreadSheet = $reader->load('vehiculos.xls');
         $stores = $spreadSheet->getActiveSheet()->toArray();
-        // var_dump($stores);die();
+//         var_dump($stores);die();
         try{
             for($i = 1; $i < intval(count($stores)); $i++)
             {

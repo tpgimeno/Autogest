@@ -111,7 +111,7 @@ window.addEventListener('load', function()
             if(this.checked)
             {
                 var request = new XMLHttpRequest();
-                request.open('POST', '/vehicles/accesories/add', true);
+                request.open('POST', '/intranet/vehicles/accesories/add', true);
                 request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');                 
                 request.send("vhaccesory=" + JSON.stringify(sender));
                 function reqListener()
@@ -125,7 +125,7 @@ window.addEventListener('load', function()
             else
             {
                 var request = new XMLHttpRequest();
-                request.open('POST', '/vehicles/accesories/del', true);
+                request.open('POST', '/intranet/vehicles/accesories/del', true);
                 request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');                
                 request.send("vhaccesory=" + JSON.stringify(sender));
                 function reqListener()
