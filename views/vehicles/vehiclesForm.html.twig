@@ -96,7 +96,7 @@
                                 <div class="form-row">                                    
                                     <div class="form-group col-md-3">
                                         <label for="inputStore">Almacen</label>
-                                        <select name="store" class="form-control" id="selectType" value="{{ store_selected }}">
+                                        <select name="store" class="form-control" id="selectStore" value="{{ store_selected }}">
                                             {% for store in stores %}
                                                 <option>{{ store.name }}</option>
                                             {% endfor %}                            
@@ -104,7 +104,7 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="inputLocation">Ubicacion</label>
-                                        <select name="location" class="form-control" id="selectType" value="{{ location_selected }}">
+                                        <select name="location" class="form-control" id="selectLocation" value="{{ location_selected }}">
                                             {% for location in locations %}
                                                 <option>{{ location.name }}</option>
                                             {% endfor %}                            

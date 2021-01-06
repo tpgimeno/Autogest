@@ -110,29 +110,24 @@ class VehicleController extends BaseController
             
             $vehicle = $this->addVehicleData($postData);            
             $responseMessage = $this->saveVehicle($vehicle);
-        }
-        $vehicleSelected = null;
+        }        
         $brandSelected = null;
         $modelSelected = null;
         $storeSelected = null;
         $locationSelected = null;
         $selectedAccesories = null;
         $typeSelected = null;        
-        if($request->getMethod() == 'GET')
+        $vehicleSelected = $this->setVehicle($request);            
+        if($vehicleSelected)
         {
-            $vehicleSelected = $this->setVehicle($request);
-            
-            if($vehicleSelected)
-            {
-                $brandSelected = $this->setBrand($vehicleSelected);
-                $modelSelected = $this->setModel($vehicleSelected);
-                $storeSelected = $this->setStore($vehicleSelected);
-                $locationSelected = $this->setLocation($vehicleSelected);
-                $selectedAccesories = $this->setAccesories($vehicleSelected);
-                
-                $typeSelected = $this->setVehicleType($vehicleSelected);
-            }            
-        }        
+            $brandSelected = $this->setBrand($vehicleSelected);
+            $modelSelected = $this->setModel($vehicleSelected);
+            $storeSelected = $this->setStore($vehicleSelected);
+            $locationSelected = $this->setLocation($vehicleSelected);
+            $selectedAccesories = $this->setAccesories($vehicleSelected);
+
+            $typeSelected = $this->setVehicleType($vehicleSelected);
+        }               
         $accesories = Accesories::All();
         $brands = Brand::All();
         $models = ModelVh::All();
@@ -176,10 +171,10 @@ class VehicleController extends BaseController
     }
     public function setVehicle($request){
         $vehicleSelected = null;
-        $params = $request->getQueryParams();
+        $params = $request->getQueryParams();       
         if(isset($params['id']) && $params['id'])
         {
-            $vehicleSelected = Vehicle::find($params['id'])->first();
+            $vehicleSelected = Vehicle::find($params['id']);
         }        
         return $vehicleSelected;        
     }  
@@ -188,7 +183,7 @@ class VehicleController extends BaseController
         
         if($vehicleSelected)
         {
-            $brandSelected = Brand::find($vehicleSelected->brand)->first()->name;
+            $brandSelected = Brand::find($vehicleSelected->brand)->name;
             
         }
         return $brandSelected;
@@ -197,25 +192,26 @@ class VehicleController extends BaseController
         $modelSelected = null;
         if($vehicleSelected)
         {
-            $modelSelected = ModelVh::find($vehicleSelected->model)->first()->name;
+            $modelSelected = ModelVh::find($vehicleSelected->model)->name;
             
         }
         return $modelSelected;
     }
     public function setStore($vehicleSelected){
         $store_selected = null;
-        if($vehicleSelected)
+        if($vehicleSelected && $vehicleSelected->store > 0)
         {
-            $store_selected = Store::find($vehicleSelected->store)->first()->name;
-            
+            $store_selected = Store::find($vehicleSelected->store)->name;            
         } 
+        
         return $store_selected;        
     }
     public function setLocation($vehicleSelected){
         $location_selected = null; 
-        if($vehicleSelected && $vehicleSelected->location > 0)
+        
+        if($vehicleSelected && $vehicleSelected->location != '0')
         {
-            $location_selected = Location::find($vehicleSelected->location)->first()->name;
+            $location_selected = Location::find($vehicleSelected->location)->name;
            
         }
         return $location_selected;
@@ -225,7 +221,7 @@ class VehicleController extends BaseController
         
         if($vehicleSelected)
         {            
-            $typeSelected = VehicleTypes::find($vehicleSelected->type)->first()->name;            
+            $typeSelected = VehicleTypes::find($vehicleSelected->type)->name;            
         }
         return $typeSelected;
     }
