@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Entitys;
 
 use App\Models\User;
 use App\Controllers\BaseController;
 use Respect\Validation\Validator as v;
-use App\Services\UserService;
+use App\Services\Entitys\UserService;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\Response\RedirectResponse;
 
@@ -30,8 +30,7 @@ class UsersController extends BaseController
             $userValidator = v::key('email', v::stringType()->notEmpty()) 
             ->key('password', v::stringType()->notEmpty());            
             try
-            {
-                // var_dump($request->getParsedBody());die;   
+            {  
                 $userValidator->assert($postData); // true 
                 $user = new User();
                 $user->email = $postData['email'];
@@ -49,16 +48,15 @@ class UsersController extends BaseController
         {
             $selected_user = User::find($request->getQueryParams('id'))->first();
         }
-        return $this->renderHTML('/users/userForm.twig', [
+        return $this->renderHTML('/Entitys/users/userForm.twig', [
             'responseMessage' => $responseMessage,
             'user' => $selected_user
         ]);         
     }
-
     public function getIndexUsers()
     {
         $users = User::All();
-        return $this->renderHTML('/users/usersList.twig', [
+        return $this->renderHTML('/Entitys/users/usersList.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'users' => $users,
         ]);

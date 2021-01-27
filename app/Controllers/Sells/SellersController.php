@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Entitys;
+namespace App\Controllers\Sells;
 
 use App\Controllers\BaseController;
 use Respect\Validation\Validator as v;
@@ -18,18 +18,14 @@ class SellersController extends BaseController
     {
         parent::__construct();
         $this->sellersService = $sellersService;
-    }
-    
-    
-    
+    }    
     public function getIndexAction()
     {
         $sellers = Sellers::All();
-        return $this->renderHTML('/sellers/sellersList.twig', [
+        return $this->renderHTML('/sells/sellers/sellersList.twig', [
             'sellers' => $sellers
         ]);
-    }   
-    
+    }    
     public function getSellersDataAction($request)
     {                
         $responseMessage = null;
@@ -45,10 +41,10 @@ class SellersController extends BaseController
                 $sellersValidator->assert($postData); // true 
                 $sellers = new Sellers();
                 $sellers->name = $postData['name'];
-                $sellers->fiscal_id = $postData['fiscal_id'];                
+                $sellers->fiscalId = $postData['fiscal_id'];                
                 $sellers->address = $postData['address'];
                 $sellers->city = $postData['city'];
-                $sellers->postal_code = $postData['postal_code'];
+                $sellers->postalCode = $postData['postal_code'];
                 $sellers->state = $postData['state'];
                 $sellers->country = $postData['country'];
                 $sellers->phone = $postData['phone'];
@@ -60,20 +56,18 @@ class SellersController extends BaseController
             }              
         }
         $sellersSelected = null;
-        if($_GET)
+        if($request->getQueryParams('id'))
         {
-            $sellersSelected = Sellers::find($_GET['id']);
+            $sellersSelected = Sellers::find($request->getQueryParams('id'));
         }
-        return $this->renderHTML('/sellers/sellersForm.twig', [
+        return $this->renderHTML('/sells/sellers/sellersForm.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
             'sellers' => $sellersSelected
         ]);
     }
-
     public function deleteAction(ServerRequest $request)
-    {
-         
+    {         
         $this->sellersService->deleteSellers($request->getQueryParams('id'));               
         return new RedirectResponse('/intranet/sellers/list');
     }

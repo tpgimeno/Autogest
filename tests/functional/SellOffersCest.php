@@ -18,7 +18,7 @@ class SellOffersCest
         $fiscal_id = substr(str_shuffle($caracteres_permitidos), 0, $longitud);        
         $I->amOnPage('/intranet/admin');
         $I->click('Ofertas', '.list-group-item');
-        $I->seeCurrentUrlEquals('/intranet/crm/offers/list');
+        $I->seeCurrentUrlEquals('/intranet/sells/offers/list');
         $I->wantTo('Create a new SellOffer');
         $I->click('#submit', '#addSellOffer');
         $I->click('#searchCustomer');

@@ -2,4 +2,6 @@
 vendor
 .vscode
 _mmServerScripts
+phinx.yml
+phinx.php
 

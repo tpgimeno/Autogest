@@ -99,15 +99,15 @@ class SellOffersController extends BaseController {
         if(isEmpty($params) && $offer)
         {
             $params = array('offer_id' => $offer->id);
-        }
-        
+        }        
         $selected_tab = 'offer'; 
         $selected_offer = $this->getSelectedOfferData($params);        
         $new_offer = null;
         $offer_number = null;        
         if($selected_offer === null)
         {
-            $last_offer = DB::table('selloffers')->get()->last();            
+            $last_offer = DB::table('selloffers')->get()->last();
+                       
             if($last_offer === null)
             {
                 $new_offer = 1;                
@@ -125,8 +125,8 @@ class SellOffersController extends BaseController {
         {
             $new_offer = $selected_offer->id;
             $offer_number = $selected_offer->offerNumber;
-        } 
-                       
+        }   
+        
         return $this->getRenderAgain($params, $new_offer, $offer_number, $selected_tab, $responseMessage);
     }  
     public function validateData($postData)
@@ -172,15 +172,15 @@ class SellOffersController extends BaseController {
         {
             if(SellOffer::find($postData['id']))
             {
-                $offer = SellOffer::find($postData['id'])->first();
+                $offer = SellOffer::find($postData['id']);
             }            
         }        
         $offer->offerNumber = $postData['offer_number'];
         $offer->offerDate = Date('y/m/d', strtotime($postData['date']));
         $offer->texts = $postData['texts'];
         $offer->observations = $postData['observations'];                       
-        $offer->customerId = Customer::find($postData['customer_id'])->first()->id;
-        $offer->vehicleId = Vehicle::find($postData['vehicle_id'])->first()->id;                 
+        $offer->customerId = Customer::find($postData['customer_id'])->id;
+        $offer->vehicleId = Vehicle::find($postData['vehicle_id'])->id;                 
         $offer->discount = $this->tofloat($postData['discount']);                 
         $offer->pvp = $this->tofloat($postData['price']);
         $offer->tva = $this->tofloat($postData['tva']);
@@ -195,7 +195,7 @@ class SellOffersController extends BaseController {
     public function deleteAction(ServerRequest $request){
         $params = $request->getQueryParams();       
         $this->sellOfferService->deleteOffer(intval($params['offer_id']));
-        return new RedirectResponse('/intranet/crm/offers/list');
+        return new RedirectResponse('/intranet/sells/offers/list');
     }
     public function searchCustomerSellOfferAction(ServerRequestInterface $request)
     {
@@ -222,8 +222,9 @@ class SellOffersController extends BaseController {
     {
         $responseMessage = null;
         $selected_tab = 'customer';
-        $params = $request->getQueryParams();        
-        return $this->getRenderAgain($params, null, null, $selected_tab, $responseMessage);        
+        $params = $request->getQueryParams();
+        $offer_number = SellOffer::find($params['offer_id'])->offerNumber;        
+        return $this->getRenderAgain($params, null, $offer_number, $selected_tab, $responseMessage);        
     }
     public function searchVehicleSellOfferAction($request)
     {
@@ -261,7 +262,8 @@ class SellOffersController extends BaseController {
         $responseMessage = null;
         $params = $request->getQueryParams();        
         $selected_tab = 'vehicle';
-        return $this->getRenderAgain($params, null, null, $selected_tab, $responseMessage);       
+        $offer_number = SellOffer::find($params['offer_id'])->offerNumber;
+        return $this->getRenderAgain($params, null, $offer_number, $selected_tab, $responseMessage);       
     }    
     public function searchSuppliesSellOffersAction($request) {
         $postData = $request->getParsedBody();
@@ -290,7 +292,8 @@ class SellOffersController extends BaseController {
         $responseMessage = null;
         $params = $request->getQueryParams();
         $selected_tab = 'supplies'; 
-        return $this->getRenderAgain($params, null, null, $selected_tab, $responseMessage);        
+        $offer_number = SellOffer::find($params['offer_id'])->offerNumber;
+        return $this->getRenderAgain($params, null, $offer_number, $selected_tab, $responseMessage);        
     }
     public function addSuppliesSellOffersAction($request) 
     {
@@ -349,7 +352,8 @@ class SellOffersController extends BaseController {
                 $editSupply->delete();
             } 
         }       
-        return $this->getRenderAgain($params, null, null, $selected_tab, $responseMessage);        
+        $offer_number = SellOffer::find($params['offer_id'])->offerNumber;
+        return $this->getRenderAgain($params, null, $offer_number, $selected_tab, $responseMessage);        
     }
     public function delSuppliesSellOffersAction($request)  {
         $responseMessage = 'Recambio eliminado';
@@ -362,7 +366,8 @@ class SellOffersController extends BaseController {
         {
             $supply->delete();
         }
-        return $this->getRenderAgain($params, null, null, $selected_tab, $responseMessage);
+        $offer_number = SellOffer::find($params['offer_id'])->offerNumber;
+        return $this->getRenderAgain($params, null, $offer_number, $selected_tab, $responseMessage);
     }
     public function searchComponentsSellOffersAction($request) {        
         $searchString = null;
@@ -394,7 +399,8 @@ class SellOffersController extends BaseController {
         $responseMessage = null;
         $params = $request->getQueryParams();
         $selected_tab = 'supplies';
-        return $this->getRenderAgain($params, null, null, $selected_tab, $responseMessage);        
+        $offer_number = SellOffer::find($params['offer_id'])->offerNumber;
+        return $this->getRenderAgain($params, null, $offer_number, $selected_tab, $responseMessage);        
     }
     public function addComponentsSellOffersAction($request)
     {
@@ -446,8 +452,9 @@ class SellOffersController extends BaseController {
             {
                 $editComponent->delete();
             } 
-        }           
-        return $this->getRenderAgain($params, null, null, $selected_tab, $responseMessage);        
+        }     
+        $offer_number = SellOffer::find($params['offer_id'])->offerNumber;
+        return $this->getRenderAgain($params, null, $offer_number, $selected_tab, $responseMessage);        
     }
     public function delComponentsSellOffersAction($request)
     {
@@ -462,7 +469,8 @@ class SellOffersController extends BaseController {
         {
             $component->delete();
         }
-        return $this->getRenderAgain($params, null, null, $selected_tab, $responseMessage);
+        $offer_number = SellOffer::find($params['offer_id'])->offerNumber;
+        return $this->getRenderAgain($params, null, $offer_number, $selected_tab, $responseMessage);
     }
     public function selectWorksSellOffersAction($request)
     {
@@ -546,8 +554,9 @@ class SellOffersController extends BaseController {
             {
                 $editWork->delete();
             } 
-        }           
-        return $this->getRenderAgain($params, null, null, $selected_tab, $responseMessage);        
+        } 
+        $offer_number = SellOffer::find($params['offer_id'])->offerNumber;
+        return $this->getRenderAgain($params, null, $offer_number, $selected_tab, $responseMessage);        
     }
     public function delWorksSellOffersAction($request)
     {
@@ -561,26 +570,38 @@ class SellOffersController extends BaseController {
         {
             $work->delete();
         }
-        return $this->getRenderAgain($params, null, null, $selected_tab, $responseMessage);
+        $offer_number = SellOffer::find($params['offer_id'])->offerNumber;
+        return $this->getRenderAgain($params, null, $offer_number, $selected_tab, $responseMessage);
     }
     public function getDetailedReportAction($request)
     {        
-        $postData = $request->getParsedBody();
+        $postData = $request->getParsedBody();        
         $selected_accesories = $this->getSellOfferVehicleAccesories($postData['vehicle_id'])->toArray();        
         $offerSupplies = $this->getSellOfferSupplies($postData['id'])->toArray();
         $offerComponents = $this->getSellOfferComponents($postData['id'])->toArray();
         $offerWorks = $this->getSellOfferWorks($postData['id'])->toArray();
-        array_push($postData, $offerSupplies, $offerComponents, $offerWorks, $selected_accesories);
+        $newPostData = array_merge(['postData' => $postData, 
+            'offerSupplies' => $offerSupplies, 
+            'offerComponents' => $offerComponents, 
+            'offerWorks' => $offerWorks, 
+            'selected_accesories' => $selected_accesories]);
         $report = new SellOfferDetailedReport();
         $report->AddPage();
-        $report->Body($postData);        
+        $report->Body($newPostData);        
         $report->Output();
     }
     public function getVehicleReportAction($request)
     {
         $postData = $request->getParsedBody();
         $selected_accesories = $this->getSellOfferVehicleAccesories($postData['vehicle_id'])->toArray();
-        $newPostData = array_merge(['postData' => $postData, 'selected_accesories' => $selected_accesories]);
+        $offerSupplies = $this->getSellOfferSupplies($postData['id'])->toArray();
+        $offerComponents = $this->getSellOfferComponents($postData['id'])->toArray();
+        $offerWorks = $this->getSellOfferWorks($postData['id'])->toArray();
+        $newPostData = array_merge(['postData' => $postData, 
+            'offerSupplies' => $offerSupplies, 
+            'offerComponents' => $offerComponents, 
+            'offerWorks' => $offerWorks, 
+            'selected_accesories' => $selected_accesories]);
         $report = new SellOfferVehicleReport();
         $report->AddPage();
         $report->Body($newPostData);        
@@ -599,7 +620,8 @@ class SellOffersController extends BaseController {
             {
                 $new_offer = 1;
             }            
-        }        
+        }  
+        
         if($offer_number === null)           
         {
             if(DB::table('selloffers')->get()->last())
@@ -710,7 +732,7 @@ class SellOffersController extends BaseController {
         {           
             if(SellOffer::find($params['offer_id']))
             {
-                $selected_offer = SellOffer::find($params['offer_id'])->first();   
+                $selected_offer = SellOffer::find($params['offer_id']);   
             }                    
         }        
         return $selected_offer;          
@@ -807,12 +829,11 @@ class SellOffersController extends BaseController {
         $selected_customer = null;       
         if(isset($params['customer_id']) && $params['customer_id'] && $params['customer_id'] != 'null')
         {            
-            
-            $selected_customer = Customer::find($params['customer_id'])->first();            
+            $selected_customer = Customer::find($params['customer_id']);            
         } 
-        else
+        else if($selected_offer)
         {            
-            $selected_customer = Customer::find($selected_offer->customerId)->first();
+            $selected_customer = Customer::find($selected_offer->customerId);
         }
         return $selected_customer;
     }
@@ -823,13 +844,15 @@ class SellOffersController extends BaseController {
         {
             if(Vehicle::find($params['vehicle_id']))
             {
-                $selected_vehicle = Vehicle::find($params['vehicle_id'])->first(); 
+                $selected_vehicle = Vehicle::find($params['vehicle_id']); 
             }
-        }
-        else
+            
+        }        
+        else if($selected_offer)
         {
-            $selected_vehicle = Vehicle::find($selected_offer->vehicleId)->first();
-        }       
+            $selected_vehicle = Vehicle::find($selected_offer->vehicleId);
+        }  
+        
         return $selected_vehicle;
     }  
     public function getSellOfferSupplies($offer_id)

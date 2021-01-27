@@ -5,7 +5,7 @@ namespace App\Controllers\Entitys;
 use App\Controllers\BaseController;
 use Respect\Validation\Validator as v;
 use App\Models\Bank;
-use App\Services\BankService;
+use App\Services\Entitys\BankService;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\Response\RedirectResponse;
 
@@ -22,7 +22,7 @@ class BanksController extends BaseController
     public function getIndexAction()
     {
         $banks = Bank::All();
-        return $this->renderHTML('/banks/banksList.html.twig', [
+        return $this->renderHTML('/Entitys/banks/banksList.html.twig', [
             'banks' => $banks
         ]);
     }     
@@ -81,7 +81,7 @@ class BanksController extends BaseController
         {
             $bankSelected = Bank::find($request->getQueryParams('id'))->first();
         }
-        return $this->renderHTML('/banks/banksForm.html.twig', [
+        return $this->renderHTML('/Entitys/banks/banksForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
             'bank' => $bankSelected

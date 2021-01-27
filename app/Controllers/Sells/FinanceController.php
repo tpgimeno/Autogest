@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Controllers\Entitys;
+namespace App\Controllers\Sells;
 
 use App\Controllers\BaseController;
 use Respect\Validation\Validator as v;
 use App\Models\Finance;
-use App\Services\FinanceService;
+use App\Services\Entitys\FinanceService;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\Response\RedirectResponse;
 
@@ -23,7 +23,7 @@ class FinanceController extends BaseController
     public function getIndexAction()
     {
         $finances = Finance::All();
-        return $this->renderHTML('/finance/financeList.html.twig', [
+        return $this->renderHTML('/Entitys/finance/financeList.html.twig', [
             'finances' => $finances
         ]);
     }   
@@ -64,7 +64,7 @@ class FinanceController extends BaseController
         {
             $financeSelected = Finance::find($request->getQueryParams('id'))->first();
         }
-        return $this->renderHTML('/finance/financeForm.html.twig', [
+        return $this->renderHTML('/Entitys/finance/financeForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
             'finance' => $financeSelected

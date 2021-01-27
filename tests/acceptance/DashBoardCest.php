@@ -75,7 +75,7 @@ class DashBoardCest
         $I->seeCurrentUrlEquals('/intranet/buys/maders/list');
         $I->amOnPage('/intranet/admin');
         $I->click('Ofertas', '.list-group-item');        
-        $I->seeCurrentUrlEquals('/intranet/crm/offers/list');
+        $I->seeCurrentUrlEquals('/intranet/sells/offers/list');
         $I->amOnPage('/intranet/admin');
         $I->click('Clientes', '.list-group-item');        
         $I->seeCurrentUrlEquals('/intranet/customers/list');
