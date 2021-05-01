@@ -1,0 +1,41 @@
+{% extends "dashboard.twig" %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                <h2> Users </h2>
+            </div>   
+            <div class="col-md-2 d-flex justify-content-end align-items-end">
+                <a class="link " href="/admin">Volver</a> 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <table class="table">
+                    <tr>
+                        <th class="col-9">email</th>  
+                        <th class="col-3">Edit</th>                      
+                        <th class="col-3">Delete</th>
+                    </tr>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.email }}</td>                            
+                            <td><a href="/users/form?id={{user.id}}">Edit</td>
+                            <td><a href="/users/delete?id={{user.id}}">Delete</td>
+                        </tr>
+                    {% endfor %}                
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col d-flex justify-content-end">
+                <form action="/users/form" method="get">
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary" value="Añadir">
+                        <a href="/admin" class="btn btn-primary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

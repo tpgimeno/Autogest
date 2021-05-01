@@ -20,19 +20,20 @@ final class CreateCompanyTable extends AbstractMigration
     {
         $table = $this->table('company');
         $table->addColumn('name', 'string')
-                ->addColumn('fiscal_id', 'string')
-                ->addColumn('fiscal_name', 'string')
+                ->addColumn('fiscalId', 'string')
+                ->addColumn('fiscalName', 'string')
                 ->addColumn('address', 'string')
                 ->addColumn('city', 'string')
-                ->addColumn('postal_code', 'integer')
+                ->addColumn('postalCode', 'integer')
                 ->addColumn('state', 'string')
                 ->addColumn('country', 'string')
                 ->addColumn('phone', 'string')
                 ->addColumn('email', 'string')
-                ->addColumn('site', 'string')
+                ->addColumn('site', 'string', ['null' => true])
                 ->addColumn('created_at', 'datetime')
-                ->addColumn('updated_at', 'datetime')
-                ->addColumn('deleted_at', 'datetime')
+                ->addColumn('updated_at', 'datetime', ['null' => true])
+                ->addColumn('deleted_at', 'datetime', ['null' => true])
+                ->addIndex('fiscalId', ['unique' => true])
                 ->create();
     }
 }

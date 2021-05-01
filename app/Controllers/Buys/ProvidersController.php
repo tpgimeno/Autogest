@@ -3,11 +3,12 @@
 namespace App\Controllers\Buys;
 
 use App\Controllers\BaseController;
-use Respect\Validation\Validator as v;
 use App\Models\Provider;
 use App\Services\Buys\ProviderService;
-use Laminas\Diactoros\ServerRequest;
+use Exception;
 use Laminas\Diactoros\Response\RedirectResponse;
+use Laminas\Diactoros\ServerRequest;
+use Respect\Validation\Validator as v;
 
 class ProvidersController extends BaseController
 {    
@@ -87,7 +88,7 @@ class ProvidersController extends BaseController
                     $provider->save();     
                     $responseMessage = 'Saved';
                 }                     
-            }catch(\Exception $e){                
+            }catch(Exception $e){                
                 $responseMessage = $e->getMessage();
             }              
         }

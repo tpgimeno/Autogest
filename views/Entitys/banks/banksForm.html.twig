@@ -1,0 +1,92 @@
+{% extends "dashboard.twig" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <h2> Bancos </h2>
+        </div>   
+        <div class="col-md-2 d-flex justify-content-end align-items-end">
+            <a class="link pr-4" href="/banks/list">Lista</a> 
+            <a class="link " href="/admin">Volver</a> 
+        </div>        
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-dark" role="alert">
+                {{ responseMessage }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <form action="/banks/save" method="post">
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="inputId">ID</label>                        
+                        <input type="id" name="id" class="form-control" id="inputId" placeholder="" value="{{ bank.id }}">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-9">
+                        <label for="inputName">Nombre</label>                       
+                        <input type="name" name="name" class="form-control" id="inputName" placeholder="Nombre" value="{{ bank.name }}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="inputNif">NIF/CIF</label>
+                        <input type="text" name="fiscal_id" class="form-control" id="inputNif" placeholder="ID Fiscal" value="{{ bank.fiscal_id }}">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="inputSocialName">Razon Social</label>
+                        <input type="socialName" name="fiscal_name" class="form-control" id="inputSocialName" placeholder="Razón Social" value="{{ bank.fiscal_name }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                        <label for="inputAddress">Dirección</label>
+                        <input type="text" name="address" class="form-control" id="inputAddress" placeholder="C/ La paz, 4" value="{{ bank.address }}">
+                    </div>                                      
+                <div class="form-row">                         
+                    <div class="form-group col-md-10">
+                        <label for="inputCity">Población</label>
+                        <input type="text" name="city" class="form-control" id="inputCity" placeholder="Ciudad" value="{{ bank.city }}">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputZip">C.P.</label>
+                        <input type="text" name="postal_code" class="form-control" id="inputZip" placeholder="Código Postal" value="{{ bank.postal_code }}">
+                    </div>                                             
+                </div>
+                <div class="form-row"> 
+                    <div class="form-group col-md-6">
+                        <label for="inputState">Provincia/Estado</label>
+                        <input type="text" name="state" class="form-control" id="inputState" placeholder="Provincia" value="{{ bank.state }}">
+                    </div> 
+                    <div class="form-group col-md-3">
+                        <label for="inputCountry">Pais</label>
+                        <input type="text" name="country" class="form-control" id="inputCountry" placeholder="Pais" value="{{ bank.country }}">
+                    </div>                          
+                    <div class="form-group col-md-3">
+                        <label for="inputPhone">Teléfono</label>
+                        <input type="text" name="phone" class="form-control" id="inputPhone" placeholder="Phone" value="{{ bank.phone }}">
+                    </div>
+                </div>
+                <div class="form-row">                         
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail">Email</label>
+                        <input type="text" name="email" class="form-control" id="inputEmail" placeholder="Email" value="{{ bank.email }}">
+                    </div>                        
+                    <div class="form-group col-md-6">
+                        <label for="inputWeb">Web</label>
+                        <input type="text" name="site" class="form-control" id="inputWeb" placeholder="Web" value="{{ bank.site }}">
+                    </div>                       
+                </div>
+                <div class="form-row">
+                    <div class="col text-right">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="reset" class="btn btn-primary">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>    
+{% endblock %}

@@ -11,6 +11,17 @@
         </div>
         <div class="row">
             <div class="col">
+                <form id="importForm" action="/intranet/vehicles/import" method="post" class="form">
+                    <div class="form-row">
+                        <div class="col-2 offset-10">                            
+                            <button type="submit" class="btn btn-primary mb-2">Importar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
                 <form id="searchForm" action="/intranet/vehicles/search" method="post" class="form">
                     <div class="container">
                         <div id="formRow" class="form-row text-right">
@@ -51,9 +62,9 @@
         </div>
         <div class="row">
             <div class="col d-flex justify-content-end">
-                <form action="/intranet/vehicles/form" method="get">
+                <form id="addVehicle" action="/intranet/vehicles/form" method="get">
                     <div class="form-group">
-                        <input type="submit" class="btn btn-primary" value="Añadir">
+                        <input id="submit"  type="submit" class="btn btn-primary" value="Añadir">
                         <a href="/intranet/admin" class="btn btn-primary">Cancelar</a>
                     </div>
                 </form>

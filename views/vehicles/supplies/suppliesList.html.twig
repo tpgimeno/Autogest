@@ -1,0 +1,47 @@
+{% extends "dashboard.twig" %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                <h2> Recambios </h2>
+            </div>   
+            <div class="col-md-2 d-flex justify-content-end align-items-end">
+                <a class="link " href="/admin">Volver</a> 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <table class="table">
+                    <tr>
+                        <th>Referencia</th>
+                        <th>Fabricante</th>
+                        <th>Nombre</th>
+                        <th>Stock</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>                    
+                    {% for supplie in supplies %}
+                        <tr>
+                            <td>{{ supplie.ref }}</td>
+                            <td>{{ supplie.mader }}</td>
+                            <td>{{ supplie.name }}</td>
+                            <td>{{ supplie.stock }}</td>
+                            <td><a href="/buys/supplies/form?id={{supplie.id}}">Edit</td>
+                            <td><a href="/buys/supplies/delete?id={{supplie.id}}">Delete</td>
+                        </tr>
+                    {% endfor %}                
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col d-flex justify-content-end">
+                <form action="/buys/supplies/form" method="get">
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary" value="Añadir">
+                        <a href="/admin" class="btn btn-primary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

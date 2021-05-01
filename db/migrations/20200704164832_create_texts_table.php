@@ -22,8 +22,8 @@ final class CreateTextsTable extends AbstractMigration
         $table->addColumn('name', 'string')  
                 ->addColumn('content', 'string')
                 ->addColumn('created_at', 'datetime')
-                ->addColumn('updated_at', 'datetime')
-                ->addColumn('deleted_at', 'datetime')
+                ->addColumn('updated_at', 'datetime', ['null' => true])
+                ->addColumn('deleted_at', 'datetime', ['null' => true])
                 ->create();
     }
 }

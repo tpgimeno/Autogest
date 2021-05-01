@@ -19,19 +19,25 @@ final class CreateSellOffersTable extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('selloffers');
-        $table->addColumn('offer_number', 'string')
-                ->addColumn('customer_id', 'string')
-                ->addColumn('vehicle_id', 'string')
-                ->addColumn('pvp', 'float')
-                ->addColumn('discount', 'float')
-                ->addColumn('tva', 'float')
-                ->addColumn('total', 'float')
-                ->addColumn('observations', 'string')
-                ->addColumn('texts', 'string')  
-                ->addColumn('vehicle_comments', 'string') 
+        $table->addColumn('offerNumber', 'string')
+                ->addColumn('offerDate', 'date')
+                ->addColumn('customerId', 'string', ['null' => true])
+                ->addColumn('vehicleId', 'string', ['null' => true])
+                ->addColumn('vehiclePvp', 'float', ['null' => true])
+                ->addColumn('vehicleTva', 'float', ['null' => true])
+                ->addColumn('vehicleTotal', 'float', ['null' => true])                
+                ->addColumn('pvp', 'float', ['null' => true])
+                ->addColumn('discount', 'float', ['null' => true])
+                ->addColumn('tva', 'float', ['null' => true])
+                ->addColumn('total', 'float', ['null' => true])
+                ->addColumn('observations', 'string', ['null' => true])
+                ->addColumn('texts', 'string', ['null' => true])  
+                ->addColumn('vehicleComments', 'string', ['null' => true]) 
+                ->addColumn('equipment', 'string', ['null' => true]) 
                 ->addColumn('created_at', 'datetime')
-                ->addColumn('updated_at', 'datetime')
-                ->addColumn('deleted_at', 'datetime')
+                ->addColumn('updated_at', 'datetime', ['null' => true])
+                ->addColumn('deleted_at', 'datetime', ['null' => true])
+                ->addIndex('offerNumber', ['unique' => true])
                 ->create();
     }
 }

@@ -9,5 +9,5 @@ class GarageOrder extends Model
 {
     use SoftDeletes;
 
-    protected $table = "garage_orders";
+    protected $table = "garageorders";
 }

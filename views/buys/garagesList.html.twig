@@ -6,12 +6,12 @@
                 <h2> Talleres </h2>
             </div>   
             <div class="col-md-2 d-flex justify-content-end align-items-end">
-                <a class="link " href="/intranet/admin">Volver</a> 
+                <a class="link " href="/admin">Volver</a> 
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <form id="searchForm" action="/intranet/buys/garages/search" method="post" class="form">
+                <form id="searchForm" action="/buys/garages/search" method="post" class="form">
                     <div class="container">
                         <div id="formRow" class="form-row text-right">
                             <div class="col-11">                                                                                
@@ -42,8 +42,8 @@
                             <td>{{ garage.city }}</td>
                             <td>{{ garage.phone }}</td>
                             <td>{{ garage.email }}</td>
-                            <td><a href="/intranet/buys/garages/form?id={{garage.id}}">Edit</td>
-                            <td><a href="/intranet/buys/garages/delete?id={{garage.id}}">Delete</td>
+                            <td><a href="/buys/garages/form?id={{garage.id}}">Edit</td>
+                            <td><a href="/buys/garages/delete?id={{garage.id}}">Delete</td>
                         </tr>
                     {% endfor %}                
                 </table>
@@ -51,10 +51,10 @@
         </div>
         <div class="row">
             <div class="col d-flex justify-content-end">
-                <form action="/intranet/buys/garages/form" method="get">
+                <form action="/buys/garages/form" method="get">
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary" value="Añadir">
-                        <a href="/intranet/admin" class="btn btn-primary">Cancelar</a>
+                        <a href="/admin" class="btn btn-primary">Cancelar</a>
                     </div>
                 </form>
             </div>

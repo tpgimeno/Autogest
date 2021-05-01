@@ -19,10 +19,11 @@ final class CreateAccesoriesTable extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('accesories');
-        $table->addColumn('name', 'string')                
+        $table->addColumn('name', 'string')  
+                ->addColumn('keyString', 'string')
                 ->addColumn('created_at', 'datetime')
-                ->addColumn('updated_at', 'datetime')
-                ->addColumn('deleted_at', 'datetime')
+                ->addColumn('updated_at', 'datetime', ['null' => true])
+                ->addIndex('name', ['unique'=> true])
                 ->create();      
     }
 }
