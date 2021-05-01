@@ -38,7 +38,10 @@
                               <a class="nav-link" id="sale-tab" data-toggle="tab" href="#sale" role="tab" aria-controls="sale" aria-selected="false">Venta</a>
                             </li>
                             <li class="nav-item" role="presentation">
-                              <a class="nav-link" id="accesories-tab" data-toggle="tab" href="#accesories" role="tab" aria-controls="accesories" aria-selected="false">Equipamiento</a>
+                              <a class="nav-link" id="accesories-tab" data-toggle="tab" href="#accesories" role="tab" aria-controls="accesories" aria-selected="false">Accesorios</a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                              <a class="nav-link" id="equipment-tab" data-toggle="tab" href="#equipment" role="tab" aria-controls="equipment" aria-selected="false">Equipamiento</a>
                             </li>
                             <li class="nav-item" role="presentation">
                               <a class="nav-link" id="technic-tab" data-toggle="tab" href="#tecnicos" role="tab" aria-controls="technics" aria-selected="false">Datos Técnicos</a>
@@ -139,6 +142,46 @@
                             </div>                                
                             <div class="tab-pane fade" id="buy" role="tabpanel" aria-labelledby="buy-tab">
                                 <div class="form-row mt-3">
+                                    <div class="form-group col-md-6">
+                                        <label for="providor">Proveedor</label>                        
+                                        <input type="text" name="providor" class="form-control" id="inputProvidor" placeholder="" value="{{ vehicle.providor }}">
+                                    </div>
+                                    <div class="form-group offset-2 col-md-2">
+                                        <label for="inputArrival">Fecha Llegada</label>
+                                        <input type="date" name="arrival" class="form-control" id="inputArrival" placeholder="" value="{{ vehicle.arrival }}">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="inputDateBuy">Fecha Compra</label>
+                                        <input type="date" name="dateBuy" class="form-control" id="inputDateBuy" placeholder="" value="{{ vehicle.datebuy }}">
+                                    </div>                                    
+                                </div>
+                                <div class="form-row mt-3 d-flex align-items-baseline align-content-center">
+                                    <div class="form-group col-md-5">
+                                        <label for="transference">Quién Realiza el Cambio de Nombre</label>                        
+                                        <input type="text" name="transference" class="form-control" id="inputTransference" placeholder="" value="{{ vehicle.transference }}">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="BuyService">Servicio anterior</label>                        
+                                        <input type="text" name="BuyService" class="form-control" id="inputBuyService" placeholder="" value="{{ vehicle.buyservice }}">
+                                    </div>
+                                    <div class="form-group col-md-1 text-center">
+                                        <label for="inputSecondKey">2ª Llave</label>
+                                        <input type="checkbox" name="secondKey" class="form-control" id="inputSecondKey" placeholder="" value="{{ vehicle.secondkey }}">
+                                    </div> 
+                                    <div class="form-group col-md-1 text-center">
+                                        <label for="inputRebu">R.E.B.U.</label>
+                                        <input type="checkbox" name="rebu" class="form-control" id="inputRebu" placeholder="" value="{{ vehicle.rebu }}">
+                                    </div> 
+                                    <div class="form-group col-md-1 text-center">
+                                        <label for="inputCard">Ficha Tecnica</label>
+                                        <input type="checkbox" name="dateCard" class="form-control" id="inputCard" placeholder="" value="{{ vehicle.card }}">
+                                    </div>
+                                    <div class="form-group col-md-1 text-center">
+                                        <label for="inputLicense">Permiso de Circulación</label>
+                                        <input type="checkbox" name="dateLicense" class="form-control" id="inputLicense" placeholder="" value="{{ vehicle.license }}">
+                                    </div>
+                                </div>                                
+                                <div class="form-row mt-3">
                                     <div class="form-group col-md-2 offset-md-6">
                                         <label for="inputCost">Precio Compra</label>
                                         <input type="text" name="cost" class="form-control" id="inputCost" placeholder="" value="{{ vehicle.cost }}">
@@ -171,6 +214,35 @@
                             </div>
                             <div class="tab-pane fade" id="accesories" role="tabpanel" aria-labelledby="accesories-tab">
                                 <div class="form-row mt-3 ml-3 mb-3">    
+                                    <div class="col-md-10">
+                                        <table class="table">
+                                            <tr>
+                                                <th>Referencia</th>
+                                                <th>Fabricante</th>
+                                                <th>Nombre</th>                        
+                                                <th>Edit</th>
+                                                <th>Delete</th>
+                                            </tr>
+                                            {% for component in components %}
+                                                <tr>
+                                                    <td>{{ component.ref }}</td>
+                                                    <td>{{ component.mader }}</td>
+                                                    <td>{{ component.name }}</td>                            
+                                                    <td><a href="/buys/components/form?id={{component.id}}">Edit</td>
+                                                    <td><a href="/buys/components/delete?id={{component.id}}">Delete</td>
+                                                </tr>
+                                            {% endfor %}                
+                                        </table>                                        
+                                    </div>
+                                    <div class="col-md-2 d-flex justify-content-end">
+                                        <div class="form-group">
+                                        <a href="" class="btn btn-primary">Añadir</a>  
+                                        </div>
+                                    </div>
+                                </div>                                                       
+                            </div>
+                            <div class="tab-pane fade" id="equipment" role="tabpanel" aria-labelledby="equipment-tab">
+                                <div class="form-row mt-3 ml-3 mb-3">    
 
                                     {% for accesory in accesories %}
                                     <div class="form-check col-md-3 pl-3">                                    
@@ -180,6 +252,11 @@
                                         </label>                                
                                     </div>
                                     {% endfor %} 
+                                </div>                                                       
+                            </div>
+                            <div class="tab-pane fade" id="tecnicos" role="tabpanel" aria-labelledby="technics-tab">
+                                <div class="form-row mt-3 ml-3 mb-3">
+                                    
                                 </div>                                                       
                             </div>
                         </div>
