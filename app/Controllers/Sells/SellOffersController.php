@@ -179,8 +179,8 @@ class SellOffersController extends BaseController {
         $offer->offerDate = Date('y/m/d', strtotime($postData['date']));
         $offer->texts = $postData['texts'];
         $offer->observations = $postData['observations'];                       
-        $offer->customerId = Customer::find($postData['customer_id'])->first()->id;
-        $offer->vehicleId = Vehicle::find($postData['vehicle_id'])->first()->id;                 
+        $offer->customerId = Customer::find($postData['customer_id'])->id;
+        $offer->vehicleId = Vehicle::find($postData['vehicle_id'])->id;                 
         $offer->discount = $this->tofloat($postData['discount']);                 
         $offer->pvp = $this->tofloat($postData['price']);
         $offer->tva = $this->tofloat($postData['tva']);
@@ -299,8 +299,7 @@ class SellOffersController extends BaseController {
         $data = json_decode($postData['supply']);        
         $supply = new SellOffersSupplies();        
         $temp_supply = SellOffersSupplies::where('supplyId', '=', $data->supplyId)
-                ->where('sellofferId', '=', $data->sellofferId)
-                ->first();
+                ->where('sellofferId', '=', $data->sellofferId);
         if($temp_supply)
         {
             $supply = $temp_supply;
@@ -343,7 +342,7 @@ class SellOffersController extends BaseController {
         {
             $array = (['supply_ref' => $supply->reference, 'supply_name' => $supply->name,  'supply_price' => $supply->price ,'supply_cantity' => $supply->cantity]);
             $params = array_merge($params, $array);
-            $editSupply = SellOffersSupplies::find($supply->id)->first(); 
+            $editSupply = SellOffersSupplies::find($supply->id); 
             if($editSupply)
             {
                 $editSupply->delete();
@@ -403,8 +402,7 @@ class SellOffersController extends BaseController {
         $data = json_decode($postData['component']);        
         $offerComponent = new SellOffersComponents();
         $temp_component = SellOffersComponents::where('componentId', '=', $data->componentId)
-                ->where('sellofferId', '=', $data->sellofferId)
-                ->first();
+                ->where('sellofferId', '=', $data->sellofferId);
         if($temp_component)
         {
             $offerComponent = $temp_component;
@@ -435,13 +433,12 @@ class SellOffersController extends BaseController {
                 ->join('maders', 'components.mader', '=', 'maders.id')
                 ->select('sellofferscomponents.id', 'sellofferscomponents.sellofferId', 'sellofferscomponents.componentId', 'components.ref as reference', 'maders.name as mader', 'components.name as name', 'sellofferscomponents.cantity as cantity', 'sellofferscomponents.price as price')
                 ->where('sellofferscomponents.sellofferId', '=', $params['offer_id'])
-                ->where('sellofferscomponents.componentId', '=', $params['component_id'])
-                ->first();    
+                ->where('sellofferscomponents.componentId', '=', $params['component_id']);    
         if($component)
         {
             $array = (['component_price' => $component->price ,'component_cantity' => $component->cantity]);
             $params = array_merge($params, $array);
-            $editComponent = SellOffersComponents::find($component->id)->first();            
+            $editComponent = SellOffersComponents::find($component->id);            
             if($editComponent)
             {
                 $editComponent->delete();
@@ -456,8 +453,7 @@ class SellOffersController extends BaseController {
         $params = $request->getQueryParams(); 
         
         $component = SellOffersComponents::where('componentId', '=', $params['component_id'])
-                ->where('sellofferId', '=', $params['offer_id'])
-                ->first();
+                ->where('sellofferId', '=', $params['offer_id']);
         if($component)
         {
             $component->delete();
@@ -475,7 +471,8 @@ class SellOffersController extends BaseController {
     {        
         $searchString = null;
         $postData = $request->getParsedBody();
-        if(isset($postData['searchFilter'])){
+        if(isset($postData['searchFilter']))
+        {
             $searchString = $postData['searchFilter'];
         }        
         if($searchString == null)
@@ -502,8 +499,7 @@ class SellOffersController extends BaseController {
         $data = json_decode($postData['work']);        
         $work = new SellOffersWorks();
         $temp_work = SellOffersWorks::where('workId', '=', $data->workId)
-                ->where('sellofferId', '=', $data->sellofferId)
-                ->first();
+                ->where('sellofferId', '=', $data->sellofferId);
         if($temp_work)
         {
             $work = $temp_work;
@@ -541,7 +537,7 @@ class SellOffersController extends BaseController {
         {
             $array = (['work_price' => $work->price ,'work_cantity' => $work->cantity]);
             $params = array_merge($params, $array);
-            $editWork = SellOffersWorks::find($work->id)->first(); 
+            $editWork = SellOffersWorks::find($work->id); 
             if($editWork)
             {
                 $editWork->delete();
@@ -555,8 +551,7 @@ class SellOffersController extends BaseController {
         $selected_tab = 'works';
         $params = $request->getQueryParams();        
         $work = SellOffersWorks::where('workId', '=', $params['work_id'])
-                ->where('sellofferId', '=', $params['offer_id'])
-                ->first();
+                ->where('sellofferId', '=', $params['offer_id']);
         if($work)
         {
             $work->delete();
@@ -711,7 +706,7 @@ class SellOffersController extends BaseController {
         {           
             if(SellOffer::find($params['offer_id']))
             {
-                $selected_offer = SellOffer::find($params['offer_id'])->first();   
+                $selected_offer = SellOffer::find($params['offer_id']);   
             }                    
         }        
         return $selected_offer;          
@@ -750,7 +745,7 @@ class SellOffersController extends BaseController {
         $selected_component = new SellOffersComponents();        
         if(isset($params['component_id']) && $params['component_id'] && $params['component_id'] !== 'null')
         {
-            $component = Components::find($params['component_id'])->first();
+            $component = Components::find($params['component_id']);
             $selected_component->offerId = $params['offer_id'];
             $selected_component->componentId = $params['component_id'];
             $selected_component->setAttribute('ref', $component->ref);
@@ -809,13 +804,13 @@ class SellOffersController extends BaseController {
         if(isset($params['customer_id']) && $params['customer_id'] && $params['customer_id'] != 'null')
         {            
             
-            $selected_customer = Customer::find($params['customer_id'])->first();            
+            $selected_customer = Customer::find($params['customer_id']);            
         } 
         else
         {   
             if($selected_offer)
             {
-                $selected_customer = Customer::find($selected_offer->customerId)->first();
+                $selected_customer = Customer::find($selected_offer->customerId);
             }         
             
         }
@@ -828,14 +823,14 @@ class SellOffersController extends BaseController {
         {
             if(Vehicle::find($params['vehicle_id']))
             {
-                $selected_vehicle = Vehicle::find($params['vehicle_id'])->first(); 
+                $selected_vehicle = Vehicle::find($params['vehicle_id']); 
             }
         }
         else
         {
             if($selected_offer)
             {
-                $selected_vehicle = Vehicle::find($selected_offer->vehicleId)->first();
+                $selected_vehicle = Vehicle::find($selected_offer->vehicleId);
             }
             
         }       

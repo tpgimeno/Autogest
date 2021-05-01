@@ -2,8 +2,12 @@
 
 require_once "../vendor/autoload.php";
 
+/**
+ * Use the function password_hash to encript the password
+ * 
+ */
 
-//Aquí tenemos la encriptación del password obtenido.
+
 
 password_hash('superSecurePassword', PASSWORD_DEFAULT);
 
@@ -277,23 +281,23 @@ $map->get('repicesDelete', '/intranet/sells/repices/delete', [
  */
 
 $map->get('customerForm', '/intranet/customers/form', [
-    'App\Controllers\Entitys\CustomerController',
+    'App\Controllers\Sells\CustomerController',
     'getCustomerDataAction'
 ]);
 $map->get('customerList', '/intranet/customers/list', [
-    'App\Controllers\Entitys\CustomerController',
+    'App\Controllers\Sells\CustomerController',
     'getIndexAction'
 ]);
 $map->post('searchCustomer', '/intranet/customers/search', [
-    'App\Controllers\Entitys\CustomerController',
+    'App\Controllers\Sells\CustomerController',
     'searchCustomerAction'
 ]);
 $map->post('saveCustomer', '/intranet/customers/save', [
-    'App\Controllers\Entitys\CustomerController',
+    'App\Controllers\Sells\CustomerController',
     'getCustomerDataAction'
 ]);
 $map->get('deleteCustomer', '/intranet/customers/delete', [        
-    'App\Controllers\Entitys\CustomerController',
+    'App\Controllers\Sells\CustomerController',
     'deleteAction'   
 ]);
 $map->get('customerTypeForm', '/intranet/customers/type/form', [
