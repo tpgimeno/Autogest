@@ -12,7 +12,10 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/xampp/htdocs/Intranet/db/migrations/20200621143216_create_vehicles_table.php</file>
+            <file>file:/C:/xampp/htdocs/Intranet/views/vehicles/vehiclesForm.html.twig</file>
             <file>file:/C:/xampp/htdocs/Intranet/logs/app.log</file>
+            <file>file:/C:/xampp/htdocs/Intranet/public/index.php</file>
         </group>
     </open-files>
 </project-private>
