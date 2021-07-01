@@ -257,14 +257,13 @@
                                 <div class="form-row d-flex justify-content-end">
                                     <div class="col-md-2 ">
                                         <div class="form-group">
-                                        <a href="/intranet/" class="btn btn-primary">Añadir</a>  
+                                            <a href="/intranet/" class="btn btn-primary">Añadir</a>  
                                         </div>
                                     </div>
                                 </div>                                                       
                             </div>
                             <div class="tab-pane fade" id="equipment" role="tabpanel" aria-labelledby="equipment-tab">
-                                <div class="form-row mt-3 ml-3 mb-3">    
-
+                                <div class="form-row mt-3 ml-3 mb-3">
                                     {% for accesory in accesories %}
                                     <div class="form-check col-md-3 pl-3">                                    
                                         <input class="form-check-input" name="{{ accesory.name }}" type="checkbox" value="{{ accesory.keyString }}" id="{{accesory.keyString}}" {% for selected_accesory in selected_accesories %}{% if accesory.keyString in selected_accesory.keystring %} checked {% endif %}{% endfor %}>                                                  
@@ -273,7 +272,14 @@
                                         </label>                                
                                     </div>
                                     {% endfor %} 
-                                </div>                                                       
+                                </div>
+                                <div class="form-row d-flex justify-content-end">
+                                    <div class="col-md-2 ">
+                                        <div class="form-group">
+                                            <a href="/intranet/" class="btn btn-primary">Añadir</a>  
+                                        </div>
+                                    </div>
+                                </div>   
                             </div>
                             <div class="tab-pane fade" id="tecnicos" role="tabpanel" aria-labelledby="technics-tab">
                                 <div class="form-row mt-3">
@@ -348,6 +354,33 @@
                                         <input type="text" name="height" class="form-control" id="height" placeholder="" value="{{ vehicle.height }}">
                                     </div>
                                 </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-2">
+                                        <label for="volFront">Voladizo Delantero</label>
+                                        <input type="text" name="volFront" class="form-control" id="volFront" placeholder="" value="{{ vehicle.volFront }}">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="volRear">Voladizo Trasero</label>
+                                        <input type="text" name="volRear" class="form-control" id="volRear" placeholder="" value="{{ vehicle.volRear }}">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="volFront">Distancia Ejes</label>
+                                        <input type="text" name="volFront" class="form-control" id="volFront" placeholder="" value="{{ vehicle.volFront }}">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="chargeLength">Logitud Carga</label>
+                                        <input type="text" name="chargeLength" class="form-control" id="chargeLength" placeholder="" value="{{ vehicle.chargeLength }}">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="deposit">Deposito</label>
+                                        <input type="text" name="deposit" class="form-control" id="deposit" placeholder="" value="{{ vehicle.deposit }}">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="deposit">Deposito</label>
+                                        <input type="text" name="deposit" class="form-control" id="deposit" placeholder="" value="{{ vehicle.deposit }}">
+                                    </div>
+                                </div>
+                                        
                             </div>
                         </div>
                     </div>  

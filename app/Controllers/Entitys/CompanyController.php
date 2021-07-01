@@ -5,7 +5,7 @@ namespace App\Controllers\Entitys;
 use App\Controllers\BaseController;
 use Respect\Validation\Validator as v;
 use App\Models\Company;
-use App\Services\CompanyService;
+use App\Services\Entitys\CompanyService;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\Response\RedirectResponse;
 
@@ -23,7 +23,7 @@ class CompanyController extends BaseController
     public function getIndexAction()
     {
         $company = Company::All();
-        return $this->renderHTML('/company/companyList.html.twig', [
+        return $this->renderHTML('/Entitys/company/companyList.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'company' => $company
         ]);
@@ -41,7 +41,7 @@ class CompanyController extends BaseController
                 ->orWhere("email", "like", "%".$searchString."%")
                 ->get();       
 
-        return $this->renderHTML('/company/companyList.html.twig', [
+        return $this->renderHTML('/Entitys/company/companyList.html.twig', [
             'currentUser' => $this->currentUser->getCurrentUserEmailAction(),
             'customers' => $customer                
         ]);
@@ -68,7 +68,7 @@ class CompanyController extends BaseController
         {
             $companySelected = Company::find($request->getQueryParams('id'))->first();
         }
-        return $this->renderHTML('/company/companyForm.html.twig', [
+        return $this->renderHTML('/Entitys/company/companyForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
             'company' => $companySelected
