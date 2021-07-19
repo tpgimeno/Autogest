@@ -116,19 +116,19 @@ $map->get('deleteCompany', '/intranet/company/delete', [
     'deleteAction'  
 ]);
 $map->get('userList', '/intranet/users/form', [
-    'App\Controllers\UsersController',
+    'App\Controllers\Entitys\UsersController',
     'getAddUserAction'
 ]);
 $map->get('userForm', '/intranet/users/list', [
-    'App\Controllers\UsersController',
+    'App\Controllers\Entitys\UsersController',
     'getIndexUsers'
 ]);
 $map->post('saveUser', '/intranet/users/form', [
-    'App\Controllers\UsersController',
+    'App\Controllers\Entitys\UsersController',
     'getAddUserAction'
 ]);
 $map->get('userDelete', '/intranet/users/delete', [
-    'App\Controllers\UsersController',
+    'App\Controllers\Entitys\UsersController',
     'deleteAction'
 ]);
 $map->get('sellerList', '/intranet/sellers/form', [

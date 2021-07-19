@@ -42,8 +42,8 @@
                             <td>{{ offer.offerDate }}</td>
                             <td>{{ offer.name }}</td>
                             <td>{{ offer.brand }} {{ offer.model }}</td>                           
-                            <td><a href="/intranet/sells/offers/form?offer_id={{offer.id}}">Edit</td>
-                            <td><a href="/intranet/sells/offers/delete?offer_id={{offer.id}}">Delete</td>
+                            <td><a href="/intranet/sells/offers/form?offer_id={{offer.id}}">Edit</a></td>
+                            <td><a href="/intranet/sells/offers/delete?offer_id={{offer.id}}">Delete</a></td>
                         </tr>
                     {% endfor %}                
                 </table>
@@ -54,7 +54,7 @@
                 <form action="/intranet/sells/offers/form" method="get">
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary" value="Añadir">
-                        <a href="/admin" class="btn btn-primary">Cancelar</a>
+                        <a href="/intranet/admin" class="btn btn-primary">Cancelar</a>
                     </div>
                 </form>
             </div>

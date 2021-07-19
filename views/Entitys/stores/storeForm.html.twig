@@ -6,8 +6,8 @@
             <h2> Almacen </h2>
         </div>   
         <div class="col-md-2 d-flex justify-content-end align-items-end">
-            <a class="link pr-4" href="/stores/list">Lista</a> 
-            <a class="link " href="/admin">Volver</a> 
+            <a class="link pr-4" href="/intranet/stores/list">Lista</a> 
+            <a class="link " href="/intranet/admin">Volver</a> 
         </div>        
     </div>
     <div class="row">
@@ -19,18 +19,16 @@
     </div>
     <div class="row">
         <div class="col">
-            <form action="/stores/save" method="post">
+            <form action="/intranet/stores/save" method="post">
                 <div class="form-row">
                     <div class="form-group col-md-2">
-                        <label for="inputId">ID</label>
-                        
+                        <label for="inputId">ID</label>                        
                         <input type="id" name="id" class="form-control" id="inputId" placeholder="" value="{{ store.id }}">
                     </div>                    
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md">
-                        <label for="inputName">Nombre</label>
-                        
+                        <label for="inputName">Nombre</label>                        
                         <input type="name" name="name" class="form-control" id="inputName" placeholder="Nombre" value="{{ store.name }}">
                     </div>                    
                 </div>
@@ -70,11 +68,12 @@
                 </div>
                 <div class="form-row">
                     <div class="col text-right">
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                    <button type="reset" class="btn btn-primary">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <button type="reset" class="btn btn-primary">Cancelar</button>
+                    </div>
                 </div>
-            </form>
+            </form>        
         </div>
     </div>
-</div>    
+</div>
 {% endblock %}

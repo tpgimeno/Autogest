@@ -6,7 +6,7 @@
                 <h2> Albaranes Compra </h2>
             </div>   
             <div class="col-md-2 d-flex justify-content-end align-items-end">
-                <a class="link " href="/admin">Volver</a> 
+                <a class="link " href="/intranet/admin">Volver</a> 
             </div>
         </div>
         <div class="row">
@@ -42,8 +42,8 @@
                             <td>{{ delivery.date }}</td>                            
                             <td>{{ delivery.provider }}</td>
                             <td>{{ delivery.total }}</td>
-                            <td><a href="/intranet/buys/buyDeliveries/form?id={{delivery.id}}">Edit</td>
-                            <td><a href="/intranet/buys/buyDeliveries/delete?id={{delivery.id}}">Delete</td>
+                            <td><a href="/intranet/buys/buyDeliveries/form?id={{delivery.id}}">Edit</a></td>
+                            <td><a href="/intranet/buys/buyDeliveries/delete?id={{delivery.id}}">Delete</a></td>
                         </tr>
                     {% endfor %}                
                 </table>
@@ -54,7 +54,7 @@
                 <form action="/intranet/buys/buyDeliveries/form" method="get">
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary" value="Añadir">
-                        <a href="/admin" class="btn btn-primary">Cancelar</a>
+                        <a href="/intranet/admin" class="btn btn-primary">Cancelar</a>
                     </div>
                 </form>
             </div>
