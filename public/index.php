@@ -74,7 +74,7 @@ $map = $routerContainer->getMap();
  * GENERIC ROUTES
  */
 
-$map->get('index', '/intranet/', [
+$map->get('index', '/Intranet', [
     'App\Controllers\IndexController',
     'indexAction'    
 ]);
