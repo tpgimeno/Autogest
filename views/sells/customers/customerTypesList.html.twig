@@ -7,12 +7,12 @@
                 <h2> Tipo Clientes </h2>
             </div>   
             <div class="col-md-2 d-flex justify-content-end align-items-end">
-                <a class="link " href="/admin">Volver</a> 
+                <a class="link " href="/intranet/admin">Volver</a> 
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <form id="searchForm" action="/customers/customerTypes/search" method="post" class="form">
+                <form id="searchForm" action="/intranet/customers/customerTypes/search" method="post" class="form">
                     <div class="container">
                         <div id="formRow" class="form-row text-right">
                             <div class="col-11">                                                                                
@@ -37,8 +37,8 @@
                     {% for customer_type in customer_types %}
                         <tr>
                             <td>{{ customer_type.name }}</td>                           
-                            <td><a href="/customers/type/form?id={{customer_type.id}}">Edit</td>
-                            <td><a href="/customers/type/delete?id={{customer_type.id}}">Delete</td>
+                            <td><a href="/intranet/customers/type/form?id={{customer_type.id}}">Edit</a></td>
+                            <td><a href="/intranet/customers/type/delete?id={{customer_type.id}}">Delete</a></td>
                         </tr>
                     {% endfor %}                
                 </table>

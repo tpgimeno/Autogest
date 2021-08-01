@@ -1,0 +1,9 @@
+I WANT TO UPDATE SUPPLY
+
+I am on page '/intranet/admin' 
+I click 'Recambios'," '.list-group-item' 
+I see current url equals '/intranet/buys/supplies/list' 
+I am on page '/intranet/buys/supplies/form?id='.$this->id" 
+I click '#submit' 
+I can see 'Updated'
+

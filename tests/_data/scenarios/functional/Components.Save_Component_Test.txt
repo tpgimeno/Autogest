@@ -1,0 +1,11 @@
+I WANT TO CREATE A NEW COMPONENT
+
+I am on page '/intranet/admin' 
+I click 'Componentes'," '.list-group-item' 
+I see current url equals '/intranet/buys/components/list' 
+I click '#submit'," '#addComponent' 
+I see current url equals '/intranet/buys/components/form' 
+I submit form('#component', array 'serialNumber' => $numero_serie",'ref' => 'loremipsum'," 'mader' => 'Generico'," 'name' => 'Lorem Ipsum'," 'observations' => 'Lorem ipsum lorem ipsum lorem ..."," 'pvc' => '10'," 'pvp' => '16')" 
+I grab from database('components', 'id', array 'serialNumber' => $numero_serie)" 
+I can see 'Saved'
+

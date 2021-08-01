@@ -1,0 +1,10 @@
+I WANT TO CREATE A NEW VEHICLE
+
+I am on page '/intranet/admin' 
+I click 'Vehículos'," '.list-group-item' 
+I see current url equals '/intranet/vehicles/list' 
+I click '#submit'," '#addVehicle' 
+I see current url equals '/intranet/vehicles/form' 
+I grab from database('vehicles', 'id', array 'plate' => $matricula"," 'vin' => $bastidor)" 
+I can see 'Saved'
+

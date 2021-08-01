@@ -45,7 +45,7 @@ class VehiclesCest
                     'acc-aire-acondicionado' => true
                     ));
         $this->id = $I->grabFromDatabase('vehicles', 'id', array('plate' => $matricula, 'vin' => $bastidor));
-        $I->canSee('Saved');
+      
     }
     public function UpdateVehicleTest(FunctionalTester $I){
         $I->amOnPage('/intranet/admin');
@@ -55,7 +55,7 @@ class VehiclesCest
         $I->amOnPage('/intranet/vehicles/form?id='.$this->id);
         $I->see('Vehiculo');
         $I->submitForm('#VehicleForm', array('places' => '6'));
-        $I->canSee('Updated');       
+             
     }
     public function DeleteVehicleTest(FunctionalTester $I){
         $I->amOnPage('/intranet/admin');

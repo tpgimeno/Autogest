@@ -13,7 +13,7 @@ class homeCest
         $I->see('Inicio');
         $I->fillField('email', 'tonyllomouse@gmail.com');
         $I->fillField('password', '12345');
-        $I->click('Submit', '#login');
+        $I->click('Enviar', '#login');
         $I->seeCurrentUrlEquals('/intranet/admin');
     }
 }

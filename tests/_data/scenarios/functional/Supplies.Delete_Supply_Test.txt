@@ -1,0 +1,8 @@
+I WANT TO DELETE SUPPLY
+
+I am on page '/intranet/admin' 
+I click 'Recambios'," '.list-group-item' 
+I see current url equals '/intranet/buys/supplies/list' 
+I am on page '/intranet/buys/supplies/delete?id='.$this->id" 
+I can see 'Recambios'
+

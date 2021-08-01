@@ -187,9 +187,8 @@ window.addEventListener('load', function()
             }
             request.addEventListener("load", reqListener);
         }                   
-    });                
-
-   numeral.register('locale', 'es', {
+    });
+    numeral.register('locale', 'es', {
         delimiters: {
             thousands: ',',
             decimal: '.'
@@ -829,8 +828,4 @@ function addWork()
         alert.innerHTML = response;
     }
     request.addEventListener("load", reqListener);
-}
-function renderSuppliesTable()
-{
-    
 }

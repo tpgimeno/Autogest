@@ -1,0 +1,9 @@
+I WANT TO CREATE A NEW CUSTOMER
+
+I am on page '/intranet/admin' 
+I click 'Clientes'," '.list-group-item' 
+I see current url equals '/intranet/customers/list' 
+I click '#submit'," '#addCustomer' 
+I grab from database('customers', 'id', array 'fiscalId' => $fiscal_id)" 
+I can see 'Saved'
+

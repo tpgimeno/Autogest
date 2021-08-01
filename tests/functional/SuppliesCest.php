@@ -34,7 +34,7 @@ class SuppliesCest
                     'total_sell' => '19,36€'
                     ));   
         $this->id = $I->grabFromDatabase('supplies', 'id', array('ref' => $referencia));
-        $I->canSee('Saved');
+     
     }
     public function UpdateSupplyTest(FunctionalTester $I)
     {
@@ -44,7 +44,7 @@ class SuppliesCest
         $I->wantTo('Update Supply');
         $I->amOnPage('/intranet/buys/supplies/form?id='.$this->id);
         $I->click('#submit');
-        $I->canSee('Updated');     
+            
     }
     public function DeleteSupplyTest(FunctionalTester $I)
     {
@@ -53,6 +53,6 @@ class SuppliesCest
         $I->seeCurrentUrlEquals('/intranet/buys/supplies/list');
         $I->wantTo('Delete Supply');
         $I->amOnPage('/intranet/buys/supplies/delete?id='.$this->id);
-        $I->canSee('Recambios');
+    
     }
 }

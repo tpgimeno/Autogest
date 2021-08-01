@@ -1,0 +1,7 @@
+I WANT TO DELETE COMPANY TEST
+
+I am on page '/intranet/admin' 
+I click 'Empresas'," '.list-group-item' 
+I see current url equals '/intranet/company/list' 
+I am on page '/intranet/company/delete?id='.$this->id"
+

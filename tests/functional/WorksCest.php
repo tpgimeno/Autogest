@@ -29,7 +29,7 @@ class WorksCest
                     'total_sell' => '19,36€'
                     ));   
         $this->id = $I->grabFromDatabase('works', 'id', array('reference' => $referencia));
-        $I->canSee('Saved');
+        
     }
     public function UpdateWorkTest(FunctionalTester $I)
     {
@@ -39,7 +39,7 @@ class WorksCest
         $I->wantTo('Update Work');
         $I->amOnPage('/intranet/vehicles/works/form?id='.$this->id);
         $I->click('#submit');
-        $I->canSee('Updated');     
+           
     }
     public function DeleteWorkTest(FunctionalTester $I)
     {
@@ -48,6 +48,6 @@ class WorksCest
         $I->seeCurrentUrlEquals('/intranet/vehicles/works/list');
         $I->wantTo('Delete Work');
         $I->amOnPage('/intranet/vehicles/works/delete?id='.$this->id);
-        $I->canSee('Trabajos');
+        
     }
 }

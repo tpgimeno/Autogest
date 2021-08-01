@@ -1,0 +1,7 @@
+I WANT TO DELETE COMPONENT
+
+I am on page '/intranet/admin' 
+I click 'Componentes'," '.list-group-item' 
+I see current url equals '/intranet/buys/components/list' 
+I am on page '/intranet/buys/components/delete?id='.$this->id"
+

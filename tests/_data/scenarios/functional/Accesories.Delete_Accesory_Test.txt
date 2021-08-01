@@ -1,0 +1,7 @@
+I WANT TO DELETE ACCESORY
+
+I am on page '/intranet/admin' 
+I click 'Accesorios'," '.list-group-item' 
+I see current url equals '/intranet/vehicles/accesories/list' 
+I am on page '/intranet/vehicles/accesories/delete?id='.$this->id"
+

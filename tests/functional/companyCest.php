@@ -37,9 +37,9 @@ class companyCest
                     'email' => 'loremipsum@loremipsum.com',
                     'site' => 'loremipsum.com' 
                     )); 
-        $this->id = $I->grabFromDatabase('company', 'id', array('fiscal_id' => $fiscal_id));      
+        $this->id = $I->grabFromDatabase('company', 'id', array('fiscalId' => $fiscal_id));      
         $I->canSeeCurrentUrlEquals('/intranet/company/save');
-        $I->canSee('Saved');        
+            
     }
     public function UpdateCompanyTest(FunctionalTester $I){
         $I->amOnPage('/intranet/admin');
@@ -51,7 +51,7 @@ class companyCest
         $I->submitForm('#CompanyForm', 
                 array ('postal_code' => '54321'                    
                     ));        
-        $I->canSee('Updated');
+        
     }
     public function DeleteCompanyTest(FunctionalTester $I){
         $I->amOnPage('/intranet/admin');

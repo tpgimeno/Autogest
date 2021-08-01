@@ -6,7 +6,23 @@
                 <h2> Componentes </h2>
             </div>   
             <div class="col-md-2 d-flex justify-content-end align-items-end">
-                <a class="link " href="/admin">Volver</a> 
+                <a class="link " href="/intranet/admin">Volver</a> 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <form id="searchForm" action="/intranet/vehicles/components/search" method="post" class="form">
+                    <div class="container">
+                        <div id="formRow" class="form-row text-right">
+                            <div class="col-11">                                                                                
+                                <input id="searchField" type="text" name="searchFilter" class="form-control mb-2 mr-sm-2" id="inlineFormSearchFilter" placeholder="Nombre / Cif / Telefono / email">
+                            </div>
+                            <div class="col-1">
+                                <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="row">
@@ -24,8 +40,8 @@
                             <td>{{ component.ref }}</td>
                             <td>{{ component.mader }}</td>
                             <td>{{ component.name }}</td>                            
-                            <td><a href="/buys/components/form?id={{component.id}}">Edit</td>
-                            <td><a href="/buys/components/delete?id={{component.id}}">Delete</td>
+                            <td><a href="/intranet/buys/components/form?id={{component.id}}">Edit</a></td>
+                            <td><a href="/intranet/buys/components/delete?id={{component.id}}">Delete</a></td>
                         </tr>
                     {% endfor %}                
                 </table>
@@ -33,10 +49,10 @@
         </div>
         <div class="row">
             <div class="col d-flex justify-content-end">
-                <form action="/buys/components/form" method="get">
+                <form id="addComponent" action="/intranet/buys/components/form" method="get">
                     <div class="form-group">
-                        <input type="submit" class="btn btn-primary" value="Añadir">
-                        <a href="/admin" class="btn btn-primary">Cancelar</a>
+                        <input id="submit" type="submit" class="btn btn-primary" value="Añadir">
+                        <a href="/intranet/admin" class="btn btn-primary">Cancelar</a>
                     </div>
                 </form>
             </div>

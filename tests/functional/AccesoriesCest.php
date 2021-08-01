@@ -40,7 +40,6 @@ class AccesoriesCest
         $I->click('Accesorios', '.list-group-item');
         $I->seeCurrentUrlEquals('/intranet/vehicles/accesories/list');
         $I->wantTo('Delete Accesory');
-        $I->amOnPage('/intranet/vehicles/accesories/delete?id='.$this->id);
-        $I->canSee('Accesorios');
+        $I->amOnPage('/intranet/vehicles/accesories/delete?id='.$this->id);        
     }
 }

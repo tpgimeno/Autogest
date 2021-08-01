@@ -1,0 +1,9 @@
+I WANT TO CREATE A NEW WORK
+
+I am on page '/intranet/admin' 
+I click 'Trabajos'," '.list-group-item' 
+I see current url equals '/intranet/vehicles/works/list' 
+I click '#submit'," '#addWork' 
+I grab from database('works', 'id', array 'reference' => $referencia)" 
+I can see 'Saved'
+

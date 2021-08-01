@@ -1,0 +1,8 @@
+I WANT TO DELETE WORK
+
+I am on page '/intranet/admin' 
+I click 'Trabajos'," '.list-group-item' 
+I see current url equals '/intranet/vehicles/works/list' 
+I am on page '/intranet/vehicles/works/delete?id='.$this->id" 
+I can see 'Trabajos'
+

@@ -1,0 +1,7 @@
+I WANT TO DELETE VEHICLE
+
+I am on page '/intranet/admin' 
+I click 'Vehículos'," '.list-group-item' 
+I see current url equals '/intranet/vehicles/list' 
+I am on page '/intranet/vehicle/delete?id='.$this->id"
+

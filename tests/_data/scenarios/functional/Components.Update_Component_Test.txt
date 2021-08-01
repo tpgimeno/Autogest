@@ -1,0 +1,9 @@
+I WANT TO UPDATE COMPONENT
+
+I am on page '/intranet/admin' 
+I click 'Componentes'," '.list-group-item' 
+I see current url equals '/intranet/buys/components/list' 
+I am on page '/intranet/buys/components/form?id='.$this->id" 
+I click '#submit' 
+I can see 'Updated'
+

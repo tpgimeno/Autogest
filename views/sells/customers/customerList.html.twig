@@ -43,8 +43,8 @@
                             <td>{{ customer.city }}</td>
                             <td>{{ customer.phone }}</td>
                             <td>{{ customer.email }}</td>
-                            <td><a href="/customers/form?id={{customer.id}}">Edit</td>
-                            <td><a href="/customers/delete?id={{customer.id}}">Delete</td>
+                            <td><a href="/intranet/customers/form?id={{customer.id}}">Edit</a></td>
+                            <td><a href="/intranet/customers/delete?id={{customer.id}}">Delete</a></td>
                         </tr>
                     {% endfor %}                
                 </table>
@@ -52,9 +52,9 @@
         </div>
         <div class="row">
             <div class="col d-flex justify-content-end">
-                <form action="/intranet/customers/form" method="get">
+                <form id="addCustomer" action="/intranet/customers/form" method="get">
                     <div class="form-group">
-                        <input type="submit" class="btn btn-primary" value="Añadir">
+                        <input id="submit" type="submit" class="btn btn-primary" value="Añadir">
                         <a href="/intranet/admin" class="btn btn-primary">Cancelar</a>
                     </div>
                 </form>
