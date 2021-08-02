@@ -1,8 +1,8 @@
 I WANT TO CREATE A NEW SELLOFFER
 
-I am on page '/intranet/admin' 
+I am on page '/Intranet/admin' 
 I click 'Ofertas'," '.list-group-item' 
-I see current url equals '/intranet/crm/offers/list' 
+I see current url equals '/Intranet/crm/offers/list' 
 I click '#submit'," '#addSellOffer' 
 I click '#searchCustomer' 
 I can see 'Clientes' 

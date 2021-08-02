@@ -484,7 +484,7 @@ class VehicleController extends BaseController
     public function deleteAction(ServerRequest $request)
     {         
         $this->vehicleService->deleteVehicle($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/vehicles/list');
+        return new RedirectResponse('/Intranet/vehicles/list');
     }
     public function tofloat($num) 
     {

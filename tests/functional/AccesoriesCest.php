@@ -12,9 +12,9 @@ class AccesoriesCest
     // tests
     public function SaveAccesoryTest(FunctionalTester $I)
     {
-        $I->amOnPage('/intranet/admin');
+        $I->amOnPage('/Intranet/admin');
         $I->click('Accesorios', '.list-group-item');
-        $I->seeCurrentUrlEquals('/intranet/vehicles/accesories/list');
+        $I->seeCurrentUrlEquals('/Intranet/vehicles/accesories/list');
         $I->wantTo('Create a new Accesory');
         $I->click('#submit', '#addAccesory');
         $I->submitForm('#AccesoryForm', array('name' => 'Lorem Ipsum'));   
@@ -23,11 +23,11 @@ class AccesoriesCest
     }
     public function UpdateAccesoryTest(FunctionalTester $I)
     {
-        $I->amOnPage('/intranet/admin');
+        $I->amOnPage('/Intranet/admin');
         $I->click('Accesorios', '.list-group-item');
-        $I->seeCurrentUrlEquals('/intranet/vehicles/accesories/list');
+        $I->seeCurrentUrlEquals('/Intranet/vehicles/accesories/list');
         $I->wantTo('Update Accesory');
-        $I->amOnPage('/intranet/vehicles/accesories/form?id='.$this->id);
+        $I->amOnPage('/Intranet/vehicles/accesories/form?id='.$this->id);
         $I->click('#submit');
         $I->canSee('Updated');
      
@@ -36,10 +36,10 @@ class AccesoriesCest
     public function DeleteAccesoryTest(FunctionalTester $I)
     {
         
-        $I->amOnPage('/intranet/admin');
+        $I->amOnPage('/Intranet/admin');
         $I->click('Accesorios', '.list-group-item');
-        $I->seeCurrentUrlEquals('/intranet/vehicles/accesories/list');
+        $I->seeCurrentUrlEquals('/Intranet/vehicles/accesories/list');
         $I->wantTo('Delete Accesory');
-        $I->amOnPage('/intranet/vehicles/accesories/delete?id='.$this->id);        
+        $I->amOnPage('/Intranet/vehicles/accesories/delete?id='.$this->id);        
     }
 }

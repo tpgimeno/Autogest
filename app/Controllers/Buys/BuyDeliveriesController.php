@@ -110,7 +110,7 @@ class BuyDeliveriesController extends BaseController
     {
          
         $this->buyDeliveryService->deleteBuyDeliveries($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/buys/deliveries/list');
+        return new RedirectResponse('/Intranet/buys/deliveries/list');
     }
 
    

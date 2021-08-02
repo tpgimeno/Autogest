@@ -91,6 +91,6 @@ class BanksController extends BaseController
     {
          
         $this->bankService->deleteBank($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/banks/list');
+        return new RedirectResponse('/Intranet/banks/list');
     }
 }

@@ -15,9 +15,9 @@ class SuppliesCest
         $caracteres_permitidos = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $longitud = 7;        
         $referencia = substr(str_shuffle($caracteres_permitidos), 0, $longitud);        
-        $I->amOnPage('/intranet/admin');
+        $I->amOnPage('/Intranet/admin');
         $I->click('Recambios', '.list-group-item');
-        $I->seeCurrentUrlEquals('/intranet/buys/supplies/list');
+        $I->seeCurrentUrlEquals('/Intranet/buys/supplies/list');
         $I->wantTo('Create a new Supply');
         $I->click('#submit', '#addSupply');
         $I->submitForm('#SupplyForm', 
@@ -38,21 +38,21 @@ class SuppliesCest
     }
     public function UpdateSupplyTest(FunctionalTester $I)
     {
-        $I->amOnPage('/intranet/admin');
+        $I->amOnPage('/Intranet/admin');
         $I->click('Recambios', '.list-group-item');
-        $I->seeCurrentUrlEquals('/intranet/buys/supplies/list');
+        $I->seeCurrentUrlEquals('/Intranet/buys/supplies/list');
         $I->wantTo('Update Supply');
-        $I->amOnPage('/intranet/buys/supplies/form?id='.$this->id);
+        $I->amOnPage('/Intranet/buys/supplies/form?id='.$this->id);
         $I->click('#submit');
             
     }
     public function DeleteSupplyTest(FunctionalTester $I)
     {
-        $I->amOnPage('/intranet/admin');
+        $I->amOnPage('/Intranet/admin');
         $I->click('Recambios', '.list-group-item');
-        $I->seeCurrentUrlEquals('/intranet/buys/supplies/list');
+        $I->seeCurrentUrlEquals('/Intranet/buys/supplies/list');
         $I->wantTo('Delete Supply');
-        $I->amOnPage('/intranet/buys/supplies/delete?id='.$this->id);
+        $I->amOnPage('/Intranet/buys/supplies/delete?id='.$this->id);
     
     }
 }

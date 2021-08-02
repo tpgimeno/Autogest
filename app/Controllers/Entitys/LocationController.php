@@ -111,7 +111,7 @@ class LocationController extends BaseController
     {       
         
         $this->locationService->deleteLocation($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/locations/list');
+        return new RedirectResponse('/Intranet/locations/list');
     }
 
 }

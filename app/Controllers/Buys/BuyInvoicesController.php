@@ -93,7 +93,7 @@ class BuyInvoicesController extends BaseController
     public function deleteAction(ServerRequest $request)
     {         
         $this->buyInvoiceService->deleteBuyInvoice($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/buys/invoices/list');
+        return new RedirectResponse('/Intranet/buys/invoices/list');
     }
 
    

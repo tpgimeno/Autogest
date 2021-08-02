@@ -106,6 +106,6 @@ class ProvidersController extends BaseController
     public function deleteAction(ServerRequest $request)
     {         
         $this->providerService->deleteProvider($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/buys/providers/list');
+        return new RedirectResponse('/Intranet/buys/providers/list');
     }    
 }

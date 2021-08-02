@@ -11,7 +11,7 @@ modules:
         # add a framework module here
         - PhpBrowser:
             browser: chrome
-            url: http://localhost/intranet
+            url: http://localhost/Intranet
         - \Helper\Functional  
         - Db:
             dsn: 'mysql:host=localhost;dbname=automotive'

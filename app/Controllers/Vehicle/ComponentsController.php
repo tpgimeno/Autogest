@@ -130,6 +130,6 @@ class ComponentsController extends BaseController
     public function deleteAction(ServerRequest $request)
     {         
         $this->componentsService->deleteComponents($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/buys/components/list');
+        return new RedirectResponse('/Intranet/buys/components/list');
     } 
 }

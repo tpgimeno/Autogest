@@ -195,7 +195,7 @@ class SellOffersController extends BaseController {
     public function deleteAction(ServerRequest $request){
         $params = $request->getQueryParams();       
         $this->sellOfferService->deleteOffer(intval($params['offer_id']));
-        return new RedirectResponse('/intranet/crm/offers/list');
+        return new RedirectResponse('/Intranet/crm/offers/list');
     }
     public function searchCustomerSellOfferAction(ServerRequestInterface $request)
     {

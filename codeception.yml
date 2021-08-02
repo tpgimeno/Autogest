@@ -8,5 +8,13 @@ actor_suffix: Tester
 extensions:
     enabled:
         - Codeception\Extension\RunFailed
+modules:
+    config:
+        Db:
+            dsn: 'mysql:host=localhost;dbname=automotive'
+            user: 'root'
+            password: ''
+            tests: 'tests/_data/dump.sql'
+
 
         

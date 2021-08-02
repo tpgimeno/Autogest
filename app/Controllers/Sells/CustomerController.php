@@ -132,7 +132,7 @@ class CustomerController extends BaseController
     {
          
         $this->customerService->deleteCustomer($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/customers/list');
+        return new RedirectResponse('/Intranet/customers/list');
     }
 
    

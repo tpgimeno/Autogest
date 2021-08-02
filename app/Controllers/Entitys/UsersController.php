@@ -66,6 +66,6 @@ class UsersController extends BaseController
     public function deleteAction(ServerRequest $request)
     {        
         $this->userService->deleteUser($request->getQueryParams()['id']);
-        return new RedirectResponse('/intranet/users/list');
+        return new RedirectResponse('/Intranet/users/list');
     }
 }

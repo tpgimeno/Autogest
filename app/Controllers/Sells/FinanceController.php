@@ -75,7 +75,7 @@ class FinanceController extends BaseController
     {
          
         $this->financeService->deleteFinance($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/finance/list');
+        return new RedirectResponse('/Intranet/finance/list');
     }
 
    

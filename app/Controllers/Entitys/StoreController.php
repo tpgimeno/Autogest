@@ -114,6 +114,6 @@ class StoreController extends BaseController
     {
          
         $this->storeService->deleteStore($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/store/list');
+        return new RedirectResponse('/Intranet/store/list');
     }
 }

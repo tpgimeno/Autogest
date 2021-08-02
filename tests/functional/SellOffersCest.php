@@ -16,9 +16,9 @@ class SellOffersCest
         $caracteres_permitidos = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $longitud = 7;        
         $fiscal_id = substr(str_shuffle($caracteres_permitidos), 0, $longitud);        
-        $I->amOnPage('/intranet/admin');
+        $I->amOnPage('/Intranet/admin');
         $I->click('Ofertas', '.list-group-item');
-        $I->seeCurrentUrlEquals('/intranet/sells/offers/list');
+        $I->seeCurrentUrlEquals('/Intranet/sells/offers/list');
         $I->wantTo('Create a new SellOffer');
         $I->click('#submit', '#addSellOffer');
         $I->click('#searchCustomer');

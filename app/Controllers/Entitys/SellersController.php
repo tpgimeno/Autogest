@@ -75,7 +75,7 @@ class SellersController extends BaseController
     {
          
         $this->sellersService->deleteSellers($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/sellers/list');
+        return new RedirectResponse('/Intranet/sellers/list');
     }
 
    

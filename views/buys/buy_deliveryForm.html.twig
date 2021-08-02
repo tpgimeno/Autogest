@@ -5,8 +5,8 @@
             <h2> Albarán Compra </h2>
         </div>   
         <div class="col-md-2 d-flex justify-content-end align-items-end">
-            <a class="link pr-4" href="/intranet/buys/buyDelieveries/list">Lista</a> 
-            <a class="link " href="/intranet/admin">Volver</a> 
+            <a class="link pr-4" href="/Intranet/buys/buyDelieveries/list">Lista</a> 
+            <a class="link " href="/Intranet/admin">Volver</a> 
         </div>        
     </div>
     <div class="row">
@@ -31,7 +31,7 @@
             </ul>
         </div>
     </div>      
-    <form action="/intranet/buys/buyDeliveries/save" method="post" class="form">
+    <form action="/Intranet/buys/buyDeliveries/save" method="post" class="form">
         <div class="tab-content" id="myTabContent">        
             <div class="tab-pane fade show active" id="provider" role="tabpanel" aria-labelledby="provider-tab">
                 <div class="form-row mt-3">
@@ -179,7 +179,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
-                            <form id="searchProviderForm" action="/intranet/crm/offers/provider/search" method="post" class="form">
+                            <form id="searchProviderForm" action="/Intranet/crm/offers/provider/search" method="post" class="form">
                                 <div class="container">
                                     <div id="formRow" class="form-row text-right">
                                         <div class="col-11">                                                                                
@@ -210,7 +210,7 @@
                                         <td>{{ provider.city }}</td>
                                         <td>{{ provider.phone }}</td>
                                         <td>{{ provider.email }}</td>
-                                        <td><a href="/intranet/crm/offers/provider/select?provider_id={{provider.id}}&offer_id={{ offer.id }}&vehicle_id{{ vehicle.id }}">Select</a></td>                                        
+                                        <td><a href="/Intranet/crm/offers/provider/select?provider_id={{provider.id}}&offer_id={{ offer.id }}&vehicle_id{{ vehicle.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>
@@ -274,7 +274,7 @@
                                         <td>{{ vehicle.brand }}</td>
                                         <td>{{ vehicle.model }}</td>
                                         <td>{{ vehicle.description }}</td>
-                                        <td><a href="/intranet/crm/offers/vehicle/select?vehicle_id={{vehicle.id}}&offer_id={{ offer.id }}&provider_id={{ provider.id }}">Select</a></td>                                        
+                                        <td><a href="/Intranet/crm/offers/vehicle/select?vehicle_id={{vehicle.id}}&offer_id={{ offer.id }}&provider_id={{ provider.id }}">Select</a></td>                                        
                                     </tr>
                                 {% endfor %}                
                             </table>

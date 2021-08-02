@@ -15,9 +15,9 @@ class CustomerCest
         $caracteres_permitidos = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $longitud = 7;        
         $fiscal_id = substr(str_shuffle($caracteres_permitidos), 0, $longitud);        
-        $I->amOnPage('/intranet/admin');
+        $I->amOnPage('/Intranet/admin');
         $I->click('Clientes', '.list-group-item');
-        $I->seeCurrentUrlEquals('/intranet/customers/list');
+        $I->seeCurrentUrlEquals('/Intranet/customers/list');
         $I->wantTo('Create a new Customer');
         $I->click('#submit', '#addCustomer');
         $I->submitForm('#customerForm', 
@@ -38,20 +38,20 @@ class CustomerCest
     }
     public function UpdateCustomerTest(FunctionalTester $I)
     {
-        $I->amOnPage('/intranet/admin');
+        $I->amOnPage('/Intranet/admin');
         $I->click('Clientes', '.list-group-item');
-        $I->seeCurrentUrlEquals('/intranet/customers/list');
+        $I->seeCurrentUrlEquals('/Intranet/customers/list');
         $I->wantTo('Update Customer');
-        $I->amOnPage('/intranet/customers/form?id='.$this->id);       
+        $I->amOnPage('/Intranet/customers/form?id='.$this->id);       
           
     }
     public function DeleteCustomerTest(FunctionalTester $I)
     {
-        $I->amOnPage('/intranet/admin');
+        $I->amOnPage('/Intranet/admin');
         $I->click('Clientes', '.list-group-item');
-        $I->seeCurrentUrlEquals('/intranet/customers/list');
+        $I->seeCurrentUrlEquals('/Intranet/customers/list');
         $I->wantTo('Delete Customer');
-        $I->amOnPage('/intranet/customers/delete?id='.$this->id);
+        $I->amOnPage('/Intranet/customers/delete?id='.$this->id);
        
     }
 }

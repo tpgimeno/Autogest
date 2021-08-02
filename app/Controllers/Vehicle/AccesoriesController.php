@@ -122,6 +122,6 @@ class AccesoriesController extends BaseController
     public function deleteAction(ServerRequest $request)
     {         
         $this->accesoriesService->deleteAccesories($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/vehicles/accesories/list');
+        return new RedirectResponse('/Intranet/vehicles/accesories/list');
     }  
 }

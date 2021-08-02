@@ -94,7 +94,7 @@ class GarageOrdersController extends BaseController
     public function deleteAction(ServerRequest $request)
     {         
         $this->GarageOrderService->deleteGarageOrder($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/buys/orders/list');
+        return new RedirectResponse('/Intranet/buys/orders/list');
     }
 
    

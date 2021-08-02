@@ -21,7 +21,7 @@ class AuthController extends BaseController
                 if(\password_verify($postData['password'], $user->password))
                 {
                     $_SESSION['userId'] = $user->id;
-                    return new RedirectResponse('/intranet/admin');                    
+                    return new RedirectResponse('/Intranet/admin');                    
                 }
                 else
                 {

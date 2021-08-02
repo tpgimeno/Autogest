@@ -108,7 +108,7 @@ class GaragesController extends BaseController
     {
          
         $this->garageService->deleteGarage($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/buys/garages/list');
+        return new RedirectResponse('/Intranet/buys/garages/list');
     }
 
    

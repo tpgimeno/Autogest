@@ -126,7 +126,7 @@ class ModelController extends BaseController
     public function deleteAction(ServerRequest $request)
     {       
         $this->modelService->deleteModel($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/vehicles/models/list');
+        return new RedirectResponse('/Intranet/vehicles/models/list');
     }
 
 }
