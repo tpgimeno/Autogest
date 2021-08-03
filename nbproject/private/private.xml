@@ -12,7 +12,10 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/xampp/htdocs/Intranet/app/Services/CurrentUserService.php</file>
+            <file>file:/C:/xampp/htdocs/Intranet/app/Services/Sells/SellersService.php</file>
             <file>file:/C:/xampp/htdocs/Intranet/logs/app.log</file>
+            <file>file:/C:/xampp/htdocs/Intranet/app/Controllers/Entitys/SellersController.php</file>
         </group>
     </open-files>
 </project-private>

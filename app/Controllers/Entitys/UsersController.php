@@ -47,7 +47,7 @@ class UsersController extends BaseController
         $selected_user = null;
         if($request->getQueryParams('id'))
         {
-            $selected_user = User::find($request->getQueryParams('id'))->first();
+            $selected_user = User::find($request->getQueryParams('id'));
         }
         return $this->renderHTML('/Entitys/users/userForm.twig', [
             'responseMessage' => $responseMessage,
