@@ -20,7 +20,7 @@ return
         ],
         'development' => [
             'adapter' => 'mysql',
-            'host' => 'localhost',
+            'host' => '127.0.0.1',
             'name' => 'automotive',
             'user' => 'root',
             'pass' => '',

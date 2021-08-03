@@ -11,7 +11,7 @@ extensions:
 modules:
     config:
         Db:
-            dsn: 'mysql:host=localhost;dbname=automotive'
+            dsn: 'mysql:host=127.0.0.1;dbname=automotive'
             user: 'root'
             password: ''
             tests: 'tests/_data/dump.sql'
