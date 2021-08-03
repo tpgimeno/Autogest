@@ -13,5 +13,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class SellOffersWorks extends Model 
 {
-    protected $table = "selloffersworks";
+    protected $table = "selloffersWorks";
 }

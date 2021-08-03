@@ -5,6 +5,5 @@ I click 'Vehículos'," '.list-group-item'
 I see current url equals '/Intranet/vehicles/list' 
 I am on page '/Intranet/vehicles/form?id='.$this->id" 
 I see 'Vehiculo' 
-I submit form('#vehicle form', array 'places' => '6')" 
-I can see 'Updated'
+I submit form('#vehicle form', array 'places' => '6')"
 

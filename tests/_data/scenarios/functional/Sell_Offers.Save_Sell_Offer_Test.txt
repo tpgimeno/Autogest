@@ -2,11 +2,10 @@ I WANT TO CREATE A NEW SELLOFFER
 
 I am on page '/Intranet/admin' 
 I click 'Ofertas'," '.list-group-item' 
-I see current url equals '/Intranet/crm/offers/list' 
+I see current url equals '/Intranet/sells/offers/list' 
 I click '#submit'," '#addSellOffer' 
 I click '#searchCustomer' 
 I can see 'Clientes' 
 I click('#select', locator::last element '//table/tr')" 
-I grab from database('customers', 'id', array 'fiscal_id' => $fiscal_id)" 
-I can see 'Saved'
+I grab from database('customers', 'id', array 'fiscal_id' => $fiscal_id)"
 

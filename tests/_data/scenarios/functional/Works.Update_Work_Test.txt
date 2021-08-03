@@ -4,6 +4,5 @@ I am on page '/Intranet/admin'
 I click 'Trabajos'," '.list-group-item' 
 I see current url equals '/Intranet/vehicles/works/list' 
 I am on page '/Intranet/vehicles/works/form?id='.$this->id" 
-I click '#submit' 
-I can see 'Updated'
+I click '#submit'
 

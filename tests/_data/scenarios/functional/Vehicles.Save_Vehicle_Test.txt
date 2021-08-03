@@ -5,6 +5,5 @@ I click 'Vehículos'," '.list-group-item'
 I see current url equals '/Intranet/vehicles/list' 
 I click '#submit'," '#addVehicle' 
 I see current url equals '/Intranet/vehicles/form' 
-I grab from database('vehicles', 'id', array 'plate' => $matricula"," 'vin' => $bastidor)" 
-I can see 'Saved'
+I grab from database('vehicles', 'id', array 'plate' => $matricula"," 'vin' => $bastidor)"
 
