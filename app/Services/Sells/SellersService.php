@@ -13,8 +13,7 @@ class SellersService
 {
     public function deleteSeller($id)
     {
-        $seller = Sellers::find($id)->get();
-        var_dump($seller);die();
+        $seller = Sellers::find($id)->first();        
         $seller->delete();
     }
 }
