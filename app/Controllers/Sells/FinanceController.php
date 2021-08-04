@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Controllers\Entitys;
+namespace App\Controllers\Sells;
 
 use App\Controllers\BaseController;
 use Respect\Validation\Validator as v;
 use App\Models\Finance;
-use App\Services\FinanceService;
+use App\Services\Entitys\FinanceService;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\Response\RedirectResponse;
 
@@ -23,7 +23,7 @@ class FinanceController extends BaseController
     public function getIndexAction()
     {
         $finances = Finance::All();
-        return $this->renderHTML('/finance/financeList.html.twig', [
+        return $this->renderHTML('/Entitys/finance/financeList.html.twig', [
             'finances' => $finances
         ]);
     }   
@@ -43,11 +43,11 @@ class FinanceController extends BaseController
                 $financeValidator->assert($postData); // true 
                 $finance = new Finance();
                 $finance->name = $postData['name'];
-                $finance->fiscal_id = $postData['fiscal_id'];
-                $finance->fiscal_name = $postData['fiscal_name'];
+                $finance->fiscalId = $postData['fiscal_id'];
+                $finance->fiscalName = $postData['fiscal_name'];
                 $finance->address = $postData['address'];
                 $finance->city = $postData['city'];
-                $finance->postal_code = $postData['postal_code'];
+                $finance->postalCode = $postData['postal_code'];
                 $finance->state = $postData['state'];
                 $finance->country = $postData['country'];
                 $finance->phone = $postData['phone'];
@@ -64,7 +64,7 @@ class FinanceController extends BaseController
         {
             $financeSelected = Finance::find($request->getQueryParams('id'))->first();
         }
-        return $this->renderHTML('/finance/financeForm.html.twig', [
+        return $this->renderHTML('/Entitys/finance/financeForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
             'finance' => $financeSelected

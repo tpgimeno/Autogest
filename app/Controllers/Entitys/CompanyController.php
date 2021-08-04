@@ -35,8 +35,8 @@ class CompanyController extends BaseController
         $searchString = $searchData['searchFilter'];        
         $customer = Customer::Where("id", "like", "%".$searchString."%")
                 ->orWhere("name", "like", "%".$searchString."%")
-                ->orWhere("fiscal_name", "like", "%".$searchString."%")
-                ->orWhere("fiscal_id", "like", "%".$searchString."%")
+                ->orWhere("fiscalName", "like", "%".$searchString."%")
+                ->orWhere("fiscalId", "like", "%".$searchString."%")
                 ->orWhere("phone", "like", "%".$searchString."%")
                 ->orWhere("email", "like", "%".$searchString."%")
                 ->get();       
@@ -53,7 +53,7 @@ class CompanyController extends BaseController
         {
             $postData = $request->getParsedBody();            
             $companyValidator = v::key('name', v::stringType()->notEmpty()) 
-            ->key('fiscal_id', v::notEmpty())
+            ->key('fiscalId', v::notEmpty())
             ->key('phone', v::notEmpty())
             ->key('email', v::stringType()->notEmpty());            
             try{
@@ -84,11 +84,11 @@ class CompanyController extends BaseController
             $update = true;
         }                            
         $company->name = $postData['name'];
-        $company->fiscal_id = $postData['fiscal_id'];
-        $company->fiscal_name = $postData['fiscal_name'];
+        $company->fiscalId = $postData['fiscalId'];
+        $company->fiscalName = $postData['fiscalName'];
         $company->address = $postData['address'];
         $company->city = $postData['city'];
-        $company->postal_code = $postData['postal_code'];
+        $company->postalCode = $postData['postalCode'];
         $company->state = $postData['state'];
         $company->country = $postData['country'];
         $company->phone = $postData['phone'];

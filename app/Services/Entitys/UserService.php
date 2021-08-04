@@ -10,7 +10,7 @@ class UserService
     public function deleteUser($id)
     {
         
-        $user = User::find($id)->first();       
+        $user = User::find($id);       
         $user->delete();        
 
     }
