@@ -136,6 +136,6 @@ class SuppliesController extends BaseController
     public function deleteAction(ServerRequest $request)
     {         
         $this->suppliesService->deleteSupplies($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/buys/supplies/list');
+        return new RedirectResponse('/Intranet/buys/supplies/list');
     }  
 }

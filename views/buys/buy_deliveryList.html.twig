@@ -6,12 +6,12 @@
                 <h2> Albaranes Compra </h2>
             </div>   
             <div class="col-md-2 d-flex justify-content-end align-items-end">
-                <a class="link " href="/intranet/admin">Volver</a> 
+                <a class="link " href="/Intranet/admin">Volver</a> 
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <form id="searchForm" action="/intranet/buys/buyDeliveries/search" method="post" class="form">
+                <form id="searchForm" action="/Intranet/buys/buyDeliveries/search" method="post" class="form">
                     <div class="container">
                         <div id="formRow" class="form-row text-right">
                             <div class="col-11">                                                                                
@@ -42,8 +42,8 @@
                             <td>{{ delivery.date }}</td>                            
                             <td>{{ delivery.provider }}</td>
                             <td>{{ delivery.total }}</td>
-                            <td><a href="/intranet/buys/buyDeliveries/form?id={{delivery.id}}">Edit</a></td>
-                            <td><a href="/intranet/buys/buyDeliveries/delete?id={{delivery.id}}">Delete</a></td>
+                            <td><a href="/Intranet/buys/buyDeliveries/form?id={{delivery.id}}">Edit</a></td>
+                            <td><a href="/Intranet/buys/buyDeliveries/delete?id={{delivery.id}}">Delete</a></td>
                         </tr>
                     {% endfor %}                
                 </table>
@@ -51,10 +51,10 @@
         </div>
         <div class="row">
             <div class="col d-flex justify-content-end">
-                <form action="/intranet/buys/buyDeliveries/form" method="get">
+                <form action="/Intranet/buys/buyDeliveries/form" method="get">
                     <div class="form-group">
                         <input type="submit" class="btn btn-primary" value="Añadir">
-                        <a href="/intranet/admin" class="btn btn-primary">Cancelar</a>
+                        <a href="/Intranet/admin" class="btn btn-primary">Cancelar</a>
                     </div>
                 </form>
             </div>

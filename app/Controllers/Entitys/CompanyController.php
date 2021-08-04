@@ -109,7 +109,7 @@ class CompanyController extends BaseController
     public function deleteAction(ServerRequest $request)
     {         
         $this->companyService->deleteCompany($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/company/list');
+        return new RedirectResponse('/Intranet/company/list');
     }
     
    

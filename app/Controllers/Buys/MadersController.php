@@ -111,6 +111,6 @@ class MadersController extends BaseController
     public function deleteAction(ServerRequest $request)
     {         
         $this->maderService->deleteMader($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/buys/maders/list');
+        return new RedirectResponse('/Intranet/buys/maders/list');
     }    
 }

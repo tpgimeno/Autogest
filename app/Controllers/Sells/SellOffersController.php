@@ -195,7 +195,7 @@ class SellOffersController extends BaseController {
     public function deleteAction(ServerRequest $request){
         $params = $request->getQueryParams();       
         $this->sellOfferService->deleteOffer(intval($params['offer_id']));
-        return new RedirectResponse('/intranet/crm/offers/list');
+        return new RedirectResponse('/Intranet/crm/offers/list');
     }
     public function searchCustomerSellOfferAction(ServerRequestInterface $request)
     {
@@ -239,7 +239,7 @@ class SellOffersController extends BaseController {
             $vehicles= DB::table('vehicles')
                 ->join('brands', 'vehicles.brand', '=', 'brands.id')
                 ->join('models', 'vehicles.model', '=', 'models.id')
-                ->join('vehicletypes', 'vehicles.type', '=', 'vehicletypes.id')
+                ->join('vehicleTypes', 'vehicles.type', '=', 'vehicleTypes.id')
                 ->select('vehicles.id', 'vehicles.plate', 'vehicles.vin', 
                         'vehicles.description as description', 'vehicles.location', 'vehicleTypes.name as type', 
                         'brands.name as brand', 'models.name as model', 'vehicles.color', 'vehicles.places',
@@ -249,7 +249,7 @@ class SellOffersController extends BaseController {
                 ->orWhere("vehicles.description", "like", "%".$searchString."%")
                 ->orWhere("vehicles.plate", "like", "%".$searchString."%")
                 ->orWhere("vehicles.vin", "like", "%".$searchString."%")
-                ->orWhere("vehicletypes.name", "like", "%".$searchString."%")
+                ->orWhere("vehicleTypes.name", "like", "%".$searchString."%")
                 ->orWhere("vehicles.id", "like", "%".$searchString."%")
                 ->WhereNull('vehicles.deleted_at')
                 ->get();         
@@ -330,12 +330,12 @@ class SellOffersController extends BaseController {
         $responseMessage = 'Editando Recambio';
         $selected_tab = 'supplies';
         $params = $request->getQueryParams();         
-        $supply = DB::table('sellofferssupplies')                
-                ->join('supplies', 'sellofferssupplies.supplyId', '=', 'supplies.id')
+        $supply = DB::table('selloffersSupplies')                
+                ->join('supplies', 'selloffersSupplies.supplyId', '=', 'supplies.id')
                 ->join('maders', 'supplies.mader', '=', 'maders.id')
-                ->select('sellofferssupplies.id', 'sellofferssupplies.sellofferId', 'sellofferssupplies.supplyId', 'supplies.ref as reference', 'maders.name as mader', 'supplies.name as name', 'sellofferssupplies.cantity as cantity', 'sellofferssupplies.price as price')
-                ->where('sellofferssupplies.sellofferId', '=', $params['offer_id'])
-                ->where('sellofferssupplies.supplyId', '=', $params['supply_id'])
+                ->select('selloffersSupplies.id', 'selloffersSupplies.sellofferId', 'selloffersSupplies.supplyId', 'supplies.ref as reference', 'maders.name as mader', 'supplies.name as name', 'selloffersSupplies.cantity as cantity', 'selloffersSupplies.price as price')
+                ->where('selloffersSupplies.sellofferId', '=', $params['offer_id'])
+                ->where('selloffersSupplies.supplyId', '=', $params['supply_id'])
                 ->first(); 
         
         if($supply !== null)
@@ -428,12 +428,12 @@ class SellOffersController extends BaseController {
         $responseMessage = 'Editando Component';
         $selected_tab = 'supplies';
         $params = $request->getQueryParams();       
-        $component = DB::table('sellofferscomponents')                
-                ->join('components', 'sellofferscomponents.componentId', '=', 'components.id')
+        $component = DB::table('selloffersComponents')                
+                ->join('components', 'selloffersComponents.componentId', '=', 'components.id')
                 ->join('maders', 'components.mader', '=', 'maders.id')
-                ->select('sellofferscomponents.id', 'sellofferscomponents.sellofferId', 'sellofferscomponents.componentId', 'components.ref as reference', 'maders.name as mader', 'components.name as name', 'sellofferscomponents.cantity as cantity', 'sellofferscomponents.price as price')
-                ->where('sellofferscomponents.sellofferId', '=', $params['offer_id'])
-                ->where('sellofferscomponents.componentId', '=', $params['component_id']);    
+                ->select('selloffersComponents.id', 'selloffersComponents.sellofferId', 'selloffersComponents.componentId', 'components.ref as reference', 'maders.name as mader', 'components.name as name', 'selloffersComponents.cantity as cantity', 'selloffersComponents.price as price')
+                ->where('selloffersComponents.sellofferId', '=', $params['offer_id'])
+                ->where('selloffersComponents.componentId', '=', $params['component_id']);    
         if($component)
         {
             $array = (['component_price' => $component->price ,'component_cantity' => $component->cantity]);
@@ -527,11 +527,11 @@ class SellOffersController extends BaseController {
         $responseMessage = 'Editando Trabajo';
         $selected_tab = 'works';
         $params = $request->getQueryParams();        
-        $work = DB::table('selloffersworks')                
-                ->join('works', 'selloffersworks.workId', '=', 'works.id')                
-                ->select('selloffersworks.id', 'selloffersworks.sellofferId', 'selloffersworks.workId', 'works.reference', 'works.description', 'selloffersworks.cantity', 'selloffersworks.price')
-                ->where('selloffersworks.sellofferId', '=', $params['offer_id'])
-                ->where('selloffersworks.workId', '=', $params['work_id'])
+        $work = DB::table('selloffersWorks')                
+                ->join('works', 'selloffersWorks.workId', '=', 'works.id')                
+                ->select('selloffersWorks.id', 'selloffersWorks.sellofferId', 'selloffersWorks.workId', 'works.reference', 'works.description', 'selloffersWorks.cantity', 'selloffersWorks.price')
+                ->where('selloffersWorks.sellofferId', '=', $params['offer_id'])
+                ->where('selloffersWorks.workId', '=', $params['work_id'])
                 ->first();         
         if($work)
         {
@@ -838,11 +838,11 @@ class SellOffersController extends BaseController {
     }  
     public function getSellOfferSupplies($offer_id)
     {
-        $offerSupplies = DB::table('sellofferssupplies')                
-            ->join('supplies', 'sellofferssupplies.supplyId', '=', 'supplies.id')
+        $offerSupplies = DB::table('selloffersSupplies')                
+            ->join('supplies', 'selloffersSupplies.supplyId', '=', 'supplies.id')
             ->join('maders', 'supplies.mader', '=', 'maders.id')
-            ->select('sellofferssupplies.id', 'sellofferssupplies.sellofferId', 'sellofferssupplies.supplyId', 'supplies.ref as reference', 'maders.name as mader', 'supplies.name as name', 'sellofferssupplies.cantity as cantity', 'sellofferssupplies.price as price')
-            ->where('sellofferssupplies.sellofferId', '=', $offer_id)
+            ->select('selloffersSupplies.id', 'selloffersSupplies.sellofferId', 'selloffersSupplies.supplyId', 'supplies.ref as reference', 'maders.name as mader', 'supplies.name as name', 'selloffersSupplies.cantity as cantity', 'selloffersSupplies.price as price')
+            ->where('selloffersSupplies.sellofferId', '=', $offer_id)
             ->get();        
         return $offerSupplies;
     }
@@ -860,11 +860,11 @@ class SellOffersController extends BaseController {
     }
     public function getSellOfferComponents($offer_id)
     {
-        $offerComponents = DB::table('sellofferscomponents')
-            ->join('components', 'sellofferscomponents.componentId', '=', 'components.id')
+        $offerComponents = DB::table('selloffersComponents')
+            ->join('components', 'selloffersComponents.componentId', '=', 'components.id')
             ->join('maders', 'components.mader', '=', 'maders.id')
-            ->select('sellofferscomponents.id', 'sellofferscomponents.sellofferId', 'sellofferscomponents.componentId', 'components.ref as reference', 'components.name as name', 'sellofferscomponents.cantity as cantity', 'sellofferscomponents.price as price')
-            ->where('sellofferscomponents.sellofferId', '=', $offer_id)                
+            ->select('selloffersComponents.id', 'selloffersComponents.sellofferId', 'selloffersComponents.componentId', 'components.ref as reference', 'components.name as name', 'selloffersComponents.cantity as cantity', 'selloffersComponents.price as price')
+            ->where('selloffersComponents.sellofferId', '=', $offer_id)                
             ->get();
         return $offerComponents;
     }
@@ -880,10 +880,10 @@ class SellOffersController extends BaseController {
         }
     }
     public function getSellOfferWorks($offer_id){
-        $offerWorks = DB::table('selloffersworks')
-            ->join('works', 'selloffersworks.workId', '=', 'works.id')               
-            ->select('selloffersworks.id', 'selloffersworks.sellofferId', 'selloffersworks.workId', 'works.description as description', 'selloffersworks.cantity as cantity', 'selloffersworks.price as price')
-            ->where('selloffersworks.sellofferId', '=', $offer_id)                
+        $offerWorks = DB::table('selloffersWorks')
+            ->join('works', 'selloffersWorks.workId', '=', 'works.id')               
+            ->select('selloffersWorks.id', 'selloffersWorks.sellofferId', 'selloffersWorks.workId', 'works.description as description', 'selloffersWorks.cantity as cantity', 'selloffersWorks.price as price')
+            ->where('selloffersWorks.sellofferId', '=', $offer_id)                
             ->get();
         return $offerWorks;
     }            
@@ -900,10 +900,10 @@ class SellOffersController extends BaseController {
     } 
     public function getSellOfferVehicleAccesories($vehicle_id)
     {
-        $selected_accesories = DB::table('vehicleaccesories')
-                ->join('accesories', 'vehicleaccesories.accesoryId', '=', 'accesories.id')
-                ->select('vehicleaccesories.accesoryId','vehicleaccesories.id', 'accesories.keystring', 'accesories.name')
-                ->where('vehicleaccesories.vehicleId', '=', $vehicle_id)
+        $selected_accesories = DB::table('vehicleAccesories')
+                ->join('accesories', 'vehicleAccesories.accesoryId', '=', 'accesories.id')
+                ->select('vehicleAccesories.accesoryId','vehicleAccesories.id', 'accesories.keystring', 'accesories.name')
+                ->where('vehicleAccesories.vehicleId', '=', $vehicle_id)
                 ->get();
         
         return $selected_accesories;

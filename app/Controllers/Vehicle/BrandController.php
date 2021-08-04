@@ -109,7 +109,7 @@ class BrandController extends BaseController
     public function deleteAction(ServerRequest $request)
     {         
         $this->brandService->deleteBrand($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/vehicles/brands/list');
+        return new RedirectResponse('/Intranet/vehicles/brands/list');
     }
 
 }

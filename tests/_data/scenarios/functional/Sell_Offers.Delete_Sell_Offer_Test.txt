@@ -1,8 +1,4 @@
-I WANT TO DELETE CUSTOMER
+I WANT TO DELETE SELL OFFER TEST
 
-I am on page '/intranet/admin' 
-I click 'Clientes'," '.list-group-item' 
-I see current url equals '/intranet/customers/list' 
-I am on page '/intranet/customers/delete?id='.$this->id" 
-I can see 'Clientes'
+
 

@@ -14,6 +14,6 @@ class homeCest
         $I->fillField('email', 'tonyllomouse@gmail.com');
         $I->fillField('password', '12345');
         $I->click('Enviar', '#login');
-        $I->seeCurrentUrlEquals('/intranet/admin');
+        $I->seeCurrentUrlEquals('/Intranet/admin');
     }
 }

@@ -15,9 +15,9 @@ class WorksCest
         $caracteres_permitidos = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $longitud = 7;        
         $referencia = substr(str_shuffle($caracteres_permitidos), 0, $longitud);        
-        $I->amOnPage('/intranet/admin');
+        $I->amOnPage('/Intranet/admin');
         $I->click('Trabajos', '.list-group-item');
-        $I->seeCurrentUrlEquals('/intranet/vehicles/works/list');
+        $I->seeCurrentUrlEquals('/Intranet/vehicles/works/list');
         $I->wantTo('Create a new Work');
         $I->click('#submit', '#addWork');
         $I->submitForm('#WorkForm', 
@@ -33,21 +33,21 @@ class WorksCest
     }
     public function UpdateWorkTest(FunctionalTester $I)
     {
-        $I->amOnPage('/intranet/admin');
+        $I->amOnPage('/Intranet/admin');
         $I->click('Trabajos', '.list-group-item');
-        $I->seeCurrentUrlEquals('/intranet/vehicles/works/list');
+        $I->seeCurrentUrlEquals('/Intranet/vehicles/works/list');
         $I->wantTo('Update Work');
-        $I->amOnPage('/intranet/vehicles/works/form?id='.$this->id);
+        $I->amOnPage('/Intranet/vehicles/works/form?id='.$this->id);
         $I->click('#submit');
            
     }
     public function DeleteWorkTest(FunctionalTester $I)
     {
-        $I->amOnPage('/intranet/admin');
+        $I->amOnPage('/Intranet/admin');
         $I->click('Trabajos', '.list-group-item');
-        $I->seeCurrentUrlEquals('/intranet/vehicles/works/list');
+        $I->seeCurrentUrlEquals('/Intranet/vehicles/works/list');
         $I->wantTo('Delete Work');
-        $I->amOnPage('/intranet/vehicles/works/delete?id='.$this->id);
+        $I->amOnPage('/Intranet/vehicles/works/delete?id='.$this->id);
         
     }
 }

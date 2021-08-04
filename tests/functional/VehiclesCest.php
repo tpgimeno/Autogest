@@ -15,12 +15,12 @@ class VehiclesCest
         $longitud_bastidor = 10;
         $matricula = substr(str_shuffle($caracteres_permitidos), 0, $longitud_placa);
         $bastidor = substr(str_shuffle($caracteres_permitidos), 0, $longitud_bastidor);
-        $I->amOnPage('/intranet/admin');
+        $I->amOnPage('/Intranet/admin');
         $I->click('Vehículos', '.list-group-item');
-        $I->seeCurrentUrlEquals('/intranet/vehicles/list');
+        $I->seeCurrentUrlEquals('/Intranet/vehicles/list');
         $I->wantTo('Create a new Vehicle');
         $I->click('#submit', '#addVehicle');
-        $I->seeCurrentUrlEquals('/intranet/vehicles/form');        
+        $I->seeCurrentUrlEquals('/Intranet/vehicles/form');        
         $I->submitForm('#VehicleForm', 
                 array ('registry_date' => '02/04/2016', 
                     'plate' => $matricula, 
@@ -48,20 +48,20 @@ class VehiclesCest
       
     }
     public function UpdateVehicleTest(FunctionalTester $I){
-        $I->amOnPage('/intranet/admin');
+        $I->amOnPage('/Intranet/admin');
         $I->click('Vehículos', '.list-group-item');
-        $I->seeCurrentUrlEquals('/intranet/vehicles/list');
+        $I->seeCurrentUrlEquals('/Intranet/vehicles/list');
         $I->wantTo('Update Vehicle');
-        $I->amOnPage('/intranet/vehicles/form?id='.$this->id);
+        $I->amOnPage('/Intranet/vehicles/form?id='.$this->id);
         $I->see('Vehiculo');
         $I->submitForm('#VehicleForm', array('places' => '6'));
              
     }
     public function DeleteVehicleTest(FunctionalTester $I){
-        $I->amOnPage('/intranet/admin');
+        $I->amOnPage('/Intranet/admin');
         $I->click('Vehículos', '.list-group-item');
-        $I->seeCurrentUrlEquals('/intranet/vehicles/list');
+        $I->seeCurrentUrlEquals('/Intranet/vehicles/list');
         $I->wantTo('Delete Vehicle');
-        $I->amOnPage('/intranet/vehicle/delete?id='.$this->id);              
+        $I->amOnPage('/Intranet/vehicle/delete?id='.$this->id);              
     }
 }

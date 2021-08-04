@@ -18,12 +18,12 @@ class companyCest
         $caracteres_permitidos = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $longitud = 12;
         $fiscal_id = substr(str_shuffle($caracteres_permitidos), 0, $longitud);
-        $I->amOnPage('/intranet/admin');
+        $I->amOnPage('/Intranet/admin');
         $I->click('Empresas', '.list-group-item');
-        $I->seeCurrentUrlEquals('/intranet/company/list');
+        $I->seeCurrentUrlEquals('/Intranet/company/list');
         $I->wantTo('Create a new Company');
         $I->click('#submit', '#addCompany');
-        $I->seeCurrentUrlEquals('/intranet/company/form');        
+        $I->seeCurrentUrlEquals('/Intranet/company/form');        
         $I->submitForm('#CompanyForm', 
                 array ('name' => 'Lorem Ipsum S.L.', 
                     'fiscal_id' => $fiscal_id, 
@@ -38,15 +38,15 @@ class companyCest
                     'site' => 'loremipsum.com' 
                     )); 
         $this->id = $I->grabFromDatabase('company', 'id', array('fiscalId' => $fiscal_id));      
-        $I->canSeeCurrentUrlEquals('/intranet/company/save');
+        $I->canSeeCurrentUrlEquals('/Intranet/company/save');
             
     }
     public function UpdateCompanyTest(FunctionalTester $I){
-        $I->amOnPage('/intranet/admin');
+        $I->amOnPage('/Intranet/admin');
         $I->click('Empresas', '.list-group-item');
-        $I->seeCurrentUrlEquals('/intranet/company/list');
+        $I->seeCurrentUrlEquals('/Intranet/company/list');
         $I->wantTo('Update Company');
-        $I->amOnPage('/intranet/company/form?id='.$this->id);
+        $I->amOnPage('/Intranet/company/form?id='.$this->id);
         $I->see('Empresas');
         $I->submitForm('#CompanyForm', 
                 array ('postal_code' => '54321'                    
@@ -54,10 +54,10 @@ class companyCest
         
     }
     public function DeleteCompanyTest(FunctionalTester $I){
-        $I->amOnPage('/intranet/admin');
+        $I->amOnPage('/Intranet/admin');
         $I->click('Empresas', '.list-group-item');
-        $I->seeCurrentUrlEquals('/intranet/company/list');
-        $I->amOnPage('/intranet/company/delete?id='.$this->id);        
+        $I->seeCurrentUrlEquals('/Intranet/company/list');
+        $I->amOnPage('/Intranet/company/delete?id='.$this->id);        
     }
             
 }

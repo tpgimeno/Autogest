@@ -10,7 +10,7 @@ class AdminController extends BaseController
 {  
     public function getDashBoardAction(ServerRequest $request)
     {              
-        $user = User::where('id', $_SESSION['userId'])->first();         
+        $user = User::find($_SESSION['userId']);         
         return $this->renderHTML('dashboard.twig', [
             'userEmail' => $user->getAttribute('email')
         ]);

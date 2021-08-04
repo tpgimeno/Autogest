@@ -101,7 +101,7 @@ class VehicleTypesController extends BaseController
     public function deleteAction(ServerRequest $request)
     {         
         $this->vehicleTypeService->deleteVehicleType($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/vehicles/vehicleTypes/list');
+        return new RedirectResponse('/Intranet/vehicles/vehicleTypes/list');
     }
 
 }

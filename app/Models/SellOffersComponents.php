@@ -13,5 +13,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class SellOffersComponents extends Model 
 {
-    protected $table = "sellofferscomponents";
+    protected $table = "selloffersComponents";
 }

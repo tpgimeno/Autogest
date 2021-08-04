@@ -1,9 +1,4 @@
-I WANT TO UPDATE CUSTOMER
+I WANT TO UPDATE SELL OFFER TEST
 
-I am on page '/intranet/admin' 
-I click 'Clientes'," '.list-group-item' 
-I see current url equals '/intranet/customers/list' 
-I am on page '/intranet/customers/form?id='.$this->id" 
-I click '#submit' 
-I can see 'Updated'
+
 

@@ -121,6 +121,6 @@ class WorksController extends BaseController
     public function deleteAction(ServerRequest $request)
     {         
         $this->worksService->deleteWorks($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/vehicles/works/list');
+        return new RedirectResponse('/Intranet/vehicles/works/list');
     }  
 }
