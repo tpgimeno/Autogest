@@ -25,7 +25,7 @@ class SellersController extends BaseController
     public function getIndexAction()
     {
         $sellers = Sellers::All();
-        return $this->renderHTML('/sellers/sellersList.twig', [
+        return $this->renderHTML('/sells/sellers/sellersList.twig', [
             'sellers' => $sellers
         ]);
     }   
@@ -64,7 +64,7 @@ class SellersController extends BaseController
         {
             $sellersSelected = Sellers::find($_GET['id']);
         }
-        return $this->renderHTML('/sellers/sellersForm.twig', [
+        return $this->renderHTML('/sells/sellers/sellersForm.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
             'sellers' => $sellersSelected
