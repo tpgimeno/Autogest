@@ -5,7 +5,7 @@ namespace App\Controllers\Entitys;
 use App\Controllers\BaseController;
 use Respect\Validation\Validator as v;
 use App\Models\Store;
-use App\Services\StoreService;
+use App\Services\Entitys\StoreService;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\Response\RedirectResponse;
 
@@ -23,7 +23,7 @@ class StoreController extends BaseController
     public function getIndexAction()
     {
         $store = Store::All();
-        return $this->renderHTML('/stores/storeList.html.twig', [
+        return $this->renderHTML('/Entitys/stores/storeList.html.twig', [
             'stores' => $store
         ]);
     }  
@@ -39,7 +39,7 @@ class StoreController extends BaseController
                 ->orWhere('email', 'like', "%".$searchString."%")
                 ->WhereNull('deleted_at')
                 ->get();
-        return $this->renderHTML('/stores/storeList.html.twig', [
+        return $this->renderHTML('/Entitys/stores/storeList.html.twig', [
             'stores' => $store
         ]);
     }
@@ -76,7 +76,7 @@ class StoreController extends BaseController
         {
             $storeSelected = Store::find($request->getQueryParams('id'))->first();
         }
-        return $this->renderHTML('/stores/storeForm.html.twig', [
+        return $this->renderHTML('/Entitys/stores/storeForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
             'store' => $storeSelected

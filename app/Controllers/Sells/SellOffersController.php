@@ -15,7 +15,6 @@ use App\Models\SellOffersSupplies;
 use App\Models\SellOffersWorks;
 use App\Models\Supplies;
 use App\Models\Vehicle;
-use App\Models\VehicleAccesories;
 use App\Models\VehicleTypes;
 use App\Models\Works;
 use App\Reports\Sells\SellOfferDetailedReport;

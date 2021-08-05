@@ -20,6 +20,7 @@ class WorksCest
         $I->seeCurrentUrlEquals('/Intranet/vehicles/works/list');
         $I->wantTo('Create a new Work');
         $I->click('#submit', '#addWork');
+        $I->seeCurrentUrlEquals('/Intranet/vehicles/works/form');
         $I->submitForm('#WorkForm', 
                 array('reference' => $referencia,                    
                     'description' => 'Lorem Ipsum',

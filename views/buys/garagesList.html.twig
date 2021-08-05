@@ -6,12 +6,12 @@
                 <h2> Talleres </h2>
             </div>   
             <div class="col-md-2 d-flex justify-content-end align-items-end">
-                <a class="link " href="/admin">Volver</a> 
+                <a class="link " href="/Intranet/admin">Volver</a> 
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <form id="searchForm" action="/buys/garages/search" method="post" class="form">
+                <form id="searchForm" action="/Intranet/Garages/search" method="post" class="form">
                     <div class="container">
                         <div id="formRow" class="form-row text-right">
                             <div class="col-11">                                                                                
@@ -42,8 +42,8 @@
                             <td>{{ garage.city }}</td>
                             <td>{{ garage.phone }}</td>
                             <td>{{ garage.email }}</td>
-                            <td><a href="/buys/garages/form?id={{garage.id}}">Edit</td>
-                            <td><a href="/buys/garages/delete?id={{garage.id}}">Delete</td>
+                            <td><a href="/Intranet/Garages/form?id={{garage.id}}">Edit</a></td>
+                            <td><a href="/Intranet/Garages/delete?id={{garage.id}}">Delete</a></td>
                         </tr>
                     {% endfor %}                
                 </table>
@@ -51,10 +51,10 @@
         </div>
         <div class="row">
             <div class="col d-flex justify-content-end">
-                <form action="/buys/garages/form" method="get">
+                <form id="addGarage" action="/Intranet/Garages/form" method="get">
                     <div class="form-group">
-                        <input type="submit" class="btn btn-primary" value="Añadir">
-                        <a href="/admin" class="btn btn-primary">Cancelar</a>
+                        <input id="submit" type="submit" class="btn btn-primary" value="Añadir">
+                        <a href="/Intranet/admin" class="btn btn-primary">Cancelar</a>
                     </div>
                 </form>
             </div>

@@ -6,7 +6,7 @@
                 <h2> Trabajos </h2>
             </div>   
             <div class="col-md-2 d-flex justify-content-end align-items-end">
-                <a class="link " href="/admin">Volver</a> 
+                <a class="link " href="/Intranet/admin">Volver</a> 
             </div>
         </div>
         <div class="row">
@@ -24,8 +24,8 @@
                             <td>{{ work.reference }}</td>
                             <td>{{ work.description }}</td>
                             <td>{{ work.price }}</td>                            
-                            <td><a href="/vehicles/works/form?id={{work.id}}">Edit</td>
-                            <td><a href="/vehicles/works/delete?id={{work.id}}">Delete</td>
+                            <td><a href="/Intranet/vehicles/works/form?id={{work.id}}">Edit</a></td>
+                            <td><a href="/Intranet/vehicles/works/delete?id={{work.id}}">Delete</a></td>
                         </tr>
                     {% endfor %}                
                 </table>
@@ -33,10 +33,10 @@
         </div>
         <div class="row">
             <div class="col d-flex justify-content-end">
-                <form action="/vehicles/works/form" method="get">
+                <form id="addWork" action="/Intranet/vehicles/works/form" method="get">
                     <div class="form-group">
                         <input id="submit" type="submit" class="btn btn-primary" value="Añadir">
-                        <a href="/admin" class="btn btn-primary">Cancelar</a>
+                        <a href="/Intranet/admin" class="btn btn-primary">Cancelar</a>
                     </div>
                 </form>
             </div>

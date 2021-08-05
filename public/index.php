@@ -243,24 +243,24 @@ $map->get('locationsDelete', '/Intranet/locations/delete', [
 
 //GARAGES 
 
-$map->get('garagesList', '/Intranet/buys/garages/form', [
-    'App\Controllers\Sells\GaragesController',
+$map->get('garagesList', '/Intranet/Garages/form', [
+    'App\Controllers\Garages\GaragesController',
     'getGarageDataAction'
 ]);
-$map->get('garagesForm', '/Intranet/buys/garages/list', [
-    'App\Controllers\Sells\GaragesController',
+$map->get('garagesForm', '/Intranet/Garages/list', [
+    'App\Controllers\Garages\GaragesController',
     'getIndexAction'
 ]);
-$map->post('searchGarage', '/Intranet/buys/garages/search', [
-    'App\Controllers\Sells\GaragesController',
+$map->post('searchGarage', '/Intranet/Garages/search', [
+    'App\Controllers\Garages\GaragesController',
     'searchGarageAction'
 ]);
-$map->post('saveGarage', '/Intranet/buys/garages/save', [
-    'App\Controllers\Sells\GaragesController',
+$map->post('saveGarage', '/Intranet/Garages/save', [
+    'App\Controllers\Garages\GaragesController',
     'getGarageDataAction'
 ]);
-$map->get('garagesDelete', '/Intranet/buys/garages/delete', [
-    'App\Controllers\Sells\GaragesController',
+$map->get('garagesDelete', '/Intranet/Garages/delete', [
+    'App\Controllers\Garages\GaragesController',
     'deleteAction'
 ]);
 

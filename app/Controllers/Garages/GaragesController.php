@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Buys;
+namespace App\Controllers\Garages;
 
 use App\Controllers\BaseController;
 use Respect\Validation\Validator as v;
