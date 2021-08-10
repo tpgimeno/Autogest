@@ -19,7 +19,7 @@
     </div>
     <div class="row">
         <div class="col">
-            <form action="/Intranet/locations/save" method="post">
+            <form id="locationForm" action="/Intranet/locations/save" method="post">
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <select name="store" class="form-control" id="selectType" value="{{ location.store }}">
@@ -33,7 +33,7 @@
                 </div>              
                 <div class="form-row">
                     <div class="col text-right">
-                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <button id="submit" type="submit" class="btn btn-primary">Guardar</button>
                         <button type="reset" class="btn btn-primary">Cancelar</button>
                     </div>
                 </div>

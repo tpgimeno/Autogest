@@ -6,6 +6,10 @@
 
 /* global numeral */
 
+/* Global variable creation
+ * 
+ * 
+ */
 
 var offer_supplies = new Array();
 var offer_components = new Array();
@@ -39,7 +43,11 @@ window.addEventListener('load', function()
     var works = document.getElementById('works');
     var tab_works = document.getElementById('works-tab');
     var selected_tab = '{{ selected_tab }}';
-    
+    var selected_tax = '{{ selected_taxe.percentaje }}';
+    var tax = 0;
+    if(!selected_tax){
+        tax = numeral(document.getElementById('selectTaxes').value).value();
+    }    
     switch(selected_tab)
     {
         case 'offer':
@@ -119,17 +127,15 @@ window.addEventListener('load', function()
             tab_offer.classList.add('active');
             break;
     }    
-    
-    document.getElementById("searchCustomerField").addEventListener("keyup", function()
-    {                      
+    document.getElementById("selectTaxes").addEventListener("change", function(){
+        var tax = numeral(document.getElementById('selectTaxes').value).value();
+    });
+    document.getElementById("searchCustomerField").addEventListener("keyup", function(){                      
         var request = new XMLHttpRequest();
         request.open('POST', '/sells/offers/customer/search', true);
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        if(document.getElementById('searchCustomerField').value === "")
-        {
-        }
-        else
-        {
+        if(document.getElementById('searchCustomerField').value === "");
+        else{
             request.send("searchCustomerFilter=" + document.getElementById('searchCustomerField').value);
             function reqListener()
             {
@@ -256,7 +262,7 @@ window.addEventListener('load', function()
     document.getElementById('inputVehiclePrice').value = price_vehicle.format('(0.0,$)');    
     document.getElementById('inputVehicleDiscount').value = vehicle_discount.format('(0.0,$)');  
     base_vehicle = numeral(price_vehicle.value() - vehicle_discount.value());
-    tva_vehicle = numeral(base_vehicle.value() * 0.21);   
+    tva_vehicle = numeral(base_vehicle.value() * tax);   
     document.getElementById('inputVehicleTva').value = tva_vehicle.format('(0.0,$)');    
     total_vehicle = numeral(base_vehicle.value() + tva_vehicle.value());
     document.getElementById('inputVehicleTotal').value = total_vehicle.format('(0.0,$)');     
@@ -270,19 +276,19 @@ window.addEventListener('load', function()
     document.getElementById('inputComponentTotal').value = base_component.format('(0.0,$)');
     
     document.getElementById('inputSuppliesBase').value = price_supplies.format('(0.0,$)');
-    tva_supplies = numeral(price_supplies.value() * 0.21);
+    tva_supplies = numeral(price_supplies.value() * tax);
     document.getElementById('inputSuppliesTva').value = tva_supplies.format('(0.0,$)');
     total_supplies = numeral(price_supplies.value() + tva_supplies.value());
     document.getElementById('inputSuppliesTotal').value = total_supplies.format('(0.0,$)');
     
     document.getElementById('inputComponentsBase').value = price_components.format('(0.0,$)');
-    tva_components = numeral(price_components.value() * 0.21);
+    tva_components = numeral(price_components.value() * tax);
     document.getElementById('inputComponentsTva').value = tva_components.format('(0.0,$)');
     total_components = numeral(price_components.value() + tva_components.value());
     document.getElementById('inputComponentsTotal').value = total_components.format('(0.0,$)');
     
     document.getElementById('inputWorksBase').value = price_works.format('(0.0,$)');
-    tva_works = numeral(price_works.value() * 0.21);
+    tva_works = numeral(price_works.value() * tax);
     document.getElementById('inputWorksTva').value = tva_works.format('(0.0,$)');
     total_works = numeral(price_works.value() + tva_works.value());
     document.getElementById('inputWorksTotal').value = total_works.format('(0.0,$)');
@@ -297,7 +303,7 @@ window.addEventListener('load', function()
     base = numeral(price_vehicle.value() + price_supplies.value() + price_works.value() + price_components.value() - discount.value());    
     document.getElementById("inputPrice").value = base.format('(0.0,$)');
     document.getElementById("inputDiscount").value = discount.format('(0.0,$)');
-    tva = numeral(base.value() * 0.21);
+    tva = numeral(base.value() * tax);
     document.getElementById("inputTva").value = tva.format('(0.0,$)');
     total = numeral(base.value() + tva.value());  
     document.getElementById("inputTotal").value = total.format('(0.0,$)');    
@@ -308,7 +314,7 @@ window.addEventListener('load', function()
         vehicle_discount = numeral(document.getElementById('inputVehicleDiscount').value);
         document.getElementById('inputVehicleDiscount').value = vehicle_discount.format('(0.0,$)');
         tva_vehicle = numeral(document.getElementById('inputVehicleTva').value);
-        tva_vehicle = numeral((price_vehicle.value() - vehicle_discount.value()) * 0.21);        
+        tva_vehicle = numeral((price_vehicle.value() - vehicle_discount.value()) * tax);        
         document.getElementById('inputVehicleTva').value = tva_vehicle.format('(0.0,$)');
         total_vehicle = numeral(document.getElementById('inputVehicleTotal').value);
         total_vehicle = numeral(price_vehicle.value() - vehicle_discount.value() + tva_vehicle.value());
@@ -322,10 +328,10 @@ window.addEventListener('load', function()
         total_vehicle = numeral(total_vehicle.value() - vehicle_discount.value());
         document.getElementById('inputVehicleTotal').value = total_vehicle.format('(0.0,$)');
         price_vehicle = numeral(document.getElementById('inputVehiclePrice').value);
-        price_vehicle = numeral(total_vehicle.value() / 1.21);
+        price_vehicle = numeral(total_vehicle.value() / (1 + tax));
         document.getElementById('inputVehiclePrice').value = price_vehicle.format('(0.0,$)');        
         tva_vehicle = numeral(document.getElementById('inputVehicleTva').value);
-        tva_vehicle = numeral((price_vehicle.value() - vehicle_discount.value()) * 0.21);          
+        tva_vehicle = numeral((price_vehicle.value() - vehicle_discount.value()) * tax);          
         document.getElementById('inputVehicleTva').value = tva_vehicle.format('(0.0,$)');
        
     });    
@@ -334,13 +340,13 @@ window.addEventListener('load', function()
         total_vehicle = numeral(document.getElementById('inputVehicleTotal').value);
         document.getElementById('inputVehicleTotal').value = total_vehicle.format('(0.0,$)');
         price_vehicle = numeral(document.getElementById('inputVehiclePrice').value);
-        price_vehicle = numeral(total_vehicle.value() / 1.21);         
+        price_vehicle = numeral(total_vehicle.value() / (1 + tax));         
         document.getElementById('inputVehiclePrice').value = price_vehicle.format('(0.0,$)');
         vehicle_discount = numeral(document.getElementById('inputVehicleDiscount').value);
         vehicle_discount = numeral(0);
         document.getElementById('inputVehicleDiscount').value = vehicle_discount.format('(0.0,$)');
         tva_vehicle = numeral(document.getElementById('inputVehicleTva').value);
-        tva_vehicle = numeral((price_vehicle.value() - vehicle_discount.value()) * 0.21);
+        tva_vehicle = numeral((price_vehicle.value() - vehicle_discount.value()) * tax);
         document.getElementById('inputVehicleTva').value = tva_vehicle.format('(0.0,$)');        
     });
     document.getElementById('inputSupplyPrice').addEventListener("change", function () 
@@ -388,7 +394,7 @@ window.addEventListener('load', function()
         document.getElementById("inputPrice").value = base.format('(0.0,$)');
         price_components = numeral(document.getElementById('inputComponentsBase').value);
         document.getElementById('inputComponentsBase').value = price_components.format('(0.0,$)'); 
-        tva_components = numeral(price_components.value() * 0.21);
+        tva_components = numeral(price_components.value() * tax);
         tva_components = numeral(document.getElementById('inputComponentsTva').value);
         total_components = numeral(price_components.value() + tva_components.value());
         document.getElementById('inputComponentsTotal').value = total_components.format('(0.0,$)');
@@ -417,7 +423,7 @@ window.addEventListener('load', function()
         discount = numeral(document.getElementById("inputDiscount").value);
         base = numeral(price.value() - discount.value());                    
         document.getElementById("inputDiscount").value = discount.format('(0.0,$)');
-        tva = numeral(base.value() * 0.21);
+        tva = numeral(base.value() * tax);
         document.getElementById("inputTva").value = tva.format('(0.0,$)');
         total = numeral(base.value() + tva.value());  
         document.getElementById("inputTotal").value = total.format('(0.0,$)');
@@ -429,7 +435,7 @@ window.addEventListener('load', function()
         discount = numeral(document.getElementById("inputDiscount").value);
         base = numeral(price.value() - discount.value());                    
         document.getElementById("inputDiscount").value = discount.format('(0.0,$)');
-        tva = numeral(base.value() * 0.21);
+        tva = numeral(base.value() * tax);
         document.getElementById("inputTva").value = tva.format('(0.0,$)');
         total = numeral(base.value() + tva.value());  
         document.getElementById("inputTotal").value = total.format('(0.0,$)');
@@ -439,9 +445,9 @@ window.addEventListener('load', function()
     {
         total = numeral(document.getElementById("inputTotal").value);
         discount = numeral(document.getElementById("inputDiscount").value);
-        base = numeral(total.value() / 1.21);                    
+        base = numeral(total.value() / (1 + tax));                    
         document.getElementById("inputDiscount").value = discount.format('(0.0,$)');
-        tva = numeral(base.value() * 0.21);
+        tva = numeral(base.value() * tax);
         document.getElementById("inputTva").value = tva.format('(0.0,$)');
         price = numeral(base.value() - discount.value());  
         document.getElementById("inputTotal").value = total.format('(0.0,$)');
@@ -488,14 +494,14 @@ window.addEventListener('load', function()
         } 
         price_supplies = numeral(suma_prices_supplies);
         document.getElementById('inputSuppliesBase').value = price_supplies.format('(0.0,$)');
-        tva_supplies = numeral(price_supplies.value() * 0.21);
+        tva_supplies = numeral(price_supplies.value() * tax);
         document.getElementById('inputSuppliesTva').value = tva_supplies.format('(0.0,$)');
         total_supplies = numeral(price_supplies.value() + tva_supplies.value());
         document.getElementById('inputSuppliesTotal').value = total_supplies.format('(0.0,$)');
         base = numeral(price_vehicle.value() + price_supplies.value() + price_works.value() + price_components.value() - discount.value());
         document.getElementById("inputPrice").value = base.format('(0.0,$)');
         document.getElementById("inputDiscount").value = discount.format('(0.0,$)');
-        tva = numeral(base.value() * 0.21);
+        tva = numeral(base.value() * tax);
         document.getElementById("inputTva").value = tva.format('(0.0,$)');
         total = numeral(base.value() + tva.value());  
         document.getElementById("inputTotal").value = total.format('(0.0,$)');
@@ -519,14 +525,14 @@ window.addEventListener('load', function()
         }        
         price_components = numeral(suma_prices_components);        
         document.getElementById('inputComponentsBase').value = price_components.format('(0.0,$)');
-        tva_components = numeral(price_components.value() * 0.21);
+        tva_components = numeral(price_components.value() * tax);
         document.getElementById('inputComponentsTva').value = tva_components.format('(0.0,$)');
         total_components = numeral(price_components.value() + tva_components.value());
         document.getElementById('inputComponentsTotal').value = total_components.format('(0.0,$)');
         base = numeral(price_vehicle.value() + price_supplies.value() + price_works.value() + price_components.value() - discount.value());
         document.getElementById("inputPrice").value = base.format('(0.0,$)');
         document.getElementById("inputDiscount").value = discount.format('(0.0,$)');
-        tva = numeral(base.value() * 0.21);
+        tva = numeral(base.value() * tax);
         document.getElementById("inputTva").value = tva.format('(0.0,$)');
         total = numeral(base.value() + tva.value());  
         document.getElementById("inputTotal").value = total.format('(0.0,$)');
@@ -551,14 +557,14 @@ window.addEventListener('load', function()
         }        
         price_works = numeral(suma_prices_works);        
         document.getElementById('inputWorksBase').value = price_works.format('(0.0,$)');
-        tva_works = numeral(price_works.value() * 0.21);
+        tva_works = numeral(price_works.value() * tax);
         document.getElementById('inputWorksTva').value = tva_works.format('(0.0,$)');
         total_works = numeral(price_works.value() + tva_works.value());
         document.getElementById('inputWorksTotal').value = total_works.format('(0.0,$)');
         base = numeral(price_vehicle.value() + price_supplies.value() + price_works.value() + price_components.value() - discount.value());
         document.getElementById("inputPrice").value = base.format('(0.0,$)');
         document.getElementById("inputDiscount").value = discount.format('(0.0,$)');
-        tva = numeral(base.value() * 0.21);
+        tva = numeral(base.value() * tax);
         document.getElementById("inputTva").value = tva.format('(0.0,$)');
         total = numeral(base.value() + tva.value());  
         document.getElementById("inputTotal").value = total.format('(0.0,$)');
@@ -567,7 +573,7 @@ window.addEventListener('load', function()
     base = numeral(price_vehicle.value() + price_supplies.value() + price_works.value() + price_components.value() - discount.value());
     document.getElementById("inputPrice").value = base.format('(0.0,$)');                            
     document.getElementById("inputDiscount").value = discount.format('(0.0,$)');
-    tva = numeral(base.value() * 0.21);
+    tva = numeral(base.value() * tax);
     document.getElementById("inputTva").value = tva.format('(0.0,$)');
     total = numeral(base.value() + tva.value());  
     document.getElementById("inputTotal").value = total.format('(0.0,$)');
@@ -635,7 +641,7 @@ function addSupply()
         }  
     }       
     price_supplies = numeral(suma_prices_supplies).value();
-    tva_supplies = numeral(numeral(price_supplies).value() * 0.21);
+    tva_supplies = numeral(numeral(price_supplies).value() * tax);
     total_supplies = numeral(price_supplies).value() + numeral(tva_supplies).value();
     document.getElementById('inputSuppliesBase').value = numeral(price_supplies).format('(0.0,$)');
     document.getElementById('inputSuppliesTva').value = numeral(tva_supplies).format('(0.0,$)');
@@ -644,7 +650,7 @@ function addSupply()
     base = numeral(price_vehicle.value() + numeral(price_supplies).value() + numeral(price_works).value() + numeral(price_components).value() - discount.value());
     document.getElementById("inputPrice").value = base.format('(0.0,$)');                            
     document.getElementById("inputDiscount").value = discount.format('(0.0,$)');
-    tva = numeral(base.value() * 0.21);
+    tva = numeral(base.value() * tax);
     document.getElementById("inputTva").value = tva.format('(0.0,$)');
     total = numeral(base.value() + tva.value());  
     document.getElementById("inputTotal").value = total.format('(0.0,$)');
@@ -721,7 +727,7 @@ function addComponent()
         }  
     }       
     price_components = numeral(suma_prices_components).value();    
-    tva_components = numeral(numeral(price_components).value() * 0.21);
+    tva_components = numeral(numeral(price_components).value() * tax);
     total_components = numeral(price_components).value() + numeral(tva_components).value();
     document.getElementById('inputComponentsBase').value = numeral(price_components).format('(0.0,$)');
     document.getElementById('inputComponentsTva').value = numeral(tva_components).format('(0.0,$)');
@@ -730,7 +736,7 @@ function addComponent()
     base = numeral(price_vehicle.value() + numeral(price_supplies).value() + numeral(price_works).value() + numeral(price_components).value() - discount.value());
     document.getElementById("inputPrice").value = base.format('(0.0,$)');                            
     document.getElementById("inputDiscount").value = discount.format('(0.0,$)');
-    tva = numeral(base.value() * 0.21);
+    tva = numeral(base.value() * tax);
     document.getElementById("inputTva").value = tva.format('(0.0,$)');
     total = numeral(base.value() + tva.value());  
     document.getElementById("inputTotal").value = total.format('(0.0,$)');
@@ -804,7 +810,7 @@ function addWork()
         }  
     }       
     price_works = numeral(suma_prices_works).value();
-    tva_works = numeral(numeral(price_works).value() * 0.21);
+    tva_works = numeral(numeral(price_works).value() * tax);
     total_works = numeral(price_works).value() + numeral(tva_works).value();
     document.getElementById('inputWorksBase').value = numeral(price_works).format('(0.0,$)');
     document.getElementById('inputWorksTva').value = numeral(tva_works).format('(0.0,$)');
@@ -813,7 +819,7 @@ function addWork()
     base = numeral(price_vehicle.value() + price_supplies.value() + numeral(price_works).value() + numeral(price_components).value() - discount.value());
     document.getElementById("inputPrice").value = base.format('(0.0,$)');                            
     document.getElementById("inputDiscount").value = discount.format('(0.0,$)');
-    tva = numeral(base.value() * 0.21);
+    tva = numeral(base.value() * tax);
     document.getElementById("inputTva").value = tva.format('(0.0,$)');
     total = numeral(base.value() + tva.value());  
     document.getElementById("inputTotal").value = total.format('(0.0,$)');

@@ -337,31 +337,36 @@ class VehicleController extends BaseController
         $responseMessage = null;
         $reader = new Xls();
         $reader->setLoadSheetsOnly('VEHICULOS');
-        $spreadSheet = $reader->load('vehiculos.xls');        
+        $spreadSheet = $reader->load('vehiculos.xls');  
+        
         $vehiculos = $spreadSheet->getActiveSheet()->toArray();
-//        var_dump($vehiculos);die();
-        if($this->importVehicleBrands())
-        {
-            $reponseMessage = $this->importVehicleBrands();
-        }
-        if($this->importVehicleModels())
-        {
-            $reponseMessage = $this->importVehicleModels();
-        }
-        if($this->importVehiclesStores())
-        {
-            $responseMessage = $this->importVehiclesStores();
+        try{
+            $reponseMessage += " - "+$this->importVehicleBrands();
+        }catch(Exception $e){
+            $responseMessage = $e->getMessage();
+        }        
+        try{
+            $reponseMessage += " - "+ $this->importVehicleModels();
+        }catch(Exception $e){
+            $responseMessage = $e->getMessage();
+        }        
+        try{
+            $responseMessage += " - "+ $this->importVehiclesStores();
+        }catch(Exception $e){
+            $responseMessage = $e->getMessage();
         }
         if($this->importVehicleTypes())
         {
             $responseMessage = $this->importVehicleTypes();
-        }        
+        }
+//        var_dump($vehiculos);die();       
         try{
             for($i = 1; $i < intval(count($vehiculos)); $i++)
             {
-                $vehiculo = new Vehicle();                              
+                $vehiculo = new Vehicle();
+                
                 $vehiculo->brand = $vehiculos[$i][3];                             
-                $vehiculo->model = $vehiculos[$i][5];
+                $vehiculo->model = $vehiculos[$i][5];                
                 $vehiculo->description = $vehiculos[$i][6];
                 $vehiculo->plate = $vehiculos[$i][0];
                 $vehiculo->vin = $vehiculos[$i][1];
@@ -384,6 +389,7 @@ class VehicleController extends BaseController
         catch (QueryException $ex) 
         {
             $responseMessage = $this->errorService->getError($ex);
+            var_dump($responseMessage);die();
                         
         }        
         $vehicles = DB::table('vehicles')  

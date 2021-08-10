@@ -6,8 +6,8 @@
             <h2> Marca </h2>
         </div>   
         <div class="col-md-2 d-flex justify-content-end align-items-end">
-            <a class="link pr-4" href="/vehicles/brands/list">Lista</a> 
-            <a class="link " href="/admin">Volver</a> 
+            <a class="link pr-4" href="/Intranet/vehicles/brands/list">Lista</a> 
+            <a class="link " href="/Intranet/admin">Volver</a> 
         </div>        
     </div>
     <div class="row">
@@ -19,7 +19,7 @@
     </div>
     <div class="row">
         <div class="col">
-            <form action="/vehicles/brands/save" method="post">
+            <form id="brandForm" action="/Intranet/vehicles/brands/save" method="post">
                 <div class="form-row">
                     <div class="form-group col-md-2">
                         <label for="inputId">Id</label>                        
@@ -32,8 +32,9 @@
                 </div>              
                 <div class="form-row">
                     <div class="col text-right">
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                    <a href="/vehicles/brands/list" class="btn btn-primary">Cancelar</a>
+                        <button id="submit" type="submit" class="btn btn-primary">Guardar</button>
+                        <a href="/Intranet/vehicles/brands/list" class="btn btn-primary">Cancelar</a>
+                    </div>
                 </div>
             </form>
         </div>

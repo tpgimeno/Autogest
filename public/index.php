@@ -267,19 +267,38 @@ $map->get('garagesDelete', '/Intranet/Garages/delete', [
 //PAYMENT-WAYS
 
 $map->get('paymentWaysList', '/Intranet/paymentWays/form', [
-    'App\Controllers\PaymentWaysController',
+    'App\Controllers\Entitys\PaymentWaysController',
     'getPaymentWaysDataAction'
 ]);
 $map->get('paymentWaysForm', '/Intranet/paymentWays/list', [
-    'App\Controllers\PaymentWaysController',
+    'App\Controllers\Entitys\PaymentWaysController',
     'getIndexAction'
 ]);
 $map->post('savePaymentWays', '/Intranet/paymentWays/save', [
-    'App\Controllers\PaymentWaysController',
+    'App\Controllers\Entitys\PaymentWaysController',
     'getPaymentWaysDataAction'
 ]);
 $map->get('paymentWaysDelete', '/Intranet/paymentWays/delete', [
-    'App\Controllers\PaymentWaysController',
+    'App\Controllers\Entitys\PaymentWaysController',
+    'deleteAction'
+]);
+
+//TAXES
+
+$map->get('taxesList', '/Intranet/taxes/form', [
+    'App\Controllers\Entitys\TaxesController',
+    'getTaxesDataAction'
+]);
+$map->get('taxesForm', '/Intranet/taxes/list', [
+    'App\Controllers\Entitys\TaxesController',
+    'getIndexAction'
+]);
+$map->post('saveTaxesWays', '/Intranet/taxes/save', [
+    'App\Controllers\Entitys\TaxesController',
+    'getTaxesDataAction'
+]);
+$map->get('taxesDelete', '/Intranet/taxes/delete', [
+    'App\Controllers\Entitys\TaxesController',
     'deleteAction'
 ]);
 
@@ -305,6 +324,9 @@ $map->get('repicesDelete', '/Intranet/sells/repices/delete', [
  * SELLS ROUTES
  */
 
+
+// CUSTOMER
+
 $map->get('customerForm', '/Intranet/customers/form', [
     'App\Controllers\Sells\CustomerController',
     'getCustomerDataAction'
@@ -325,6 +347,9 @@ $map->get('deleteCustomer', '/Intranet/customers/delete', [
     'App\Controllers\Sells\CustomerController',
     'deleteAction'   
 ]);
+
+//CUSTOMER TYPES
+
 $map->get('customerTypeForm', '/Intranet/customers/type/form', [
     'App\Controllers\Sells\CustomerTypesController',
     'getCustomerTypesDataAction'
@@ -345,6 +370,9 @@ $map->get('deleteCustomerType', '/Intranet/customers/type/delete', [
     'App\Controllers\Sells\CustomerTypesController',
     'deleteAction'   
 ]);
+
+//SELLOFFERS
+
 $map->get('sellOffersForm', '/Intranet/sells/offers/form', [
     'App\Controllers\Sells\SellOffersController',
     'getSellOffersDataAction'
@@ -441,6 +469,9 @@ $map->get('deleteSellOffers', '/Intranet/sells/offers/delete', [
     'App\Controllers\Sells\SellOffersController',
     'deleteAction'   
 ]);
+
+//SELL DELIVERIES
+
 $map->get('sellDeliveriesForm', '/Intranet/sells/sellDeliveries/form', [
     'App\Controllers\Sells\SellDeliveriesController',
     'getSellDeliveriesDataAction'
@@ -461,6 +492,9 @@ $map->get('deleteSellDeliveries', '/Intranet/sells/sellDeliveries/delete', [
     'App\Controllers\Sells\SellDeliveriesController',
     'deleteAction'  
 ]);
+
+//SELL INVOICES
+
 $map->get('sellInvoicesForm', '/Intranet/sells/invoices/form', [
     'App\Controllers\Sells\SellInvoicesController',
     'getSellInvoicesDataAction'
@@ -837,7 +871,7 @@ $map->post('SellOfferExportReport', '/Intranet/reports/sellofferExport', [
 
 
 
-// FIN DE LAS RUTAS
+// END OF ROUTES
 
 
 

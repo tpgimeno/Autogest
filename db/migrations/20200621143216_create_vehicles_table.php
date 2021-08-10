@@ -62,7 +62,7 @@ class CreateVehiclesTable extends AbstractMigration
                 ->addColumn('appointDate', 'date', ['null' => true, 'default' => null])
                 ->addColumn('customer', 'integer', ['null' => true, 'default' => null])
                 ->addColumn('seller', 'integer', ['null' => true, 'default' => null])
-                ->addColumn('state', 'string')
+                ->addColumn('state', 'string', ['null' => true, 'default' => null])
                 ->addColumn('dataType', 'string', ['null' => true, 'default' => null])
                 ->addColumn('variant', 'string', ['null' => true, 'default' => null])
                 ->addColumn('version', 'string', ['null' => true, 'default' => null])

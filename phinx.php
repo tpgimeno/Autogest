@@ -11,7 +11,7 @@ return
         'default_environment' => 'development',
         'production' => [
             'adapter' => 'mysql',
-            'host' => 'localhost',
+            'host' => '127.0.0.1',
             'name' => 'automotive',
             'user' => 'root',
             'pass' => '',
@@ -29,7 +29,7 @@ return
         ],
         'testing' => [
             'adapter' => 'mysql',
-            'host' => 'localhost',
+            'host' => '127.0.0.1',
             'name' => 'testing_db',
             'user' => 'root',
             'pass' => '',

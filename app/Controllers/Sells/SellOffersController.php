@@ -9,11 +9,13 @@ use App\Models\Brand;
 use App\Models\Components;
 use App\Models\Customer;
 use App\Models\ModelVh;
+use App\Models\PaymentWays;
 use App\Models\SellOffer;
 use App\Models\SellOffersComponents;
 use App\Models\SellOffersSupplies;
 use App\Models\SellOffersWorks;
 use App\Models\Supplies;
+use App\Models\Taxes;
 use App\Models\Vehicle;
 use App\Models\VehicleTypes;
 use App\Models\Works;
@@ -65,7 +67,7 @@ class SellOffersController extends BaseController {
                 ->join('customers', 'selloffers.customerId', '=', 'customers.id')
                 ->join('vehicles', 'selloffers.vehicleId', '=', 'vehicles.id')
                 ->join('brands', 'vehicles.brand', '=', 'brands.id')
-                ->join('models', 'vehicles.model', '=', 'models.id')
+                ->join('models', 'vehicles.model', '=', 'models.id')          
                 ->select('selloffers.offerNumber', 'customers.name as customerName', 'brands.name as brand',
                         'models.name as model')
                 ->where('selloffers.offerDate', 'like', '%'.$searchString.'%')
@@ -80,12 +82,10 @@ class SellOffersController extends BaseController {
             'offers' => $offers
         ]);
     }
-    public function getSellOffersDataAction($request)
-    {
+    public function getSellOffersDataAction($request){
         $responseMessage = null;
         $offer = null;
-        if($request->getMethod() == 'POST')
-        {
+        if($request->getMethod() == 'POST'){
             $postData = $request->getParsedBody();            
             if($this->validateData($postData))
             {
@@ -95,58 +95,48 @@ class SellOffersController extends BaseController {
             $responseMessage = $this->saveSellOffersDataAction($offer);            
         }                        
         $params = $request->getQueryParams();
-        if(isEmpty($params) && $offer)
-        {
+        if(isEmpty($params) && $offer){
             $params = array('offer_id' => $offer->id);
-        }
-        
+        }        
         $selected_tab = 'offer'; 
         $selected_offer = $this->getSelectedOfferData($params);        
         $new_offer = null;
         $offer_number = null;        
-        if($selected_offer === null)
-        {
+        if($selected_offer === null){
             $last_offer = DB::table('selloffers')->get()->last();            
-            if($last_offer === null)
-            {
+            if($last_offer === null){
                 $new_offer = 1;                
                 $offer_number = $this->getFirstSellOfferNumber(); 
                 $this->resetOffer($new_offer);
             }
-            else
-            {
+            else{
                 $new_offer = $last_offer->id + 1;
                 $offer_number = $this->getNewSellOfferNumber($last_offer); 
                 $this->resetOffer($new_offer);
             }              
         }
-        else
-        {
+        else{
             $new_offer = $selected_offer->id;
             $offer_number = $selected_offer->offerNumber;
         } 
                        
         return $this->getRenderAgain($params, $new_offer, $offer_number, $selected_tab, $responseMessage);
     }  
-    public function validateData($postData)
-    {
+    public function validateData($postData) {
         $responseMessage = null;
         $offerValidator = v::key('offer_number', v::stringType()->notEmpty())
                     ->key('customer_id', v::notEmpty())
                     ->key('vehicle_id', v::notEmpty());
-        try
-        {
+        try{
              $offerValidator->assert($postData);
 
         } 
-        catch (Exception $ex) 
-        {
+        catch (Exception $ex){
             $responseMessage = $ex->getMessage();
         }
         return $responseMessage;
     }
-    public function saveSellOffersDataAction($offer)
-    {               
+    public function saveSellOffersDataAction($offer){               
         try{
             if(SellOffer::find($offer->id))
             {                     
@@ -158,19 +148,15 @@ class SellOffersController extends BaseController {
                 $offer->save();
                 $responseMessage = 'Saved';
             }
-        } catch (QueryException $ex) {
+        } catch (QueryException $ex){
             $responseMessage = $this->errorService->getError($ex);
         }  
         return $responseMessage;
     }
-    public function getPostDataSellOffer($postData)
-    {
-        $offer = new SellOffer();
-        
-        if(isset($postData['id']) && $postData['id'])
-        {
-            if(SellOffer::find($postData['id']))
-            {
+    public function getPostDataSellOffer($postData){
+        $offer = new SellOffer();        
+        if(isset($postData['id']) && $postData['id']){
+            if(SellOffer::find($postData['id'])){
                 $offer = SellOffer::find($postData['id'])->first();
             }            
         }        
@@ -607,7 +593,9 @@ class SellOffersController extends BaseController {
                 $offer_number = $this->getFirstSellOfferNumber();
             }            
         }        
-        $selectedSupply = $this->getSelectedOfferSelectedSupply($params);        
+        $selectedSupply = $this->getSelectedOfferSelectedSupply($params);  
+        $selectedTaxe = $this->getSelectedTaxe($selected_offer);   
+        $selectedPaymentWay = $this->getSelectedPaymentWay($selected_offer);
         $editPriceSupply = $selectedSupply->price;
         $editCantitySupply = $selectedSupply->cantity;           
         $selectedComponent = $this->getSelectedOfferComponents($params);
@@ -628,10 +616,11 @@ class SellOffersController extends BaseController {
         $supplies = Supplies::All();
         $components = Components::All();
         $works = Works::All();
+        $taxes= Taxes::All();
+        $paymentWays = PaymentWays::All();
         $customers = Customer::All();
         $vehicles = Vehicle::All();
         $accesories = Accesories::All();
-//        var_dump($selectedCustomer);die();
         return $this->renderHTML('/sells/offers/sellOffersForm.html.twig', [
             'sellOffer' => $selected_offer,
             'offer_number' => $offer_number,
@@ -642,6 +631,8 @@ class SellOffersController extends BaseController {
             'brand' => $brand,
             'model' => $model,
             'types' => $types,
+            'taxes' => $taxes,
+            'paymentWays' => $paymentWays,
             'accesories' => $accesories,
             'selected_accesories' => $selectedAccesories,
             'supplies' => $supplies,
@@ -655,7 +646,9 @@ class SellOffersController extends BaseController {
             'edit_price_component' => $editPriceComponent,
             'edit_cantity_component' => $editCantityComponent,
             'selected_work' => $selectedWork,
-            'selected_tab' => $selected_tab,                
+            'selected_tab' => $selected_tab, 
+            'selected_taxe' => $selectedTaxe,
+            'selected_paymentWay' => $selectedPaymentWay,
             'works' => $works,                
             'offerWorks' => $offerWorks,
             'edit_price_work' => $editPriceWork,
@@ -709,6 +702,23 @@ class SellOffersController extends BaseController {
             }                    
         }        
         return $selected_offer;          
+    }
+    public function getSelectedTaxe($offer){
+        $taxe = null;        
+        if($offer){            
+            $taxe = Taxes::find($offer->taxesId)->first();
+            return $taxe;  
+        }
+        return $taxe;
+        
+    }  
+    public function getSelectedPaymentWay($offer){
+        $paymentWay = null;
+        if($offer){
+            $paymentWay = PaymentWays::find($offer->paymentWayId);
+            return $paymentWay->name;
+        }
+        return $paymentWay;
     }
     public function getSelectedOfferSelectedSupply($params)
     {              

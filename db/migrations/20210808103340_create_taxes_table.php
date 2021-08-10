@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class CreatePaymentWaysTable extends AbstractMigration
+final class CreateTaxesTable extends AbstractMigration
 {
     /**
      * Change Method.
@@ -18,6 +18,12 @@ final class CreatePaymentWaysTable extends AbstractMigration
      */
     public function change(): void
     {
-
+        $table = $this->table('taxes');
+        $table->addColumn('name', 'string')  
+                ->addColumn('percentaje', 'integer')
+                ->addColumn('created_at', 'datetime')
+                ->addColumn('updated_at', 'datetime', ['null' => true])
+                ->addColumn('deleted_at', 'datetime', ['null' => true])
+                ->create();
     }
 }

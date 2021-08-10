@@ -2,18 +2,18 @@
 
 namespace App\Services\Entitys;
 
-use App\Models\Location;
+use App\Models\PaymentWays;
 
 /**
  * Description of ModelService
  *
  * @author tonyl
  */
-class LocationService 
+class PaymentWaysService 
 {
-    public function deleteLocation($id)
+    public function deletepaymentWay($id)
     {              
-        $loc = Location::find($id)->first();        
+        $loc = paymentWays::find($id)->first();        
         $loc->delete();
     }
 }

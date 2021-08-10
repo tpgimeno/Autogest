@@ -5,7 +5,7 @@
             <h2> Oferta </h2>
         </div>   
         <div class="col-md-2 d-flex justify-content-end align-items-end">
-            <a class="link pr-4" href="/Intranet/Intranet/sells/offers/list">Lista</a> 
+            <a class="link pr-4" href="/Intranet/sells/offers/list">Lista</a> 
             <a class="link " href="/Intranet/admin">Volver</a> 
         </div>        
     </div>
@@ -48,13 +48,31 @@
                           <label for="inputOfferID">ID</label>                        
                           <input type="text" name="id" class="form-control" id="inputId" placeholder="" value="{{ new_selloffer }}">
                     </div>
-                    <div class="form-group col-md-2 offset-md-6">
+                    <div class="form-group col-md-2 offset-md-7">
                           <label for="inputOfferNumber">Numero de Oferta</label>                        
                           <input type="text" name="offer_number" class="form-control" id="inputOfferNumber" placeholder="" value="{{ offer_number }}">
                     </div>
                     <div class="form-group col-md-2">
                           <label for="inputOfferDate">Fecha</label>                        
                           <input type="date" name="date" class="form-control" id="inputDate" placeholder="" value="{{ sellOffer.offerDate }}">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="selectTaxes">Tipo de Iva</label>
+                        <select name="taxes" class="form-control" id="selectTaxes">
+                            {% for taxe in taxes %}
+                                <option>{{ taxe.name ~ " / " ~ taxe.percentaje ~ "%"}}</option>
+                            {% endfor %}                            
+                        </select>
+                    </div>
+                        <div class="form-group offset-md-4 col-md-4">
+                        <label for="selectPaymentWays">Forma de Pago</label>
+                        <select name="paymentWays" class="form-control" id="selectPaymentWays">
+                            {% for paymentWay in paymentWays %}
+                                <option>{{ paymentWay.name ~ " / " ~ paymentWay.discount ~ "%"}}</option>
+                            {% endfor %}                            
+                        </select>
                     </div>
                 </div>
                 <div class="form-row">
