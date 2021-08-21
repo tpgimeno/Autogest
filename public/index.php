@@ -669,6 +669,25 @@ $map->get('deleteVehicleTypes', '/Intranet/vehicles/vehicleTypes/delete', [
     'deleteAction'   
 ]);
 
+//VEHICLE COMPONENTS
+
+$map->get('vehicleComponentsSearch', '/Intranet/vehicles/vehicleComponents/form', [
+    'App\Controllers\Vehicle\VehicleController',
+    'searchComponentAction'
+]);
+$map->get('vehicleComponentsSelect', '/Intranet/vehicles/vehicleComponents/select', [
+    'App\Controllers\Vehicle\VehicleController',
+    'selectComponentAction'
+]);
+$map->post('vehicleComponentsAdd', '/Intranet/vehicles/vehicleComponents/add', [
+    'App\Controllers\Vehicle\VehicleController',
+    'addComponentAction'
+]);
+$map->get('vehicleComponentsDelete', '/Intranet/vehicles/vehicleComponents/delete', [        
+    'App\Controllers\Vehicle\VehicleController',
+    'deleteComponentAction'   
+]);
+
 //BUY DELIVERIES
 
 $map->get('buyDeliveriesForm', '/Intranet/buys/buyDeliveries/form', [

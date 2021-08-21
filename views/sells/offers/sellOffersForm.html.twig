@@ -281,12 +281,11 @@
                             Buscar Recambios
                         </button>                        
                     </div>
-                </div>
-               
+                </div>               
                 <div class="form-row">
                     <div class="form-group col-md-1">
                         <label for="inputSupplyId">ID</label>
-                        <input type="text" name="supply_id" class="form-control" id="inputSupplyId" placeholder="" value="{{ selected_supply.supplyId }}">
+                        <input type="text" name="supplyId" class="form-control" id="inputSupplyId" placeholder="" value="{{ selected_supply.supplyId }}">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputSupplyReference">Referencia</label>
@@ -354,7 +353,7 @@
                         <input type="text" name="supplies_total" class="euros form-control" id="inputSuppliesTotal" placeholder="" value="">
                     </div>
                 </div>
-                        <div class="form-row mt-3">
+                <div class="form-row mt-3">
                     <div class="form-group col text-right">                        
                         <button id="searchComponents" type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchComponentsModal">
                             Buscar Componentes
@@ -364,7 +363,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-1">
                         <label for="inputComponentId">ID</label>
-                        <input type="text" name="component_id" class="form-control" id="inputComponentId" placeholder="" value="{{ selected_component.componentId }}">
+                        <input type="text" name="componentId" class="form-control" id="inputComponentId" placeholder="" value="{{ selected_component.componentId }}">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputComponentReference">Referencia</label>
@@ -407,13 +406,15 @@
                             </tr>
                             {% for component in offerComponents %}
                                  <tr>
-                                     <td>{{ component.id }}</td>
+                                     {% set import = component.price*component.cantity %}                                     
+                                     <td>{{ component.componentId }}</td>
                                      <td>{{ component.reference }}</td>
                                      <td>{{ component.name }}</td>
                                      <td>{{ component.price }}</td>
                                      <td>{{ component.cantity }}</td>
-                                     <td>{{ component.import }}</td>
-                                 </tr>
+                                     <td>{{ import }}</td>
+                                     <td><a href="/Intranet/sells/offers/components/edit?componentId={{ component.id }}&offer_id={{ new_selloffer }}">Edit</a></td>
+                                     <td><a href="/Intranet/sells/offers/components/del?componentId={{ component.id }}&offer_id={{ new_selloffer }}">Edit</a></td>                                     
                             {% endfor %} 
                         </table>
                     </div>
@@ -575,7 +576,7 @@
                                         <td>{{ customer.city }}</td>
                                         <td>{{ customer.phone }}</td>
                                         <td>{{ customer.email }}</td>
-                                        <td><a href="/Intranet/sells/offers/customer/select?customer_id={{ customer.id }}&offer_id={{ new_selloffer }}&vehicle_id={{selected_vehicle.id}}&work_id={{selected_work.id}}&supply_id={{ selected_supply.id }}&component_id={{ selected_component.id }}">Select</a></td>                                        
+                                        <td><a href="/Intranet/sells/offers/customer/select?customer_id={{ customer.id }}&offer_id={{ new_selloffer }}&vehicle_id={{selected_vehicle.id}}&work_id={{selected_work.id}}&supplyId={{ selected_supply.id }}&componentId={{ selected_component.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>
@@ -638,7 +639,7 @@
                                         <td>{{ vehicle.brand }}</td>
                                         <td>{{ vehicle.model }}</td>
                                         <td>{{ vehicle.description }}</td>
-                                        <td><a href="/Intranet/sells/offers/vehicle/select?vehicle_id={{vehicle.id}}&offer_id={{ new_selloffer }}&work_id={{selected_work.id}}&customer_id={{ selected_customer.id }}&supply_id={{ selected_supply.id }}&component_id={{ selected_component.id }}">Select</a></td>                                        
+                                        <td><a href="/Intranet/sells/offers/vehicle/select?vehicle_id={{vehicle.id}}&offer_id={{ new_selloffer }}&work_id={{selected_work.id}}&customer_id={{ selected_customer.id }}&supplyId={{ selected_supply.id }}&componentId={{ selected_component.id }}">Select</a></td>                                        
                                     </tr>
                                 {% endfor %}                
                             </table>
@@ -697,7 +698,7 @@
                                         <td>{{ supply.name }}</td>
                                         <td>{{ supply.stock }}</td>
                                         <td>{{ supply.pvp }}</td>
-                                        <td><a href="/Intranet/sells/offers/supplies/select?supply_id={{ supply.id }}&offer_id={{ new_selloffer }}&work_id={{selected_work.id}}&vehicle_id={{ selected_vehicle.id }}&customer_id={{ selected_customer.id }}&component_id={{ selected_component.id }}">Select</a></td>                                        
+                                        <td><a href="/Intranet/sells/offers/supplies/select?supplyId={{ supply.id }}&offer_id={{ new_selloffer }}&work_id={{selected_work.id}}&vehicle_id={{ selected_vehicle.id }}&customer_id={{ selected_customer.id }}&componentId={{ selected_component.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>
@@ -752,10 +753,9 @@
                                         <td>{{ component.ref }}</td>
                                         <td>{{ component.mader }}</td>
                                         <td>{{ component.serial_number }}</td>
-                                        <td>{{ component.name }}</td>
-                                        <td>{{ component.stock }}</td>
+                                        <td>{{ component.name }}</td>                                        
                                         <td>{{ component.pvp }}</td>                                        
-                                        <td><a href="/Intranet/sells/offers/components/select?component_id={{component.id}}&offer_id={{new_selloffer}}&work_id={{selected_work.id}}&vehicle_id={{ selected_vehicle.id }}&supply_id={{ selected_supply.id }}&customer_id={{ selected_customer.id }}">Select</a></td>                                        
+                                        <td><a href="/Intranet/sells/offers/components/select?componentId={{component.id}}&offer_id={{new_selloffer}}&work_id={{selected_work.id}}&vehicle_id={{ selected_vehicle.id }}&supplyId={{ selected_supply.id }}&customer_id={{ selected_customer.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>
@@ -808,7 +808,7 @@
                                         <td>{{ work.reference }}</td>
                                         <td>{{ work.description }}</td>                                                                               
                                         <td>{{ work.price }}</td>                                        
-                                        <td><a href="/Intranet/sells/offers/works/select?work_id={{work.id}}&offer_id={{new_selloffer}}&vehicle_id={{ selected_vehicle.id }}&supply_id={{ selected_supply.id }}&component_id={{ selected_component.id }}&customer_id={{ selected_customer.id }}">Select</a></td>                                        
+                                        <td><a href="/Intranet/sells/offers/works/select?work_id={{work.id}}&offer_id={{new_selloffer}}&vehicle_id={{ selected_vehicle.id }}&supplyId={{ selected_supply.id }}&componentId={{ selected_component.id }}&customer_id={{ selected_customer.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>

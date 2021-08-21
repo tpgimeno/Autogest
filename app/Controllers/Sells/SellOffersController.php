@@ -277,33 +277,29 @@ class SellOffersController extends BaseController {
         $selected_tab = 'supplies'; 
         return $this->getRenderAgain($params, null, null, $selected_tab, $responseMessage);        
     }
-    public function addSuppliesSellOffersAction($request) 
-    {
+    public function addSuppliesSellOffersAction($request) {
         $responseMessage = null;
         $postData = $request->getParsedBody();        
         $data = json_decode($postData['supply']);        
         $supply = new SellOffersSupplies();        
         $temp_supply = SellOffersSupplies::where('supplyId', '=', $data->supplyId)
-                ->where('sellofferId', '=', $data->sellofferId);
-        if($temp_supply)
-        {
+                ->where('sellofferId', '=', $data->sellofferId)
+                ->first();
+        if($temp_supply){
             $supply = $temp_supply;
             $supply->cantity += $data->cantity;
         }  
-        else
-        {
+        else{
             $supply->cantity = $data->cantity;
         }
         $supply->supplyId = $data->supplyId;
         $supply->sellofferId = $data->sellofferId;        
         $supply->price = $data->price;         
-        if($temp_supply)
-        {
+        if($temp_supply){
             $supply->update();
             $responseMessage = 'Supply Updated';
         }
-        else
-        {
+        else{
             $supply->save();
             $responseMessage = 'Supply Saved';
         }
@@ -320,7 +316,7 @@ class SellOffersController extends BaseController {
                 ->join('maders', 'supplies.mader', '=', 'maders.id')
                 ->select('selloffersSupplies.id', 'selloffersSupplies.sellofferId', 'selloffersSupplies.supplyId', 'supplies.ref as reference', 'maders.name as mader', 'supplies.name as name', 'selloffersSupplies.cantity as cantity', 'selloffersSupplies.price as price')
                 ->where('selloffersSupplies.sellofferId', '=', $params['offer_id'])
-                ->where('selloffersSupplies.supplyId', '=', $params['supply_id'])
+                ->where('selloffersSupplies.supplyId', '=', $params['supplyId'])
                 ->first(); 
         
         if($supply !== null)
@@ -339,7 +335,7 @@ class SellOffersController extends BaseController {
         $responseMessage = 'Recambio eliminado';
         $selected_tab = 'supplies';
         $params = $request->getQueryParams();        
-        $supply = SellOffersSupplies::where('supplyId', '=', $params['supply_id'])
+        $supply = SellOffersSupplies::where('supplyId', '=', $params['supplyId'])
                 ->where('sellofferId', '=', $params['offer_id'])
                 ->first();
         if($supply)
@@ -376,18 +372,19 @@ class SellOffersController extends BaseController {
     public function selectComponentsSellOffersAction($request)
     {             
         $responseMessage = null;
-        $params = $request->getQueryParams();
+        $params = $request->getQueryParams();        
         $selected_tab = 'supplies';
         return $this->getRenderAgain($params, null, null, $selected_tab, $responseMessage);        
     }
-    public function addComponentsSellOffersAction($request)
-    {
+    public function addComponentsSellOffersAction($request){
         $responseMessage = null;
-        $postData = $request->getParsedBody();
+        $postData = $request->getParsedBody();        
         $data = json_decode($postData['component']);        
         $offerComponent = new SellOffersComponents();
+        
         $temp_component = SellOffersComponents::where('componentId', '=', $data->componentId)
-                ->where('sellofferId', '=', $data->sellofferId);
+                ->where('sellofferId', '=', $data->sellofferId)
+                ->first();
         if($temp_component)
         {
             $offerComponent = $temp_component;
@@ -396,6 +393,7 @@ class SellOffersController extends BaseController {
         $offerComponent->sellofferId = $data->sellofferId;
         $offerComponent->cantity = $data->cantity;
         $offerComponent->price = $data->price;
+        
         if($temp_component)
         {
             $offerComponent->update();
@@ -412,13 +410,14 @@ class SellOffersController extends BaseController {
     public function editComponentsSellOffersAction($request) {
         $responseMessage = 'Editando Component';
         $selected_tab = 'supplies';
-        $params = $request->getQueryParams();       
+        $params = $request->getQueryParams();        
         $component = DB::table('selloffersComponents')                
                 ->join('components', 'selloffersComponents.componentId', '=', 'components.id')
                 ->join('maders', 'components.mader', '=', 'maders.id')
                 ->select('selloffersComponents.id', 'selloffersComponents.sellofferId', 'selloffersComponents.componentId', 'components.ref as reference', 'maders.name as mader', 'components.name as name', 'selloffersComponents.cantity as cantity', 'selloffersComponents.price as price')
                 ->where('selloffersComponents.sellofferId', '=', $params['offer_id'])
-                ->where('selloffersComponents.componentId', '=', $params['component_id']);    
+                ->where('selloffersComponents.componentId', '=', $params['componentId'])
+                ->first();                
         if($component)
         {
             $array = (['component_price' => $component->price ,'component_cantity' => $component->cantity]);
@@ -428,7 +427,7 @@ class SellOffersController extends BaseController {
             {
                 $editComponent->delete();
             } 
-        }           
+        }        
         return $this->getRenderAgain($params, null, null, $selected_tab, $responseMessage);        
     }
     public function delComponentsSellOffersAction($request)
@@ -437,7 +436,7 @@ class SellOffersController extends BaseController {
         $selected_tab = 'supplies';
         $params = $request->getQueryParams(); 
         
-        $component = SellOffersComponents::where('componentId', '=', $params['component_id'])
+        $component = SellOffersComponents::where('componentId', '=', $params['componentId'])
                 ->where('sellofferId', '=', $params['offer_id']);
         if($component)
         {
@@ -621,6 +620,7 @@ class SellOffersController extends BaseController {
         $customers = Customer::All();
         $vehicles = Vehicle::All();
         $accesories = Accesories::All();
+        
         return $this->renderHTML('/sells/offers/sellOffersForm.html.twig', [
             'sellOffer' => $selected_offer,
             'offer_number' => $offer_number,
@@ -720,30 +720,25 @@ class SellOffersController extends BaseController {
         }
         return $paymentWay;
     }
-    public function getSelectedOfferSelectedSupply($params)
-    {              
+    public function getSelectedOfferSelectedSupply($params) {              
         $selectedSupply = new SellOffersSupplies();
-        if(isset($params['supply_id']) && $params['supply_id'] && $params['supply_id'] != 'null')
-        {            
-            $supply = Supplies::find($params['supply_id']);           
-            $selectedSupply->supplyId = $params['supply_id'];
+        
+        if(isset($params['supplyId']) && $params['supplyId'] && $params['supplyId'] != 'null') {            
+            $supply = Supplies::find($params['supplyId']);           
+            $selectedSupply->supplyId = $params['supplyId'];
             $selectedSupply->offerId = $params['offer_id'];
             $selectedSupply->setAttribute('ref', $supply->ref);
             $selectedSupply->setAttribute('name', $supply->name);
-            if(isset($params['supply_price']) && $params['supply_price'] && $params['supply_price'] != 'null')
-            {
+            if(isset($params['supply_price']) && $params['supply_price'] && $params['supply_price'] != 'null'){
                 $selectedSupply->price = $params['supply_price'];
             }
-            else
-            {               
+            else {               
                 $selectedSupply->price = $supply->pvp;
             }
-            if(isset($params['supply_cantity']) && $params['supply_cantity'] && $params['supply_cantity'] != 'null')
-            {
+            if(isset($params['supply_cantity']) && $params['supply_cantity'] && $params['supply_cantity'] != 'null'){
                $selectedSupply->cantity = $params['supply_cantity'];
             }
-            else
-            {
+            else {
                 $selectedSupply->cantity = 0;
             }
         }        
@@ -752,11 +747,11 @@ class SellOffersController extends BaseController {
     public function getSelectedOfferComponents($params)
     {
         $selected_component = new SellOffersComponents();        
-        if(isset($params['component_id']) && $params['component_id'] && $params['component_id'] !== 'null')
-        {
-            $component = Components::find($params['component_id']);
+        if(isset($params['componentId']) && $params['componentId'] && $params['componentId'] !== 'null')
+        {            
+            $component = Components::find($params['componentId']);            
             $selected_component->offerId = $params['offer_id'];
-            $selected_component->componentId = $params['component_id'];
+            $selected_component->componentId = $params['componentId'];
             $selected_component->setAttribute('ref', $component->ref);
             $selected_component->setAttribute('name', $component->name);
             if(isset($params['component_price']) && $params['component_price'] && $params['component_price'] != 'null')
@@ -852,7 +847,8 @@ class SellOffersController extends BaseController {
             ->join('maders', 'supplies.mader', '=', 'maders.id')
             ->select('selloffersSupplies.id', 'selloffersSupplies.sellofferId', 'selloffersSupplies.supplyId', 'supplies.ref as reference', 'maders.name as mader', 'supplies.name as name', 'selloffersSupplies.cantity as cantity', 'selloffersSupplies.price as price')
             ->where('selloffersSupplies.sellofferId', '=', $offer_id)
-            ->get();        
+            ->get();   
+        
         return $offerSupplies;
     }
     public function cleanSupplies($offer_id)
@@ -874,7 +870,7 @@ class SellOffersController extends BaseController {
             ->join('maders', 'components.mader', '=', 'maders.id')
             ->select('selloffersComponents.id', 'selloffersComponents.sellofferId', 'selloffersComponents.componentId', 'components.ref as reference', 'components.name as name', 'selloffersComponents.cantity as cantity', 'selloffersComponents.price as price')
             ->where('selloffersComponents.sellofferId', '=', $offer_id)                
-            ->get();
+            ->get();       
         return $offerComponents;
     }
     public function cleanComponents($offer_id) {

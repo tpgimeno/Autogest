@@ -3,7 +3,7 @@
 <div class="container">
     {% block javascripts %}
             <script>
-                {{ include('js/vehicles.js')}}
+                {{ include('js/vehicles.js') }}
             </script>
     {% endblock %}
     <div class="row">
@@ -35,7 +35,7 @@
                               <a class="nav-link" id="buy-tab" data-toggle="tab" href="#buy" role="tab" aria-controls="buy" aria-selected="false">Compra</a>
                             </li>
                             <li class="nav-item" role="presentation">
-                              <a class="nav-link" id="sale-tab" data-toggle="tab" href="#sale" role="tab" aria-controls="sale" aria-selected="false">Venta</a>
+                              <a class="nav-link" id="sell-tab" data-toggle="tab" href="#sell" role="tab" aria-controls="sell" aria-selected="false">Venta</a>
                             </li>
                             <li class="nav-item" role="presentation">
                               <a class="nav-link" id="accesories-tab" data-toggle="tab" href="#accesories" role="tab" aria-controls="accesories" aria-selected="false">Accesorios</a>
@@ -44,7 +44,7 @@
                               <a class="nav-link" id="equipment-tab" data-toggle="tab" href="#equipment" role="tab" aria-controls="equipment" aria-selected="false">Equipamiento</a>
                             </li>
                             <li class="nav-item" role="presentation">
-                              <a class="nav-link" id="technic-tab" data-toggle="tab" href="#tecnicos" role="tab" aria-controls="technics" aria-selected="false">Datos Técnicos</a>
+                              <a class="nav-link" id="technic-tab" data-toggle="tab" href="#tecnichs" role="tab" aria-controls="technics" aria-selected="false">Datos Técnicos</a>
                             </li>
                         </ul>                   
                         <div class="tab-content" id="myTabContent">
@@ -124,19 +124,19 @@
                                     </div>                    
                                     <div class="form-group col-md-2">
                                         <label for="inputPower">Potencia</label>
-                                        <input type="text" name="power" class="form-control text-center" id="inputPower" placeholder="130cv" value="{{ vehicle.power }}">
+                                        <input type="text" name="power" class="form-control text-center" id="inputPower" placeholder="" value="{{ vehicle.power }}">
                                     </div>                          
                                     <div class="form-group col-md-2">
                                         <label for="inputPlaces">Plazas</label>
-                                        <input type="text" name="places" class="form-control text-center" id="inputPlaces" placeholder="3" value="{{ vehicle.places }}">
+                                        <input type="text" name="places" class="form-control text-center" id="inputPlaces" placeholder="" value="{{ vehicle.places }}">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label for="inputDoors">Puertas</label>
-                                        <input type="text" name="doors" class="form-control text-center" id="inputDoors" placeholder="4" value="{{ vehicle.doors }}">
+                                        <input type="text" name="doors" class="form-control text-center" id="inputDoors" placeholder="" value="{{ vehicle.doors }}">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label for="inputColor">Color</label>
-                                        <input type="text" name="color" class="form-control" id="inputColor" placeholder="Blanco" value="{{ vehicle.color }}">
+                                        <input type="text" name="color" class="form-control" id="inputColor" placeholder="" value="{{ vehicle.color }}">
                                     </div>                    
                                 </div>
                             </div>                                
@@ -196,7 +196,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="sale" role="tabpanel" aria-labelledby="sale-tab">
+                            <div class="tab-pane fade" id="sell" role="tabpanel" aria-labelledby="sell-tab">
                                 <div class="form-row mt-3">
                                     <div class="form-group col-md-6">
                                         <label for="seller">Vendedor</label>                        
@@ -214,53 +214,191 @@
                                         <label for="inputDateSell">Fecha Venta</label>
                                         <input type="date" name="dateSell" class="form-control" id="inputDateSell" placeholder="" value="{{ vehicle.datesell }}">
                                     </div>                                    
-                                </div>
-                                    <div class="form-row"
+                                </div>                                    
                                 <div class="form-row mt-3">
                                     <div class="form-group col-md-2 offset-md-6">
                                         <label for="inputPvp">Precio Venta</label>
                                         <input type="text" name="pvp" class="form-control" id="inputPvp" placeholder="" value="{{ vehicle.pvp }}">
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label for="inputPvp">Iva Venta</label>
-                                        <input type="text" name="tvaSell" class="form-control" id="inputTvaSell" placeholder="" value="{{ vehicle.pvp }}">
+                                        <label for="inputTvaSell">Iva Venta</label>
+                                        <input type="text" name="tvaSell" class="form-control" id="inputTvaSell" placeholder="" value="{{ vehicle.pvp * 0.21 }}">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label for="inputPvp">Total Venta</label>
-                                        <input type="text" name="totalSell" class="form-control" id="inputTotalSell" placeholder="" value="{{ vehicle.pvp }}">
+                                        <input type="text" name="totalSell" class="form-control" id="inputTotalSell" placeholder="" value="{{ vehicle.pvp + (vehicle.pvp * 0.21) }}">
                                     </div>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="accesories" role="tabpanel" aria-labelledby="accesories-tab">
-                                <div class="form-row mt-3 ml-3 mb-3">    
+                                <div class="form-row mt-3 ml-3 mb-3">
                                     <div class="col">
-                                        <table class="table">
+                                        <h2>Componentes</h2>
+                                    </div>
+                                </div>
+                                <div class="form-row mt-3">
+                                    <div class="form-group col text-right">                        
+                                        <button id="searchComponents" type="button" class="btn btn-primary" data-toggle="modal" data-target="#ComponentsModal">
+                                            Buscar Componentes
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-1">
+                                        <label for="inputComponentId">ID</label>
+                                        <input type="text" name="component_id" class="form-control" id="inputComponentId" placeholder="" value="{{ selected_component.id }}">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="inputComponentReference">Referencia</label>
+                                        <input type="text" name="component_reference" class="form-control" id="inputComponentReference" placeholder="" value="{{ selected_component.ref }}">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="inputComponentName">Nombre</label>
+                                        <input type="text" name="component_name" class="form-control" id="inputComponentName" placeholder="" value="{{ selected_component.name }}">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="inputComponentPrice">Precio</label>
+                                        <input type="text" name="component_price" class="form-control" id="inputComponentPrice" placeholder="" value="{{ edit_price_component }}">
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <label for="inputComponentCantity">Cantidad</label>
+                                        <input type="text" name="component_cantity" class="form-control" id="inputComponentCantity" placeholder="" value="{{ edit_cantity_component }}">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="inputComponentTotal">Importe</label>
+                                        <input type="text" name="component_total" class="form-control" id="inputComponentTotal" placeholder="" value="">
+                                    </div>
+                                </div>
+                                <div class="form-row mt-3 ml-3 mb-3">    
+                                    <div class="col">                                        
+                                        <table id="ComponentsTable" class="table">
                                             <tr>
                                                 <th>Referencia</th>
                                                 <th>Fabricante</th>
-                                                <th>Nombre</th>                        
+                                                <th>Nombre</th>
+                                                <th>Cantidad</th>
+                                                <th>Precio</th>
                                                 <th>Edit</th>
                                                 <th>Delete</th>
                                             </tr>
-                                            {% for component in components %}
+                                            {% for component in vehicle_components %}
                                                 <tr>
                                                     <td>{{ component.ref }}</td>
                                                     <td>{{ component.mader }}</td>
-                                                    <td>{{ component.name }}</td>                            
-                                                    <td><a href="/Intranet/buys/components/form?id={{component.id}}">Edit</a></td>
-                                                    <td><a href="/Intranet/buys/components/delete?id={{component.id}}">Delete</a></td>
+                                                    <td>{{ component.name }}</td> 
+                                                    <td>{{ component.cantity }}</td>
+                                                    <td>{{ component.pvp }}</td> 
+                                                    <td><a href="/Intranet/vehicles/vehicleComponents/edit?id={{component.id}}">Edit</a></td>
+                                                    <td><a href="/Intranet/vehicles/vehicleComponents/delete?id={{component.id}}">Delete</a></td>
                                                 </tr>
                                             {% endfor %}                
                                         </table>                                        
                                     </div>                                        
-                                </div>
+                                </div>                                
                                 <div class="form-row d-flex justify-content-end">
                                     <div class="col-md-2 ">
                                         <div class="form-group">
-                                            <a href="/Intranet/" class="btn btn-primary">Añadir</a>  
+                                            <button type="button" onclick="addComponent();" class="btn btn-primary">Añadir</button>
                                         </div>
                                     </div>
-                                </div>                                                       
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-2 offset-md-6">
+                                        <label for="inputComponentsPrice">P.V.P.</label>
+                                        <input type="text" name="components_price" step="0.01" class="euros form-control" id="inputComponentsPrice" placeholder="" value="">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="inputComponentsTva">I.V.A.</label>
+                                        <input type="text" name="components_tva" step="0.01" class="euros form-control" id="inputComponentsTva" placeholder="" value="">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="inputComponentsTotal">Total</label>
+                                        <input type="text" name="components_total" class="euros form-control" id="inputComponentsTotal" placeholder="" value="">
+                                    </div>
+                                </div>
+                                <div class="form-row mt-3 ml-3 mb-3">
+                                    <div class="col">
+                                        <h2>Recambios</h2>
+                                    </div>
+                                </div>
+                                <div class="form-row mt-3">
+                                    <div class="form-group col text-right">
+                                        <button id="searchSupplies" type="button" formmethod="get" class="btn btn-primary" data-toggle="modal" data-target="#searchSuppliesModal">
+                                            Buscar Recambios
+                                        </button>                        
+                                    </div>
+                                </div>               
+                                <div class="form-row">
+                                    <div class="form-group col-md-1">
+                                        <label for="inputSupplyId">ID</label>
+                                        <input type="text" name="supply_id" class="form-control" id="inputSupplyId" placeholder="" value="{{ selected_supply.supplyId }}">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="inputSupplyReference">Referencia</label>
+                                        <input type="text" name="supply_reference" class="form-control" id="inputSupplyReference" placeholder="" value="{{ selected_supply.ref }}">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="inputSupplyName">Nombre</label>
+                                        <input type="text" name="supply_name" class="form-control" id="inputSupplyName" placeholder="" value="{{ selected_supply.name }}">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="inputSupplyPrice">Precio</label>
+                                        <input type="text" name="supply_price" class="form-control" id="inputSupplyPrice" placeholder="" value="{{ edit_price_supply }}">
+                                    </div>
+                                    <div class="form-group col-md-1">
+                                        <label for="inputSupplyCantity">Cantidad</label>
+                                        <input type="text" name="supply_cantity" class="form-control" id="inputSupplyCantity" placeholder="" value="{{ edit_cantity_supply }}">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="inputSupplyTotal">Importe</label>
+                                        <input type="text" name="supply_reference" class="form-control" id="inputSupplyTotal" placeholder="" value="">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <table id="SuppliesTable" class="table">
+                                            <tr>
+                                                <th>Referencia</th>
+                                                <th>Fabricante</th>
+                                                <th>Nombre</th>
+                                                <th>Stock</th>
+                                                <th>Edit</th>
+                                                <th>Delete</th>
+                                            </tr>                    
+                                            {% for supply in vehicle_supplies %}
+                                                <tr>
+                                                    <td>{{ supply.ref }}</td>
+                                                    <td>{{ supply.mader }}</td>
+                                                    <td>{{ supply.name }}</td>
+                                                    <td>{{ supply.stock }}</td>
+                                                    <td><a href="/Intranet/vehicles/vehicleSupplies/edit?id={{supply.id}}">Edit</a></td>
+                                                    <td><a href="/Intranet/vehicles/vehicleSupplies/delete?id={{supply.id}}">Delete</a></td>
+                                                </tr>
+                                            {% endfor %}                
+                                        </table>
+                                    </div>
+                                </div>       
+                                <div class="form-row d-flex justify-content-end">
+                                    <div class="col-md-2 ">
+                                        <div class="form-group">
+                                            <button type="button" onclick="addSupply();" class="btn btn-primary">Añadir</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-2 offset-md-6">
+                                        <label for="inputSuppliesPrice">P.V.P.</label>
+                                        <input type="text" name="supplies_price" step="0.01" class="euros form-control" id="inputSuppliesBase" placeholder="" value="">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="inputSuppliesTva">I.V.A.</label>
+                                        <input type="text" name="supplies_tva" step="0.01" class="euros form-control" id="inputSuppliesTva" placeholder="" value="">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="inputSuppliesTotal">Total</label>
+                                        <input type="text" name="supplies_total" class="euros form-control" id="inputSuppliesTotal" placeholder="" value="">
+                                    </div>
+                                </div>
                             </div>
                             <div class="tab-pane fade" id="equipment" role="tabpanel" aria-labelledby="equipment-tab">
                                 <div class="form-row mt-3 ml-3 mb-3">
@@ -276,7 +414,7 @@
                                 <div class="form-row d-flex justify-content-end">
                                     <div class="col-md-2 ">
                                         <div class="form-group">
-                                            <a href="/Intranet/" class="btn btn-primary">Añadir</a>  
+                                            <a href="/Intranet/vehicles/accesories/form" class="btn btn-primary">Añadir</a>  
                                         </div>
                                     </div>
                                 </div>   
@@ -364,8 +502,8 @@
                                         <input type="text" name="volRear" class="form-control" id="volRear" placeholder="" value="{{ vehicle.volRear }}">
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label for="volFront">Distancia Ejes</label>
-                                        <input type="text" name="volFront" class="form-control" id="volFront" placeholder="" value="{{ vehicle.volFront }}">
+                                        <label for="axeDistance">Distancia Ejes</label>
+                                        <input type="text" name="axeDistance" class="form-control" id="axeDistance" placeholder="" value="{{ vehicle.axeDistance }}">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label for="chargeLength">Logitud Carga</label>
@@ -376,11 +514,10 @@
                                         <input type="text" name="deposit" class="form-control" id="deposit" placeholder="" value="{{ vehicle.deposit }}">
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label for="deposit">Deposito</label>
-                                        <input type="text" name="deposit" class="form-control" id="deposit" placeholder="" value="{{ vehicle.deposit }}">
+                                        <label for="initCharge">Inicio Carga</label>
+                                        <input type="text" name="initCharge" class="form-control" id="initCharge" placeholder="" value="{{ vehicle.initCharge }}">
                                     </div>
-                                </div>
-                                        
+                                </div>                                        
                             </div>
                         </div>
                     </div>  
@@ -394,5 +531,122 @@
             </form>
         </div>
     </div>
-</div>    
+</div>                                       
+<!-- Modal VEHICLE COMPONENTS  -->
+<div class="modal fade" id="ComponentsModal" tabindex="-1" role="dialog" aria-labelledby="searchComponentsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h5 class="modal-title" id="searchComponentsModalLabel">Componentes</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <form id="searchComponentsForm" action="/Intranet/vehicles/vehicleComponents/search" method="post" class="form">
+                            <div class="container">
+                                <div id="formRow" class="form-row text-right">
+                                    <div class="col-11">                                                                                
+                                        <input id="searchComponentField" type="text" name="searchComponentFilter" class="form-control mb-2 mr-sm-2" id="inlineFormSearchFilter" placeholder="Nombre / Cif / Telefono / email">
+                                    </div>
+                                    <div class="col-1">
+                                        <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>                          
+                <div class="row">
+                    <div class="col">                            
+                        <table id="componentsTable" class="table">
+                            <tr>
+                                <th>Referencia</th>
+                                <th>Marca</th>
+                                <th>Serial Number</th>                                    
+                                <th>Nombre</th>                                    
+                                <th>Pvp</th>                                    
+                            </tr>                                
+                            {% for component in components %}                                    
+                                <tr id="datarow">
+                                    <td>{{ component.ref }}</td>
+                                    <td>{{ component.mader }}</td>
+                                    <td>{{ component.serial_number }}</td>
+                                    <td>{{ component.name }}</td>
+                                    <td>{{ component.stock }}</td>
+                                    <td>{{ component.pvp }}</td>                                        
+                                    <td><a href="/Intranet/vehicles/vehicleComponents/select?component_id={{component.id}}&vehicle_id={{vehicle.id}}">Select</a></td>                                        
+                                </tr>  
+                            {% endfor %}                
+                        </table>
+                    </div>
+                </div>                    
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>                  
+            </div>
+        </div>
+    </div>
+</div>
+<!-- MODAL VEHICLE SUPPLIES -->
+<div class="modal fade" id="SuppliesModal" tabindex="-1" role="dialog" aria-labelledby="searchSuppliesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h5 class="modal-title" id="searchSupplyModalLabel">Recambios</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <form id="searchSuppliesForm" action="/Intranet/vehicles/vehicleSupplies/search" method="post" class="form">
+                            <div class="container">
+                                <div id="formRow" class="form-row text-right">
+                                    <div class="col-11">                                                                                
+                                        <input id="searchSupplyField" type="text" name="searchSuppliesFilter" class="form-control mb-2 mr-sm-2" id="inlineFormSearchFilter" placeholder="">
+                                    </div>
+                                    <div class="col-1">
+                                        <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>                          
+                <div class="row">
+                    <div class="col">
+                        <table id="suppliesTable" class="table">
+                            <tr>
+                                <th>Referencia</th>
+                                <th>Marca</th>
+                                <th>Ref. Fabricante</th>                                    
+                                <th>Nombre</th>
+                                <th>Stock</th>
+                                <th>Pvp</th>                                    
+                            </tr>                                
+                            {% for supply in supplies %}                                    
+                                <tr id="datarow">
+                                    <td>{{ supply.ref }}</td>
+                                    <td>{{ supply.mader }}</td>
+                                    <td>{{ supply.mader_code }}</td>
+                                    <td>{{ supply.name }}</td>
+                                    <td>{{ supply.stock }}</td>
+                                    <td>{{ supply.pvp }}</td>
+                                    <td><a href="/Intranet/vehicles/vehicleSupplies/select?supply_id={{ supply.id }}&vehicle_id={{ selected_vehicle.id }}&customer_id={{ selected_customer.id }}&component_id={{ selected_component.id }}">Select</a></td>                                        
+                                </tr>  
+                            {% endfor %}                
+                        </table>
+                    </div>
+                </div>                    
+            </div>                 
+            <div class="modal-footer">                                               
+                <button type="button" class="btn btn-primary ml-auto" data-dismiss="modal">Close</button>  
+            </div>              
+        </div>
+    </div>
+</div> 
 {% endblock %}

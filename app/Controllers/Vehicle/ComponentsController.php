@@ -49,10 +49,10 @@ class ComponentsController extends BaseController
         if($request->getMethod() == 'POST')
         {
             $postData = $request->getParsedBody();            
-            if($this->validateData($postData))
-            {
-                $responseMessage = $this->validateData($postData);
-            }
+//            if($this->validateData($postData))
+//            {
+//                $responseMessage = $this->validateData($postData);
+//            }
             $component = $this->addComponentData($postData);
             $responseMessage = $this->saveComponent($component);
         }                
@@ -69,7 +69,7 @@ class ComponentsController extends BaseController
     {
         $responseMessage = null;
         $componentsValidator = v::key('ref', v::stringType()->notEmpty())
-                    ->key('serial_number', v::stringType()->notEmpty())
+                    ->key('serialNumber', v::stringType()->notEmpty())
                     ->key('name', v::stringType()->notEmpty());
         try{
             $componentsValidator->assert($postData);               
@@ -101,7 +101,7 @@ class ComponentsController extends BaseController
         }               
         $component->name = $postData['name'];
         $component->ref = $postData['ref'];   
-        $component->serialNumber = $postData['serial_number'];
+        $component->serialNumber = $postData['serialNumber'];
         $mader = Mader::where('name', 'like', "%".$postData['mader']."%")->first();               
         $component->mader = $mader->id;                
         $component->pvc = $this->tofloat($postData['pvc']);                

@@ -11,11 +11,15 @@ namespace App\Controllers\Vehicle;
 use App\Controllers\BaseController;
 use App\Models\Accesories;
 use App\Models\Brand;
+use App\Models\Components;
 use App\Models\Location;
 use App\Models\ModelVh;
 use App\Models\Store;
+use App\Models\Supplies;
 use App\Models\Vehicle;
 use App\Models\VehicleAccesories;
+use App\Models\VehicleComponents;
+use App\Models\VehicleSupplies;
 use App\Models\VehicleTypes;
 use App\Services\Vehicle\VehicleService;
 use Illuminate\Database\Capsule\Manager as DB;
@@ -96,7 +100,7 @@ class VehicleController extends BaseController
     }    
     public function getVehicleDataAction($request)
     {                
-        $responseMessage = null;       
+        $responseMessage = null;        
         if($request->getMethod() == 'POST')
         {
             $postData = $request->getParsedBody();            
@@ -106,51 +110,13 @@ class VehicleController extends BaseController
             }catch(Exception $e)
             {                
                 $responseMessage = $e->getMessage();
-            }
-            
+            }            
             $vehicle = $this->addVehicleData($postData);            
             $responseMessage = $this->saveVehicle($vehicle);
-        }        
-        $brandSelected = null;
-        $modelSelected = null;
-        $storeSelected = null;
-        $locationSelected = null;
-        $selectedAccesories = null;
-        $typeSelected = null;        
-        $vehicleSelected = $this->setVehicle($request);            
-        if($vehicleSelected)
-        {
-            $brandSelected = $this->setBrand($vehicleSelected);
-            $modelSelected = $this->setModel($vehicleSelected);
-            $storeSelected = $this->setStore($vehicleSelected);
-            $locationSelected = $this->setLocation($vehicleSelected);
-            $selectedAccesories = $this->setAccesories($vehicleSelected);
-
-            $typeSelected = $this->setVehicleType($vehicleSelected);
         }               
-        $accesories = Accesories::All();
-        $brands = Brand::All();
-        $models = ModelVh::All();
-        $types = VehicleTypes::All();
-        $stores = Store::All();
-        $locations = Location::All();
-        return $this->renderHTML('/vehicles/vehiclesForm.html.twig', [
-            'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
-            'responseMessage' => $responseMessage,
-            'brands' => $brands,
-            'models' => $models,
-            'stores' => $stores,
-            'locations' => $locations,
-            'store_selected' => $storeSelected,
-            'location_selected' => $locationSelected,
-            'types' => $types,
-            'type_selected' => $typeSelected,
-            'vehicle' => $vehicleSelected,
-            'brand_selected' => $brandSelected,
-            'model_selected' => $modelSelected,
-            'accesories' => $accesories,
-            'selected_accesories' => $selectedAccesories
-        ]);
+        $vehicleSelected = $this->setVehicle($request);
+        $params = $request->getQueryParams();
+        return $this->renderAgain($params, $vehicleSelected, $responseMessage, null);
     }
     public function saveVehicle($vehicle){
         try{
@@ -229,14 +195,38 @@ class VehicleController extends BaseController
         $selected_accesories = null;
         if($vehicleSelected)
         {                          
-            $selected_accesories = DB::table('vehicleaccesories')
-                    ->join('accesories', 'vehicleaccesories.accesoryId', '=', 'accesories.id')
-                    ->select('vehicleaccesories.accesoryId','vehicleaccesories.id', 'accesories.keystring', 'accesories.name')
-                    ->where('vehicleaccesories.vehicleId', '=', $vehicleSelected->id)
+            $selected_accesories = DB::table('vehicleAccesories')
+                    ->join('accesories', 'vehicleAccesories.accesoryId', '=', 'accesories.id')
+                    ->select('vehicleAccesories.accesoryId','vehicleAccesories.id', 'accesories.keystring', 'accesories.name')
+                    ->where('vehicleAccesories.vehicleId', '=', $vehicleSelected->id)
                     ->get()->toArray();            
         }
         return $selected_accesories;
     }
+    public function setVehicleComponents($vehicleSelected){
+        $selectedComponents = null;
+        if($vehicleSelected){
+            $selectedComponents = DB::table('vehicleComponents')
+                    ->join('components', 'vehicleComponents.componentId', '=', 'components.id')
+                    ->join('maders', 'vehicleComponents.mader', '=', 'mader.id')
+                    ->select('vehicleComponents.componentId', 'components.name', 'components.ref', 'components.serialNumber', 'components.mader', 'components.pvp')
+                    ->where('vehicleComponents.vehicleId', '=', $vehicleSelected->id)                    
+                    ->get();                    
+        }
+        return $selectedComponents;
+    }
+    
+    public function setVehicleSupplies($vehicleSelected){
+        $selectedSupply = null;
+        if($vehicleSelected){
+            $selectedSupply = DB::table('vehicleSupplies')
+                    ->join('supplies', 'vehicleSupplies.supplyId', '=', 'supplies.id')
+                    ->select('vehicleSupplies.supplyId', 'supplies.name', 'supplies.ref', 'supplies.mader', 'supplies.pvp')
+                    ->where('vehicleSupplies.vehicleId', '=', $vehicleSelected->id)                    
+                    ->get();
+        }
+        return $selectedSupply;
+    }      
     public function addVehicleData($postData){
         $vehicle = new Vehicle();                
         if(isset($postData['id']) && $postData['id'])
@@ -313,23 +303,91 @@ class VehicleController extends BaseController
         $response = new JsonResponse($responseMessage);
         return $response;
     }
-    public function deleteAccesoryAction($request)
-    {
+    public function deleteAccesoryAction($request){
         $responseMessage = null;
         $vehicle_accesory = null;
         $postData = $request->getParsedBody();
-        $getaccesory = json_decode($postData['vhaccesory']);        
-        $accesory = Accesories::where('name', 'like', "%".$getaccesory->accesory."%")->first();               
-        $vehicle_accesory = VehicleAccesories::where('vehicleId', '=', $getaccesory->vehicle_id)
-                ->where('accesoryId', '=', $accesory->id)
-                ->first();        
-        if($vehicle_accesory !== null)
-        {
+        if($postData){
+            $getaccesory = json_decode($postData['vhaccesory']);        
+            $accesory = Accesories::where('name', 'like', "%".$getaccesory->accesory."%")->first();               
+            $vehicle_accesory = VehicleAccesories::where('vehicleId', '=', $getaccesory->vehicle_id)
+                    ->where('accesoryId', '=', $accesory->id)
+                    ->first();
+        }
+        if($vehicle_accesory !== null){
             $responseMessage = 'Accesory Deleted';
             $vehicle_accesory->delete();
         }             
         $response = new JsonResponse($responseMessage);
         return $response;
+    }
+    public function searchComponentAction($request){
+        $searchString = null;
+        $postData = $request->getParsedBody();
+        if(isset($postData['searchFilter'])){
+            $searchString = $postData['searchFilter'];
+        }        
+        if($searchString == null){
+            $components = Components::All();
+        }
+        else{
+            $components = DB::table('components')
+                 ->join('maders', 'components.mader', '=', 'maders.id')
+                 ->select('components.id', 'components.ref', 'components.serialNumber', 'components.pvp')
+                 ->where('components.id', 'like', "%".$searchString."$")
+                 ->orWhere('components.ref', 'like', "$".$searchString."$")
+                 ->orWhere('maders.name', 'like', "$".$searchString."$")
+                 ->orWhere('components.serialNumber', 'like', "$".$searchString."$")
+                 ->whereNull('deleted_at')
+                 ->get();
+        }
+        $response = new JsonResponse($components);        
+        return $response;       
+    }
+    public function selectComponentAction($request)
+    {
+        $responseMessage = null;
+        $vehicleSelected = null;
+        $selected_tab = 'accesories';
+        try{
+            $params = $request->getQueryParams();
+        }catch(Exception $e){
+            $responseMessage = $e->getMessage();
+        }
+        if(isset($params['vehicle_id'])&& $params['vehicle_id']){
+            $vehicleSelected = Vehicle::find($params['vehicle_id'])->first();
+        }
+        return $this->renderAgain($params, $vehicleSelected, $responseMessage, $selected_tab);        
+    }
+    public function addComponentAction($request){
+       $responseMessage = null;
+        $postData = $request->getParsedBody();
+        $data = json_decode($postData['component']);        
+        $vehicleComponent = new VehicleComponents();
+        $temp_component = VehicleComponents::where('componentId', '=', $data->componentId)
+                ->where('vehicleId', '=', $data->vehicleId)
+                ->first();
+        if($temp_component){
+            $vehicleComponent = $temp_component;
+        }              
+        $vehicleComponent->componentId = $data->componentId;
+        $vehicleComponent->vehicleId = $data->vehicleId;
+        $vehicleComponent->cantity = $data->cantity;
+        $vehicleComponent->price = $data->price;
+        if($temp_component){
+            $vehicleComponent->update();
+            $responseMessage = 'Component Updated';
+        }
+        else{
+            $vehicleComponent->save();
+            $responseMessage = 'Component Saved';
+        }
+        $response = new JsonResponse($responseMessage);
+        return $response;        
+    }    
+    public function delComponentAction()
+    {
+        
     }
     public function importVehiclesExcel()
     {
@@ -341,37 +399,42 @@ class VehicleController extends BaseController
         
         $vehiculos = $spreadSheet->getActiveSheet()->toArray();
         try{
-            $reponseMessage += " - "+$this->importVehicleBrands();
+            $responseMessage . " - ". $this->importVehicleBrands();
         }catch(Exception $e){
             $responseMessage = $e->getMessage();
         }        
         try{
-            $reponseMessage += " - "+ $this->importVehicleModels();
+            $responseMessage ." - ". $this->importVehicleModels();
         }catch(Exception $e){
             $responseMessage = $e->getMessage();
         }        
         try{
-            $responseMessage += " - "+ $this->importVehiclesStores();
+            $responseMessage . " - " . $this->importVehiclesStores();
         }catch(Exception $e){
             $responseMessage = $e->getMessage();
         }
-        if($this->importVehicleTypes())
+        try
         {
-            $responseMessage = $this->importVehicleTypes();
-        }
+            $responseMessage . " - " . $this->importVehicleTypes();
+        }catch(Exception $e){
+            $responseMessage = $e->getMessage();
+        }        
 //        var_dump($vehiculos);die();       
         try{
             for($i = 1; $i < intval(count($vehiculos)); $i++)
             {
-                $vehiculo = new Vehicle();
-                
+                $vehiculo = new Vehicle();                
                 $vehiculo->brand = $vehiculos[$i][3];                             
                 $vehiculo->model = $vehiculos[$i][5];                
                 $vehiculo->description = $vehiculos[$i][6];
                 $vehiculo->plate = $vehiculos[$i][0];
                 $vehiculo->vin = $vehiculos[$i][1];
-                $time = strtotime($vehiculos[$i][11]);                
-                $vehiculo->registryDate = date('Y/m/d', $time);                
+                $time = null;
+                if($vehiculos[$i][11])
+                {
+                    $time = date_create_from_format('d/m/Y', $vehiculos[$i][11]); 
+                }               
+                $vehiculo->registryDate = date_format($time, 'Y/m/d');                
                 $vehiculo->store = $vehiculos[$i][13];
                 $vehiculo->location = 0;
                 $vehiculo->type = $vehiculos[$i][17];
@@ -388,9 +451,7 @@ class VehicleController extends BaseController
         } 
         catch (QueryException $ex) 
         {
-            $responseMessage = $this->errorService->getError($ex);
-            var_dump($responseMessage);die();
-                        
+            $responseMessage = $this->errorService->getError($ex);                        
         }        
         $vehicles = DB::table('vehicles')  
                 ->join('brands', 'vehicles.brand', '=', 'brands.id')
@@ -491,6 +552,90 @@ class VehicleController extends BaseController
     {         
         $this->vehicleService->deleteVehicle($request->getQueryParams('id'));               
         return new RedirectResponse('/Intranet/vehicles/list');
+    }
+    public function renderAgain($params, $vehicleSelected, $responseMessage, $selected_tab){
+        $brandSelected = null;
+        $modelSelected = null;
+        $storeSelected = null;
+        $locationSelected = null;
+        $selectedAccesories = null;
+        $typeSelected = null;
+        $vehicleComponents = null;
+        $vehicleSupplies = null;  
+        $editPriceComponent = null;
+        $editCantityComponent = null;
+        $editPriceSupply = null;
+        $editCantitySupply = null;
+        if($vehicleSelected)
+        {
+            $brandSelected = $this->setBrand($vehicleSelected);
+            $modelSelected = $this->setModel($vehicleSelected);
+            $storeSelected = $this->setStore($vehicleSelected);
+            $locationSelected = $this->setLocation($vehicleSelected);
+            $selectedAccesories = $this->setAccesories($vehicleSelected);
+            $typeSelected = $this->setVehicleType($vehicleSelected);
+            $vehicleComponents = $this->setVehicleComponents($vehicleSelected);
+            $vehicleSupplies = $this->setVehicleSupplies($vehicleSelected);
+        }
+        $selected_component = null;
+        if(isset($params['component_id'])&& $params['component_id']){
+            $selected_component = Components::find($params['component_id'])->first();
+            $selectedVehicleComponent = VehicleComponents::find($params['component_id']);
+            if($selectedVehicleComponent){
+                $editPriceComponent = $selectedVehicleComponent->pvp;
+                $editCantityComponent = $selectedVehicleComponent->cantity;
+            }
+            if(!$editPriceComponent){
+                $editPriceComponent = $selected_component->pvp;
+            }
+        }
+        $selected_supply = null;
+        if(isset($params['supply_id'])&& $params['supply_id']){
+            $selected_supply = Supplies::find($params['supply_id'])->first();
+            $selectedVehicleSupply = VehicleSupplies::find($params['supply_id'])->first();
+            if($selectedVehicleSupply){
+                $editPriceSupply = $selectedVehicleSupply->pvp;
+                $editCantitySupply = $selectedVehicleSupply->cantity;
+            }
+            if(!$editPriceSupply){
+                $editPriceSupply = $selected_supply->pvp;
+            }
+        }       
+        $accesories = Accesories::All();
+        $brands = Brand::All();
+        $models = ModelVh::All();
+        $types = VehicleTypes::All();
+        $stores = Store::All();
+        $components = Components::All();
+        $supplies = Supplies::All();
+        $locations = Location::All();  
+//        var_dump($vehicleComponents);die();
+        return $this->renderHTML('/vehicles/vehiclesForm.html.twig', [
+            'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
+            'responseMessage' => $responseMessage,
+            'brands' => $brands,
+            'models' => $models,
+            'stores' => $stores,
+            'components' => $components,
+            'supplies' => $supplies,
+            'locations' => $locations,
+            'selected_tab' => $selected_tab,
+            'store_selected' => $storeSelected,
+            'location_selected' => $locationSelected,
+            'types' => $types,
+            'type_selected' => $typeSelected,
+            'vehicle' => $vehicleSelected,
+            'brand_selected' => $brandSelected,
+            'model_selected' => $modelSelected,
+            'accesories' => $accesories,
+            'selected_accesories' => $selectedAccesories,
+            'vehicle_components' => $vehicleComponents,
+            'vehicle_supplies' => $vehicleSupplies,
+            'selected_component' => $selected_component,
+            'edit_price_component' => $editPriceComponent,
+            'edit_cantity_component' => $editCantityComponent,
+            'selected_supply' => $selected_supply
+        ]);
     }
     public function tofloat($num) 
     {
