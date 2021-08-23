@@ -246,7 +246,7 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-1">
                                         <label for="inputComponentId">ID</label>
-                                        <input type="text" name="component_id" class="form-control" id="inputComponentId" placeholder="" value="{{ selected_component.id }}">
+                                        <input type="text" name="componentId" class="form-control" id="inputComponentId" placeholder="" value="{{ selected_component.id }}">
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="inputComponentReference">Referencia</label>
@@ -323,7 +323,7 @@
                                 </div>
                                 <div class="form-row mt-3">
                                     <div class="form-group col text-right">
-                                        <button id="searchSupplies" type="button" formmethod="get" class="btn btn-primary" data-toggle="modal" data-target="#searchSuppliesModal">
+                                        <button id="searchSupplies" type="button" formmethod="get" class="btn btn-primary" data-toggle="modal" data-target="#SuppliesModal">
                                             Buscar Recambios
                                         </button>                        
                                     </div>
@@ -331,7 +331,7 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-1">
                                         <label for="inputSupplyId">ID</label>
-                                        <input type="text" name="supply_id" class="form-control" id="inputSupplyId" placeholder="" value="{{ selected_supply.supplyId }}">
+                                        <input type="text" name="supplyId" class="form-control" id="inputSupplyId" placeholder="" value="{{ selected_supply.id }}">
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="inputSupplyReference">Referencia</label>
@@ -577,7 +577,7 @@
                                     <td>{{ component.name }}</td>
                                     <td>{{ component.stock }}</td>
                                     <td>{{ component.pvp }}</td>                                        
-                                    <td><a href="/Intranet/vehicles/vehicleComponents/select?component_id={{component.id}}&vehicle_id={{vehicle.id}}">Select</a></td>                                        
+                                    <td><a href="/Intranet/vehicles/vehicleComponents/select?componentId={{component.id}}&vehicleId={{vehicle.id}}">Select</a></td>                                        
                                 </tr>  
                             {% endfor %}                
                         </table>
@@ -636,7 +636,7 @@
                                     <td>{{ supply.name }}</td>
                                     <td>{{ supply.stock }}</td>
                                     <td>{{ supply.pvp }}</td>
-                                    <td><a href="/Intranet/vehicles/vehicleSupplies/select?supply_id={{ supply.id }}&vehicle_id={{ selected_vehicle.id }}&customer_id={{ selected_customer.id }}&component_id={{ selected_component.id }}">Select</a></td>                                        
+                                    <td><a href="/Intranet/vehicles/vehicleSupplies/select?supplyId={{ supply.id }}&vehicleId={{ vehicle.id }}">Select</a></td>                                        
                                 </tr>  
                             {% endfor %}                
                         </table>

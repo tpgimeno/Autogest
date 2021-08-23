@@ -669,25 +669,6 @@ $map->get('deleteVehicleTypes', '/Intranet/vehicles/vehicleTypes/delete', [
     'deleteAction'   
 ]);
 
-//VEHICLE COMPONENTS
-
-$map->get('vehicleComponentsSearch', '/Intranet/vehicles/vehicleComponents/form', [
-    'App\Controllers\Vehicle\VehicleController',
-    'searchComponentAction'
-]);
-$map->get('vehicleComponentsSelect', '/Intranet/vehicles/vehicleComponents/select', [
-    'App\Controllers\Vehicle\VehicleController',
-    'selectComponentAction'
-]);
-$map->post('vehicleComponentsAdd', '/Intranet/vehicles/vehicleComponents/add', [
-    'App\Controllers\Vehicle\VehicleController',
-    'addComponentAction'
-]);
-$map->get('vehicleComponentsDelete', '/Intranet/vehicles/vehicleComponents/delete', [        
-    'App\Controllers\Vehicle\VehicleController',
-    'deleteComponentAction'   
-]);
-
 //BUY DELIVERIES
 
 $map->get('buyDeliveriesForm', '/Intranet/buys/buyDeliveries/form', [
@@ -736,48 +717,49 @@ $map->get('deleteBuyInvoices', '/Intranet/buys/buyInvoices/delete', [
 
 //VEHICLE COMPONENTS
 
-$map->get('componentsForm', '/Intranet/buys/components/form', [
-    'App\Controllers\Vehicle\ComponentsController',
-    'getComponentsDataAction'
+$map->get('vehicleComponentsSelect', '/Intranet/vehicles/vehicleComponents/select', [
+    'App\Controllers\Vehicle\VehicleController',
+    'selectComponentAction'
 ]);
-$map->get('componentsList', '/Intranet/buys/components/list', [
-    'App\Controllers\Vehicle\ComponentsController',
-    'getIndexAction'
+$map->get('vehicleComponentsAdd', '/Intranet/vehicles/vehicleComponents/add', [
+    'App\Controllers\Vehicle\VehicleController',
+    'addComponentAction'
 ]);
-$map->post('searchComponents', '/Intranet/buys/components/search', [
-    'App\Controllers\Vehicle\ComponentsController',
+$map->post('vehicleComponentsSearch', '/Intranet/vehicles/vehicleComponents/search', [
+    'App\Controllers\Vehicle\VehicleController',
     'searchComponentsAction'
 ]);
-$map->post('saveComponents', '/Intranet/buys/components/save', [
-    'App\Controllers\Vehicle\ComponentsController',
-    'getComponentsDataAction'
+$map->get('vehicleComponentsEdit', '/Intranet/vehicles/vehicleComponents/edit', [
+    'App\Controllers\Vehicle\VehicleController',
+    'editComponentAction'
 ]);
-$map->get('deleteComponents', '/Intranet/buys/components/delete', [        
-    'App\Controllers\Vehicle\ComponentsController',
-    'deleteAction'  
+$map->get('vehicleComponentsDel', '/Intranet/vehicles/vehicleComponents/del', [        
+    'App\Controllers\Vehicle\VehicleController',
+    'delComponentAction'  
 ]);
+
 
 //VEHICLE SUPPLIES
 
-$map->get('suppliesForm', '/Intranet/buys/supplies/form', [
-    'App\Controllers\Vehicle\SuppliesController',
-    'getSuppliesDataAction'
+$map->get('vehicleSuppliesSelect', '/Intranet/vehicles/vehicleSupplies/select', [
+    'App\Controllers\Vehicle\VehicleController',
+    'selectSupplyAction'
 ]);
-$map->get('suppliesList', '/Intranet/buys/supplies/list', [
-    'App\Controllers\Vehicle\SuppliesController',
-    'getIndexAction'
+$map->post('vehicleSuppliesAdd', '/Intranet/vehicles/vehicleSupplies/add', [
+    'App\Controllers\Vehicle\VehicleController',
+    'addSupplyAction'
 ]);
-$map->post('searchSupplies', '/Intranet/buys/supplies/search', [
-    'App\Controllers\Vehicle\SuppliesController',
-    'searchSuppliesAction'
+$map->post('vehiclesSupliesSearch', '/Intranet/vehicles/vehicleSupplies/search', [
+    'App\Controllers\Vehicle\VehicleController',
+    'searchSupplyAction'
 ]);
-$map->post('saveSupplies', '/Intranet/buys/supplies/save', [
-    'App\Controllers\Vehicle\SuppliesController',
-    'getSuppliesDataAction'
+$map->get('vehicleSuppliesEdit', '/Intranet/vehicles/vehicleSupplies/edit', [
+    'App\Controllers\Vehicle\VehicleController',
+    'editSupplyAction'
 ]);
-$map->get('deleteSupplies', '/Intranet/buys/supplies/delete', [        
-    'App\Controllers\Vehicle\SuppliesController',
-    'deleteAction'  
+$map->get('vehicleSuppliesDel', '/Intranet/vehicles/vehicleSupplies/del', [        
+    'App\Controllers\Vehicle\VehicleController',
+    'delSupplyAction'  
 ]);
 
 //PROVIDERS
@@ -866,10 +848,9 @@ $map->get('productionDelete', '/Intranet/production/delete', [
 
 // REPORTS
 
-
-$map->get('pruebaReport', '/Intranet/reports/prueba', [
-    'App\Controllers\PruebaReportController',
-    'getReportAction'
+$map->get('VehiclesReport', '/Intranet/reports/vehicles', [
+    'App\Controllers\Vehicle\VehicleController',
+    'getVehiclesReportAction'
 ]);
 $map->post('SellOfferVehicleReport', '/Intranet/reports/sellofferVehicle', [
     'App\Controllers\Sells\SellOffersController',
@@ -892,12 +873,8 @@ $map->post('SellOfferExportReport', '/Intranet/reports/sellofferExport', [
 
 // END OF ROUTES
 
-
-
-
 $builder = new ContainerBuilder();
 $container = $builder->build();
-
 $matcher = $routerContainer->getMatcher();
 $route = $matcher->match($request);
 if(!$route)
