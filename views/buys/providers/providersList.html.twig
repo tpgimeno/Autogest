@@ -1,0 +1,63 @@
+{% extends "dashboard.twig" %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                <h2> Proveedores </h2>
+            </div>   
+            <div class="col-md-2 d-flex justify-content-end align-items-end">
+                <a class="link " href="/Intranet/admin">Volver</a> 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <form id="searchForm" action="/Intranet/buys/providers/search" method="post" class="form">
+                    <div class="container">
+                        <div id="formRow" class="form-row text-right">
+                            <div class="col-11">                                                                                
+                                <input id="searchField" type="text" name="searchFilter" class="form-control mb-2 mr-sm-2" id="inlineFormSearchFilter" placeholder="Nombre / Cif / Telefono / email">
+                            </div>
+                            <div class="col-1">
+                                <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <table class="table">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Población</th>
+                        <th>Teléfono</th>
+                        <th>Email</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    {% for provider in providers %}
+                        <tr>
+                            <td>{{ provider.name }}</td>
+                            <td>{{ provider.city }}</td>
+                            <td>{{ provider.phone }}</td>
+                            <td>{{ provider.email }}</td>
+                            <td><a href="/Intranet/buys/providers/form?id={{provider.id}}">Edit</a></td>
+                            <td><a href="/Intranet/buys/providers/delete?id={{provider.id}}">Delete</a></td>
+                        </tr>
+                    {% endfor %}                
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col d-flex justify-content-end">
+                <form id="addProvidor" action="/Intranet/buys/providers/form" method="get">
+                    <div class="form-group">
+                        <input id="submit" type="submit" class="btn btn-primary" value="Añadir">
+                        <a href="/Intranet/admin" class="btn btn-primary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

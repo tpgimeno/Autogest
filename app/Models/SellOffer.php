@@ -9,6 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class SellOffer extends Model
 {
     use SoftDeletes;
-    protected $table = 'sellOffers';
+    protected $table = 'selloffers';
 }
         

@@ -1,0 +1,95 @@
+{% extends "dashboard.twig" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <h2> Cliente </h2>
+        </div>   
+        <div class="col-md-2 d-flex justify-content-end align-items-end">
+            <a class="link pr-4" href="/Intranet/customers/list">Lista</a> 
+            <a class="link " href="/Intranet/admin">Volver</a> 
+        </div>        
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-dark" role="alert">
+                {{ responseMessage }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <form id="CustomerForm" action="/Intranet/customers/save" method="post">
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="inputId">ID</label>                        
+                        <input type="text" name="id" class="form-control" id="inputId" placeholder="" value="{{ customer.id }}">
+                    </div>
+                    <div class="form-group col-md-3 offset-md-7">
+                        <label for="inputNif">NIF/CIF</label>
+                        <input type="text" name="fiscal_id" class="form-control" id="inputNif" placeholder="ID Fiscal" value="{{ customer.fiscalId }}">
+                    </div>
+                </div>  
+                <div class="form-row">
+                    <div class="form-group col-md-9">
+                        <label for="inputName">Nombre</label>                        
+                        <input type="text" name="name" class="form-control" id="inputName" placeholder="Nombre" value="{{ customer.name }}">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="selectType">Tipo Cliente</label>
+                        <select name="type" class="form-control" id="selectType">
+                            {% for type in types %}
+                                <option>{{ type.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                        <label for="inputAddress">Dirección</label>
+                        <input type="text" name="address" class="form-control" id="inputAddress" placeholder="C/ La paz, 4" value="{{ customer.address }}">
+                    </div>                                      
+                <div class="form-row">                         
+                    <div class="form-group col-md-10">
+                        <label for="inputCity">Población</label>
+                        <input type="text" name="city" class="form-control" id="inputCity" placeholder="Ciudad" value="{{ customer.city }}">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputZip">C.P.</label>
+                        <input type="text" name="postal_code" class="form-control" id="inputZip" placeholder="Código Postal" value="{{ customer.postalCode }}">
+                    </div>                                             
+                </div>
+                <div class="form-row"> 
+                    <div class="form-group col-md-6">
+                        <label for="inputState">Provincia/Estado</label>
+                        <input type="text" name="state" class="form-control" id="inputState" placeholder="Provincia" value="{{ customer.state }}">
+                    </div> 
+                    <div class="form-group col-md-3">
+                        <label for="inputCountry">Pais</label>
+                        <input type="text" name="country" class="form-control" id="inputCountry" placeholder="Pais" value="{{ customer.country }}">
+                    </div>                          
+                    <div class="form-group col-md-3">
+                        <label for="inputPhone">Teléfono</label>
+                        <input type="text" name="phone" class="form-control" id="inputPhone" placeholder="Phone" value="{{ customer.phone }}">
+                    </div>
+                </div>
+                <div class="form-row">                         
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail">Email</label>
+                        <input type="text" name="email" class="form-control" id="inputEmail" placeholder="Email" value="{{ customer.email }}">
+                    </div>  
+                    <div class="form-group col-md-3 offset-md-3">
+                        <label for="inputBirth">Fecha Nacimiento</label>
+                        <input type="date" name="birth" class="form-control" id="inputBirth" placeholder="Phone" value="{{ customer.birthDate }}">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col text-right">
+                        <button id="submit" type="submit" class="btn btn-primary">Guardar</button>
+                        <button type="reset" class="btn btn-primary">Cancelar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>    
+{% endblock %}

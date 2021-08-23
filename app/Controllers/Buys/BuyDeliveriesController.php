@@ -8,6 +8,7 @@ use App\Models\BuyDelivery;
 use App\Services\Buys\BuyDeliveryService;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\Response\RedirectResponse;
+use Illuminate\Database\Capsule\Manager as DB;
 
 class BuyDeliveriesController extends BaseController
 {    
@@ -21,12 +22,32 @@ class BuyDeliveriesController extends BaseController
     }    
     public function getIndexAction()
     {
-        $buyDeliveries = BuyDelivery::All();
+        $buyDeliveries = DB::table('buy_delivery')
+                ->join('providers', 'buy_delivery.providor_id', '=', 'providers.id')
+                ->select('buy_delivery.id', 'buy_delivery.delivery_number', 'buy_delivery.date', 'providers.name', 'buy_delivery.total')                
+                ->whereNull('buy_delivery.deleted_at')
+                ->get();
         return $this->renderHTML('/buys/buy_deliveryList.html.twig', [
             'buyDeliveries' => $buyDeliveries
         ]);
     }       
-    
+    public function searchBuyDeliveriesAction($request)
+    {
+        $postData = $request->getParsedBody();
+        $searchString = $postData['searchFilter'];
+        $buyDeliveries = DB::table('buy_delivery')
+                ->join('providers', 'buy_delivery.providor_id', '=', 'providers.id')
+                ->select('buy_delivery.id', 'buy_delivery.delivery_number', 'buy_delivery.date', 'providers.name', 'buy_delivery.total')
+                ->where('buy_delivery.delivery_number', 'like', "%".$searchString."%")
+                ->orWhere('providers.name', 'like', "%".$searchString."%")
+                ->orWhere('buy_delivery.date', 'like', "%".$searchString."%")
+                ->whereNull('buy_delivery.deleted_at')
+                ->get();
+        return $this->renderHTML('/buys/buy_deliveryList.html.twig', [
+            'buyDeliveries' => $buyDeliveries
+        ]);
+        
+    }
     public function getBuyDeliveriesDataAction($request)
     {                
         $responseMessage = null;
@@ -41,27 +62,42 @@ class BuyDeliveriesController extends BaseController
             try{
                 $buyDeliveryValidator->assert($postData); // true 
                 $buyDelivery = new BuyDeliveries();
-                $buyDelivery->name = $postData['name'];
-                $buyDelivery->fiscal_id = $postData['fiscal_id'];
-                $buyDelivery->fiscal_name = $postData['fiscal_name'];
-                $buyDelivery->address = $postData['address'];
-                $buyDelivery->city = $postData['city'];
-                $buyDelivery->postal_code = $postData['postal_code'];
-                $buyDelivery->state = $postData['state'];
-                $buyDelivery->country = $postData['country'];
-                $buyDelivery->phone = $postData['phone'];
-                $buyDelivery->email = $postData['email'];
-                $buyDelivery->site = $postData['site'];
-                $buyDelivery->save();     
-                $responseMessage = 'Saved';     
+                $buyDelivery->id = $postData['id'];
+                if($buyDelivery->id)
+                {
+                    $buyDelivery_temp = BuyDelivery::find($buyDelivery->id)->first();
+                    if($buyDelivery_temp)
+                    {
+                        $buyDelivery = $buyDelivery_temp;
+                    }
+                }
+                $buyDelivery->buyDelivery_number = $postData['delivery_number'];
+                $buyDelivery->date = $postData['date'];
+                $buyDelivery->providor_id = $postData['providor_id'];
+                $buyDelivery->articles = $postData['city'];
+                $buyDelivery->base = $postData['postal_code'];
+                $buyDelivery->tva = $postData['tva'];
+                $buyDelivery->total = $postData['total'];
+                $buyDelivery->observations = $postData['observations'];
+                $buyDelivery->text = $postData['text'];
+                if($buyDelivery_temp)
+                {
+                    $buyDelivery->update();
+                    $responseMessage = 'Updated';
+                }
+                else
+                {
+                    $buyDelivery->save();     
+                    $responseMessage = 'Saved';
+                }                     
             }catch(\Exception $e){                
                 $responseMessage = $e->getMessage();
             }              
         }
         $buyDeliverySelected = null;
-        if($_GET)
+        if($request->getQueryParams('id'))
         {
-            $buyDeliverySelected = BuyDeliveries::find($_GET['id']);
+            $buyDeliverySelected = BuyDeliveries::find($request->getQueryParams('id'));
         }
         return $this->renderHTML('/buys/buy_deliveryForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
@@ -74,7 +110,7 @@ class BuyDeliveriesController extends BaseController
     {
          
         $this->buyDeliveryService->deleteBuyDeliveries($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/buys/deliveries/list');
+        return new RedirectResponse('/Intranet/buys/deliveries/list');
     }
 
    

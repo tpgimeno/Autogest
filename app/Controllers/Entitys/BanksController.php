@@ -5,7 +5,7 @@ namespace App\Controllers\Entitys;
 use App\Controllers\BaseController;
 use Respect\Validation\Validator as v;
 use App\Models\Bank;
-use App\Services\BankService;
+use App\Services\Entitys\BankService;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\Response\RedirectResponse;
 
@@ -22,7 +22,7 @@ class BanksController extends BaseController
     public function getIndexAction()
     {
         $banks = Bank::All();
-        return $this->renderHTML('/banks/banksList.html.twig', [
+        return $this->renderHTML('/Entitys/banks/banksList.html.twig', [
             'banks' => $banks
         ]);
     }     
@@ -50,11 +50,11 @@ class BanksController extends BaseController
                     $bank = $temp_bank;
                 }
                 $bank->name = $postData['name'];
-                $bank->fiscal_id = $postData['fiscal_id'];
-                $bank->fiscal_name = $postData['fiscal_name'];
+                $bank->fiscalId = $postData['fiscal_id'];
+                $bank->fiscalName = $postData['fiscal_name'];
                 $bank->address = $postData['address'];
                 $bank->city = $postData['city'];
-                $bank->postal_code = $postData['postal_code'];
+                $bank->postalCode = $postData['postal_code'];
                 $bank->state = $postData['state'];
                 $bank->country = $postData['country'];
                 $bank->phone = $postData['phone'];
@@ -81,7 +81,7 @@ class BanksController extends BaseController
         {
             $bankSelected = Bank::find($request->getQueryParams('id'))->first();
         }
-        return $this->renderHTML('/banks/banksForm.html.twig', [
+        return $this->renderHTML('/Entitys/banks/banksForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
             'bank' => $bankSelected
@@ -91,6 +91,6 @@ class BanksController extends BaseController
     {
          
         $this->bankService->deleteBank($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/banks/list');
+        return new RedirectResponse('/Intranet/banks/list');
     }
 }

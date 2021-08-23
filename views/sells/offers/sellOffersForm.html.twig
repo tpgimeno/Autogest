@@ -5,8 +5,8 @@
             <h2> Oferta </h2>
         </div>   
         <div class="col-md-2 d-flex justify-content-end align-items-end">
-            <a class="link pr-4" href="/intranet/crm/offers/list">Lista</a> 
-            <a class="link " href="/intranet/admin">Volver</a> 
+            <a class="link pr-4" href="/Intranet/sells/offers/list">Lista</a> 
+            <a class="link " href="/Intranet/admin">Volver</a> 
         </div>        
     </div>
     <div class="row">
@@ -16,7 +16,7 @@
             </div>
         </div>
     </div>              
-    <div class="form-row">
+    <div class="row">
         <div class="col">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -33,11 +33,14 @@
                 </li> 
                 <li class="nav-item" role="presentation">
                   <a class="nav-link" id="works-tab" data-toggle="tab" href="#works" role="tab" aria-controls="works" aria-selected="false">Trabajos</a>
-                </li> 
+                </li>
+                 <li class="nav-item" role="presentation">
+                  <a class="nav-link" id="reports-tab" data-toggle="tab" href="#reports" role="tab" aria-controls="reports" aria-selected="false">Informes</a>
+                </li>
             </ul>
         </div>
     </div>      
-    <form action="/intranet/crm/offers/save" method="post" class="form">
+    <form id="SellOfferForm" action="/Intranet/sells/offers/save" method="post" class="form">
         <div class="tab-content" id="myTabContent">    
             <div class="tab-pane fade show active" id="offer" role="tabpanel" aria-labelledby="offer-tab">
                 <div class="form-row mt-3">
@@ -45,13 +48,31 @@
                           <label for="inputOfferID">ID</label>                        
                           <input type="text" name="id" class="form-control" id="inputId" placeholder="" value="{{ new_selloffer }}">
                     </div>
-                    <div class="form-group col-md-2 offset-md-6">
+                    <div class="form-group col-md-2 offset-md-7">
                           <label for="inputOfferNumber">Numero de Oferta</label>                        
                           <input type="text" name="offer_number" class="form-control" id="inputOfferNumber" placeholder="" value="{{ offer_number }}">
                     </div>
                     <div class="form-group col-md-2">
                           <label for="inputOfferDate">Fecha</label>                        
-                          <input type="date" name="date" class="form-control" id="inputDate" placeholder="" value="{{ sellOffer.offer_date }}">
+                          <input type="date" name="date" class="form-control" id="inputDate" placeholder="" value="{{ sellOffer.offerDate }}">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="selectTaxes">Tipo de Iva</label>
+                        <select name="taxes" class="form-control" id="selectTaxes">
+                            {% for taxe in taxes %}
+                                <option>{{ taxe.name ~ " / " ~ taxe.percentaje ~ "%"}}</option>
+                            {% endfor %}                            
+                        </select>
+                    </div>
+                        <div class="form-group offset-md-4 col-md-4">
+                        <label for="selectPaymentWays">Forma de Pago</label>
+                        <select name="paymentWays" class="form-control" id="selectPaymentWays">
+                            {% for paymentWay in paymentWays %}
+                                <option>{{ paymentWay.name ~ " / " ~ paymentWay.discount ~ "%"}}</option>
+                            {% endfor %}                            
+                        </select>
                     </div>
                 </div>
                 <div class="form-row">
@@ -88,7 +109,7 @@
             <div class="tab-pane fade" id="customer" role="tabpanel" aria-labelledby="customer-tab">
                 <div class="form-row mt-3">
                     <div class="form-group col text-right">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchCustomerModal">
+                        <button id="searchCustomer" type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchCustomerModal">
                             Buscar Cliente
                         </button>
                     </div>
@@ -106,7 +127,7 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputFiscalId">DNI/CIF</label>
-                        <input type="text" name="fiscal_id" class="form-control" id="inputFiscalId" placeholder="" value="{{ selected_customer.fiscal_id }}">
+                        <input type="text" name="fiscal_id" class="form-control" id="inputFiscalId" placeholder="" value="{{ selected_customer.fiscalId }}">
                     </div>                    
                 </div>
                 <div class="form-row">
@@ -116,7 +137,7 @@
                     </div>
                      <div class="form-group col-md-2">
                         <label for="inputPostalCode">C.P.</label>
-                        <input type="text" name="cp" class="form-control" id="inputCp" placeholder="" value="{{ selected_customer.postal_code }}">
+                        <input type="text" name="cp" class="form-control" id="inputCp" placeholder="" value="{{ selected_customer.postalCode }}">
                     </div>                    
                 </div>
                 <div class="form-row mb-3">  
@@ -148,18 +169,18 @@
                 <div class="form-row mt-3">                                                      
                     <div class="form-group col">
                         <div class="form-group col text-right">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchVehicleModal">
+                        <button id="searchVehicle" type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchVehicleModal">
                             Buscar Vehículo
                         </button>
                     </div>
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-1">
                           <label for="inputVehicleID">ID</label>                        
                           <input type="text" name="vehicle_id" class="form-control" id="inputVehicleId" placeholder="" value="{{ selected_vehicle.id }}">
                     </div>                    
-                    <div class="form-group col-md-3">                          
+                    <div class="form-group col-md-2">                          
                         <label for="inputPlate">Matricula</label>
                         <input type="text" name="plate" class="form-control" id="inputPlate" placeholder="" value="{{ selected_vehicle.plate }}">
                     </div>                    
@@ -167,17 +188,21 @@
                         <label for="inputBrand">Marca</label>
                         <input type="text" name="brand" class="form-control" id="inputBrand" placeholder="" value="{{ brand.name }}">
                     </div>                                
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                         <label for="inputModelVh">Modelo</label>
                         <input type="text" name="model" class="form-control" id="inputModel" placeholder="" value="{{ model.name }}">
                     </div> 
                 </div>
-                <div class="form-row"> 
+                <div class="form-row">
+                    <div class="form-group col-md-2">                          
+                        <label for="inputRegistryDate">Fecha Matriculación</label>
+                         <input type="date" name="registryDate" class="form-control" id="inputRegistryDate" placeholder="" value="{{ selected_vehicle.registryDate }}">
+                    </div>
                     <div class="form-group col-md-3">                          
                         <label for="inputVin">Bastidor</label>
                         <input type="text" name="vin" class="form-control" id="inputVin" placeholder="" value="{{ selected_vehicle.vin }}">
                     </div>
-                    <div class="form-group col-md-9">
+                    <div class="form-group col-md-7">
                         <label for="inputDescription">Descripcion</label>
                         <input type="text" name="description" class="form-control" id="inputDescription" placeholder="130cv" value="{{ selected_vehicle.description }}">
                     </div>
@@ -209,13 +234,13 @@
                     </div>
                 </div>
                 <div class="form-row mt-3 ml-3 mb-3">                                
-                    {% for accesory in accesories %}
-                    <div class="form-check col-md-3 pl-3">                                    
-                        <input class="form-check-input" name="{{ accesory.name }}" type="checkbox" value="{{ accesory.keystring }}" id="{{accesory.keystring}}" {% for selected_accesory in selected_accesories %}{% if accesory.keystring in selected_accesory.keystring %} checked {% endif %}{% endfor %}>                                                  
-                        <label class="form-check-label" for="defaultCheck1">
-                          {{ accesory.name }}
-                        </label>
-                    </div>
+                    {% for accesory in accesories %}                        
+                        <div class="form-check col-md-3 pl-3">                                    
+                            <input class="form-check-input" name="{{ accesory.name }}" type="checkbox" value="{{ accesory.keystring }}" id="{{accesory.keystring}}" {% for selected_accesory in selected_accesories %}{% if accesory.keyString in selected_accesory.keystring %} checked {% endif %}{% endfor %}>                                                  
+                            <label class="form-check-label" for="defaultCheck1">
+                              {{ accesory.name }}
+                            </label>
+                        </div>
                     {% endfor %} 
                 </div> 
                 <div class="form-row mt-3">
@@ -238,23 +263,29 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col">
+                        <label for="equipment">Equipamiento Adicional</label>
+                        <textarea class="form-control" name="equipment" id="vehicle_comments" rows="6">{{ sellOffer.equipment|striptags }}</textarea>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
                         <label for="vehicle_comments">Comentarios</label>
-                        <textarea class="form-control" name="vehicle_comments" id="vehicle_comments" rows="6">{{ sellOffer.vehicle_comments }}</textarea>
+                        <textarea class="form-control" name="vehicle_comments" id="vehicle_comments" rows="6">{{ sellOffer.vehicleComments }}</textarea>
                     </div>
                 </div>
             </div>
             <div class="tab-pane fade" id="supplies" role="tabpanel" aria-labelledby="supplies-tab">
                 <div class="form-row mt-3">
                     <div class="form-group col text-right">
-                        <button type="button" formmethod="get" class="btn btn-primary" data-toggle="modal" data-target="#searchSuppliesModal">
+                        <button id="searchSupplies" type="button" formmethod="get" class="btn btn-primary" data-toggle="modal" data-target="#searchSuppliesModal">
                             Buscar Recambios
                         </button>                        
                     </div>
-                </div>
+                </div>               
                 <div class="form-row">
                     <div class="form-group col-md-1">
                         <label for="inputSupplyId">ID</label>
-                        <input type="text" name="supply_id" class="form-control" id="inputSupplyId" placeholder="" value="{{ selected_supply.id }}">
+                        <input type="text" name="supplyId" class="form-control" id="inputSupplyId" placeholder="" value="{{ selected_supply.supplyId }}">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputSupplyReference">Referencia</label>
@@ -322,9 +353,9 @@
                         <input type="text" name="supplies_total" class="euros form-control" id="inputSuppliesTotal" placeholder="" value="">
                     </div>
                 </div>
-                        <div class="form-row mt-3">
+                <div class="form-row mt-3">
                     <div class="form-group col text-right">                        
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchComponentsModal">
+                        <button id="searchComponents" type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchComponentsModal">
                             Buscar Componentes
                         </button>
                     </div>
@@ -332,7 +363,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-1">
                         <label for="inputComponentId">ID</label>
-                        <input type="text" name="component_id" class="form-control" id="inputComponentId" placeholder="" value="{{ selected_component.id }}">
+                        <input type="text" name="componentId" class="form-control" id="inputComponentId" placeholder="" value="{{ selected_component.componentId }}">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputComponentReference">Referencia</label>
@@ -375,13 +406,15 @@
                             </tr>
                             {% for component in offerComponents %}
                                  <tr>
-                                     <td>{{ component.id }}</td>
+                                     {% set import = component.price*component.cantity %}                                     
+                                     <td>{{ component.componentId }}</td>
                                      <td>{{ component.reference }}</td>
                                      <td>{{ component.name }}</td>
                                      <td>{{ component.price }}</td>
                                      <td>{{ component.cantity }}</td>
-                                     <td>{{ component.import }}</td>
-                                 </tr>
+                                     <td>{{ import }}</td>
+                                     <td><a href="/Intranet/sells/offers/components/edit?componentId={{ component.id }}&offer_id={{ new_selloffer }}">Edit</a></td>
+                                     <td><a href="/Intranet/sells/offers/components/del?componentId={{ component.id }}&offer_id={{ new_selloffer }}">Edit</a></td>                                     
                             {% endfor %} 
                         </table>
                     </div>
@@ -404,7 +437,7 @@
             <div class="tab-pane fade" id="works" role="tabpanel" aria-labelledby="works-tab">
                 <div class="form-row mt-3">
                     <div class="form-group col text-right">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchWorksModal">
+                        <button id="searchWorks" type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchWorksModal">
                             Buscar Trabajos
                         </button>                        
                     </div>
@@ -412,7 +445,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-1">
                         <label for="inputWorkId">ID</label>
-                        <input type="text" name="work_id" class="form-control" id="inputWorkId" placeholder="" value="{{ selected_work.id }}">
+                        <input type="text" name="work_id" class="form-control" id="inputWorkId" placeholder="" value="{{ selected_work.workId }}">
                     </div>
                     <div class="form-group col-md-5">
                         <label for="inputWorkDescription">Descripcion</label>
@@ -472,13 +505,31 @@
                         <input type="text" name="works_total" class="euros form-control" id="inputWorksTotal" placeholder="" value="">
                     </div>
                 </div>                            
-            </div>            
+            </div>
+            <div class="tab-pane fade" id="reports" role="tabpanel" aria-labelledby="reports-tab">                
+                <div class="form-row mt-4 mb-5 justify-content-center">
+                    <div class="form-group col-md-3 text-center">
+                        <button type="submit" formaction="/Intranet/reports/sellofferDetailed" formmethod="post"  class="btn btn-primary">OFERTA DETALLADA</button>
+                    </div>
+                    <div class="form-group col-md-3 text-center">
+                        <button type="submit" formaction="/Intranet/reports/sellofferVehicle" formmethod="post"  class="btn btn-primary">OFERTA VEHICULO</button>
+                    </div>
+                </div>
+                <div class="form-row mt-4 mb-5 justify-content-center">
+                    <div class="form-group col-md-3 text-center">
+                        <button type="submit" formaction="/Intranet/reports/sellofferVehicleExport" formmethod="post"  class="btn btn-primary">OFERTA VH EXPORTACION</button>
+                    </div>
+                    <div class="form-group col-md-3 text-center">
+                        <button type="submit" formaction="/Intranet/reports/sellofferVehicleIntra" formmethod="post"  class="btn btn-primary">OFERTA VH INTRACOMUNITARIA</button>
+                    </div>
+                </div>
+                
+            </div>  
         </div>
         <div class="form-row">
-            <div class="form-group col text-right">
-                <button type="submit" formaction="/intranet/reports/selloffer" formmethod="post"  class="btn btn-primary">Imprimir</button>
+            <div class="form-group col text-right">                
                 <button type="submit" class="btn btn-primary">Guardar</button>
-                <a href="/intranet/admin" class="btn btn-primary">Cancelar</a>
+                <a href="/admin" class="btn btn-primary">Cancelar</a>
             </div>
         </div> 
     </form>         
@@ -495,7 +546,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
-                            <form id="searchCustomerForm" action="/intranet/crm/offers/customer/search" method="post" class="form">
+                            <form id="searchCustomerForm" action="/Intranet/sells/offers/customer/search" method="post" class="form">
                                 <div class="container">
                                     <div id="formRow" class="form-row text-right">
                                         <div class="col-11">                                                                                
@@ -525,7 +576,7 @@
                                         <td>{{ customer.city }}</td>
                                         <td>{{ customer.phone }}</td>
                                         <td>{{ customer.email }}</td>
-                                        <td><a href="/intranet/crm/offers/customer/select?customer_id={{ customer.id }}&offer_id={{ new_selloffer }}&vehicle_id={{selected_vehicle.id}}&work_id={{selected_work.id}}&supply_id={{ selected_supply.id }}&component_id={{ selected_component.id }}">Select</a></td>                                        
+                                        <td><a href="/Intranet/sells/offers/customer/select?customer_id={{ customer.id }}&offer_id={{ new_selloffer }}&vehicle_id={{selected_vehicle.id}}&work_id={{selected_work.id}}&supplyId={{ selected_supply.id }}&componentId={{ selected_component.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>
@@ -540,7 +591,7 @@
     </div>                            
     {% block javascripts %}
         <script>
-            {{ include('js/sellOffers.js')}}
+            {{ include('/js/sellOffers.js')}}
          </script>
     {% endblock %}    
     <!-- Modal Vehicles -->
@@ -556,7 +607,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
-                            <form id="searchVehicleForm" action="/intranet/crm/offers/vehicle/search" method="post" class="form">
+                            <form id="searchVehicleForm" action="/Intranet/sells/offers/vehicle/search" method="post" class="form">
                                 <div class="container">
                                     <div id="formRow" class="form-row text-right">
                                         <div class="col-11">                                                                                
@@ -588,7 +639,7 @@
                                         <td>{{ vehicle.brand }}</td>
                                         <td>{{ vehicle.model }}</td>
                                         <td>{{ vehicle.description }}</td>
-                                        <td><a href="/intranet/crm/offers/vehicle/select?vehicle_id={{vehicle.id}}&offer_id={{ new_selloffer }}&work_id={{selected_work.id}}&customer_id={{ selected_customer.id }}&supply_id={{ selected_supply.id }}&component_id={{ selected_component.id }}">Select</a></td>                                        
+                                        <td><a href="/Intranet/sells/offers/vehicle/select?vehicle_id={{vehicle.id}}&offer_id={{ new_selloffer }}&work_id={{selected_work.id}}&customer_id={{ selected_customer.id }}&supplyId={{ selected_supply.id }}&componentId={{ selected_component.id }}">Select</a></td>                                        
                                     </tr>
                                 {% endfor %}                
                             </table>
@@ -614,7 +665,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
-                            <form id="searchSuppliesForm" action="/intranet/buys/supplies/search" method="post" class="form">
+                            <form id="searchSuppliesForm" action="/buys/supplies/search" method="post" class="form">
                                 <div class="container">
                                     <div id="formRow" class="form-row text-right">
                                         <div class="col-11">                                                                                
@@ -647,7 +698,7 @@
                                         <td>{{ supply.name }}</td>
                                         <td>{{ supply.stock }}</td>
                                         <td>{{ supply.pvp }}</td>
-                                        <td><a href="/intranet/crm/offers/supplies/select?supply_id={{ supply.id }}&offer_id={{ new_selloffer }}&work_id={{selected_work.id}}&vehicle_id={{ selected_vehicle.id }}&customer_id={{ selected_customer.id }}&component_id={{ selected_component.id }}">Select</a></td>                                        
+                                        <td><a href="/Intranet/sells/offers/supplies/select?supplyId={{ supply.id }}&offer_id={{ new_selloffer }}&work_id={{selected_work.id}}&vehicle_id={{ selected_vehicle.id }}&customer_id={{ selected_customer.id }}&componentId={{ selected_component.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>
@@ -673,7 +724,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
-                            <form id="searchComponentsForm" action="/intranet/crm/offers/components/search" method="post" class="form">
+                            <form id="searchComponentsForm" action="/Intranet/sells/offers/components/search" method="post" class="form">
                                 <div class="container">
                                     <div id="formRow" class="form-row text-right">
                                         <div class="col-11">                                                                                
@@ -702,10 +753,9 @@
                                         <td>{{ component.ref }}</td>
                                         <td>{{ component.mader }}</td>
                                         <td>{{ component.serial_number }}</td>
-                                        <td>{{ component.name }}</td>
-                                        <td>{{ component.stock }}</td>
+                                        <td>{{ component.name }}</td>                                        
                                         <td>{{ component.pvp }}</td>                                        
-                                        <td><a href="/intranet/crm/offers/components/select?component_id={{component.id}}&offer_id={{new_selloffer}}&work_id={{selected_work.id}}&vehicle_id={{ selected_vehicle.id }}&supply_id={{ selected_supply.id }}&customer_id={{ selected_customer.id }}">Select</a></td>                                        
+                                        <td><a href="/Intranet/sells/offers/components/select?componentId={{component.id}}&offer_id={{new_selloffer}}&work_id={{selected_work.id}}&vehicle_id={{ selected_vehicle.id }}&supplyId={{ selected_supply.id }}&customer_id={{ selected_customer.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>
@@ -731,7 +781,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
-                            <form id="searchWorksForm" action="/intranet/crm/offers/works/search" method="post" class="form">
+                            <form id="searchWorksForm" action="/Intranet/sells/offers/works/search" method="post" class="form">
                                 <div class="container">
                                     <div id="formRow" class="form-row text-right">
                                         <div class="col-11">                                                                                
@@ -758,7 +808,7 @@
                                         <td>{{ work.reference }}</td>
                                         <td>{{ work.description }}</td>                                                                               
                                         <td>{{ work.price }}</td>                                        
-                                        <td><a href="/intranet/crm/offers/works/select?work_id={{work.id}}&offer_id={{new_selloffer}}&vehicle_id={{ selected_vehicle.id }}&supply_id={{ selected_supply.id }}&component_id={{ selected_component.id }}&customer_id={{ selected_customer.id }}">Select</a></td>                                        
+                                        <td><a href="/Intranet/sells/offers/works/select?work_id={{work.id}}&offer_id={{new_selloffer}}&vehicle_id={{ selected_vehicle.id }}&supplyId={{ selected_supply.id }}&componentId={{ selected_component.id }}&customer_id={{ selected_customer.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>

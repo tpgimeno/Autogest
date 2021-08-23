@@ -21,14 +21,14 @@ final class CreateArticlesTable extends AbstractMigration
         $table = $this->table('articles');
         $table->addColumn('name', 'string')
                 ->addColumn('ref', 'string')
-                ->addColumn('mader', 'integer')
-                ->addColumn('pvc', 'float')
-                ->addColumn('pvp', 'float')
-                ->addColumn('observations', 'string')
-                ->addColumn('accesories', 'string')
+                ->addColumn('mader', 'integer', ['null' => true])
+                ->addColumn('pvc', 'float', ['null' => true])
+                ->addColumn('pvp', 'float', ['null' => true])
+                ->addColumn('observations', 'string', ['null' => true])
+                ->addColumn('accesories', 'string', ['null' => true])
                 ->addColumn('created_at', 'datetime')
-                ->addColumn('updated_at', 'datetime')
-                ->addColumn('deleted_at', 'datetime')
+                ->addColumn('updated_at', 'datetime', ['null' => true])
+                ->addColumn('deleted_at', 'datetime', ['null' => true])
                 ->create();      
     }
 }

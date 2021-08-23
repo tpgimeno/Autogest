@@ -1,0 +1,60 @@
+{% extends "dashboard.twig" %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">               
+                <h2> Formas de Pago </h2>
+            </div>   
+            <div class="col-md-2 d-flex justify-content-end align-items-end">
+                <a class="link " href="/Intranet/admin">Volver</a> 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <form id="searchForm" action="/Intranet/paymentWays/search" method="post" class="form">
+                    <div class="container">
+                        <div id="formRow" class="form-row text-right">
+                            <div class="col-11">                                                                                
+                                <input id="searchField" type="text" name="searchFilter" class="form-control mb-2 mr-sm-2" id="inlineFormSearchFilter" placeholder="Nombre / Porcentaje">
+                            </div>
+                            <div class="col-1">
+                                <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <table class="table">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descuento</th>                        
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    {% for paymentWay in paymentWays %}
+                        <tr>
+                            <td>{{ paymentWay.name }}
+                            <td>{{ paymentWay.discount }}</td>                           
+                            <td><a href="/Intranet/paymentWays/form?id={{paymentWay.id}}">Edit</a></td>
+                            <td><a href="/Intranet/paymentWays/delete?id={{paymentWay.id}}">Delete</a></td>
+                        </tr>
+                    {% endfor %}                
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col d-flex justify-content-end">
+                <form id="addPaymentWay" action="/Intranet/paymentWays/form" method="get">
+                    <div class="form-group">
+                        <input id="submit" type="submit" class="btn btn-primary" value="Añadir">
+                        <a href="/Intranet/admin" class="btn btn-primary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

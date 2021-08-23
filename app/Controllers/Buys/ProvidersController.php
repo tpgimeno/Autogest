@@ -23,7 +23,7 @@ class ProvidersController extends BaseController
     public function getIndexAction()
     {
         $providers = Provider::All();
-        return $this->renderHTML('/buys/providersList.html.twig', [
+        return $this->renderHTML('/buys/providers/providersList.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'providers' => $providers
         ]);
@@ -40,7 +40,7 @@ class ProvidersController extends BaseController
                 ->WhereNull('deleted_at')
                 ->get();
         
-        return $this->renderHTML('/buys/providersList.html.twig', [
+        return $this->renderHTML('/buys/providers/providersList.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'providers' => $providers
         ]);
@@ -97,7 +97,7 @@ class ProvidersController extends BaseController
         {
             $providerSelected = Provider::find($_GET['id']);
         }
-        return $this->renderHTML('/buys/providersForm.html.twig', [
+        return $this->renderHTML('/buys/providers/providersForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
             'provider' => $providerSelected
@@ -106,6 +106,6 @@ class ProvidersController extends BaseController
     public function deleteAction(ServerRequest $request)
     {         
         $this->providerService->deleteProvider($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/buys/providers/list');
+        return new RedirectResponse('/Intranet/buys/providers/list');
     }    
 }
