@@ -814,7 +814,7 @@ class VehicleController extends BaseController
             preg_replace("/[^0-9]/", "", substr($num, $sep+1, strlen($num)))
         );
     } 
-    public function getVehiclesReportAction($request){
+    public function getVehiclesReportAction(){
         $vehicles = DB::table('vehicles')  
                 ->join('brands', 'vehicles.brand', '=', 'brands.id')
                 ->join('models', 'vehicles.model', '=', 'models.id')

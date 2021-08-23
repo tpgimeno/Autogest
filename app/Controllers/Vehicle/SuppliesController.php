@@ -11,6 +11,7 @@ namespace App\Controllers\Vehicle;
 use App\Controllers\BaseController;
 use App\Models\Mader;
 use App\Models\Supplies;
+use App\Reports\Vehicles\SuppliesReport;
 use App\Services\Vehicle\SuppliesService;
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Database\QueryException;
@@ -138,4 +139,17 @@ class SuppliesController extends BaseController
         $this->suppliesService->deleteSupplies($request->getQueryParams('id'));               
         return new RedirectResponse('/Intranet/buys/supplies/list');
     }  
+    public function getSuppliesReportAction(){
+        $supplies = DB::table('supplies')  
+                ->join('maders', 'supplies.mader', '=', 'maders.id')               
+                ->select('supplies.id', 'supplies.name', 'supplies.ref', 'maders.name as mader', 'supplies.pvc', 'supplies.pvp' )               
+                ->whereNull('supplies.deleted_at')                
+                ->get()->toArray();
+        
+        $newPostData = array_merge(['supplies' => $supplies ]);
+        $report = new SuppliesReport();
+        $report->AddPage();
+        $report->Body($newPostData);        
+        $report->Output();
+    }
 }

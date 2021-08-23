@@ -852,6 +852,15 @@ $map->get('VehiclesReport', '/Intranet/reports/vehicles', [
     'App\Controllers\Vehicle\VehicleController',
     'getVehiclesReportAction'
 ]);
+$map->get('ComponentsReport', '/Intranet/reports/components', [
+    'App\Controllers\Vehicle\ComponentsController',
+    'getComponentsReportAction'
+]);
+$map->get('SuppliesReport', '/Intranet/reports/supplies', [
+    'App\Controllers\Vehicle\SuppliesController',
+    'getSuppliesReportAction'
+]);
+
 $map->post('SellOfferVehicleReport', '/Intranet/reports/sellofferVehicle', [
     'App\Controllers\Sells\SellOffersController',
     'getVehicleReportAction'

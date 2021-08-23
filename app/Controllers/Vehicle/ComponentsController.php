@@ -11,6 +11,7 @@ namespace App\Controllers\Vehicle;
 use App\Controllers\BaseController;
 use App\Models\Components;
 use App\Models\Mader;
+use App\Reports\Vehicles\ComponentsReport;
 use App\Services\Vehicle\ComponentsService;
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Database\QueryException;
@@ -132,4 +133,17 @@ class ComponentsController extends BaseController
         $this->componentsService->deleteComponents($request->getQueryParams('id'));               
         return new RedirectResponse('/Intranet/buys/components/list');
     } 
+    public function getComponentsReportAction(){
+        $components = DB::table('components')  
+                ->join('maders', 'components.mader', '=', 'maders.id')               
+                ->select('components.id', 'components.name', 'components.ref', 'maders.name as mader', 'components.pvc', 'components.pvp' )               
+                ->whereNull('components.deleted_at')                
+                ->get()->toArray();
+        
+        $newPostData = array_merge(['components' => $components ]);
+        $report = new ComponentsReport();
+        $report->AddPage();
+        $report->Body($newPostData);        
+        $report->Output();
+    }
 }
