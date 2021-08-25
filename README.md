@@ -11,10 +11,21 @@ This software is the result of accumulated experience in the vehicle sales secto
 
 By formalizing all the information in a document, it allows to generate a more precise repair order, avoiding wasted time and improving the performance of the company.
 
+This software has been developed in Php7.4, the pattern has been MVC, it is presented as an intranet on a local server.
 
-At the begin we'll see the software requirements.
+I have used OOP, mysql and various symfony modules, such as the Twig template engine and Http routing. I have also used Eloquent, the Laravel database engine.
+
+Next we will see the requirements for installation.
 
 # REQUIREMENTS
 
+You should have installed:
+
+- Php7.4
+- Composer(https://getcomposer.org/)
+- The rest of modules will be installed with composer.
+
 # INSTALATION
+
+
 
