@@ -5,14 +5,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+    
 namespace App\Controllers\Vehicle;
 
 use App\Controllers\BaseController;
 use App\Models\Accesories;
 use App\Models\Brand;
 use App\Models\Components;
+use App\Models\Location;
 use App\Models\ModelVh;
+use App\Models\Store;
 use App\Models\Supplies;
 use App\Models\Vehicle;
 use App\Models\VehicleAccesories;
@@ -23,13 +25,11 @@ use App\Reports\Vehicles\VehiclesReport;
 use App\Services\Vehicle\VehicleService;
 use Illuminate\Database\QueryException;
 use Illuminate\Database\Capsule\Manager as DB;
+use Laminas\Diactoros\Response\JsonResponse;
+use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\ServerRequest;
-use phpDocumentor\Reflection\Location;
-use PhpOffice\PhpSpreadsheet\Writer\Xls;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\HttpCache\Store;
-use ZipStream\Exception;
+use PhpOffice\PhpSpreadsheet\Reader\Xls;
+use Respect\Validation\Validator as v;
 use function GuzzleHttp\json_decode;
 
 /**
@@ -555,8 +555,7 @@ class VehicleController extends BaseController
         $responseMessage = null;
         $reader = new Xls();
         $reader->setLoadSheetsOnly('VEHICULOS');
-        $spreadSheet = $reader->load('vehiculos.xls');  
-        
+        $spreadSheet = $reader->load('vehiculos.xls');        
         $vehiculos = $spreadSheet->getActiveSheet()->toArray();
         try{
             $responseMessage . " - ". $this->importVehicleBrands();
@@ -592,7 +591,7 @@ class VehicleController extends BaseController
                 $time = null;
                 if($vehiculos[$i][11])
                 {
-                    $time = date_create_from_format('d/m/Y', $vehiculos[$i][11]); 
+                    $time = date_create_from_format('d/m/y', $vehiculos[$i][11]); 
                 }               
                 $vehiculo->registryDate = date_format($time, 'Y/m/d');                
                 $vehiculo->store = $vehiculos[$i][13];

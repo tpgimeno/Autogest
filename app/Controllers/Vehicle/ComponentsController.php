@@ -50,10 +50,10 @@ class ComponentsController extends BaseController
         if($request->getMethod() == 'POST')
         {
             $postData = $request->getParsedBody();            
-//            if($this->validateData($postData))
-//            {
-//                $responseMessage = $this->validateData($postData);
-//            }
+            if($this->validateData($postData))
+            {
+                $responseMessage = $this->validateData($postData);
+            }
             $component = $this->addComponentData($postData);
             $responseMessage = $this->saveComponent($component);
         }                
@@ -81,7 +81,7 @@ class ComponentsController extends BaseController
     }
     public function setComponent($params)
     {
-        $selectedComponent = null;
+        $selectedComponent = null;      
         if(isset($params['id']) && $params['id'])
         {        
             $selectedComponent = Components::find($params['id'])
@@ -95,7 +95,7 @@ class ComponentsController extends BaseController
     }
     public function addComponentData($postData)
     {        
-        $component = new Components();                                          
+        $component = new Components();      
         if(isset($postData['id']) && $postData['id'])
         {
             $component = Components::find($postData['id'])->first();                            
@@ -103,6 +103,7 @@ class ComponentsController extends BaseController
         $component->name = $postData['name'];
         $component->ref = $postData['ref'];   
         $component->serialNumber = $postData['serialNumber'];
+       
         $mader = Mader::where('name', 'like', "%".$postData['mader']."%")->first();               
         $component->mader = $mader->id;                
         $component->pvc = $this->tofloat($postData['pvc']);                

@@ -36,43 +36,21 @@ class SellOffersCest
         $I->wantTo('Create a new Vehicle');
         $I->click('#submit', '#addVehicle');
         $I->seeCurrentUrlEquals('/Intranet/vehicles/form');        
-        $I->submitForm('#VehicleForm', 
-                array ('registry_date' => '02/04/2016', 
-                    'plate' => $matricula, 
-                    'vin' => $bastidor,
-                    'brand' => 'FIAT',
-                    'model' => 'DUCATO',
-                    'description' => 'L3H2 130cv Furgón 35 3p',
-                    'type' => 'Furgón',
-                    'store' => 'Automotive',
-                    'location' => 'A1',
-                    'Kilómetros' => '45.728',
-                    'power' => '130',
-                    'places' => '3',
-                    'doors' => '4',
-                    'color' => 'Blanco',
-                    'cost' => '10.000,00€',
-                    'tvaBuy' => '2.100,00€',
-                    'totalBuy' => '12.100,00€',
-                    'pvp' => '12.500,00€',
-                    'tvaSell' => '2.625,00€',
-                    'totalSell' => '15.125,00€',
-                    'acc-aire-acondicionado' => true
-                    ));
+        $I->submitForm('#VehicleForm', array ('registry_date' => '02/04/2016','plate' => $matricula, 'vin' => $bastidor, 'brand' => 'FIAT', 'model' => 'DUCATO', 'description' => 'L3H2 130cv Furgón 35 3p', 'type' => 'Furgón', 'store' => 'Automotive', 'Kilómetros' => '45.728', 'power' => '130', 'places' => '3', 'doors' => '4', 'color' => 'Blanco', 'cost' => '10.000,00€', 'tvaBuy' => '2.100,00€', 'totalBuy' => '12.100,00€', 'pvp' => '12.500,00€', 'tvaSell' => '2.625,00€', 'totalSell' => '15.125,00€', 'acc-aire-acondicionado' => true));
         $this->vehicleId = $I->grabFromDatabase('vehicles', 'id', array('plate' => $matricula, 'vin' => $bastidor));
         $numero_serie = substr(str_shuffle($caracteres_permitidos), 0, $longitud);        
         $I->amOnPage('/Intranet/admin');
         $I->click('Componentes', '.list-group-item');
-        $I->seeCurrentUrlEquals('/Intranet/buys/components/list');
+        $I->seeCurrentUrlEquals('/Intranet/vehicles/components/list');
         $I->wantTo('Create a new Component');
         $I->click('#submit', '#addComponent');
-        $I->seeCurrentUrlEquals('/Intranet/buys/components/form');        
-        $I->submitForm('#component', array('serialNumber' => $numero_serie,'ref' => 'loremipsum', 'mader' => 'Generico', 'name' => 'Lorem Ipsum', 'observations' => 'Lorem ipsum lorem ipsum lorem ipsum sumotas', 'pvc' => '10', 'pvp' => '16'));   
+        $I->seeCurrentUrlEquals('/Intranet/vehicles/components/form');        
+        $I->submitForm('#componentsForm', array('serialNumber' => $numero_serie,'ref' => 'loremipsum', 'mader' => 'Generico', 'name' => 'Lorem Ipsum', 'observations' => 'Lorem ipsum lorem ipsum lorem ipsum sumotas', 'pvc' => '10', 'pvp' => '16'));   
         $this->componentId = $I->grabFromDatabase('components', 'id', array('serialNumber' => $numero_serie)); 
         $referencia = substr(str_shuffle($caracteres_permitidos), 0, $longitud);        
         $I->amOnPage('/Intranet/admin');
         $I->click('Recambios', '.list-group-item');
-        $I->seeCurrentUrlEquals('/Intranet/buys/supplies/list');
+        $I->seeCurrentUrlEquals('/Intranet/vehicles/supplies/list');
         $I->wantTo('Create a new Supply');
         $I->click('#submit', '#addSupply');
         $I->submitForm('#SupplyForm', 
@@ -111,28 +89,20 @@ class SellOffersCest
         $I->wantTo('Create a new SellOffer');
         $I->click('#submit', '#addSellOffer');        
         $I->seeCurrentUrlEquals('/Intranet/sells/offers/form');
-        $I->submitForm('#SellOfferForm', 
-                array ('offerNumber' => $I->grabValueFrom('#inputOfferNumber'),
-                        'offerDate' => Date('y/m/d', strtotime($I->grabValueFrom('#inputDate'))),
-                        'texts' => 'Lorem ipsum lorem ipsum lorem ipsum sumotas',  
-                        'observations' => 'Lorem ipsum lorem ipsum lorem ipsum sumotas',                    
-                        'customerId' => $this->customerId,
-                        'vehicleId' => $this->vehicleId ,                 
-                        'discount' => $I->grabValueFrom('#inputDiscount'),                   
-                        'pvp' => $I->grabValueFrom('#inputPrice'),  
-                        'tva' => $I->grabValueFrom('#inputTva'),  
-                        'total' => $I->grabValueFrom('#inputTotal'),  
-                        'vehiclePvp' => $I->grabValueFrom('#inputVehiclePrice'),                 
-                        'vehicleTva' => $I->grabValueFrom('#inputVehicleTva'),  
-                        'vehicleTotal' => $I->grabValueFrom('#inputVehicleTotal'),       
-                        'vehicleComments' => $I->grabValueFrom('#inputVehicleTva')
-                    ));
-        $this->id = $I->grabFromDatabase('sellOffers', 'id', array('offerNumber' => $I->grabValueFrom('#inputOfferNumber')));
+        $I->submitForm('#SellOfferForm', array ('offerNumber' => '2021OF0001', 'offerDate' => Date('d/m/y', strtotime($I->grabValueFrom('#inputDate'))), 'texts' => 'Lorem ipsum lorem ipsum lorem ipsum sumotas', 'observations' => 'Lorem ipsum lorem ipsum lorem ipsum sumotas', 'customerId' => $this->customerId, 'vehicleId' => $this->vehicleId , 'discount' => $I->grabValueFrom('#inputDiscount'), 'pvp' => $I->grabValueFrom('#inputPrice'), 'tva' => $I->grabValueFrom('#inputTva'), 'total' => $I->grabValueFrom('#inputTotal'), 'vehiclePvp' => $I->grabValueFrom('#inputVehiclePrice'), 'vehicleTva' => $I->grabValueFrom('#inputVehicleTva'), 'vehicleTotal' => $I->grabValueFrom('#inputVehicleTotal'), 'vehicleComments' => $I->grabValueFrom('#inputVehicleTva')));
+        $this->id = $I->grabFromDatabase('selloffers', 'id', array('offerNumber' => '2021OF0001'));
        
     }
     public function UpdateSellOfferTest(FunctionalTester $I)
     {
-        
+        $I->amOnPage('/Intranet/admin');
+        $I->click('Ofertas', '.list-group-item');
+        $I->seeCurrentUrlEquals('/Intranet/sells/offers/list');
+        $I->wantTo('Update SellOffer');
+        $I->click('#submit', '#addSellOffer');        
+        $I->seeCurrentUrlEquals('/Intranet/sells/offers/form'.$this->id);
+        $I->click('#submit'); 
+        $I->see('Updated');
             
     }
     public function DeleteSellOfferTest(FunctionalTester $I)

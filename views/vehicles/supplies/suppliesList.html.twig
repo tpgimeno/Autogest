@@ -26,8 +26,8 @@
                             <td>{{ supplie.mader }}</td>
                             <td>{{ supplie.name }}</td>
                             <td>{{ supplie.stock }}</td>
-                            <td><a href="/Intranet/buys/supplies/form?id={{supplie.id}}">Edit</a></td>
-                            <td><a href="/Intranet/buys/supplies/delete?id={{supplie.id}}">Delete</a></td>
+                            <td><a href="/Intranet/vehicles/supplies/form?id={{supplie.id}}">Edit</a></td>
+                            <td><a href="/Intranet/vehicles/supplies/delete?id={{supplie.id}}">Delete</a></td>
                         </tr>
                     {% endfor %}                
                 </table>
@@ -35,7 +35,7 @@
         </div>
         <div class="row">
             <div class="col d-flex justify-content-end">
-                <form id="addSupply" action="/Intranet/buys/supplies/form" method="get">
+                <form id="addSupply" action="/Intranet/vehicles/supplies/form" method="get">
                     <div class="form-group">
                         <input id="submit" type="submit" class="btn btn-primary" value="Añadir">
                         <a href="/Intranet/admin" class="btn btn-primary">Cancelar</a>

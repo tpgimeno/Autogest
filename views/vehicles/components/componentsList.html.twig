@@ -40,8 +40,8 @@
                             <td>{{ component.ref }}</td>
                             <td>{{ component.mader }}</td>
                             <td>{{ component.name }}</td>                            
-                            <td><a href="/Intranet/buys/components/form?id={{component.id}}">Edit</a></td>
-                            <td><a href="/Intranet/buys/components/delete?id={{component.id}}">Delete</a></td>
+                            <td><a href="/Intranet/vehicles/components/form?id={{component.id}}">Edit</a></td>
+                            <td><a href="/Intranet/vehicles/components/delete?id={{component.id}}">Delete</a></td>
                         </tr>
                     {% endfor %}                
                 </table>
@@ -49,7 +49,7 @@
         </div>
         <div class="row">
             <div class="col d-flex justify-content-end">
-                <form id="addComponent" action="/Intranet/buys/components/form" method="get">
+                <form id="addComponent" action="/Intranet/vehicles/components/form" method="get">
                     <div class="form-group">
                         <input id="submit" type="submit" class="btn btn-primary" value="Añadir">
                         <a href="/Intranet/admin" class="btn btn-primary">Cancelar</a>

@@ -623,6 +623,52 @@ $map->get('deleteModel', '/Intranet/vehicles/models/delete', [
     'deleteAction'   
 ]);
 
+//COMPONENTS
+
+$map->get('ComponentsForm', '/Intranet/vehicles/components/form', [
+    'App\Controllers\Vehicle\ComponentsController',
+    'getComponentsDataAction'
+]);
+$map->get('ComponentsList', '/Intranet/vehicles/components/list', [
+    'App\Controllers\Vehicle\ComponentsController',
+    'getIndexAction'
+]);
+$map->post('searchComponents', '/Intranet/vehicles/components/search', [
+    'App\Controllers\Vehicle\ComponentsController',
+    'searchComponentsAction'
+]);
+$map->post('saveComponents', '/Intranet/vehicles/components/save', [
+    'App\Controllers\Vehicle\ComponentsController',
+    'getComponentsDataAction'
+]);
+$map->get('deleteComponents', '/Intranet/vehicles/components/delete', [        
+    'App\Controllers\Vehicle\ComponentsController',
+    'deleteAction'   
+]);
+
+//SUPPLIES
+
+$map->get('SuppliesForm', '/Intranet/vehicles/supplies/form', [
+    'App\Controllers\Vehicle\SuppliesController',
+    'getSuppliesDataAction'
+]);
+$map->get('SuppliesList', '/Intranet/vehicles/supplies/list', [
+    'App\Controllers\Vehicle\SuppliesController',
+    'getIndexAction'
+]);
+$map->post('searchSupplies', '/Intranet/vehicles/supplies/search', [
+    'App\Controllers\Vehicle\SuppliesController',
+    'searchSuppliesAction'
+]);
+$map->post('saveSupplies', '/Intranet/vehicles/supplies/save', [
+    'App\Controllers\Vehicle\SuppliesController',
+    'getSuppliesDataAction'
+]);
+$map->get('deleteSupplies', '/Intranet/vehicles/supplies/delete', [        
+    'App\Controllers\Vehicle\SuppliesController',
+    'deleteAction'   
+]);
+
 //WORKS
 
 $map->get('WorksForm', '/Intranet/vehicles/works/form', [

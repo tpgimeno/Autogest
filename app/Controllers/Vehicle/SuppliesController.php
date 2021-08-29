@@ -137,7 +137,7 @@ class SuppliesController extends BaseController
     public function deleteAction(ServerRequest $request)
     {         
         $this->suppliesService->deleteSupplies($request->getQueryParams('id'));               
-        return new RedirectResponse('/Intranet/buys/supplies/list');
+        return new RedirectResponse('/Intranet/vehicles/supplies/list');
     }  
     public function getSuppliesReportAction(){
         $supplies = DB::table('supplies')  

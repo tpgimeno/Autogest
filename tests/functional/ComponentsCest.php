@@ -16,11 +16,11 @@ class ComponentsCest
         $numero_serie = substr(str_shuffle($caracteres_permitidos), 0, $longitud);        
         $I->amOnPage('/Intranet/admin');
         $I->click('Componentes', '.list-group-item');
-        $I->seeCurrentUrlEquals('/Intranet/buys/components/list');
+        $I->seeCurrentUrlEquals('/Intranet/vehicles/components/list');
         $I->wantTo('Create a new Component');
         $I->click('#submit', '#addComponent');
-        $I->seeCurrentUrlEquals('/Intranet/buys/components/form');        
-        $I->submitForm('#component', array('serialNumber' => $numero_serie,'ref' => 'loremipsum', 'mader' => 'Generico', 'name' => 'Lorem Ipsum', 'observations' => 'Lorem ipsum lorem ipsum lorem ipsum sumotas', 'pvc' => '10', 'pvp' => '16'));   
+        $I->seeCurrentUrlEquals('/Intranet/vehicles/components/form');        
+        $I->submitForm('#componentsForm', array('serialNumber' => $numero_serie,'ref' => 'loremipsum', 'mader' => 'Generico', 'name' => 'Lorem Ipsum', 'observations' => 'Lorem ipsum lorem ipsum lorem ipsum sumotas', 'pvc' => '10', 'pvp' => '16'));   
         $this->id = $I->grabFromDatabase('components', 'id', array('serialNumber' => $numero_serie));        
        
     }
@@ -28,9 +28,9 @@ class ComponentsCest
     {     
         $I->amOnPage('/Intranet/admin');
         $I->click('Componentes', '.list-group-item');
-        $I->seeCurrentUrlEquals('/Intranet/buys/components/list');
+        $I->seeCurrentUrlEquals('/Intranet/vehicles/components/list');
         $I->wantTo('Update Component');
-        $I->amOnPage('/Intranet/buys/components/form?id='.$this->id);
+        $I->amOnPage('/Intranet/vehicles/components/form?id='.$this->id);
         $I->click('#submit');
              
     }
@@ -38,9 +38,9 @@ class ComponentsCest
     {
         $I->amOnPage('/Intranet/admin');
         $I->click('Componentes', '.list-group-item');
-        $I->seeCurrentUrlEquals('/Intranet/buys/components/list');
+        $I->seeCurrentUrlEquals('/Intranet/vehicles/components/list');
         $I->wantTo('Delete Component');
-        $I->amOnPage('/Intranet/buys/components/delete?id='.$this->id);
+        $I->amOnPage('/Intranet/vehicles/components/delete?id='.$this->id);
      
     }
 }

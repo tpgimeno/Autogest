@@ -23,6 +23,7 @@ final class CreateVehicleTypesTable extends AbstractMigration
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime', ['null' => true])
                 ->addColumn('deleted_at', 'datetime', ['null' => true])
+                ->addIndex('name', ['unique' => true])
                 ->create();
     }
 }
