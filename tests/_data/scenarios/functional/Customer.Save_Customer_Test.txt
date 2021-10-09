@@ -5,6 +5,7 @@ I click 'Clientes'," '.list-group-item'
 I see current url equals '/Intranet/customers/list' 
 I click '#submit'," '#addCustomer' 
 I see current url equals '/Intranet/customers/form' 
-I submit form('#customer form', array 'fiscalId' ..."," 'name' => ..."," 'type' => ..."," 'address' ..."," 5'," 'city' => ..."," 'postalCod..."," 'state' =>..."," 'country' ..."," 'phone' =>..."," 'email' =>..."," 'birth' =>..." 
-I grab from database('customers', 'id', array 'fiscalId' => $fiscalId)"
+I submit form('#customer form', array 'fiscal_id' ..."," 'name' => '..."," 'type' => '..."," 'address' =..."," 'city' => '..."," 'postal_cod..."," 'state' => ..."," 'country' =..."," 'phone' => ..."," 'email' => ..."," 'birth' => ..." 
+I grab from database('customers', 'id', array 'fiscalId' => $fiscal_id)" 
+I can see 'Saved'
 

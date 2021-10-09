@@ -24,22 +24,10 @@ class companyCest
         $I->wantTo('Create a new Company');
         $I->click('#submit', '#addCompany');
         $I->seeCurrentUrlEquals('/Intranet/company/form');        
-        $I->submitForm('#CompanyForm', 
-                array ('name' => 'Lorem Ipsum S.L.', 
-                    'fiscal_id' => $fiscal_id, 
-                    'fiscal_name' => 'Lorem Ipsum S.L.',
-                    'address' => 'Avenida Lorem Ipsum, 5',
-                    'city' => 'LOREM',
-                    'postal_code' => '12345',
-                    'state' => 'IPSUM',
-                    'country' => 'LOREMIPSUM',
-                    'phone' => '1234-4546565',
-                    'email' => 'loremipsum@loremipsum.com',
-                    'site' => 'loremipsum.com' 
-                    )); 
+        $I->submitForm('#CompanyForm', array ('name' => 'Lorem Ipsum S.L.', 'fiscalId' => $fiscal_id, 'fiscalName' => 'Lorem Ipsum S.L.', 'address' => 'Avenida Lorem Ipsum, 5', 'city' => 'LOREM', 'postalCode' => '12345', 'state' => 'IPSUM', 'country' => 'LOREMIPSUM', 'phone' => '1234-4546565', 'email' => 'loremipsum@loremipsum.com', 'site' => 'loremipsum.com')); 
         $this->id = $I->grabFromDatabase('company', 'id', array('fiscalId' => $fiscal_id));      
         $I->canSeeCurrentUrlEquals('/Intranet/company/save');
-            
+        $I->canSee('Saved');    
     }
     public function UpdateCompanyTest(FunctionalTester $I){
         $I->amOnPage('/Intranet/admin');
@@ -48,10 +36,8 @@ class companyCest
         $I->wantTo('Update Company');
         $I->amOnPage('/Intranet/company/form?id='.$this->id);
         $I->see('Empresas');
-        $I->submitForm('#CompanyForm', 
-                array ('postal_code' => '54321'                    
-                    ));        
-        
+        $I->click('#submit');       
+        $I->canSee('Updated');
     }
     public function DeleteCompanyTest(FunctionalTester $I){
         $I->amOnPage('/Intranet/admin');

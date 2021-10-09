@@ -150,17 +150,23 @@ class VehicleController extends BaseController
         
         if($vehicleSelected)
         {
-            $brandSelected = Brand::find($vehicleSelected->brand)->name;
-            
+            $brandSelected = Brand::find($vehicleSelected->brand)->name;            
         }
         return $brandSelected;
     }
+    public function findBrand($vehicleSelected){
+        $brand = Brand::find($vehicleSelected->brand);
+        if($brand){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     public function setModel($vehicleSelected){
         $modelSelected = null;
-        if($vehicleSelected)
-        {
-            $modelSelected = ModelVh::find($vehicleSelected->model)->name;
-            
+        if($this->findBrand($vehicleSelected)){
+            $modelSelected = ModelVh::find($vehicleSelected->model)->name;            
         }
         return $modelSelected;
     }
@@ -176,12 +182,19 @@ class VehicleController extends BaseController
     public function setLocation($vehicleSelected){
         $location_selected = null; 
         
-        if($vehicleSelected && $vehicleSelected->location != '0')
-        {
-            $location_selected = Location::find($vehicleSelected->location)->name;
-           
+        if($this->findLocation($vehicleSelected)){
+            $location_selected = Location::find($vehicleSelected->location)->name;             
         }
         return $location_selected;
+    }
+    public function findLocation($vehicleSelected){
+        $location = Location::find($vehicleSelected->location);
+        if($location){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
     public function setVehicleType($vehicleSelected){
         $typeSelected = null;
@@ -210,7 +223,7 @@ class VehicleController extends BaseController
             $selectedComponents = DB::table('vehicleComponents')
                     ->join('components', 'vehicleComponents.componentId', '=', 'components.id')
                     ->join('maders', 'components.mader', '=', 'maders.id')
-                    ->select('vehicleComponents.componentId', 'vehicleComponents.vehicleId as vehicleId', 'vehicleComponents.cantity as cantity', 'components.name', 'components.ref', 'components.serialNumber', 'components.mader', 'vehicleComponents.price')
+                    ->select('vehicleComponents.componentId', 'vehicleComponents.vehicleId as vehicleId', 'vehicleComponents.cantity as cantity', 'components.name', 'components.ref', 'components.serialNumber', 'components.mader', 'vehicleComponents.pvp')
                     ->where('vehicleComponents.vehicleId', '=', $vehicleSelected->id)                    
                     ->get();                    
         }
@@ -234,7 +247,9 @@ class VehicleController extends BaseController
         {
             $vehicle = Vehicle::find($postData['id']);            
         } 
+        
         $brand = Brand::where('name', 'like', "%".$postData['brand']."%")->first(); 
+        
         if($brand)
         {
             $vehicle->brand = $brand->id;
@@ -408,7 +423,7 @@ class VehicleController extends BaseController
         $component = DB::table('vehicleComponents')                
                 ->join('components', 'vehicleComponents.componentId', '=', 'components.id')
                 ->join('maders', 'components.mader', '=', 'maders.id')
-                ->select('vehicleComponents.id', 'vehicleComponents.vehicleId', 'vehicleComponents.componentId', 'components.ref as reference', 'maders.name as mader', 'components.name as name', 'vehicleComponents.cantity as cantity', 'vehicleComponents.price as price')
+                ->select('vehicleComponents.id', 'vehicleComponents.vehicleId', 'vehicleComponents.componentId', 'components.ref as reference', 'maders.name as mader', 'components.name as name', 'vehicleComponents.cantity as cantity', 'vehicleComponents.pvp as price')
                 ->where('vehicleComponents.vehicleId', '=', $params['vehicleId'])
                 ->where('vehicleComponents.componentId', '=', $params['componentId'])
                 ->first();        
@@ -591,9 +606,9 @@ class VehicleController extends BaseController
                 $time = null;
                 if($vehiculos[$i][11])
                 {
-                    $time = date_create_from_format('d/m/y', $vehiculos[$i][11]); 
+                    $time = strtotime($vehiculos[$i][11]); 
                 }               
-                $vehiculo->registryDate = date_format($time, 'Y/m/d');                
+                $vehiculo->registryDate = date('Y-m-d', $time);               
                 $vehiculo->store = $vehiculos[$i][13];
                 $vehiculo->location = 0;
                 $vehiculo->type = $vehiculos[$i][17];

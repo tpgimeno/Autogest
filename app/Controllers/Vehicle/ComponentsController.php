@@ -37,9 +37,10 @@ class ComponentsController extends BaseController
     {
         $components = DB::table('components')
                 ->join('maders', 'components.mader', '=', 'maders.id')
-                ->select('components.id', 'components.ref', 'maders.name as mader', 'components.name', 'components.serialNumber', 'components.pvc', 'components.pvp')
+                ->select('components.id', 'components.ref', 'maders.name as mader', 'components.name as name', 'components.serialNumber', 'components.pvc', 'components.pvp')
                 ->whereNull('components.deleted_at')
                 ->get();
+//        var_dump($components);die();
         return $this->renderHTML('/vehicles/components/componentsList.html.twig', [
             'components' => $components
         ]);
@@ -69,6 +70,7 @@ class ComponentsController extends BaseController
     public function validateData($postData)
     {
         $responseMessage = null;
+//        var_dump($postData);die();
         $componentsValidator = v::key('ref', v::stringType()->notEmpty())
                     ->key('serialNumber', v::stringType()->notEmpty())
                     ->key('name', v::stringType()->notEmpty());
@@ -93,29 +95,48 @@ class ComponentsController extends BaseController
         }
         return $selectedComponent;
     }
-    public function addComponentData($postData)
-    {        
-        $component = new Components();      
-        if(isset($postData['id']) && $postData['id'])
-        {
-            $component = Components::find($postData['id'])->first();                            
+    public function addComponentData($postData){        
+        $component = new Components();  
+        $mader = null;
+        if($this->findComponent($postData)){
+            $component = Components::find(intval($postData['id']));            
         }               
         $component->name = $postData['name'];
         $component->ref = $postData['ref'];   
         $component->serialNumber = $postData['serialNumber'];
-       
-        $mader = Mader::where('name', 'like', "%".$postData['mader']."%")->first();               
-        $component->mader = $mader->id;                
+        if($this->findMader($postData)){
+            $mader = Mader::where('name', 'like', "%".$postData['mader']."%")->first(); 
+            $component->mader = $mader->id; 
+        }   
+        
         $component->pvc = $this->tofloat($postData['pvc']);                
         $component->pvp = $this->tofloat($postData['pvp']);
-        $component->observations = $postData['observations'];            
+        $component->observations = $postData['observations'];   
+        
         return $component;
+    }
+    public function findComponent($postData){
+        $component = Components::find(intval($postData['id'])); 
+        if($component){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public function findMader($postData){
+        $mader = Mader::where('name', 'like', '%'.$postData['mader'].'%');
+        if($mader){
+            return true;
+        }else{
+            return false;
+        }
     }
     public function saveComponent($component)
     {        
         try{
-            if(Components::find($component->id))
-            {
+            $findComponent = Components::find($component->id);
+            if($findComponent)
+            {                
                 $component->update();
                 $responseMessage = 'Updated';
             }

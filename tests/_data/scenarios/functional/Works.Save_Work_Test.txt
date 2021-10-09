@@ -5,5 +5,6 @@ I click 'Trabajos'," '.list-group-item'
 I see current url equals '/Intranet/vehicles/works/list' 
 I click '#submit'," '#addWork' 
 I see current url equals '/Intranet/vehicles/works/form' 
-I grab from database('works', 'id', array 'reference' => $referencia)"
+I grab from database('works', 'id', array 'reference' => $referencia)" 
+I can see 'Saved'
 

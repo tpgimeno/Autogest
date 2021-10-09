@@ -6,5 +6,6 @@ I see current url equals '/Intranet/company/list'
 I click '#submit'," '#addCompany' 
 I see current url equals '/Intranet/company/form' 
 I grab from database('company', 'id', array 'fiscalId' => $fiscal_id)" 
-I can see current url equals '/Intranet/company/save'
+I can see current url equals '/Intranet/company/save' 
+I can see 'Saved'
 

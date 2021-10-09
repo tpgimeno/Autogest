@@ -41,8 +41,7 @@ class SuppliesController extends BaseController
                 ->join('maders', 'supplies.mader', '=', 'maders.id')
                 ->select('supplies.id', 'supplies.ref', 'maders.name as mader', 'supplies.name', 'supplies.stock', 'supplies.maderCode', 'supplies.pvc', 'supplies.pvp')
                 ->whereNull('supplies.deleted_at')
-                ->get();
-        
+                ->get();        
         return $this->renderHTML('/vehicles/supplies/suppliesList.html.twig', [
             'supplies' => $supplies
         ]);
@@ -103,7 +102,7 @@ class SuppliesController extends BaseController
         $supply = new Supplies();        
         if(Supplies::find($postData['id']))
         {
-            $supply = Supplies::find($postData['id'])->first();                   
+            $supply = Supplies::find(intval($postData['id']));                   
         }                
         $supply->ref = $postData['ref'];
         $supply->name = $postData['name'];
@@ -113,7 +112,7 @@ class SuppliesController extends BaseController
         $supply->stock = intval($postData['stock']);
         $supply->pvc = $this->tofloat($postData['pvc']);
         $supply->pvp = $this->tofloat($postData['pvp']);
-        $supply->observations = $postData['observations'];
+        $supply->observations = $postData['observations'];        
         return $supply;
     }
     public function saveSupply($supply)

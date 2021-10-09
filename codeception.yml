@@ -15,8 +15,13 @@ modules:
             user: 'root'
             password: ''
             tests: 'tests/_data/dump.sql'
-        coverage:
-            enabled: true
+        
+coverage:
+    enabled: true
+    include:
+        - app/*
+        - views/*.twig
+   
 
 
         

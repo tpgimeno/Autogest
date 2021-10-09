@@ -32,9 +32,9 @@ class CreateVehiclesTable extends AbstractMigration
     public function change()
     {
         $table = $this->table('vehicles')
-                ->addColumn('brand', 'integer')
-                ->addColumn('model', 'integer')
-                ->addColumn('description', 'string')
+                ->addColumn('brand', 'integer', ['null' => true])
+                ->addColumn('model', 'integer', ['null' => true])
+                ->addColumn('description', 'string', ['null' => true])
                 ->addColumn('plate', 'string', ['null' => true])
                 ->addColumn('registryDate', 'date', ['null' => true])
                 ->addColumn('vin', 'string', ['null' => true, 'default' => null])

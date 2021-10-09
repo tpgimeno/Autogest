@@ -29,7 +29,6 @@ var tva = null;
 var discount = null;
 var base = null;
 var total = null;
-var selected_tax = '{{ selected_taxe.percentaje }}';
 var tax = 0;
 
 
@@ -45,10 +44,8 @@ window.addEventListener('load', function()
     var tab_supplies = document.getElementById('supplies-tab');
     var works = document.getElementById('works');
     var tab_works = document.getElementById('works-tab');
-    var selected_tab = '{{ selected_tab }}';
-    if(!selected_tax){
-        tax = numeral(document.getElementById('selectTaxes').value).value();
-    }    
+    var selected_tab = '{{ selected_tab }}';    
+    tax = numeral(document.getElementById('selectTaxes').value).value();     
     switch(selected_tab)
     {
         case 'offer':
@@ -477,7 +474,7 @@ window.addEventListener('load', function()
     var id_component = document.getElementById('inputComponentId');
     var id_work = document.getElementById('inputWorkId');
     var json_supplies_response = '{{offerSupplies|raw}}'; 
-    console.log(json_supplies_response);
+    
     if(json_supplies_response)
     {
         offer_supplies = JSON.parse(json_supplies_response);        
@@ -658,8 +655,7 @@ function addSupply()
     document.getElementById("inputTotal").value = total.format('(0,0.0$)');
     var request = new XMLHttpRequest();    
     request.open('POST', '/Intranet/sells/offers/supplies/add', true);
-    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");  
-    console.log(offer_supply);
+    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");    
     request.send('supply=' + JSON.stringify(offer_supply));    
     function reqListener()
     {

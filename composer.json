@@ -44,6 +44,7 @@
         "codeception/module-laravel5": "^1.1",
         "codeception/module-webdriver": "^1.1",
         "codeception/module-db": "^1.1",
-        "hoa/console": "^3.17"
+        "hoa/console": "^3.17",
+        "phpunit/php-code-coverage": "^9.2"
     }
 }

@@ -2,6 +2,6 @@ I WANT TO DELETE COMPONENT
 
 I am on page '/Intranet/admin' 
 I click 'Componentes'," '.list-group-item' 
-I see current url equals '/Intranet/buys/components/list' 
-I am on page '/Intranet/buys/components/delete?id='.$this->id"
+I see current url equals '/Intranet/vehicles/components/list' 
+I am on page '/Intranet/vehicles/components/delete?id='.$this->id"
 

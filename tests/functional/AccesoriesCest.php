@@ -34,12 +34,11 @@ class AccesoriesCest
     }
     
     public function DeleteAccesoryTest(FunctionalTester $I)
-    {
-        
+    {        
         $I->amOnPage('/Intranet/admin');
         $I->click('Accesorios', '.list-group-item');
         $I->seeCurrentUrlEquals('/Intranet/vehicles/accesories/list');
         $I->wantTo('Delete Accesory');
-        $I->amOnPage('/Intranet/vehicles/accesories/delete?id='.$this->id);        
+        $I->amOnPage('/Intranet/vehicles/accesories/delete?id='.$this->id);  
     }
 }

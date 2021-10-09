@@ -95,14 +95,17 @@ class CustomerController extends BaseController
         $customer->fiscalId = $postData['fiscal_id'];               
         $customer->address = $postData['address'];
         $customer->city = $postData['city'];
-        $customer->postalCode = $postData['postal_code'];
+        $customer->postalCode = intval($postData['postal_code']);
         $customer->state = $postData['state'];
         $customer->country = $postData['country'];
         $customer->phone = $postData['phone'];
         $customer->email = $postData['email'];
-        $customer->birthDate = $postData['birth'];
+        $customer->birthDate = date('Y-m-d', strtotime($postData['birth']));
         $type = CustomerTypes::where('name', 'like', "%".$postData['type']."%")->first();                
-        $customer->customerType = $type->id;
+        if($type){
+            $customer->customerType = $type->id;
+        }
+        
         return $customer;
     }
     public function saveCustomer($customer)

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Commands;
+namespace App\BackEnd\Commands;
 
 
 use App\Models\Message;

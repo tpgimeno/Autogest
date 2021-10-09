@@ -39,7 +39,7 @@
                     {% for offer in offers %}
                         <tr>
                             <td>{{ offer.offerNumber }}</td>
-                            <td>{{ offer.offerDate }}</td>
+                            <td>{{ offer.offerDate|date('d-m-Y') }}</td>
                             <td>{{ offer.name }}</td>
                             <td>{{ offer.brand }} {{ offer.model }}</td>                           
                             <td><a href="/Intranet/sells/offers/form?offer_id={{offer.id}}">Edit</a></td>

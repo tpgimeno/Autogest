@@ -6,5 +6,6 @@ I see current url equals '/Intranet/vehicles/list'
 I click '#submit'," '#addVehicle' 
 I see current url equals '/Intranet/vehicles/form' 
 I submit form('#vehicle form', array  '...",'..."," ..."," ..."," ..."," ..."," ..."," ..."," ..."," ..."," ..."," ..."," ..."," ...","00€'," ...","00€'," ...","00€'," ...","00€'," ...","00€'," ...","00€'," ..." 
-I grab from database('vehicles', 'id', array 'plate' => $matricula"," 'vin' => $bastidor)"
+I grab from database('vehicles', 'id', array 'plate' => $matricula"," 'vin' => $bastidor)" 
+I can see 'Saved'
 

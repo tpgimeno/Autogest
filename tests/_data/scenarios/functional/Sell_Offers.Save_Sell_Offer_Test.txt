@@ -1,41 +1,45 @@
-I WANT TO CREATE A NEW CUSTOMER
+I WANT TO CREATE A NEW SELLOFFER
 
 I am on page '/Intranet/admin' 
 I click 'Clientes'," '.list-group-item' 
 I see current url equals '/Intranet/customers/list' 
 I click '#submit'," '#addCustomer' 
 I see current url equals '/Intranet/customers/form' 
-I submit form('#customer form', array 'fiscalId' ..."," 'name' => ..."," 'type' => ..."," 'address' ..."," 5'," 'city' => ..."," 'postalCod..."," 'state' =>..."," 'country' ..."," 'phone' =>..."," 'email' =>..."," 'birth' =>..." 
-I grab from database('customers', 'id', array 'fiscalId' => $fiscalId)" 
+I submit form('#customer form', array 'fiscal_id' ..."," 'name' => '..."," 'type' => '..."," 'address' =..."," 'city' => '..."," 'postal_cod..."," 'state' => ..."," 'country' =..."," 'phone' => ..."," 'email' => ..."," 'birth' => ..." 
+I grab from database('customers', 'id', array 'fiscalId' => $fiscal_id)" 
 I am on page '/Intranet/admin' 
 I am on page '/Intranet/admin' 
 I click 'Vehículos'," '.list-group-item' 
 I see current url equals '/Intranet/vehicles/list' 
 I click '#submit'," '#addVehicle' 
 I see current url equals '/Intranet/vehicles/form' 
+I submit form('#vehicle form', array  '...",'..."," ..."," ..."," ..."," ..."," ..."," ..."," ..."," ..."," ..."," ..."," ..."," ...","00€'," ...","00€'," ...","00€'," ...","00€'," ...","00€'," ...","00€'," ..." 
 I grab from database('vehicles', 'id', array 'plate' => $matricula"," 'vin' => $bastidor)" 
 I am on page '/Intranet/admin' 
 I click 'Componentes'," '.list-group-item' 
-I see current url equals '/Intranet/buys/components/list' 
+I see current url equals '/Intranet/vehicles/components/list' 
 I click '#submit'," '#addComponent' 
-I see current url equals '/Intranet/buys/components/form' 
-I submit form('#component', array 'serialNumber' => $numero_serie",'ref' => 'loremipsum'," 'mader' => 'Generico'," 'name' => 'Lorem Ipsum'," 'observations' => 'Lorem ipsum lorem ipsum lorem ..."," 'pvc' => '10'," 'pvp' => '16')" 
-I grab from database('components', 'id', array 'serialNumber' => $numero_serie)" 
+I see current url equals '/Intranet/vehicles/components/form' 
+I submit form('#components form', array('name' => 'lorem ipsum', 'ref' => 'loremipsum', 'serial number' => $this->serial number, 'mader' => 'generico', 'observations' => 'lorem ipsum lorem ipsum lorem ipsum sumotas', 'pvc' => '10', 'pvp' => '16'));           $this->component id = $i->grab from database('components', 'id', array 'serialNumber' => $this->serialNumber)" 
 I am on page '/Intranet/admin' 
 I click 'Recambios'," '.list-group-item' 
-I see current url equals '/Intranet/buys/supplies/list' 
+I see current url equals '/Intranet/vehicles/supplies/list' 
 I click '#submit'," '#addSupply' 
+I submit form('#supply form', array 'ref' =>..."," 'mader'..."," 'mader_..."," 'name' ..."," 'observ..."," 'pvc' =...","00€'," 'pvp' =...","00€'," 'tva_bu...","10€'," 'tva_se...","36€'," 'total_...","10€'," 'total_...","36€')" 
 I grab from database('supplies', 'id', array 'ref' => $referencia)" 
 I am on page '/Intranet/admin' 
 I click 'Trabajos'," '.list-group-item' 
 I see current url equals '/Intranet/vehicles/works/list' 
 I click '#submit'," '#addWork' 
 I see current url equals '/Intranet/vehicles/works/form' 
-I grab from database('works', 'id', array 'reference' => $refWork)" 
+I submit form('#work form', array 'reference' => $ref_work"," 'description' => 'Lorem Ipsum'," 'observations' => 'Lorem ipsum lorem ipsum lorem i..."," 'price' => '16","00€'," 'tva_sell' => '3","36€'," 'total_sell' => '19","36€')" 
+I grab from database('works', 'id', array 'reference' => $ref_work)" 
 I am on page '/Intranet/admin' 
 I click 'Ofertas'," '.list-group-item' 
 I see current url equals '/Intranet/sells/offers/list' 
 I click '#submit'," '#addSellOffer' 
 I see current url equals '/Intranet/sells/offers/form' 
-I grab from database('sell offers', 'id', array('offer number' => $i->grab value from '#inputOfferNumber'))"
+I submit form('#sell offer form', array ('offer_number' => $i->grab value from('#input offer number'), 'date' => date('d/m/y', strtotime($i->grab value from('#input date'))), 'texts' => 'lorem ipsum lorem ipsum lorem ipsum sumotas', 'observations' => 'lorem ipsum lorem ipsum lorem ipsum sumotas', 'customer_id' => $this->customer id, 'vehicle_id' => $this->vehicle id , 'discount' => $i->grab value from('#input discount'), 'pvp' => $i->grab value from('#input price'), 'tva' => $i->grab value from('#input tva'), 'total' => $i->grab value from('#input total'), 'price_vehicle' => $i->grab value from('#input vehicle price'), 'vehicle_tva' => $i->grab value from('#input vehicle tva'), 'vehicle_total' => $i->grab value from('#input vehicle total'), 'vehicle_comments' => $i->grab value from '#vehicle_comments'))" 
+I grab from database('selloffers', 'id', array 'offerNumber' => '2021OF0001')" 
+I can see 'Saved'
 

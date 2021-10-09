@@ -158,6 +158,22 @@ window.addEventListener('load', function () {
         total_components = numeral(price_components.value() + tva_components.value());
         document.getElementById('inputComponentsTotal').value = total_components.format('(0,0.0$)');
     });
+    document.getElementById('inputPvp').addEventListener('change', function(){
+        pvc = numeral(document.getElementById('inputPvp').value);
+        document.getElementById('inputPvp').value = pvc.format('(0,0.0$)');
+        tva_pvc = numeral(pvc.value() * 0.21);
+        document.getElementById('inputTvaSell').value = tva_pvc.format('(0,0.0$)');
+        total_pvc = numeral(pvc.value() + tva_pvc.value());
+        document.getElementById('inputTotalSell').value = total_pvc.format('(0,0.0$)');
+    });
+    document.getElementById('inputCost').addEventListener('change', function(){
+        pvp = numeral(document.getElementById('inputCost').value);
+        document.getElementById('inputCost').value = pvp.format('(0,0.0$)');
+        tva_pvp = numeral(pvc.value() * 0.21);
+        document.getElementById('inputTvaCost').value = tva_pvp.format('(0,0.0$)');
+        total_pvp = numeral(pvp.value() + tva_pvp.value());
+        document.getElementById('inputTotalCost').value = total_pvp.format('(0,0.0$)');
+    });
     var json_components_response = '{{vehicle_components|raw}}';
     var vehicle = document.getElementById('inputId').value;   
     if (json_components_response.length > 0) {

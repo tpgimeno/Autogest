@@ -19,7 +19,7 @@
     </div>
     <div class="row">
         <div class="col">
-            <form id="banksForm" action="/Intranet/banks/save" method="post">
+            <form id="BanksForm" action="/Intranet/banks/save" method="post">
                 <div class="form-row">
                     <div class="form-group col-md-2">
                         <label for="inputId">ID</label>                        
@@ -33,13 +33,13 @@
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputNif">NIF/CIF</label>
-                        <input type="text" name="fiscal_id" class="form-control" id="inputNif" placeholder="ID Fiscal" value="{{ bank.fiscal_id }}">
+                        <input type="text" name="fiscalId" class="form-control" id="inputNif" placeholder="ID Fiscal" value="{{ bank.fiscal_id }}">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col">
                         <label for="inputSocialName">Razon Social</label>
-                        <input type="socialName" name="fiscal_name" class="form-control" id="inputSocialName" placeholder="Razón Social" value="{{ bank.fiscal_name }}">
+                        <input type="socialName" name="fiscalName" class="form-control" id="inputSocialName" placeholder="Razón Social" value="{{ bank.fiscal_name }}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -53,7 +53,7 @@
                     </div>
                     <div class="form-group col-md-2">
                         <label for="inputZip">C.P.</label>
-                        <input type="text" name="postal_code" class="form-control" id="inputZip" placeholder="Código Postal" value="{{ bank.postal_code }}">
+                        <input type="text" name="postalCode" class="form-control" id="inputZip" placeholder="Código Postal" value="{{ bank.postal_code }}">
                     </div>                                             
                 </div>
                 <div class="form-row"> 

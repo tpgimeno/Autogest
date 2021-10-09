@@ -20,8 +20,7 @@ class CompanyController extends BaseController
         $this->companyService = $companyService;
     }
     
-    public function getIndexAction()
-    {
+    public function getIndexAction() {
         $company = Company::All();
         return $this->renderHTML('/Entitys/company/companyList.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
@@ -29,8 +28,7 @@ class CompanyController extends BaseController
         ]);
     }   
     
-    public function searchCompanyAction($request)
-    {
+    public function searchCompanyAction($request) {
         $searchData = $request->getParsedBody();
         $searchString = $searchData['searchFilter'];        
         $customer = Customer::Where("id", "like", "%".$searchString."%")
@@ -46,11 +44,9 @@ class CompanyController extends BaseController
             'customers' => $customer                
         ]);
     }    
-    public function getCompanyDataAction($request)
-    {                
+    public function getCompanyDataAction($request) {                
         $responseMessage = null;
-        if($request->getMethod() == 'POST')
-        {
+        if($request->getMethod() == 'POST') {
             $postData = $request->getParsedBody();            
             $companyValidator = v::key('name', v::stringType()->notEmpty()) 
             ->key('fiscalId', v::notEmpty())
@@ -64,9 +60,9 @@ class CompanyController extends BaseController
             }              
         }
         $companySelected = null;
-        if($request->getQueryParams() && Company::find($request->getQueryParams('id')))
-        {
-            $companySelected = Company::find($request->getQueryParams('id'))->first();
+        $params = $request->getQueryParams();
+        if($params && $this->findCompany($params)) {
+            $companySelected = Company::find(intval($params['id']));
         }
         return $this->renderHTML('/Entitys/company/companyForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
@@ -74,14 +70,21 @@ class CompanyController extends BaseController
             'company' => $companySelected
         ]);
     }
-    public function saveCompanyData($postData)
-    {
+    public function findCompany($postData){
+        $company = null;
+        if(isset($postData['id']) && $postData['id']){
+            $company = Company::find(intval($postData['id']));
+        }
+        if($company){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public function saveCompanyData($postData) {
         $company = new Company();   
-        $update = false;
-        if(Company::find($postData['id']))
-        {
-            $company->id = Company::find($postData['id'])->first();   
-            $update = true;
+        if($this->findCompany($postData)) {
+            $company = Company::find(intval($postData['id']));            
         }                            
         $company->name = $postData['name'];
         $company->fiscalId = $postData['fiscalId'];
@@ -94,20 +97,16 @@ class CompanyController extends BaseController
         $company->phone = $postData['phone'];
         $company->email = $postData['email'];
         $company->site = $postData['site'];
-        if($update === true)
-        {
+        if($this->findCompany($postData)) {
             $company->update();
             $responseMessage = 'Updated';
-        }
-        else
-        {
+        }else{
             $company->save();     
             $responseMessage = 'Saved'; 
         } 
         return $responseMessage;
     }
-    public function deleteAction(ServerRequest $request)
-    {         
+    public function deleteAction(ServerRequest $request) {         
         $this->companyService->deleteCompany($request->getQueryParams('id'));               
         return new RedirectResponse('/Intranet/company/list');
     }

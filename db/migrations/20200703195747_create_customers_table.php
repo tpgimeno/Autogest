@@ -29,7 +29,7 @@ final class CreateCustomersTable extends AbstractMigration
                 ->addColumn('phone', 'string', ['null' => true])
                 ->addColumn('email', 'string', ['null' => true])
                 ->addColumn('birthDate', 'date', ['null' => true])
-                ->addColumn('customerType', 'integer')
+                ->addColumn('customerType', 'integer', ['null' => true])
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime', ['null' => true])
                 ->addColumn('deleted_at', 'datetime', ['null' => true])

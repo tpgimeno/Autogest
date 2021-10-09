@@ -91,7 +91,7 @@ class WorksController extends BaseController
         $work = new Works();                
         if(isset($postData['id']) && $postData['id'])
         {
-            $work = Works::find($postData['id'])->first();                                
+            $work = Works::find(intval($postData['id']));                                
         }                
         $work->reference = $postData['reference'];
         $work->description = $postData['description'];

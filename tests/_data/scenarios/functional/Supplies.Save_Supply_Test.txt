@@ -2,7 +2,8 @@ I WANT TO CREATE A NEW SUPPLY
 
 I am on page '/Intranet/admin' 
 I click 'Recambios'," '.list-group-item' 
-I see current url equals '/Intranet/buys/supplies/list' 
+I see current url equals '/Intranet/vehicles/supplies/list' 
 I click '#submit'," '#addSupply' 
-I grab from database('supplies', 'id', array 'ref' => $referencia)"
+I grab from database('supplies', 'id', array 'ref' => $referencia)" 
+I can see 'Saved'
 

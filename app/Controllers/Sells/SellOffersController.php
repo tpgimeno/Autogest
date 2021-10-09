@@ -87,8 +87,7 @@ class SellOffersController extends BaseController {
         $offer = null;
         if($request->getMethod() == 'POST'){
             $postData = $request->getParsedBody();            
-            if($this->validateData($postData))
-            {
+            if($this->validateData($postData)){
                 $responseMessage = $this->validateData($postData);
             }
             $offer = $this->getPostDataSellOffer($postData);
@@ -108,18 +107,15 @@ class SellOffersController extends BaseController {
                 $new_offer = 1;                
                 $offer_number = $this->getFirstSellOfferNumber(); 
                 $this->resetOffer($new_offer);
-            }
-            else{
+            }else{
                 $new_offer = $last_offer->id + 1;
                 $offer_number = $this->getNewSellOfferNumber($last_offer); 
                 $this->resetOffer($new_offer);
             }              
-        }
-        else{
+        }else{
             $new_offer = $selected_offer->id;
             $offer_number = $selected_offer->offerNumber;
-        } 
-                       
+        }                       
         return $this->getRenderAgain($params, $new_offer, $offer_number, $selected_tab, $responseMessage);
     }  
     public function validateData($postData) {
@@ -153,15 +149,23 @@ class SellOffersController extends BaseController {
         }  
         return $responseMessage;
     }
+    public function findSellOffer($postData){
+        $offer = SellOffer::find(intval($postData['id']));
+        if($offer){
+            return true;
+        }else{
+            return false;
+        }
+    }
     public function getPostDataSellOffer($postData){
         $offer = new SellOffer();        
-        if(isset($postData['id']) && $postData['id']){
-            if(SellOffer::find($postData['id'])){
-                $offer = SellOffer::find($postData['id'])->first();
-            }            
+        if($this->findSellOffer($postData)){
+            $offer = SellOffer::find(intval($postData['id']));            
         }        
         $offer->offerNumber = $postData['offer_number'];
-        $offer->offerDate = Date('y/m/d', strtotime($postData['date']));
+        $offer->offerDate = Date('y-m-d', strtotime($postData['date']));
+        $offer->taxesId = Taxes::where('percentaje', '=', intval($postData['taxes']))->first()->id;        
+        $offer->paymentWayId = PaymentWays::where('discount', '=', intval($postData['paymentWays']))->first()->id;
         $offer->texts = $postData['texts'];
         $offer->observations = $postData['observations'];                       
         $offer->customerId = Customer::find($postData['customer_id'])->id;
@@ -380,8 +384,7 @@ class SellOffersController extends BaseController {
         $responseMessage = null;
         $postData = $request->getParsedBody();        
         $data = json_decode($postData['component']);        
-        $offerComponent = new SellOffersComponents();
-        
+        $offerComponent = new SellOffersComponents();        
         $temp_component = SellOffersComponents::where('componentId', '=', $data->componentId)
                 ->where('sellofferId', '=', $data->sellofferId)
                 ->first();
@@ -483,7 +486,8 @@ class SellOffersController extends BaseController {
         $data = json_decode($postData['work']);        
         $work = new SellOffersWorks();
         $temp_work = SellOffersWorks::where('workId', '=', $data->workId)
-                ->where('sellofferId', '=', $data->sellofferId);
+                ->where('sellofferId', '=', $data->sellofferId)
+                ->first();
         if($temp_work)
         {
             $work = $temp_work;
@@ -591,7 +595,15 @@ class SellOffersController extends BaseController {
             {
                 $offer_number = $this->getFirstSellOfferNumber();
             }            
-        }        
+        } 
+        $offerDate = null;
+        
+        if($selected_offer && $selected_offer->offerDate){
+            $offerDate = Date('Y-m-d', strtotime($selected_offer->offerDate));
+        }else{
+            $offerDate = date('Y-m-d', getDate()[0]);
+        } 
+
         $selectedSupply = $this->getSelectedOfferSelectedSupply($params);  
         $selectedTaxe = $this->getSelectedTaxe($selected_offer);   
         $selectedPaymentWay = $this->getSelectedPaymentWay($selected_offer);
@@ -619,8 +631,7 @@ class SellOffersController extends BaseController {
         $paymentWays = PaymentWays::All();
         $customers = Customer::All();
         $vehicles = Vehicle::All();
-        $accesories = Accesories::All();
-        
+        $accesories = Accesories::All();        
         return $this->renderHTML('/sells/offers/sellOffersForm.html.twig', [
             'sellOffer' => $selected_offer,
             'offer_number' => $offer_number,
@@ -653,7 +664,8 @@ class SellOffersController extends BaseController {
             'offerWorks' => $offerWorks,
             'edit_price_work' => $editPriceWork,
             'edit_cantity_work' => $editCantityWork,
-            'new_selloffer' => $new_offer,                
+            'new_selloffer' => $new_offer, 
+            'offer_date' => $offerDate,
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage
         ]);         
@@ -706,13 +718,13 @@ class SellOffersController extends BaseController {
     public function getSelectedTaxe($offer){
         $taxe = null;        
         if($offer){            
-            $taxe = Taxes::find($offer->taxesId)->first();
+            $taxe = Taxes::find($offer->taxesId);
             return $taxe;  
         }
-        return $taxe;
-        
+        return $taxe;        
     }  
     public function getSelectedPaymentWay($offer){
+        
         $paymentWay = null;
         if($offer){
             $paymentWay = PaymentWays::find($offer->paymentWayId);
@@ -721,8 +733,7 @@ class SellOffersController extends BaseController {
         return $paymentWay;
     }
     public function getSelectedOfferSelectedSupply($params) {              
-        $selectedSupply = new SellOffersSupplies();
-        
+        $selectedSupply = new SellOffersSupplies();        
         if(isset($params['supplyId']) && $params['supplyId'] && $params['supplyId'] != 'null') {            
             $supply = Supplies::find($params['supplyId']);           
             $selectedSupply->supplyId = $params['supplyId'];
@@ -780,7 +791,7 @@ class SellOffersController extends BaseController {
         {           
             $selectedWork->workId = $params['work_id'];
             $selectedWork->sellofferId = $params['offer_id'];
-            $work = Works::find($params['work_id'])->first();
+            $work = Works::find($params['work_id']);
             $selectedWork->setAttribute('reference', $work->reference);
             $selectedWork->setAttribute('description', $work->description);
             if(isset($params['work_price']) && $params['work_price'] && $params['work_price'] != 'null')
