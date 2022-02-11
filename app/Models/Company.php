@@ -9,5 +9,4 @@ class Company extends Model
 {
     use SoftDeletes;
     protected $table = "company";
-
 }

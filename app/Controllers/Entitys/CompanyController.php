@@ -2,46 +2,35 @@
 
 namespace App\Controllers\Entitys;
 
+use App\BackEnd\Classes\CompanyClass;
 use App\Controllers\BaseController;
-use Respect\Validation\Validator as v;
 use App\Models\Company;
 use App\Services\Entitys\CompanyService;
-use Laminas\Diactoros\ServerRequest;
+use Exception;
 use Laminas\Diactoros\Response\RedirectResponse;
-
-class CompanyController extends BaseController
-{    
-    
+use Laminas\Diactoros\ServerRequest;
+use Respect\Validation\Validator as v;
+class CompanyController extends BaseController {        
     protected $companyService;
-
-    public function __construct(CompanyService $companyService)
-    {
+    public function __construct(CompanyService $companyService) {
         parent::__construct();
         $this->companyService = $companyService;
-    }
-    
+    }    
     public function getIndexAction() {
-        $company = Company::All();
+        $company = new CompanyClass();
         return $this->renderHTML('/Entitys/company/companyList.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
-            'company' => $company
+            'companies' => $company->getAllRegisters()
         ]);
-    }   
-    
+    }       
     public function searchCompanyAction($request) {
         $searchData = $request->getParsedBody();
-        $searchString = $searchData['searchFilter'];        
-        $customer = Customer::Where("id", "like", "%".$searchString."%")
-                ->orWhere("name", "like", "%".$searchString."%")
-                ->orWhere("fiscalName", "like", "%".$searchString."%")
-                ->orWhere("fiscalId", "like", "%".$searchString."%")
-                ->orWhere("phone", "like", "%".$searchString."%")
-                ->orWhere("email", "like", "%".$searchString."%")
-                ->get();       
-
+        $searchString = $searchData['searchFilter']; 
+        $company = new CompanyClass();
+        $companies = $company->searchCompanies($searchString);
         return $this->renderHTML('/Entitys/company/companyList.html.twig', [
             'currentUser' => $this->currentUser->getCurrentUserEmailAction(),
-            'customers' => $customer                
+            'companies' => $companies                
         ]);
     }    
     public function getCompanyDataAction($request) {                
@@ -55,7 +44,7 @@ class CompanyController extends BaseController
             try{
                 $companyValidator->assert($postData); // true 
                 $responseMessage = $this->saveCompanyData($postData);                   
-            }catch(\Exception $e){                
+            }catch(Exception $e){                
                 $responseMessage = $e->getMessage();
             }              
         }
