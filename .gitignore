@@ -3,4 +3,8 @@ vendor
 .vscode
 _mmServerScripts
 phinx.*
+nbproject
+.phpdoc
+build
+docs
 
