@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * Template for all controllers that implements Views engine
+ */
+
 namespace App\Controllers;
 
 require_once "../vendor/autoload.php";
