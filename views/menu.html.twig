@@ -1,4 +1,4 @@
-{% extends "layout.twig" %}
+{% extends "layout.html.twig" %}
 {% block loginForm %}
     <form class="form" action="/Intranet/logout" method="post">
         <div class="form-group">
@@ -7,7 +7,12 @@
         </div>
     </form>
 {% endblock %} 
-{% block content %}    
+{% block content %} 
+    {% block javascripts %}
+        <script>
+            {{include('js/manageMenuTabs.js')}}
+        </script>
+    {% endblock %}
     <div class="container">
         <div class="row">
             <div class="col">
@@ -38,7 +43,7 @@
                                                 </li>
                                                 <li class="list-group-item"><a href="/Intranet/company/list">Empresas</a></li>
                                                 <li class="list-group-item"><a href="/Intranet/users/list">Usuarios</a></li>
-                                                <li class="list-group-item"><a href="/Intranet/sellers/list">Comerciales</a></li>  
+                                                <li class="list-group-item"><a href="/Intranet/settings">Parametros</a></li>                                              
                                                 <li class="list-group-item"><a href="/Intranet/taxes/list">Tipos Iva</a></li>
 
                                                 
@@ -104,6 +109,7 @@
                                                 <li class="list-group-item">
                                                     <h4> CRM </h4>
                                                 </li>
+                                                <li class="list-group-item"><a href="/Intranet/sellers/list">Comerciales</a></li>  
                                                 <li class="list-group-item"><a href="/Intranet/sells/offers/list">Ofertas</a></li>                                                
                                             </ul>
                                         </div>

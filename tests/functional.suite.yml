@@ -8,10 +8,7 @@
 actor: FunctionalTester
 modules:
     enabled:
-        # add a framework module here
-        - PhpBrowser:
-            browser: chrome
-            url: http://localhost/Intranet
+        # add a framework module here      
         - \Helper\Functional  
         - Db:
             dsn: 'mysql:host=127.0.0.1;dbname=automotive'

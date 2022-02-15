@@ -1,4 +1,7 @@
 <?php 
+namespace Tests\acceptance;
+
+use AcceptanceTester;
 
 class FirstCest
 {

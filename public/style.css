@@ -1,6 +1,10 @@
 #home_icon{
     height: 20px;
 }
+#colmenu{
+    background-color: red;
+    height: 100%;
+}
 #searchField{
     width:600px;
 }

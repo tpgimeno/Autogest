@@ -1,0 +1,28 @@
+{% extends "layout.html.twig" %}
+{% block loginForm %}
+    <form class="form" action="/Intranet/logout" method="post">
+        <div class="form-group">
+           {{ userEmail }}        
+            <input type="submit" value="Logout" class="form-control btn btn-link">
+        </div>
+    </form>
+{% endblock %} 
+{% block content %}    
+    <div class="container">
+        <div class="row">
+            <div id="colmenu" class="col-3">
+                <p> Prueba Texto Menu</p>
+            </div>
+            <div id="panel" class="col-9">
+                <div class="card" style="width: 16rem;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

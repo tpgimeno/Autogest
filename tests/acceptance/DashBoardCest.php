@@ -2,7 +2,6 @@
 namespace App\Acceptance\Tests;
 
 use AcceptanceTester;
-use FunctionalTester;
 use FirstCest;
 
 
@@ -13,7 +12,7 @@ class DashBoardCest
         FirstCest::loginTest($I);        
     }
     // tests
-    public function linksTest(FunctionalTester $I)
+    public function linksTest(AcceptanceTester $I)
     {
         $I->amOnPage('/Intranet/admin');
         $I->click('Empresas', '.list-group-item');
@@ -78,8 +77,7 @@ class DashBoardCest
         $I->seeCurrentUrlEquals('/Intranet/customers/list');
         $I->amOnPage('/Intranet/admin');
         $I->click('Tipos Clientes', '.list-group-item');        
-        $I->seeCurrentUrlEquals('/Intranet/customers/type/list');
-        
+        $I->seeCurrentUrlEquals('/Intranet/customers/type/list');       
                 
     }
 }

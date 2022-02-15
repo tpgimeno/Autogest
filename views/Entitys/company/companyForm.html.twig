@@ -1,4 +1,4 @@
-{% extends "dashboard.twig" %}
+{% extends "menu.html.twig" %}
 {% block content %}
 <div class="container">
     <div class="row">
@@ -7,7 +7,7 @@
         </div>   
         <div class="col-md-2 d-flex justify-content-end align-items-end">
             <a class="link pr-4" href="/Intranet/company/list">Lista</a> 
-            <a class="link " href="/Intranet/admin">Volver</a> 
+            <a class="link " href="/Intranet/admin?selected_tab=home">Volver</a> 
         </div>        
     </div>
     <div class="row">
@@ -27,37 +27,35 @@
                     </div>                   
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-9">
+                    <div class="form-group col-md-4">
                         <label for="inputName">Nombre</label>                        
                         <input type="text" name="name" class="form-control" id="inputName" placeholder="Nombre" value="{{ company.name }}">
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-2">
                         <label for="inputNif">NIF/CIF</label>
                         <input type="text" name="fiscalId" class="form-control" id="inputNif" placeholder="ID Fiscal" value="{{ company.fiscalId }}">
                     </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col">
+                    <div class="form-group col-md-6">
                         <label for="inputSocialName">Razon Social</label>
                         <input type="text" name="fiscalName" class="form-control" id="inputSocialName" placeholder="Razón Social" value="{{ company.fiscalName }}">
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
                         <label for="inputAddress">Dirección</label>
                         <input type="text" name="address" class="form-control" id="inputAddress" placeholder="C/ La paz, 4" value="{{ company.address }}">
-                    </div>                                      
-                <div class="form-row">                         
-                    <div class="form-group col-md-10">
-                        <label for="inputCity">Población</label>
-                        <input type="text" name="city" class="form-control" id="inputCity" placeholder="Ciudad" value="{{ company.city }}">
-                    </div>
+                    </div> 
                     <div class="form-group col-md-2">
                         <label for="inputZip">C.P.</label>
                         <input type="text" name="postalCode" class="form-control" id="inputZip" placeholder="Código Postal" value="{{ company.postalCode }}">
-                    </div>                                             
-                </div>
+                    </div> 
+                    <div class="form-group col-md-4">
+                        <label for="inputCity">Población</label>
+                        <input type="text" name="city" class="form-control" id="inputCity" placeholder="Ciudad" value="{{ company.city }}">
+                    </div>
+                </div>                   
                 <div class="form-row"> 
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label for="inputState">Provincia/Estado</label>
                         <input type="text" name="state" class="form-control" id="inputState" placeholder="Provincia" value="{{ company.state }}">
                     </div> 
@@ -65,20 +63,20 @@
                         <label for="inputCountry">Pais</label>
                         <input type="text" name="country" class="form-control" id="inputCountry" placeholder="Pais" value="{{ company.country }}">
                     </div>                          
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-2">
                         <label for="inputPhone">Teléfono</label>
-                        <input type="text" name="phone" class="form-control" id="inputPhone" placeholder="Phone" value="{{ company.phone }}">
+                        <input type="text" name="phone" class="form-control text-right" id="inputPhone" placeholder="Phone" value="{{ company.phone }}">
                     </div>
-                </div>
-                <div class="form-row">                         
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                         <label for="inputEmail">Email</label>
                         <input type="text" name="email" class="form-control" id="inputEmail" placeholder="Email" value="{{ company.email }}">
-                    </div>                        
+                    </div> 
+                </div>
+                <div class="form-row">                                  
                     <div class="form-group col-md-6">
                         <label for="inputWeb">Web</label>
                         <input type="text" name="site" class="form-control" id="inputWeb" placeholder="Web" value="{{ company.site }}">
-                    </div>                       
+                    </div>                    
                 </div>
                 <div class="form-row">
                     <div class="col text-right">

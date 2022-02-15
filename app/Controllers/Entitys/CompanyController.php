@@ -10,6 +10,7 @@ use Exception;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\ServerRequest;
 use Respect\Validation\Validator as v;
+
 class CompanyController extends BaseController {        
     protected $companyService;
     public function __construct(CompanyService $companyService) {
@@ -17,17 +18,15 @@ class CompanyController extends BaseController {
         $this->companyService = $companyService;
     }    
     public function getIndexAction() {
-        $company = new CompanyClass();
+        $companies = $this->companyService->getAllRegisters();
         return $this->renderHTML('/Entitys/company/companyList.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
-            'companies' => $company->getAllRegisters()
+            'companies' => $companies
         ]);
     }       
     public function searchCompanyAction($request) {
-        $searchData = $request->getParsedBody();
-        $searchString = $searchData['searchFilter']; 
-        $company = new CompanyClass();
-        $companies = $company->searchCompanies($searchString);
+        $searchData = $request->getParsedBody();      
+        $companies = $this->companyService->searchCompanies($searchData['searchFilter']);
         return $this->renderHTML('/Entitys/company/companyList.html.twig', [
             'currentUser' => $this->currentUser->getCurrentUserEmailAction(),
             'companies' => $companies                
@@ -43,16 +42,13 @@ class CompanyController extends BaseController {
             ->key('email', v::stringType()->notEmpty());            
             try{
                 $companyValidator->assert($postData); // true 
-                $responseMessage = $this->saveCompanyData($postData);                   
+                $responseMessage = $this->companyService->saveCompanyData($postData);                   
             }catch(Exception $e){                
                 $responseMessage = $e->getMessage();
             }              
-        }
-        $companySelected = null;
+        }        
         $params = $request->getQueryParams();
-        if($params && $this->findCompany($params)) {
-            $companySelected = Company::find(intval($params['id']));
-        }
+        $companySelected = $this->companyService->findCompany($params);
         return $this->renderHTML('/Entitys/company/companyForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
@@ -70,31 +66,7 @@ class CompanyController extends BaseController {
             return false;
         }
     }
-    public function saveCompanyData($postData) {
-        $company = new Company();   
-        if($this->findCompany($postData)) {
-            $company = Company::find(intval($postData['id']));            
-        }                            
-        $company->name = $postData['name'];
-        $company->fiscalId = $postData['fiscalId'];
-        $company->fiscalName = $postData['fiscalName'];
-        $company->address = $postData['address'];
-        $company->city = $postData['city'];
-        $company->postalCode = $postData['postalCode'];
-        $company->state = $postData['state'];
-        $company->country = $postData['country'];
-        $company->phone = $postData['phone'];
-        $company->email = $postData['email'];
-        $company->site = $postData['site'];
-        if($this->findCompany($postData)) {
-            $company->update();
-            $responseMessage = 'Updated';
-        }else{
-            $company->save();     
-            $responseMessage = 'Saved'; 
-        } 
-        return $responseMessage;
-    }
+    
     public function deleteAction(ServerRequest $request) {         
         $this->companyService->deleteCompany($request->getQueryParams('id'));               
         return new RedirectResponse('/Intranet/company/list');

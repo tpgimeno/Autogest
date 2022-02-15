@@ -10,4 +10,8 @@ modules:
         - PhpBrowser:            
             url: http://localhost/Intranet
         - \Helper\Acceptance
+        - Db:
+            populate: true
+            clean: true
+        - \Helper\Acceptance
 step_decorators: ~        

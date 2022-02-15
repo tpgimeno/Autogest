@@ -14,8 +14,7 @@ class AuthController extends BaseController
         $postData = $request->getParsedBody();
         if($request->getMethod() == 'POST')
         {               
-            $user = User::where('email', $postData['email'])->first();
-            
+            $user = User::where('email', $postData['email'])->first();            
             if($user)
             {
                 if(\password_verify($postData['password'], $user->password))
@@ -26,14 +25,14 @@ class AuthController extends BaseController
                 else
                 {
                     $responseMessage = 'El usuario o el Password no es correcto';
-                    return $this->renderHTML('login.twig', [
+                    return $this->renderHTML('login.html.twig', [
                         'responseMessage' => $responseMessage
                     ]);
                 }                
             }else
             {
                 $responseMessage = 'El usuario o el Password no es correcto';
-                    return $this->renderHTML('login.twig', [
+                    return $this->renderHTML('login.html.twig', [
                         'responseMessage' => $responseMessage
                     ]);
             }           
@@ -44,4 +43,5 @@ class AuthController extends BaseController
         unset($_SESSION['userId']);
         return new RedirectResponse('/Intranet/');  
     }
+    
 }
