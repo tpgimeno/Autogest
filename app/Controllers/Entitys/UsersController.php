@@ -12,15 +12,11 @@ use Laminas\Diactoros\Response\RedirectResponse;
 class UsersController extends BaseController 
 {
     protected $userService;
-
     public function __construct(UserService $userService)
     {
         parent::__construct();
         $this->userService = $userService;
     }
-
-
-
     public function getAddUserAction($request)
     {
         $responseMessage = null;
