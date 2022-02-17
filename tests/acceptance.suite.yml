@@ -13,5 +13,4 @@ modules:
         - Db:
             populate: true
             clean: true
-        - \Helper\Acceptance
 step_decorators: ~        

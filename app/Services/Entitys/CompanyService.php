@@ -3,14 +3,11 @@
 namespace App\Services\Entitys;
 
 use App\Models\Company;
+use App\Services\BaseService;
 
 
-class CompanyService
+class CompanyService extends BaseService
 {    
-    public function getAllRegisters(){
-        $companies = Company::All();
-        return $companies;
-    }
     public function searchCompanies($searchString){
         $companies = Company::Where("id", "like", "%".$searchString."%")
                 ->orWhere("name", "like", "%".$searchString."%")
@@ -19,11 +16,10 @@ class CompanyService
                 ->orWhere("phone", "like", "%".$searchString."%")
                 ->orWhere("email", "like", "%".$searchString."%")
                 ->get(); 
-        if($companies){
-            return $companies;
-        }else{
-            return null;
+        if(!$companies){
+            $companies = $this->getAllRegisters(new Company());
         }
+        return $companies;
     }
     public function findCompany($array){
         $company = null;
@@ -32,9 +28,8 @@ class CompanyService
         }
         return $company;
     }
-    public function saveOrUpdate($array)
-    {
-        $company = new Company();   
+    public function saveOrUpdate($array) {
+        $company = new Company();          
         if($this->findCompany($array)) {
             $company = Company::find(intval($array['id']));            
         }
@@ -62,8 +57,7 @@ class CompanyService
         } 
         return $responseMessage;
     }
-    public function deleteCompany($id)
-    {        
+    public function deleteCompany($id) {        
         $company = Company::find($id)->first();
         $company->delete();
     }

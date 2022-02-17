@@ -2,7 +2,6 @@
 
 namespace App\Controllers\Entitys;
 
-use App\BackEnd\Classes\CompanyClass;
 use App\Controllers\BaseController;
 use App\Models\Company;
 use App\Services\Entitys\CompanyService;
@@ -18,7 +17,7 @@ class CompanyController extends BaseController {
         $this->companyService = $companyService;
     }    
     public function getIndexAction() {
-        $companies = $this->companyService->getAllRegisters();
+        $companies = $this->companyService->getAllRegisters(new Company());
         return $this->renderHTML('/Entitys/company/companyList.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'companies' => $companies
@@ -42,33 +41,20 @@ class CompanyController extends BaseController {
             ->key('email', v::stringType()->notEmpty());            
             try{
                 $companyValidator->assert($postData); // true 
-                $responseMessage = $this->companyService->saveCompanyData($postData);                   
+                $responseMessage = $this->companyService->saveRegister(new Company(), $postData);                   
             }catch(Exception $e){                
                 $responseMessage = $e->getMessage();
             }              
         }        
-        $params = $request->getQueryParams();
-        $companySelected = $this->companyService->findCompany($params);
+        $companySelected = $this->companyService->setInstance(new Company(), $request->getQueryParams());
         return $this->renderHTML('/Entitys/company/companyForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
             'company' => $companySelected
         ]);
-    }
-    public function findCompany($postData){
-        $company = null;
-        if(isset($postData['id']) && $postData['id']){
-            $company = Company::find(intval($postData['id']));
-        }
-        if($company){
-            return true;
-        }else{
-            return false;
-        }
-    }
-    
+    }    
     public function deleteAction(ServerRequest $request) {         
-        $this->companyService->deleteCompany($request->getQueryParams('id'));               
+        $this->companyService->deleteRegister(new Company(), $request->getQueryParams('id'));               
         return new RedirectResponse('/Intranet/company/list');
     }
     

@@ -5,12 +5,10 @@ use AcceptanceTester;
 
 class FirstCest
 {
-    public function frontpageWorks(AcceptanceTester $I)
-    {
+    public function frontpageWorks(AcceptanceTester $I) {
         $I->amOnPage('/Intranet');        
     }
-    public function loginTest(AcceptanceTester $I){
-      
+    public function loginTest(AcceptanceTester $I){      
         $I->amOnPage('/Intranet');
         $I->see('Inicio');
         $I->fillField('email', 'tonyllomouse@gmail.com');

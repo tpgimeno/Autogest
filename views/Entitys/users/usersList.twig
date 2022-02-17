@@ -1,4 +1,4 @@
-{% extends "dashboard.twig" %}
+{% extends "menu.html.twig" %}
 {% block content %}
     <div class="container">
         <div class="row">
@@ -13,12 +13,14 @@
             <div class="col">
                 <table class="table">
                     <tr>
+                        <th class="col-1">ID</th>
                         <th class="col-9">email</th>  
                         <th class="col-3">Edit</th>                      
                         <th class="col-3">Delete</th>
                     </tr>
                     {% for user in users %}
                         <tr>
+                            <td>{{ user.id }}</td>
                             <td>{{ user.email }}</td>                            
                             <td><a href="/Intranet/users/form?id={{user.id}}">Edit</a></td>
                             <td><a href="/Intranet/users/delete?id={{user.id}}">Delete</a></td>

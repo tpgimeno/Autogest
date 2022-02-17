@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\acceptance;
 
 use AcceptanceTester;
@@ -14,12 +15,14 @@ class CompanyCest
     // tests
     public function accesTest(AcceptanceTester $I)
     {
+        $J = new AcceptanceTester();
+        
         $I->amOnPage('/Intranet/');
         $I->amOnPage('/Intranet/admin');
         $I->click('Empresas', '.list-group-item');
         $I->seeCurrentUrlEquals('/Intranet/company/list');
     }
-    public function SaveCompanyTest(AcceptanceTester $I){
+    public function saveCompanyTest(AcceptanceTester $I){
         $caracteres_permitidos = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';        
         $longitud = 12;
         $fiscal_id = substr(str_shuffle($caracteres_permitidos), 0, $longitud);
@@ -34,7 +37,7 @@ class CompanyCest
         $I->seeCurrentUrlEquals('/Intranet/company/save');
         $I->see("Saved");   
     }
-    public function UpdateCompanyTest(AcceptanceTester $I){
+    public function updateCompanyTest(AcceptanceTester $I){
         $I->amOnPage('/Intranet/admin');
         $I->click('Empresas', '.list-group-item');
         $I->seeCurrentUrlEquals('/Intranet/company/list');
@@ -44,7 +47,7 @@ class CompanyCest
         $I->click('#submit');       
         $I->see('Updated');
     }
-    public function DeleteCompanyTest(AcceptanceTester $I){
+    public function deleteCompanyTest(AcceptanceTester $I){
         $I->amOnPage('/Intranet/admin');
         $I->click('Empresas', '.list-group-item');
         $I->seeCurrentUrlEquals('/Intranet/company/list');

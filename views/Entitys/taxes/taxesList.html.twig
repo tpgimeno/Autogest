@@ -1,4 +1,4 @@
-{% extends "dashboard.twig" %}
+{% extends "menu.html.twig" %}
 {% block content %}
     <div class="container">
         <div class="row">
@@ -6,29 +6,14 @@
                 <h2> Tipos de Iva </h2>
             </div>   
             <div class="col-md-2 d-flex justify-content-end align-items-end">
-                <a class="link " href="/Intranet/admin">Volver</a> 
+                <a class="link " href="/Intranet/admin?selected_tab=home">Volver</a> 
             </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <form id="searchForm" action="/Intranet/taxes/search" method="post" class="form">
-                    <div class="container">
-                        <div id="formRow" class="form-row text-right">
-                            <div class="col-11">                                                                                
-                                <input id="searchField" type="text" name="searchFilter" class="form-control mb-2 mr-sm-2" id="inlineFormSearchFilter" placeholder="Nombre / Porcentaje">
-                            </div>
-                            <div class="col-1">
-                                <button type="submit" class="btn btn-primary mb-2">Buscar</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
+        </div>        
         <div class="row">
             <div class="col">
                 <table class="table">
                     <tr>
+                        <th>ID</th>
                         <th>Nombre</th>
                         <th>Porcentaje</th>                        
                         <th>Edit</th>
@@ -36,6 +21,7 @@
                     </tr>
                     {% for taxe in taxes %}
                         <tr>
+                            <td>{{ taxe.id }}
                             <td>{{ taxe.name }}
                             <td>{{ taxe.percentaje }}</td>                           
                             <td><a href="/Intranet/taxes/form?id={{taxe.id}}">Edit</a></td>
@@ -50,7 +36,7 @@
                 <form id="addTaxes" action="/Intranet/taxes/form" method="get">
                     <div class="form-group">
                         <input id="submit" type="submit" class="btn btn-primary" value="Añadir">
-                        <a href="/Intranet/admin" class="btn btn-primary">Cancelar</a>
+                        <a href="/Intranet/admin?selected_tab=home" class="btn btn-primary">Cancelar</a>
                     </div>
                 </form>
             </div>
