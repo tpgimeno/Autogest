@@ -19,8 +19,7 @@ class Company extends Model
         'country', 
         'phone',
         'email',
-        'site'];
-    
+        'site'];    
     public function getProperties(){
         return $this->properties;
     }

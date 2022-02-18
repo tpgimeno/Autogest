@@ -2,12 +2,13 @@
 
 namespace App\Controllers\Entitys;
 
-use App\Models\User;
 use App\Controllers\BaseController;
-use Respect\Validation\Validator as v;
+use App\Models\User;
 use App\Services\Entitys\UserService;
-use Laminas\Diactoros\ServerRequest;
+use Exception;
 use Laminas\Diactoros\Response\RedirectResponse;
+use Laminas\Diactoros\ServerRequest;
+use Respect\Validation\Validator as v;
 
 class UsersController extends BaseController 
 {
@@ -15,6 +16,13 @@ class UsersController extends BaseController
     public function __construct(UserService $userService) {
         parent::__construct();
         $this->userService = $userService;
+    }
+    public function getIndexUsers() {
+        $users = $this->userService->getAllRegisters(new User());
+        return $this->renderHTML('/Entitys/users/usersList.html.twig', [
+            'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
+            'users' => $users,
+        ]);
     }
     public function getAddUserAction($request){
         $responseMessage = null;
@@ -24,29 +32,24 @@ class UsersController extends BaseController
             ->key('password', v::stringType()->notEmpty());            
             try {
                 $userValidator->assert($postData); // true 
-                $responseMessage = $this->userService->saveUser($postData);              
-            }catch(\Exception $e){                
+                $responseMessage = $this->userService->saveRegister(new User(), $postData);              
+            }catch(Exception $e){                
                 $responseMessage = $this->errorService->getError($e);
             }              
-        }          
+        }    
+        $selected_user = null;
         if($request->getQueryParams('id')) {
-            $selected_user = $this->userService->setUser($request->getQueryParams());
+            $selected_user = $this->userService->setInstance(new User(), $request->getQueryParams());
         }
-        return $this->renderHTML('/Entitys/users/userForm.twig', [
+        return $this->renderHTML('/Entitys/users/userForm.html.twig', [
             'responseMessage' => $responseMessage,
             'user' => $selected_user
         ]);         
     }
-    public function getIndexUsers() {
-        $users = $this->userService->getAllUsers();
-        return $this->renderHTML('/Entitys/users/usersList.twig', [
-            'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
-            'users' => $users,
-        ]);
-    }
+    
     public function deleteAction(ServerRequest $request)
     {        
-        $this->userService->deleteUser($request->getQueryParams()['id']);
+        $this->userService->deleteRegister(new User(), $request->getQueryParams('id'));
         return new RedirectResponse('/Intranet/users/list');
     }
 }

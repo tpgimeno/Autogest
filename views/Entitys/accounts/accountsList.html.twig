@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-10">
-                <h2> Financieras </h2>
+                <h2> Cuentas Bancarias </h2>
             </div>   
             <div class="col-md-2 d-flex justify-content-end align-items-end">
                 <a class="link " href="/Intranet/admin?selected_tab=home">Volver</a> 
@@ -13,19 +13,19 @@
             <div class="col">
                 <table class="table">
                     <tr>
-                        <th>Nombre</th>
-                        <th>Teléfono</th>
-                        <th>Email</th>
+                        <th>Banco</th>
+                        <th>Titular</th>
+                        <th>Número Cuenta</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
-                    {% for finance in finances %}
+                    {% for account in accounts %}
                         <tr>
-                            <td>{{ finance.name }}</td>                            <
-                            <td>{{ finance.phone }}</td>
-                            <td>{{ finance.email }}</td>
-                            <td><a href="/Intranet/finance/form?id={{finance.id}}">Edit</a></td>
-                            <td><a href="/Intranet/finance/delete?id={{finance.id}}">Delete</a></td>
+                            <td>{{ account.bank }}</td>
+                            <td>{{ account.owner }}</td>
+                            <td>{{ account.accountNumber }}</td>
+                            <td><a href="/Intranet/accounts/form?id={{account.id}}">Edit</a></td>
+                            <td><a href="/Intranet/accounts/delete?id={{account.id}}">Delete</a></td>
                         </tr>
                     {% endfor %}                
                 </table>
@@ -33,7 +33,7 @@
         </div>
         <div class="row">
             <div class="col d-flex justify-content-end">
-                <form id="addFinance" action="/Intranet/finance/form" method="get">
+                <form id="addAccount" action="/Intranet/accounts/form" method="get">
                     <div class="form-group">
                         <input id="submit" type="submit" class="btn btn-primary" value="Añadir">
                         <a href="/Intranet/admin?selected_tab=home" class="btn btn-primary">Cancelar</a>

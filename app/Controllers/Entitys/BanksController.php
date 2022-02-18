@@ -9,88 +9,42 @@ use App\Services\Entitys\BankService;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\Response\RedirectResponse;
 
-class BanksController extends BaseController
-{    
-    
+class BanksController extends BaseController {       
     protected $bankService;
-
-    public function __construct(BankService $bankService)
-    {
+    public function __construct(BankService $bankService) {
         parent::__construct();
         $this->bankService = $bankService;
     }    
-    public function getIndexAction()
-    {
-        $banks = Bank::All();
+    public function getIndexAction() {
+        $banks = $this->bankService->getAllRegisters(new Bank());
         return $this->renderHTML('/Entitys/banks/banksList.html.twig', [
             'banks' => $banks
         ]);
-    }     
-    public function getBankDataAction($request)
-    {                
+    }  
+    public function getBankDataAction($request) {                
         $responseMessage = null;
-        if($request->getMethod() == 'POST')
-        {
-            $postData = $request->getParsedBody();
-            
+        if($request->getMethod() == 'POST') {
+            $postData = $request->getParsedBody();            
             $bankValidator = v::key('name', v::stringType()->notEmpty()) 
-            ->key('fiscal_id', v::notEmpty())
+            ->key('fiscalId', v::notEmpty())
             ->key('phone', v::notEmpty())
-            ->key('email', v::stringType()->notEmpty());            
+            ->key('email', v::notEmpty());            
             try{
                 $bankValidator->assert($postData); // true 
-                $bank = new Bank();
-                $bank->id = $postData['id'];
-                if($bank->id)
-                {
-                    $temp_bank = Bank::find($bank->id)->first();
-                }
-                if(isset($temp_bank))
-                {
-                    $bank = $temp_bank;
-                }
-                $bank->name = $postData['name'];
-                $bank->fiscalId = $postData['fiscal_id'];
-                $bank->fiscalName = $postData['fiscal_name'];
-                $bank->address = $postData['address'];
-                $bank->city = $postData['city'];
-                $bank->postalCode = $postData['postal_code'];
-                $bank->state = $postData['state'];
-                $bank->country = $postData['country'];
-                $bank->phone = $postData['phone'];
-                $bank->email = $postData['email'];
-                $bank->site = $postData['site'];
-                if(isset($temp_bank))
-                {
-                    $bank->update();
-                    $responseMessage = 'Updated';
-                }
-                else
-                {
-                    $bank->save();     
-                    $responseMessage = 'Saved'; 
-                }
-                    
-            }catch(\Exception $e)
-            {                
+                $responseMessage = $this->bankService->saveRegister(new Bank(), $postData);                   
+            }catch(\Exception $e) {                
                 $responseMessage = $e->getMessage();
             }              
         }
-        $bankSelected = null;
-        if($request->getQueryParams('id'))
-        {
-            $bankSelected = Bank::find($request->getQueryParams('id'))->first();
-        }
+        $bankSelected = $this->bankService->setInstance(new Bank(), $request->getQueryParams('id'));        
         return $this->renderHTML('/Entitys/banks/banksForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
             'bank' => $bankSelected
         ]);
     }
-    public function deleteAction(ServerRequest $request)
-    {
-         
-        $this->bankService->deleteBank($request->getQueryParams('id'));               
+    public function deleteAction(ServerRequest $request) {         
+        $this->bankService->deleteRegister(new Bank(), $request->getQueryParams('id'));               
         return new RedirectResponse('/Intranet/banks/list');
     }
 }

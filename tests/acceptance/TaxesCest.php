@@ -45,4 +45,11 @@ class TaxesCest
         $I->submitForm('#taxesForm', array ('name' => $name, 'percentaje' => 21));
         $I->see('Updated'); 
     }
+    public function deleteTaxTest(AcceptanceTester $I){
+        $I->amOnPage('/Intranet/admin');
+        $I->click('Tipos Iva', '.list-group-item');
+        $I->seeCurrentUrlEquals('/Intranet/taxes/list');
+        $I->amOnPage('/Intranet/taxes/delete?id='.$this->id); 
+        $I->dontSeeInDatabase('taxes', array('id' => intval($this->id)));
+    }
 }

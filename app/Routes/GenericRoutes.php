@@ -18,12 +18,10 @@ class GenericRoutes {
     public function getGenericRoutes()
     {
         $routerContainer = new RouterContainer();
-        $map = $routerContainer->getMap();
-        
+        $map = $routerContainer->getMap();        
         /*
         * GENERIC ROUTES
         */
-
        $map->get('index', '/Intranet/', [
            'App\Controllers\IndexController',
            'indexAction'    
@@ -98,6 +96,10 @@ class GenericRoutes {
            'App\Controllers\Entitys\BanksController',
            'getIndexAction'    
        ]);
+       $map->post('searchBank', '/Intranet/banks/search', [
+           'App\Controllers\Entitys\BanksController',
+           'searchBanksAction' 
+       ]);
        $map->post('saveBank', '/Intranet/banks/save', [
            'App\Controllers\Entitys\BanksController',
            'getBankDataAction'    
@@ -106,23 +108,46 @@ class GenericRoutes {
            'App\Controllers\Entitys\BanksController',
            'deleteAction'    
        ]);
+       
+        //ACCOUNTS
+
+       $map->get('accountsList', '/Intranet/accounts/form', [
+           'App\Controllers\Entitys\AccountController',
+           'getAccountDataAction'
+       ]);
+       $map->get('accountForm', '/Intranet/accounts/list', [
+           'App\Controllers\Entitys\AccountController',
+           'getIndexAction'    
+       ]);
+       $map->post('searchAccount', '/Intranet/accounts/search', [
+           'App\Controllers\Entitys\AccountController',
+           'searchAccountsAction' 
+       ]);
+       $map->post('saveAccount', '/Intranet/accounts/save', [
+           'App\Controllers\Entitys\AccountController',
+           'getAccountDataAction'    
+       ]);
+       $map->get('accountDelete', '/Intranet/accounts/delete', [
+           'App\Controllers\Entitys\AccountController',
+           'deleteAction'    
+       ]);
 
        //FINANCE
 
        $map->get('financeList', '/Intranet/finance/form', [
-           'App\Controllers\Sells\FinanceController',
+           'App\Controllers\Entitys\FinanceController',
            'getFinanceDataAction'
        ]);
        $map->get('financeForm', '/Intranet/finance/list', [
-           'App\Controllers\Sells\FinanceController',
+           'App\Controllers\Entitys\FinanceController',
            'getIndexAction'    
        ]);
        $map->post('saveFinance', '/Intranet/finance/save', [
-           'App\Controllers\Sells\FinanceController',
+           'App\Controllers\Entitys\FinanceController',
            'getFinanceDataAction'
        ]);
        $map->get('financeDelete', '/Intranet/finance/delete', [
-           'App\Controllers\Sells\FinanceController',
+           'App\Controllers\Entitys\FinanceController',
            'deleteAction'    
        ]);
 
@@ -138,7 +163,7 @@ class GenericRoutes {
        ]);
        $map->post('searchStore', '/Intranet/stores/search', [
            'App\Controllers\Entitys\StoreController',
-           'searchStore' 
+           'searchStoreAction' 
        ]);
        $map->post('saveStore', '/Intranet/stores/save', [
            'App\Controllers\Entitys\StoreController',

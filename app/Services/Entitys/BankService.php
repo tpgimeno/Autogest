@@ -2,14 +2,8 @@
 
 namespace App\Services\Entitys;
 
-use App\Models\Bank;
+use App\Services\BaseService;
 
-
-class BankService
-{
-    public function deleteBank($id)
-    {        
-        $bank = Bank::find($id)->first();
-        $bank->delete();
-    }
+class BankService extends BaseService {
+    
 }

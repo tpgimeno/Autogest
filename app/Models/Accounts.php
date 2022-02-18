@@ -12,26 +12,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Description of Bank
+ * Description of Accounts
  *
  * @author tonyl
  */
-class Bank extends Model
-{
+class Accounts extends Model {
+    
     use SoftDeletes;
-    protected $table = 'banks';
-    protected $properties = ['bankCode',
-        'name', 
-        'fiscalId', 
-        'fiscalName', 
-        'address',        
-        'city',
-        'postalCode',
-        'state', 
-        'country', 
-        'phone',
-        'email',
-        'site'];
+    protected $table = 'accounts';
+    protected $properties = ['bank', 'owner', 'accountNumber', 'observations'];
     public function getProperties(){
         return $this->properties;
     }

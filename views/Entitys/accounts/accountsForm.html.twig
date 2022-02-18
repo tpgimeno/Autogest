@@ -1,0 +1,75 @@
+{% extends "menu.html.twig" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <h2> Cuenta Bancaria </h2>
+        </div>   
+        <div class="col-md-2 d-flex justify-content-end align-items-end">
+            <a class="link pr-4" href="/Intranet/accounts/list">Lista</a> 
+            <a class="link " href="/Intranet/admin?selected_tab=home">Volver</a> 
+        </div>        
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-dark" role="alert">
+                {{ responseMessage }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <form id="accountsForm" action="/Intranet/accounts/save" method="post">
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label for="inputId">ID</label>                        
+                        <input type="text" name="id" class="form-control" id="inputId" placeholder="" value="{{ account.id }}">
+                    </div>                    
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="selectBank">Banco</label>
+                        <select name="bank" class="form-control" id="selectBank">
+                            {% for bank in banks %}
+                                {% if account.bank == bank.name %}
+                                    <option selected="selected">{{ bank.name }}</option>
+                                {% else %}
+                                    <option>{{ bank.name }}</option>
+                                {% endif %}
+                            {% endfor %}                            
+                        </select>
+                    </div>                    
+                    <div class="form-group col-md-4">
+                        <label for="selectOwner">Titular</label>
+                        <select name="owner" class="form-control" id="selectOwner">
+                            {% for owner in owners %}
+                                {% if account.owner == owner.name %}
+                                    <option selected="selected">{{ owner.name }}</option>
+                                {% else %}
+                                    <option>{{ owner.name }}</option>
+                                {% endif %}
+                            {% endfor %}                            
+                        </select>
+                    </div>                      
+                    <div class="form-group col-md-4">
+                        <label for="inputAccountNumber">Número de cuenta</label>                       
+                        <input type="text" name="accountNumber" class="form-control" id="inputAccountNumber" placeholder="" value="{{ account.accountNumber }}">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="observations">Observaciones</label>
+                        <textarea class="form-control" name="observations" id="inputObservations" rows="6">{{ account.observations }}</textarea>
+                    </div>                   
+                </div>
+                <div class="form-row">
+                    <div class="col text-right">
+                        <button id="submit" type="submit" class="btn btn-primary">Guardar</button>
+                        <a href="/Intranet/admin?selected_tab=home" class="btn btn-primary">Cancelar</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>    
+{% endblock %}

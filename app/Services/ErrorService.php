@@ -29,7 +29,7 @@ class ErrorService {
                 break;
             }
         }       
-        return $ex->getMessages()['name'];
+        return $ex->getMessage();
     }    
    
 }

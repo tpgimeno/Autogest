@@ -6,8 +6,7 @@ use App\Models\Company;
 use App\Services\BaseService;
 
 
-class CompanyService extends BaseService
-{    
+class CompanyService extends BaseService {    
     public function searchCompanies($searchString){
         $companies = Company::Where("id", "like", "%".$searchString."%")
                 ->orWhere("name", "like", "%".$searchString."%")
