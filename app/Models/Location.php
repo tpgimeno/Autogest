@@ -10,4 +10,8 @@ class Location extends Model
     use SoftDeletes;
 
     protected $table = "locations";
+    protected $properties = ['storeId', 'name'];
+    public function getProperties(){
+        return $this->properties;
+    }
 }

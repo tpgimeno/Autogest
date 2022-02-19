@@ -32,12 +32,12 @@ class AccountService extends BaseService {
     }
     public function getBankByName($array){
         $name = $array['bank'];
-        $bank = Bank::where('name', 'like', "%".$name."%")->get()[0];       
+        $bank = Bank::where('name', 'like', "%".$name."%")->get()->first();       
         return $bank->id;
     }
     public function getOwnerByName($array){
         $name = $array['owner'];
-        $owner = Company::where('name', 'like', "%".$name."%")->get()[0];       
+        $owner = Company::where('name', 'like', "%".$name."%")->get()->first();       
         return $owner->id;
     }
     public function getBankNames(){
@@ -65,9 +65,8 @@ class AccountService extends BaseService {
                 ->whereNull('accounts.deleted_at')
                 ->get()->first();        
         }else{
-            $instance = new Accounts();
-        }
-        
+            $instance = new Accounts();        
+        }        
         return $instance;
     }
 }

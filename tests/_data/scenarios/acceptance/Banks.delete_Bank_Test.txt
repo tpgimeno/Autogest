@@ -1,0 +1,8 @@
+I WANT TO DELETE BANK
+
+I am on page '/Intranet/admin' 
+I click 'Bancos'," '.list-group-item' 
+I see current url equals '/Intranet/banks/list' 
+I am on page '/Intranet/banks/delete?id='.$this->id" 
+I don't see in database('banks', array('id' => intval "$this->id)"," 'deleted_at' => null)"
+

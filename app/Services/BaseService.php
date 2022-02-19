@@ -37,7 +37,7 @@ class BaseService {
    }
    public function saveRegister($model, $array){  
        $properties = $model->getProperties();
-       $content = array_values($array);   
+       $content = array_values($array);       
        if($this->findRegister($model, $array) == true){
            $model = $model::find(intval($array['id']));
        }       

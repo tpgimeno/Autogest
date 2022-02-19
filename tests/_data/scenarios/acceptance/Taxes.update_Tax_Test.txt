@@ -1,0 +1,9 @@
+I WANT TO UPDATE TAX
+
+I am on page '/Intranet/admin' 
+I click 'Tipos Iva'," '.list-group-item' 
+I see current url equals '/Intranet/taxes/list' 
+I am on page '/Intranet/taxes/form?id='.$this->id" 
+I submit form('#taxes form', array  'name' => $name"," 'percentaje' => 21)" 
+I see 'Updated'
+

@@ -27,6 +27,7 @@ final class CreateAccountsTable extends AbstractMigration
                 ->addColumn('updated_at', 'datetime', ['null' => true])
                 ->addColumn('deleted_at', 'datetime', ['null' => true])
                 ->addIndex('accountNumber' , ['unique' => true])
+                ->addForeignKey('bank', 'banks', 'banks.id')
                 ->create();
     }
 }

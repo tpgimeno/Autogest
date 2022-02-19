@@ -1,4 +1,4 @@
-{% extends "dashboard.twig" %}
+{% extends "menu.html.twig" %}
 {% block content %}
     <div class="container">
         <div class="row">
@@ -6,7 +6,7 @@
                 <h2> Ubicaciones </h2>
             </div>   
             <div class="col-md-2 d-flex justify-content-end align-items-end">
-                <a class="link " href="/Intranet/admin">Volver</a> 
+                <a class="link " href="/Intranet/admin?selected_tab=home">Volver</a> 
             </div>
         </div>
         <div class="row">
@@ -29,6 +29,7 @@
             <div class="col">
                 <table class="table">
                     <tr>
+                        <th>ID</th>
                         <th>Almacén</th>
                         <th>Nombre</th>                        
                         <th>Edit</th>
@@ -36,7 +37,8 @@
                     </tr>
                     {% for location in locations %}
                         <tr>
-                            <td>{{ location.store }}
+                            <td>{{ location.id }}</td>
+                            <td>{{ location.store }}</td>
                             <td>{{ location.name }}</td>                           
                             <td><a href="/Intranet/locations/form?id={{location.id}}">Edit</a></td>
                             <td><a href="/Intranet/locations/delete?id={{location.id}}">Delete</a></td>
@@ -50,7 +52,7 @@
                 <form id="addLocation" action="/Intranet/locations/form" method="get">
                     <div class="form-group">
                         <input id="submit" type="submit" class="btn btn-primary" value="Añadir">
-                        <a href="/Intranet/admin" class="btn btn-primary">Cancelar</a>
+                        <a href="/Intranet/admin?selected_tab=home" class="btn btn-primary">Cancelar</a>
                     </div>
                 </form>
             </div>

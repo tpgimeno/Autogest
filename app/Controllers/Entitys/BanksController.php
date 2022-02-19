@@ -35,8 +35,8 @@ class BanksController extends BaseController {
             }catch(\Exception $e) {                
                 $responseMessage = $e->getMessage();
             }              
-        }
-        $bankSelected = $this->bankService->setInstance(new Bank(), $request->getQueryParams('id'));        
+        }      
+        $bankSelected = $this->bankService->setInstance(new Bank(), $request->getQueryParams('id'));           
         return $this->renderHTML('/Entitys/banks/banksForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,

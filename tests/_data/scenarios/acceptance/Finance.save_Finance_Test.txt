@@ -1,0 +1,10 @@
+I WANT TO CREATE A NEW FINANCE
+
+I am on page '/Intranet/admin' 
+I click 'Financieras'," '.list-group-item' 
+I see current url equals '/Intranet/finance/list' 
+I click '#submit'," '#addFinance' 
+I see current url equals '/Intranet/finance/form' 
+I grab from database('finance', 'id', array 'fiscalId' => $this->fiscalId)" 
+I see 'Saved'
+
