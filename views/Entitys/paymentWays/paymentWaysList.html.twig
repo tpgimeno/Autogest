@@ -1,4 +1,4 @@
-{% extends "dashboard.twig" %}
+{% extends "menu.html.twig" %}
 {% block content %}
     <div class="container">
         <div class="row">
@@ -6,7 +6,7 @@
                 <h2> Formas de Pago </h2>
             </div>   
             <div class="col-md-2 d-flex justify-content-end align-items-end">
-                <a class="link " href="/Intranet/admin">Volver</a> 
+                <a class="link " href="/Intranet/admin?selected_tab=buys">Volver</a> 
             </div>
         </div>
         <div class="row">
@@ -30,13 +30,19 @@
                 <table class="table">
                     <tr>
                         <th>Nombre</th>
+                        <th>Cuenta</th>
                         <th>Descuento</th>                        
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
                     {% for paymentWay in paymentWays %}
                         <tr>
-                            <td>{{ paymentWay.name }}
+                            <td>{{ paymentWay.name }}</td>
+                            {% for account in accounts %}
+                                {% if account.id == paymentWay.account %}
+                                    <td>{{ account.accountNumber }}</td>
+                                {% endif %}
+                            {% endfor %}
                             <td>{{ paymentWay.discount }}</td>                           
                             <td><a href="/Intranet/paymentWays/form?id={{paymentWay.id}}">Edit</a></td>
                             <td><a href="/Intranet/paymentWays/delete?id={{paymentWay.id}}">Delete</a></td>
@@ -50,7 +56,7 @@
                 <form id="addPaymentWay" action="/Intranet/paymentWays/form" method="get">
                     <div class="form-group">
                         <input id="submit" type="submit" class="btn btn-primary" value="Añadir">
-                        <a href="/Intranet/admin" class="btn btn-primary">Cancelar</a>
+                        <a href="/Intranet/admin?selected_tab=buys" class="btn btn-primary">Cancelar</a>
                     </div>
                 </form>
             </div>

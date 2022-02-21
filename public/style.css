@@ -6,7 +6,10 @@
     height: 100%;
 }
 #searchField{
-    width:600px;
+    width:75%;
+}
+#headerimg{
+    width: 40%;
 }
 .form-inline .form-control{
     max-width: 100%;
