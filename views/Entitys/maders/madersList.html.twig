@@ -1,4 +1,4 @@
-{% extends "dashboard.twig" %}
+{% extends "menu.html.twig" %}
 {% block content %}
     <div class="container">
         <div class="row">
@@ -6,7 +6,7 @@
                 <h2> Fabricantes </h2>
             </div>   
             <div class="col-md-2 d-flex justify-content-end align-items-end">
-                <a class="link " href="/Intranet/admin">Volver</a> 
+                <a class="link " href="/Intranet/admin?selected_tab=home">Volver</a> 
             </div>
         </div>
         <div class="row">
@@ -26,8 +26,8 @@
                             <td>{{ mader.city }}</td>
                             <td>{{ mader.phone }}</td>
                             <td>{{ mader.email }}</td>
-                            <td><a href="/Intranet/buys/maders/form?id={{mader.id}}">Edit</a></td>
-                            <td><a href="/Intranet/buys/maders/delete?id={{mader.id}}">Delete</a></td>
+                            <td><a href="/Intranet/maders/form?id={{mader.id}}">Edit</a></td>
+                            <td><a href="/Intranet/maders/delete?id={{mader.id}}">Delete</a></td>
                         </tr>
                     {% endfor %}                
                 </table>
@@ -35,10 +35,10 @@
         </div>
         <div class="row">
             <div class="col d-flex justify-content-end">
-                <form id="addMader" action="/Intranet/buys/maders/form" method="get">
+                <form id="addMader" action="/Intranet/maders/form" method="get">
                     <div class="form-group">
                         <input id="submit" type="submit" class="btn btn-primary" value="Añadir">
-                        <a href="/Intranet/admin" class="btn btn-primary">Cancelar</a>
+                        <a href="/Intranet/admin?selected_tab=home" class="btn btn-primary">Cancelar</a>
                     </div>
                 </form>
             </div>

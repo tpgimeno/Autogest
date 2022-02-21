@@ -199,24 +199,43 @@ class GenericRoutes {
 
        //GARAGES 
 
-       $map->get('garagesList', '/Intranet/Garages/form', [
+       $map->get('garagesList', '/Intranet/garages/form', [
            'App\Controllers\Garages\GaragesController',
            'getGarageDataAction'
        ]);
-       $map->get('garagesForm', '/Intranet/Garages/list', [
+       $map->get('garagesForm', '/Intranet/garages/list', [
            'App\Controllers\Garages\GaragesController',
            'getIndexAction'
        ]);
-       $map->post('searchGarage', '/Intranet/Garages/search', [
+       $map->post('searchGarage', '/Intranet/garages/search', [
            'App\Controllers\Garages\GaragesController',
            'searchGarageAction'
        ]);
-       $map->post('saveGarage', '/Intranet/Garages/save', [
+       $map->post('saveGarage', '/Intranet/garages/save', [
            'App\Controllers\Garages\GaragesController',
            'getGarageDataAction'
        ]);
-       $map->get('garagesDelete', '/Intranet/Garages/delete', [
+       $map->get('garagesDelete', '/Intranet/garages/delete', [
            'App\Controllers\Garages\GaragesController',
+           'deleteAction'
+       ]);
+       
+       //MADERS
+
+       $map->get('madersList', '/Intranet/maders/form', [
+           'App\Controllers\Entitys\MadersController',
+           'getMaderDataAction'
+       ]);
+       $map->get('madersForm', '/Intranet/maders/list', [
+           'App\Controllers\Entitys\MadersController',
+           'getIndexAction'    
+       ]);
+       $map->post('saveMader', '/Intranet/maders/save', [
+           'App\Controllers\Entitys\MadersController',
+           'getMaderDataAction' 
+       ]);
+       $map->get('madersDelete', '/Intranet/maders/delete', [
+           'App\Controllers\Entitys\MadersController',
            'deleteAction'
        ]);
 

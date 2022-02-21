@@ -335,26 +335,7 @@ class BuyRoutes
        $map->get('providersDelete', '/Intranet/buys/providers/delete', [
            'App\Controllers\Buys\ProvidersController',
            'deleteAction'
-       ]);
-
-       //MADERS
-
-       $map->get('madersList', '/Intranet/buys/maders/form', [
-           'App\Controllers\Buys\MadersController',
-           'getMaderDataAction'
-       ]);
-       $map->get('madersForm', '/Intranet/buys/maders/list', [
-           'App\Controllers\Buys\MadersController',
-           'getIndexAction'    
-       ]);
-       $map->post('saveMader', '/Intranet/buys/maders/save', [
-           'App\Controllers\Buys\MadersController',
-           'getMaderDataAction' 
-       ]);
-       $map->get('madersDelete', '/Intranet/buys/maders/delete', [
-           'App\Controllers\Buys\MadersController',
-           'deleteAction'
-       ]);
+       ]);       
 
        //GARAGE ORDERS
 

@@ -19,7 +19,8 @@ final class CreateMadersTable extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('maders');
-        $table->addColumn('name', 'string')               
+        $table->addColumn('fiscalId', 'string')
+                ->addColumn('name', 'string') 
                 ->addColumn('address', 'string', ['null' => true])
                 ->addColumn('city', 'string', ['null' => true])
                 ->addColumn('postalCode', 'integer', ['null' => true])
