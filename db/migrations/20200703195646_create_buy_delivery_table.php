@@ -18,19 +18,20 @@ final class CreateBuyDeliveryTable extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('buy_delivery');
-        $table->addColumn('delivery_number', 'string')
+        $table = $this->table('buyDelivery');
+        $table->addColumn('deliveryNumber', 'string')
                 ->addColumn('date', 'date')
-                ->addColumn('providor_id', 'integer')
-                ->addColumn('articles', 'string')
-                ->addColumn('base', 'float')
-                ->addColumn('tva', 'float')
-                ->addColumn('total', 'float')
-                ->addColumn('observations', 'string')
-                ->addColumn('text', 'string')
+                ->addColumn('providorId', 'integer')
+                ->addColumn('articles', 'string', ['null' => true])
+                ->addColumn('base', 'float', ['null' => true])
+                ->addColumn('tva', 'float', ['null' => true])
+                ->addColumn('total', 'float', ['null' => true])
+                ->addColumn('observations', 'string', ['null' => true])
+                ->addColumn('text', 'string', ['null' => true])
                 ->addColumn('created_at', 'datetime')
-                ->addColumn('updated_at', 'datetime')
-                ->addColumn('deleted_at', 'datetime')
+                ->addColumn('updated_at', 'datetime', ['null' => true])
+                ->addColumn('deleted_at', 'datetime', ['null' => true])
+                ->addIndex('deliveryNumber', ['unique' => true])
                 ->create();
     }
 }

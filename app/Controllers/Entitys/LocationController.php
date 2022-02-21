@@ -11,7 +11,7 @@ namespace App\Controllers\Entitys;
 use App\Controllers\BaseController;
 use App\Models\Location;
 use App\Models\Store;
-use App\Services\LocationService;
+use App\Services\Entitys\LocationService;
 use Exception;
 use Illuminate\Database\Capsule\Manager as DB;
 use Laminas\Diactoros\Response\RedirectResponse;
@@ -32,12 +32,12 @@ class LocationController extends BaseController
     public function getIndexAction()
     {
         $locations = DB::table('locations')
-                ->join('stores', 'stores.id', '=', 'locations.store_id')                
+                ->join('stores', 'stores.id', '=', 'locations.storeId')                
                 ->select('locations.id', 'stores.name as store', 'locations.name')
                 ->whereNull('locations.deleted_at')
                 ->get();    
         $stores = Store::All();
-        return $this->renderHTML('/stores/locationList.html.twig', [
+        return $this->renderHTML('/Entitys/stores/locationList.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'locations' => $locations,
             'stores' => $stores
@@ -67,7 +67,7 @@ class LocationController extends BaseController
         }
                
         $stores = Store::All();       
-        return $this->renderHTML('/stores/locationList.html.twig', [
+        return $this->renderHTML('/Entitys/stores/locationList.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'locations' => $locations,
             'stores' => $stores                
@@ -99,7 +99,7 @@ class LocationController extends BaseController
             $locationSelected = Location::find($request->getQueryParams('id'))->first();
         }
         $stores = Store::All();
-        return $this->renderHTML('/stores/locationForm.html.twig', [
+        return $this->renderHTML('/Entitys/stores/locationForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
             'location' => $locationSelected,
@@ -111,7 +111,7 @@ class LocationController extends BaseController
     {       
         
         $this->locationService->deleteLocation($request->getQueryParams('id'));               
-        return new RedirectResponse('/intranet/locations/list');
+        return new RedirectResponse('/Intranet/locations/list');
     }
 
 }

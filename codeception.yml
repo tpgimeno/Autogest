@@ -8,3 +8,20 @@ actor_suffix: Tester
 extensions:
     enabled:
         - Codeception\Extension\RunFailed
+modules:
+    config:
+        Db:
+            dsn: 'mysql:host=127.0.0.1;dbname=automotive'
+            user: 'root'
+            password: ''
+            tests: 'tests/_data/dump.sql'
+        
+coverage:
+    enabled: true
+    include:
+        - app/*
+        - views/*.twig
+   
+
+
+        

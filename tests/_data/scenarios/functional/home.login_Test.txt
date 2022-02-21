@@ -1,0 +1,9 @@
+I WANT TO LOGIN TEST
+
+I am on page '/' 
+I see 'Inicio' 
+I fill field 'email'," 'tonyllomouse@gmail.com' 
+I fill field 'password'," '12345' 
+I click 'Enviar'," '#login' 
+I see current url equals '/Intranet/admin'
+

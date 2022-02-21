@@ -19,7 +19,7 @@ class indexControllerTest extends WebTestCase
    public function testIndex()
    {
        $client = static::createClient();
-       $client->request('GET', '/intranet');
+       $client->request('GET', '/Intranet');
        $this->assertEquals(200, $client->getResponse()->getStatusCode());
    }
 }

@@ -6,12 +6,12 @@
                 <h2> Ofertas </h2>
             </div>   
             <div class="col-md-2 d-flex justify-content-end align-items-end">
-                <a class="link " href="/intranet/admin">Volver</a> 
+                <a class="link " href="/Intranet/admin">Volver</a> 
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <form id="searchForm" action="/intranet/crm/offers/search" method="post" class="form">
+                <form id="searchForm" action="/Intranet/sells/offers/search" method="post" class="form">
                     <div class="container">
                         <div id="formRow" class="form-row text-right">
                             <div class="col-11">                                                                                
@@ -38,12 +38,12 @@
                     </tr>
                     {% for offer in offers %}
                         <tr>
-                            <td>{{ offer.offer_number }}</td>
-                            <td>{{ offer.offer_date }}</td>
+                            <td>{{ offer.offerNumber }}</td>
+                            <td>{{ offer.offerDate|date('d-m-Y') }}</td>
                             <td>{{ offer.name }}</td>
                             <td>{{ offer.brand }} {{ offer.model }}</td>                           
-                            <td><a href="/intranet/crm/offers/form?offer_id={{offer.id}}">Edit</td>
-                            <td><a href="/intranet/crm/offers/delete?offer_id={{offer.id}}">Delete</td>
+                            <td><a href="/Intranet/sells/offers/form?offer_id={{offer.id}}">Edit</a></td>
+                            <td><a href="/Intranet/sells/offers/delete?offer_id={{offer.id}}">Delete</a></td>
                         </tr>
                     {% endfor %}                
                 </table>
@@ -51,10 +51,10 @@
         </div>
         <div class="row">
             <div class="col d-flex justify-content-end">
-                <form action="/intranet/crm/offers/form" method="get">
+                <form id="addSellOffer" action="/Intranet/sells/offers/form" method="get">
                     <div class="form-group">
-                        <input type="submit" class="btn btn-primary" value="Añadir">
-                        <a href="/intranet/admin" class="btn btn-primary">Cancelar</a>
+                        <input id="submit" type="submit" class="btn btn-primary" value="Añadir">
+                        <a href="/Intranet/admin" class="btn btn-primary">Cancelar</a>
                     </div>
                 </form>
             </div>

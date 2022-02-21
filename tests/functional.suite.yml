@@ -9,5 +9,19 @@ actor: FunctionalTester
 modules:
     enabled:
         # add a framework module here
-        - \Helper\Functional
-    step_decorators: ~        
+        - PhpBrowser:
+            browser: chrome
+            url: http://localhost/Intranet
+        - \Helper\Functional  
+        - Db:
+            dsn: 'mysql:host=127.0.0.1;dbname=automotive'
+            user: 'root'
+            password: ''
+        
+            
+    step_decorators: ~ 
+coverage:
+    enabled: true
+    
+ 
+     

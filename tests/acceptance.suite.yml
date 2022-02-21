@@ -7,7 +7,7 @@
 actor: AcceptanceTester
 modules:
     enabled:
-        - PhpBrowser:
-            url: http://localhost/
+        - PhpBrowser:            
+            url: http://localhost/Intranet
         - \Helper\Acceptance
 step_decorators: ~        

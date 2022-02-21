@@ -6,8 +6,8 @@
 
 require __DIR__.'/vendor/autoload.php';
 
-use App\Commands\CreateUserCommand;
-use App\Commands\SendMailsCommand;
+use App\BackEnd\Commands\CreateUserCommand;
+use App\BackEnd\Commands\SendMailsCommand;
 use Dotenv\Dotenv;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Symfony\Component\Console\Application;
