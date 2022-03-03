@@ -12,6 +12,24 @@ use Respect\Validation\Validator as v;
 
 class CompanyController extends BaseController {        
     protected $companyService;
+    protected $list = '/Intranet/company/list';
+    protected $tab = 'home';
+    protected $title = 'Empresas';
+    protected $save = "/Intranet/company/save";
+    protected $formName = "CompanyForm";
+    protected $search = "/Intranet/company/search";
+    protected $inputs = ['id' => ['id' => 'inputID', 'name' => 'id', 'title' => 'ID'],
+        'name' => ['id' => 'inputName', 'name' => 'name', 'title' => 'Nombre'],
+        'fiscalId' => ['id' => 'inputFiscalId', 'name' => 'fiscalId', 'title' => 'NIF/CIF'],
+        'fiscalName' => ['id' => 'inputSocialName', 'name' => 'fiscalName', 'title' => 'Razón Social'],
+        'address' => ['id' => 'inputAdress', 'name' => 'address', 'title' => 'Dirección'],
+        'postalCode' => ['id' => 'inputZip', 'name' => 'postalCode', 'title' => 'Código Postal'],
+        'city' => ['id' => 'inputCity', 'name' => 'city', 'title' => 'Población'],
+        'state' => ['id' => 'inputState', 'name' => 'state', 'title' => 'Provincia'],
+        'country' => ['id' => 'inputCountry', 'name' => 'country', 'title' => 'Pais'],
+        'phone' => ['id' => 'inputPhone', 'name' => 'phone', 'title' => 'Telefono'],
+        'email' => ['id' => 'inputEmail', 'name' => 'email', 'title' => 'Email'],
+        'site' => ['id' => 'inputWeb', 'name' => 'site', 'title' => 'Página Web']];
     public function __construct(CompanyService $companyService) {
         parent::__construct();
         $this->companyService = $companyService;
@@ -50,7 +68,13 @@ class CompanyController extends BaseController {
         return $this->renderHTML('/Entitys/company/companyForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
-            'company' => $companySelected
+            'inputs' => $this->inputs,
+            'save' => $this->save,
+            'list' => $this->list,
+            'formName' => $this->formName,
+            'tab' => $this->tab,
+            'title' => $this->title,
+            'value' => $companySelected
         ]);
     }    
     public function deleteAction(ServerRequest $request) {         

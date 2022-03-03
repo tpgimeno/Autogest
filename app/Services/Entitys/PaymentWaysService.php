@@ -36,4 +36,24 @@ class PaymentWaysService extends BaseService {
         }
         return $account->id;
     }
+    public function getAccounts(){
+        $accounts = DB::table('accounts')
+                ->select('accounts.id', 'accounts.accountNumber as iter')
+                ->whereNull('deleted_at')
+                ->get();
+        return $accounts;
+    }
+    public function setPaymentWay($array){
+        if(isset($array['id'])){
+            $paymentWay = DB::table('paymentWays')
+                    ->join('accounts', 'accounts.id', '=', 'paymentWays.account')
+                    ->select('paymentWays.id', 'paymentWays.name', 'accounts.accountNumber as iter', 'paymentWays.discount')
+                    ->where('paymentWays.id', '=', intval($array['id']))
+                    ->whereNull('deleted_at')
+                    ->get()->first();
+        }else{
+            $paymentWay = new PaymentWays();
+        }
+        return $paymentWay;
+    }
 }

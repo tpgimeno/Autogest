@@ -1,46 +1,29 @@
 {% extends "menu.html.twig" %}
+{% import 'macros.html.twig' as fields %}
 {% block content %}
 <div class="container">
     <div class="row">
         <div class="col-md-10">
-            <h2> Usuarios </h2>
+            <h2> {{ title }} </h2>
         </div>   
-        <div class="col-md-2 d-flex justify-content-end align-items-end">
-            <a class="link pr-4" href="/Intranet/users/list">Lista</a> 
-            <a class="link " href="/Intranet/admin?selected_tab=home">Volver</a> 
-        </div>        
+        {{ fields.return(list, tab) }}       
+    </div>
+    <div class="row">
+        {{ fields.alert(responseMessage) }}
     </div>
     <div class="row">
         <div class="col">
-            <div class="alert alert-dark" role="alert">
-                {{ responseMessage }}
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <form id="userForm" action="/Intranet/users/form" method="post">
+            <form id="{{formName}}" action="{{save}}" method="post">
                 <div class="form-row">
-                    <div class="form-group col-md-1">
-                        <label for="inputId">ID</label>                        
-                        <input type="text" name="id" email="email" class="form-control" id="inputId" placeholder="ID" value="{{ user.id }}">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="inputName">email</label>                        
-                        <input type="email" name="email" email="email" class="form-control" id="inputEmail" placeholder="Email" value="{{ user.email }}">
-                    </div>
-                    <div class="form-group col-md-5">
-                        <label for="inputPassword">Password</label>
-                        <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password" value="{{ user.password }}">
-                    </div>
+                    {{ fields.input2(inputs.id.id, inputs.id.name, inputs.id.title, value.id) }}
+                    {{ fields.input5(inputs.email.id, inputs.email.name, inputs.email.title, value.email) }}
+                    {{ fields.input5password(inputs.password.id, inputs.password.name, inputs.password.title, value.password) }}
                 </div>                
                 <div class="form-row">
-                    <div class="col text-right">
-                        <button id="submit" type="submit" class="btn btn-primary">Guardar</button>
-                        <a href="/Intranet/admin?selected_tab=home" class="btn btn-primary">Cancelar</a>
-                    </div>
+                    {{ fields.buttonsForm(tab) }}
                 </div>
             </form>        
+        </div>
     </div>
 </div>    
 {% endblock %}

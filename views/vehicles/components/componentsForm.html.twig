@@ -1,100 +1,54 @@
-{% extends "dashboard.twig" %}
+{% extends "menu.html.twig" %}
+{% import 'macros.html.twig' as fields %}
 {% block content %}
 <div class="container">
     {% block javascripts %}
+        {% if script %}
             <script>
-                {{ include('js/components.js')}}
+                {{ include(script)}}
             </script>
+        {% endif %}
     {% endblock %}
     <div class="row">
         <div class="col-md-10">
-            <h2> Componentes </h2>
+            <h2> {{ title }} </h2>
         </div>   
-        <div class="col-md-2 d-flex justify-content-end align-items-end">
-            <a class="link pr-4" href="/Intranet/vehicles/components/list">Lista</a> 
-            <a class="link " href="/Intranet/admin">Volver</a> 
-        </div>        
+        {{ fields.return(list, tab) }}       
     </div>
     <div class="row">
-        <div class="col">
-            <div class="alert alert-dark" role="alert">
-                {{ responseMessage }}
-            </div>
-        </div>
+        {{ fields.alert(responseMessage) }}
     </div>
     <div class="row">
         <div class="col">            
-            <form id="componentsForm" action="/Intranet/vehicles/components/save" method="post">
+            <form id="{{formName}}" action="{{save}}" method="post">
                 <div class="form-row">                    
-                    <div class="form-group col-md-3">
-                        <label for="inputId">ID</label>                        
-                        <input type="text" name="id" class="form-control" id="inputId" placeholder="" value="{{ component.id }}">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="inputRef">REF.</label>                        
-                        <input type="text" name="ref" class="form-control" id="inputRef" placeholder="Referencia" value="{{ component.ref }}">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="inputMader">Fabricante</label>
-                        <select type="text" name="mader" class="form-control" id="inputMader" placeholder="Fabricante" value="{{ component.mader }}">
-                            {% for mader in maders %}
-                                <option>{{ mader.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="inputSerialNumber">Numero Serie</label>
-                        <input type="text" name="serialNumber" class="form-control" id="inputSerialNumber" placeholder="Numero de Serie" value="{{ component.serialNumber }}">
-                    </div>
+                    {{ fields.input2(inputs.id.id, inputs.id.name, inputs.id.title, value.id) }}
+                </div>
+                <div class="form-row">                    
+                   {{ fields.input4(inputs.ref.id, inputs.ref.name, inputs.ref.title, value.ref) }}
+                   {{ fields.select(inputs.selectMader.id, inputs.selectMader.name, inputs.selectMader.title, value|json_encode(), iterable) }}
+                   {{ fields.input4(inputs.serialNumber.id, inputs.serialNumber.name, inputs.serialNumber.title, value.serialNumber) }}
                 </div>
                 <div class="row">
-                    <div class="form-group col">
-                        <label for="inputName">Nombre</label>
-                        <input type="text" name="name" class="form-control" id="inputName" placeholder="Nombre" value="{{ component.name }}">
-                    </div>
+                    {{ fields.inputRow(inputs.name.id, inputs.name.name, inputs.name.title, value.name) }}
                 </div>                                                      
                 <div class="form-row">                         
-                    <div class="form-group col">
-                        <label for="observations">Comentarios</label>
-                        <textarea class="form-control" name="observations" id="observations" rows="6">{{ component.observations }}</textarea>
-                    </div>                                  
-                </div>
-                <div class="form-row">
-                    
-                    <div class="form-group col-md-3 offset-md-6">
-                        <label for="inputPvc">Precio Compra</label>
-                        <input type="text" name="pvc" class="form-control" id="inputPvc" placeholder="" value="{{ component.pvc }}">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="inputPvc">Precio Venta</label>
-                        <input type="text" name="pvp" class="form-control" id="inputPvp" placeholder="" value="{{ component.pvp }}">
-                    </div>
+                    {{ fields.textarea(inputs.observations.id, inputs.observations.name, inputs.observations.title, value.observations) }}                               
                 </div>
                 <div class="form-row">                    
-                    <div class="form-group col-md-3 offset-md-6">
-                        <label for="inputTvaBuy">Iva Compra</label>
-                        <input type="text" name="tva_buy" class="form-control" id="inputTvaBuy" placeholder="" value="" disabled>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="inputTvaSell">Iva Venta</label>
-                        <input type="text" name="tva_sell" class="form-control" id="inputTvaSell" placeholder="" value="" disabled>
-                    </div>
+                    {{ fields.input3offset6(inputs.pvc.id, inputs.pvc.name, inputs.pvc.title, value.pvc) }}
+                    {{ fields.input3(inputs.pvp.id, inputs.pvp.name, inputs.pvp.title, value.pvp) }}
                 </div>
                 <div class="form-row">                    
-                    <div class="form-group col-md-3 offset-md-6">
-                        <label for="inputTotalBuy">Total Compra</label>
-                        <input type="text" name="total_buy" class="form-control" id="inputTotalBuy" placeholder="" value="">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="inputTotalSell">Total Venta</label>
-                        <input type="text" name="total_sell" class="form-control" id="inputTotalSell" placeholder="" value="">
-                    </div>
+                    {{ fields.input3offset6disabled(inputs.tvaBuy.id, inputs.tvaBuy.name, inputs.tvaBuy.title, null) }}
+                    {{ fields.input3disabled(inputs.tvaSell.id, inputs.tvaSell.name, inputs.tvaSell.title, null) }}
+                </div>
+                <div class="form-row">                    
+                    {{ fields.input3offset6(inputs.totalBuy.id, inputs.totalBuy.name, inputs.totalBuy.title, null) }}
+                    {{ fields.input3(inputs.totalSell.id, inputs.totalSell.name, inputs.totalSell.title, null) }}
                 </div>
                 <div class="form-row">
-                    <div class="col text-right">
-                        <button id="submit" type="submit" class="btn btn-primary">Guardar</button>
-                        <button type="reset" class="btn btn-primary">Cancelar</button>
-                    </div>
+                    {{ fields.buttonsForm(tab) }}
                 </div>
             </form>
         </div>        

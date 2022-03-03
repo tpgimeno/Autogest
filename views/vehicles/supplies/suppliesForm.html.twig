@@ -1,4 +1,4 @@
-{% extends "dashboard.twig" %}
+{% extends "menu.html.twig" %}
 {% block content %}
 <div class="container">
     {% block javascripts %}
@@ -12,7 +12,7 @@
         </div>   
         <div class="col-md-2 d-flex justify-content-end align-items-end">
             <a class="link pr-4" href="/Intranet/vehicles/supplies/list">Lista</a> 
-            <a class="link " href="/Intranet/admin">Volver</a> 
+            <a class="link " href="/Intranet/admin?selected_tab=buys">Volver</a> 
         </div>        
     </div>
     <div class="row">
@@ -24,36 +24,39 @@
     </div>
     <div class="row">
         <div class="col">
-            <form id="SupplyForm" action="/Intranet/vehicles/supplies/save" method="post">
-                
+            <form id="suppliesForm" action="/Intranet/vehicles/supplies/save" method="post">                
                 <div class="form-row">
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-2">
                         <label for="inputId">ID</label>                        
                         <input type="text" name="id" class="form-control" id="inputId" placeholder="" value="{{ supply.id }}">
                     </div>
-                    <div class="form-group col-md-3">
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
                         <label for="inputRef">REF.</label>                        
                         <input type="text" name="ref" class="form-control" id="inputRef" placeholder="Referencia" value="{{ supply.ref }}">
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-4">
                         <label for="inputMader">Fabricante</label>
-                        <select type="text" name="mader" class="form-control" id="inputMader" placeholder="Fabricante" value="{{ supply.mader }}">
+                        <select type="text" name="mader" class="form-control" id="inputMader" placeholder="Fabricante">
                             {% for mader in maders %}
-                                <option>{{ mader.name }}</option>
+                                {% if mader.id == supply.mader %}
+                                    <option selected="selected">{{ mader.name }}</option>
+                                {% else %}
+                                    <option>{{ mader.name }}</option>
+                                {% endif %}
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-4">
                         <label for="inputMaderCode">Ref. Fabricante</label>
-                        <input type="text" name="mader_code" class="form-control" id="inputMaderCode" placeholder="Referencia Fabricante" value="{{ supply.maderCode }}">
+                        <input type="text" name="maderCode" class="form-control" id="inputMaderCode" placeholder="Referencia Fabricante" value="{{ supply.maderCode }}">
                     </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col">
+                     <div class="form-group col-md-8">
                         <label for="inputName">Nombre</label>
                         <input type="text" name="name" class="form-control" id="inputName" placeholder="Nombre" value="{{ supply.name }}">
                     </div>
-                </div>                                                      
+                </div>                                                                     
                 <div class="form-row">                         
                     <div class="form-group col">
                         <label for="observations">Comentarios</label>
@@ -77,27 +80,27 @@
                 <div class="form-row">                    
                     <div class="form-group col-md-3 offset-md-6">
                         <label for="inputTvaBuy">Iva Compra</label>
-                        <input type="text" name="tva_buy" class="form-control" id="inputTvaBuy" placeholder="" value="" disabled>
+                        <input type="text" name="tvaBuy" class="form-control" id="inputTvaBuy" placeholder="" value="" disabled>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputTvaSell">Iva Venta</label>
-                        <input type="text" name="tva_sell" class="form-control" id="inputTvaSell" placeholder="" value="" disabled>
+                        <input type="text" name="tvaSell" class="form-control" id="inputTvaSell" placeholder="" value="" disabled>
                     </div>
                 </div>
                 <div class="form-row">                    
                     <div class="form-group col-md-3 offset-md-6">
                         <label for="inputTotalBuy">Total Compra</label>
-                        <input type="text" name="total_buy" class="form-control" id="inputTotalBuy" placeholder="" value="">
+                        <input type="text" name="totalBuy" class="form-control" id="inputTotalBuy" placeholder="" value="">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputTotalSell">Total Venta</label>
-                        <input type="text" name="total_sell" class="form-control" id="inputTotalSell" placeholder="" value="">
+                        <input type="text" name="totalSell" class="form-control" id="inputTotalSell" placeholder="" value="">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col text-right">
                         <button id="submit" type="submit" class="btn btn-primary">Guardar</button>
-                        <button type="reset" class="btn btn-primary">Cancelar</button>
+                         <a href="/Intranet/admin?selected_tab=buys" class="btn btn-primary">Cancelar</a>
                     </div>
                 </div>
             </form>

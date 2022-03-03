@@ -1,0 +1,133 @@
+{% macro return(list, back) %}
+     <div class="col-md-2 d-flex justify-content-end align-items-end">  
+        <a class="link pr-4" href={{ list }}>Lista</a> 
+        <a class="link " href="/Intranet/admin?selected_tab={{ back }}">Volver</a>
+    </div> 
+{% endmacro %}
+{% macro alert(message) %}
+    <div class="col">
+        <div class="alert alert-dark" role="alert">
+            {{ message }}
+        </div>
+    </div>
+{% endmacro %}
+{% macro inputRow(id, name, title, value, type = 'text') %}
+    <div class="form-group col">
+        <label for="{{ id }}">{{ title }}</label>
+        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
+    </div>
+{% endmacro %}
+{% macro input2(id, name, title, value, type = 'text') %}
+    <div class="form-group col-md-2">
+        <label for="{{ id }}">{{ title }}</label>                        
+        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
+    </div>
+{% endmacro input2 %}
+{% macro input2offset2(id, name, title, value, type = 'text') %}
+    <div class="form-group col-md-2 offset-md-2">
+        <label for="{{ id }}">{{ title }}</label>                        
+        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
+    </div>
+{% endmacro input2offset2 %}
+{% macro input2offset8(id, name, title, value, type = 'text') %}
+    <div class="form-group col-md-2 offset-md-8">
+        <label for="{{ id }}">{{ title }}</label>                        
+        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
+    </div>
+{% endmacro input2offset8 %}
+{% macro input3(id, name, title, value, type = 'text') %}
+    <div class="form-group col-md-3">
+        <label for="{{ id }}">{{ title }}</label>
+        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
+    </div>
+{% endmacro %}
+{% macro input3offset6(id, name, title, value, type = 'text') %}
+    <div class="form-group col-md-3 offset-md-6">
+        <label for="{{ id }}">{{ title }}</label>
+        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
+    </div>
+{% endmacro %}
+{% macro input3disabled(id, name, title, value, type = 'text') %}
+    <div class="form-group col-md-3">
+        <label for="{{ id }}">{{ title }}</label>
+        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}" disabled>
+    </div>
+{% endmacro %}
+{% macro input3offset6disabled(id, name, title, value, type = 'text') %}
+    <div class="form-group col-md-3 offset-md-6">
+        <label for="{{ id }}">{{ title }}</label>
+        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}" disabled>
+    </div>
+{% endmacro %}
+{% macro input4(id, name, title, value, type = 'text') %}
+    <div class="form-group col-md-4">
+        <label for="{{ id }}">{{ title }}</label>                        
+        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
+    </div>
+{% endmacro input4 %}
+{% macro input5password(id, name, title, value, type = 'password') %}
+    <div class="form-group col-md-5">
+        <label for="{{ id }}">{{ title }}</label>                        
+        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
+    </div>
+{% endmacro input5password %}
+{% macro input5(id, name, title, value, type = 'text') %}
+    <div class="form-group col-md-5">
+        <label for="{{ id }}">{{ title }}</label>                        
+        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
+    </div>
+{% endmacro input5 %}
+{% macro input6(id, name, title, value, type = 'text') %}
+    <div class="form-group col-md-6">
+        <label for="{{ id }}">{{ title }}</label>                        
+        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
+    </div>
+{% endmacro input6 %}
+{% macro select(id, name, title, value, iterable, type = 'text') %}
+    <div class="form-group col-md-4">                        
+        <label for="{{ id }}">{{ title }}</label>
+        <select type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}">
+            {% for iter in iterable %}                
+                {% if iter.id == value.iter %}
+                    <option selected="selected">{{ iter.iter }}</option>
+                {% else %}
+                    <option>{{ iter.iter }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+{% endmacro select %}
+{% macro textarea(id, name, title, value, type = 'text') %}
+     <div class="form-group col">
+        <label for="{{ id }}">{{ title }}</label>
+        <textarea class="form-control" name="{{ name }}" id="{{id}}" rows="6">{{ value }}</textarea>
+    </div>   
+{% endmacro %}
+{% macro buttonsForm(back) %}
+    <div class="col text-right">
+        <button id="submit" type="submit" class="btn btn-primary">Guardar</button>
+        <a href="/Intranet/admin?selected_tab={{ back }}" class="btn btn-primary">Cancelar</a>
+    </div>
+{% endmacro %}
+{% macro buttonsList(back) %}
+    <div class="col text-right">
+        <button id="submit" type="submit" class="btn btn-primary">Añadir</button>
+        <a href="/Intranet/admin?selected_tab={{ back }}" class="btn btn-primary">Cancelar</a>
+    </div>
+{% endmacro %}
+{% macro searchList(action) %}
+    <div class="col">
+        <form id="searchForm" action="{{ action }}" method="post" class="form">
+            <div class="container">
+                <div id="formRow" class="form-row text-right">
+                    <div class="col-11">                                                                                
+                        <input id="searchField" type="text" name="searchFilter" class="form-control mb-2 mr-sm-2" id="inlineFormSearchFilter">
+                    </div>
+                    <div class="col-1">
+                        <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endmacro %}

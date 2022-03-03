@@ -10,10 +10,8 @@ namespace App\Controllers\Entitys;
 
 use App\Controllers\BaseController;
 use App\Models\Location;
-use App\Models\Store;
 use App\Services\Entitys\LocationService;
 use Exception;
-use Illuminate\Database\Capsule\Manager as DB;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\ServerRequest;
 use Respect\Validation\Validator as v;
@@ -24,6 +22,15 @@ use Respect\Validation\Validator as v;
  */
 class LocationController extends BaseController {
     protected $locationService;
+    protected $list = '/Intranet/locations/list';
+    protected $tab = 'home';
+    protected $title = 'Ubicaciones';
+    protected $save = "/Intranet/locations/save";
+    protected $formName = "locationForm";
+    protected $search = '/Intranet/locations/search';
+    protected $inputs = ['id' => ['id' => 'inputID', 'name' => 'id', 'title' => 'ID'],
+        'name' => ['id' => 'inputName', 'name' => 'name', 'title' => 'Nombre'],
+        'selectStore' => ['id' => 'selectStore', 'name' => 'store', 'title' => 'Almacen']];
     public function __construct(LocationService $locationService) {
         parent::__construct();
         $this->locationService = $locationService;
@@ -34,6 +41,8 @@ class LocationController extends BaseController {
         return $this->renderHTML('/Entitys/stores/locationList.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'locations' => $locations,
+            'title' => $this->title,
+            'tab' => $this->tab,
             'stores' => $stores
         ]);
     }
@@ -45,6 +54,12 @@ class LocationController extends BaseController {
         return $this->renderHTML('/Entitys/stores/locationList.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'locations' => $locations,
+            'inputs' => $this->inputs,
+            'save' => $this->save,
+            'list' => $this->list,
+            'formName' => $this->formName,
+            'tab' => $this->tab,
+            'title' => $this->title,
             'stores' => $stores                
         ]);
     }    
@@ -66,7 +81,13 @@ class LocationController extends BaseController {
         return $this->renderHTML('/Entitys/stores/locationForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
-            'location' => $locationSelected,
+            'value' => $locationSelected,
+            'inputs' => $this->inputs,
+            'save' => $this->save,
+            'list' => $this->list,
+            'formName' => $this->formName,
+            'tab' => $this->tab,
+            'title' => $this->title,
             'stores' => $stores
         ]);
     }

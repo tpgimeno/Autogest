@@ -10,6 +10,7 @@ class LocationsCest
     protected $id;   
     protected $name;
     protected $storeId;
+    protected $store;
     public function _before(AcceptanceTester $I) {
         FirstCest::loginTest($I);
     }
@@ -32,8 +33,9 @@ class LocationsCest
         $I->wantTo('Create a new Location');
         $I->click('#submit', '#addLocation');
         $I->seeCurrentUrlEquals('/Intranet/locations/form'); 
-        $I->submitForm('#locationForm', array('name' => $this->name, 'store' => 'AUTOMOTIVE')); 
-        $this->storeId = $I->grabFromDatabase('stores', 'id', array('name' => 'AUTOMOTIVE'));
+        $this->store = $I->grabFromDatabase('stores', 'name', array('id' => 1));
+        $I->submitForm('#locationForm', array('name' => $this->name, 'store' => $this->store)); 
+        $this->storeId = $I->grabFromDatabase('stores', 'id', array('name' => $this->store));
         $this->id = $I->grabFromDatabase('locations', 'id', array('name' => $this->name, 'storeId' => $this->storeId));
         $I->see('Saved');       
     }
@@ -46,7 +48,7 @@ class LocationsCest
         $caracteres_permitidos = '123456789012345678901234567890';
         $longitud = 2;        
         $this->name = substr(str_shuffle($caracteres_permitidos), 0, $longitud); 
-        $I->submitForm('#locationForm', array('id' => $this->id, 'name' => $this->name, 'store' => 'AUTOMOTIVE'));
+        $I->submitForm('#locationForm', array('id' => $this->id, 'name' => $this->name, 'store' => $this->store));
         $I->see('Updated'); 
     }
      public function deleteLocationTest(AcceptanceTester $I){

@@ -1,12 +1,13 @@
 {% extends "menu.html.twig" %}
+{% import 'macros.html.twig' as fields %}
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-md-10">
-                <h2> Fabricantes </h2>
+                <h2> {{ title }} </h2>
             </div>   
             <div class="col-md-2 d-flex justify-content-end align-items-end">
-                <a class="link " href="/Intranet/admin?selected_tab=home">Volver</a> 
+                <a class="link " href="/Intranet/admin?selected_tab={{ tab }}">Volver</a> 
             </div>
         </div>
         <div class="row">
@@ -36,10 +37,7 @@
         <div class="row">
             <div class="col d-flex justify-content-end">
                 <form id="addMader" action="/Intranet/maders/form" method="get">
-                    <div class="form-group">
-                        <input id="submit" type="submit" class="btn btn-primary" value="Añadir">
-                        <a href="/Intranet/admin?selected_tab=home" class="btn btn-primary">Cancelar</a>
-                    </div>
+                    {{ fields.buttonsList(tab) }}
                 </form>
             </div>
         </div>

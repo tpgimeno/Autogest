@@ -23,6 +23,16 @@ use Respect\Validation\Validator as v;
  */
 class PaymentWaysController extends BaseController {
     protected $paymentWayService;
+    protected $list = '/Intranet/paymentWays/list';
+    protected $tab = 'buys';
+    protected $title = 'Formas de Pago';
+    protected $save = "/Intranet/paymentWays/save";
+    protected $formName = "paymentWaysForm";
+    protected $search = "/Intranet/paymentWays/search";
+    protected $inputs = ['id' => ['id' => 'inputID', 'name' => 'id', 'title' => 'ID'],
+        'name' => ['id' => 'inputName', 'name' => 'name', 'title' => 'Nombre'],
+        'selectAccount' => ['id' => 'selectAccount', 'name' => 'account', 'title' => 'Cuenta Asociada'],
+        'discount' => ['id' => 'inputDiscount', 'name' => 'discount', 'title' => 'Descuento']];
     public function __construct(PaymentWaysService $paymentWayService) {
         parent::__construct();
         $this->paymentWayService = $paymentWayService;
@@ -33,6 +43,9 @@ class PaymentWaysController extends BaseController {
         return $this->renderHTML('/Entitys/paymentWays/paymentWaysList.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'paymentWays' => $paymentWays,
+            'list' => $this->list,
+            'tab' => $this->tab,
+            'search' => $this->search,
             'accounts' => $accounts
         ]);
     }
@@ -44,6 +57,13 @@ class PaymentWaysController extends BaseController {
         return $this->renderHTML('/Entitys/paymentWays/paymentWaysList.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'paymentWays' => $paymentWays,
+            'list' => $this->list,
+            'tab' => $this->tab,
+            'title' => $this->title,
+            'save' => $this->save,
+            'formName' => $this->formName,
+            'search' => $this->search,
+            'inputs' => $this->inputs,
             'accounts' => $accounts
         ]);
     }   
@@ -60,12 +80,19 @@ class PaymentWaysController extends BaseController {
                 $responseMessage = $ex->getMessage();
             }          
         }        
-        $paymentWaySelected = $this->paymentWayService->setInstance(new PaymentWays(), $request->getQueryParams('id'));
-        $accounts = $this->paymentWayService->getAllRegisters(new Accounts());
+        $paymentWaySelected = $this->paymentWayService->setPaymentWay($request->getQueryParams('id'));
+        $accounts = $this->paymentWayService->getAccounts();
         return $this->renderHTML('/Entitys/paymentWays/paymentWaysForm.html.twig', [
         'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
         'responseMessage' => $responseMessage,
-        'paymentWay' => $paymentWaySelected,
+        'value' => $paymentWaySelected,
+        'list' => $this->list,
+        'tab' => $this->tab,
+        'title' => $this->title,
+        'save' => $this->save,
+        'formName' => $this->formName,
+        'search' => $this->search,
+        'inputs' => $this->inputs,
         'accounts' => $accounts
         ]);               
     }    

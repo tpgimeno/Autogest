@@ -14,9 +14,7 @@ class CompanyCest
     }
     // tests
     public function accesTest(AcceptanceTester $I)
-    {
-        $J = new AcceptanceTester();
-        
+    {        
         $I->amOnPage('/Intranet/');
         $I->amOnPage('/Intranet/admin');
         $I->click('Empresas', '.list-group-item');

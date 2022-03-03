@@ -23,7 +23,7 @@ class LocationService extends BaseService {
     }
     public function getStoresNames(){
         $stores = DB::table('stores')
-                ->select('stores.name')
+                ->select('stores.id', 'stores.name as iter')
                 ->get();
         return $stores;
     }
@@ -38,9 +38,8 @@ class LocationService extends BaseService {
         return $locations;
     }
     public function getStoreByName($array){
-        if(isset($array['store'])){
-            $name = $array['store'];        
-            $store = Store::where('name', 'like', "%".$name."%")->get()->first();
+        if(isset($array['store'])){       
+            $store = Store::where('name', 'like', "%".$array['store']."%")->get()->first();
         }else{
             $store = new Store();
         }
@@ -50,7 +49,7 @@ class LocationService extends BaseService {
         if(isset($array['id'])){
             $location = DB::table('locations')
                 ->join('stores', 'stores.id', '=', 'locations.storeId')
-                ->select('locations.id', 'locations.name', 'stores.name as store')
+                ->select('locations.id', 'locations.name', 'stores.name as iter')
                 ->where('locations.id', '=', intval($array['id']))
                 ->get()->first();
         }else{

@@ -22,7 +22,17 @@ use Laminas\Diactoros\ServerRequest;
  * @author tonyl
  */
 class AccountController extends BaseController {
-   protected $accountService;
+    protected $accountService;
+    protected $list = '/Intranet/accounts/list';
+    protected $tab = 'home';
+    protected $title = 'Cuentas Bancarias';
+    protected $save = "/Intranet/accounts/save";
+    protected $formName = "accountsForm";
+    protected $inputs = ['id' => ['id' => 'inputID', 'name' => 'id', 'title' => 'ID'],
+        'selectBank' => ['id' => 'selectBank', 'name' => 'bank', 'title' => 'Banco'],
+        'selectOwner' => ['id' => 'selectOwner', 'name' => 'owner', 'title' => 'Titular'],
+        'observations' => ['id' => 'observations', 'name' => 'observations', 'title' => 'Observaciones'],
+        'accountNumber' => ['id' => 'inputAccountNumber', 'name' => 'accountNumber', 'title' => 'Numero de Cuenta']];
     public function __construct(AccountService $accountService) {
         parent::__construct();
         $this->accountService = $accountService;
@@ -30,6 +40,9 @@ class AccountController extends BaseController {
     public function getIndexAction() {
         $accounts = $this->accountService->getAllAccounts();       
         return $this->renderHTML('/Entitys/accounts/accountsList.html.twig', [
+            'list' => $this->list,
+            'tab' => $this->tab,
+            'title' => $this->title,
             'accounts' => $accounts
         ]);
     }  
@@ -55,9 +68,15 @@ class AccountController extends BaseController {
         return $this->renderHTML('/Entitys/accounts/accountsForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
-            'account' => $accountSelected,
+            'value' => $accountSelected,
             'banks' => $banks,
-            'owners' => $owners
+            'owners' => $owners,
+            'inputs' => $this->inputs,
+            'save' => $this->save,
+            'list' => $this->list,
+            'formName' => $this->formName,
+            'tab' => $this->tab,
+            'title' => $this->title
         ]);
     }
     public function deleteAction(ServerRequest $request) {         

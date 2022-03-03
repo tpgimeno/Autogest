@@ -9,6 +9,8 @@ class AccountsCest
 {
     protected $id;   
     protected $iban;
+    protected $bank;
+    protected $owner;
     public function _before(AcceptanceTester $I) {
         FirstCest::loginTest($I);
     }
@@ -31,8 +33,10 @@ class AccountsCest
         $I->wantTo('Create a new Account');
         $I->click('#submit', '#addAccount');
         $I->seeCurrentUrlEquals('/Intranet/accounts/form'); 
-        $I->submitForm('#accountsForm', array('bank' => 'Caixabank',
-            'owner' => 'AUTOMOTIVE SERVICES 2014 SLU',
+        $this->bank = $I->grabFromDatabase('banks', 'name', array('id' => 1));
+        $this->owner = $I->grabFromDatabase('company', 'name', array('id' => 1));
+        $I->submitForm('#accountsForm', array('bank' => $this->bank,
+            'owner' => $this->owner,
             'accountNumber' => $this->iban,
             'observations' => 'Lorem Ipsum'));
         $this->id = $I->grabFromDatabase('accounts', 'id', array('accountNumber' => $this->iban));
@@ -47,8 +51,8 @@ class AccountsCest
         $caracteres_permitidos = '123456789012345678901234567890';
         $longitud = 18;        
         $this->iban = "ES".substr(str_shuffle($caracteres_permitidos), 0, $longitud); 
-        $I->submitForm('#accountsForm', array ('id' => $this->id, 'bank' => 'Caixabank',
-            'owner' => 'AUTOMOTIVE SERVICES 2014 SLU',
+        $I->submitForm('#accountsForm', array ('id' => $this->id, 'bank' => $this->bank,
+            'owner' => $this->owner,
             'accountNumber' => $this->iban, 
             'observations' => 'Prueba Actualización'));
         $I->see('Updated'); 
