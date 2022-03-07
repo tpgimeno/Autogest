@@ -1,12 +1,13 @@
-{% extends "dashboard.twig" %}
+{% extends "menu.html.twig" %}
+{% import 'macros.html.twig' as fields %}
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-md-10">
-                <h2> Comerciales </h2>
+                <h2> {{ title }} </h2>
             </div>   
             <div class="col-md-2 d-flex justify-content-end align-items-end">
-                <a class="link " href="/Intranet/admin">Volver</a> 
+                <a class="link " href="/Intranet/admin?selected_tab={{ tab }}">Volver</a> 
             </div>
         </div>
         <div class="row">
@@ -33,11 +34,8 @@
         </div>
         <div class="row">
             <div class="col d-flex justify-content-end">
-                <form class="addSeller" action="/Intranet/sellers/form" method="get">
-                    <div class="form-group">
-                        <input id="submit" type="submit" class="btn btn-primary" value="Añadir">
-                        <a href="/Intranet/admin" class="btn btn-primary">Cancelar</a>
-                    </div>           
+                <form id="addSeller" action="/Intranet/sellers/form" method="get">
+                    {{ fields.buttonsList(tab) }}         
                 </form>
             </div>
         </div>

@@ -1,74 +1,38 @@
 {% extends "menu.html.twig" %}
+{% import 'macros.html.twig' as fields %}
 {% block content %}
 <div class="container">
     <div class="row">
         <div class="col-md-10">
-            <h2> Almacen </h2>
+            <h2> {{ title }} </h2>
         </div>   
-        <div class="col-md-2 d-flex justify-content-end align-items-end">
-            <a class="link pr-4" href="/Intranet/stores/list">Lista</a> 
-            <a class="link " href="/Intranet/admin?selected_tab=home">Volver</a> 
-        </div>        
+        {{ fields.return(list, tab) }}       
+    </div>
+    <div class="row">
+        {{ fields.alert(responseMessage) }}
     </div>
     <div class="row">
         <div class="col">
-            <div class="alert alert-dark" role="alert">
-                {{ responseMessage }}
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <form id="storesForm" action="/Intranet/stores/save" method="post">
+            <form id="{{formName}}" action="{{ save }}" method="post">
                 <div class="form-row">
-                    <div class="form-group col-md-2">
-                        <label for="inputId">ID</label>                        
-                        <input type="id" name="id" class="form-control" id="inputId" placeholder="" value="{{ store.id }}">
-                    </div>                    
+                    {{ fields.input2(inputs.id.id, inputs.id.name, inputs.id.title, value.id) }}                   
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="inputName">Nombre</label>                        
-                        <input type="name" name="name" class="form-control" id="inputName" placeholder="Nombre" value="{{ store.name }}">
-                    </div> 
-                    <div class="form-group col-md-4">
-                        <label for="inputAddress">Dirección</label>
-                        <input type="text" name="address" class="form-control" id="inputAddress" placeholder="C/ La paz, 4" value="{{ store.address }}">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputCity">Población</label>
-                        <input type="text" name="city" class="form-control" id="inputCity" placeholder="Ciudad" value="{{ store.city }}">
-                    </div>
-                </div>                                                      
-                <div class="form-row">                   
-                    <div class="form-group col-md-2">
-                        <label for="inputZip">C.P.</label>
-                        <input type="text" name="postal_code" class="form-control" id="inputZip" placeholder="Código Postal" value="{{ store.postal_code }}">
-                    </div> 
-                    <div class="form-group col-md-6">
-                        <label for="inputState">Provincia/Estado</label>
-                        <input type="text" name="state" class="form-control" id="inputState" placeholder="Provincia" value="{{ store.state }}">
-                    </div> 
-                    <div class="form-group col-md-4">
-                        <label for="inputCountry">Pais</label>
-                        <input type="text" name="country" class="form-control" id="inputCountry" placeholder="Pais" value="{{ store.country }}">
-                    </div> 
-                </div>
-                <div class="form-row">                                           
-                    <div class="form-group col-md-3">
-                        <label for="inputPhone">Teléfono</label>
-                        <input type="text" name="phone" class="form-control" id="inputPhone" placeholder="Phone" value="{{ store.phone }}">
-                    </div>
-                    <div class="form-group col-md">
-                        <label for="inputEmail">Email</label>
-                        <input type="text" name="email" class="form-control" id="inputEmail" placeholder="Email" value="{{ store.email }}">
-                    </div>
-                </div>                
+                    {{ fields.input6(inputs.name.id, inputs.name.name, inputs.name.title, value.id) }}                    
+                    {{ fields.input4(inputs.city.id, inputs.city.name, inputs.city.title, value.city) }}
+                    {{ fields.input2(inputs.postalCode.id, inputs.postalCode.name, inputs.postalCode.title, value.postalCode) }}
+                </div>   
                 <div class="form-row">
-                    <div class="col text-right">
-                        <button id="submit" type="submit" class="btn btn-primary">Guardar</button>
-                        <a href="/Intranet/admin?selected_tab=home" class="btn btn-primary">Cancelar</a>
-                    </div>
+                    {{ fields.input6(inputs.address.id, inputs.address.name, inputs.address.title, value.address) }}
+                    {{ fields.input3(inputs.state.id, inputs.state.name, inputs.state.title, value.state) }} 
+                    {{ fields.input3(inputs.country.id, inputs.country.name, inputs.country.title, value.country) }} 
+                </div>
+                <div class="form-row">
+                    {{ fields.input4offset2(inputs.phone.id, inputs.phone.name, inputs.phone.title, value.phone) }}
+                    {{ fields.input6(inputs.email.id, inputs.email.name, inputs.email.title, value.email) }}
+                </div>                              
+                <div class="form-row">
+                    {{ fields.buttonsForm(tab) }}
                 </div>
             </form>        
         </div>

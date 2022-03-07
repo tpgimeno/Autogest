@@ -9,39 +9,33 @@
             <div class="col-md-2 d-flex justify-content-end align-items-end">
                 <a class="link " href="/Intranet/admin?selected_tab={{ tab }}">Volver</a> 
             </div>
-        </div>
-        <div class="row">
-            {{ fields.searchList(search) }}
-        </div>
+        </div>        
         <div class="row">
             <div class="col">
                 <table class="table">
                     <tr>
-                        <th>ID</th>
-                        <th>Nombre</th> 
-                        <th>Clave</th>
+                        <th>Descripcion</th>                        
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
-                    {% for accesory in accesories %}
+                    {% for customer_type in customer_types %}
                         <tr>
-                            <td>{{ accesory.id }}</td>
-                            <td>{{ accesory.name }}</td> 
-                            <td>{{ accesory.keyString }}</td>
-                            <td><a href="/Intranet/vehicles/accesories/form?id={{accesory.id}}">Edit</a></td>
-                            <td><a href="/Intranet/vehicles/accesories/delete?id={{accesory.id}}">Delete</a></td>
+                            <td>{{ customer_type.name }}</td>                           
+                            <td><a href="/Intranet/customers/type/form?id={{customer_type.id}}">Edit</a></td>
+                            <td><a href="/Intranet/customers/type/delete?id={{customer_type.id}}">Delete</a></td>
                         </tr>
                     {% endfor %}                
                 </table>
             </div>
         </div>
         <div class="row">
-            <div class="col d-flex justify-content-end">               
-                <form id="addAccesory" action="/Intranet/vehicles/accesories/form" method="get">
+            <div class="col d-flex justify-content-end">
+                <form id="addCustomerType" action="/Intranet/customers/type/form" method="get">
                     {{ fields.buttonsList(tab) }}
                 </form>
             </div>
         </div>
     </div>
 {% endblock %}
+
 

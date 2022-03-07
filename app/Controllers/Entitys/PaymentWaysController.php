@@ -39,7 +39,7 @@ class PaymentWaysController extends BaseController {
     }
     public function getIndexAction() {
         $paymentWays = $this->paymentWayService->getAllRegisters(new PaymentWays());
-        $accounts = $this->paymentWayService->getAllRegisters(new Accounts());
+        $accounts = $this->paymentWayService->getAllRegisters(new Accounts());        
         return $this->renderHTML('/Entitys/paymentWays/paymentWaysList.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'paymentWays' => $paymentWays,

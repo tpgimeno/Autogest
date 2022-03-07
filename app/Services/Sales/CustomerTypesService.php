@@ -6,18 +6,16 @@
  * and open the template in the editor.
  */
 
-namespace App\Services\Sells;
+namespace App\Services\Sales;
+
+use App\Services\BaseService;
 
 /**
  * Description of CustomerTypesService
  *
  * @author tonyl
  */
-class CustomerTypesService 
+class CustomerTypesService extends BaseService
 {
-    public function deleteCustomerType($id)
-    {
-        $customerType = CustomerTypes::find($id)->first();
-        $customerType->delete();
-    }
+   
 }

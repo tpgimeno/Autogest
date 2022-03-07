@@ -34,6 +34,7 @@ class PaymentWaysService extends BaseService {
         }else{
             $account = new Accounts();
         }
+        
         return $account->id;
     }
     public function getAccounts(){
@@ -49,7 +50,7 @@ class PaymentWaysService extends BaseService {
                     ->join('accounts', 'accounts.id', '=', 'paymentWays.account')
                     ->select('paymentWays.id', 'paymentWays.name', 'accounts.accountNumber as iter', 'paymentWays.discount')
                     ->where('paymentWays.id', '=', intval($array['id']))
-                    ->whereNull('deleted_at')
+                    ->whereNull('paymentWays.deleted_at')
                     ->get()->first();
         }else{
             $paymentWay = new PaymentWays();

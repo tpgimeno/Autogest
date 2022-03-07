@@ -93,7 +93,7 @@ class LocationController extends BaseController {
     }
     public function deleteAction(ServerRequest $request) {       
         $this->locationService->deleteRegister(new Location(), $request->getQueryParams('id'));              
-        return new RedirectResponse('/Intranet/locations/list');
+        return new RedirectResponse($this->list);
     }
 }
 

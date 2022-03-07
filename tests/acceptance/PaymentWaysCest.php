@@ -9,6 +9,7 @@ class PaymentWaysCest
 {
     protected $id;   
     protected $name;
+    protected $account;
     protected $accountId;
     public function _before(AcceptanceTester $I) {
         FirstCest::loginTest($I);
@@ -32,7 +33,8 @@ class PaymentWaysCest
         $I->wantTo('Create a new PaymentWay');
         $I->click('#submit', '#addPaymentWay');
         $I->seeCurrentUrlEquals('/Intranet/paymentWays/form'); 
-        $this->accountId = $I->grabFromDatabase('accounts', 'id', array('accountNumber' => 'ES2100564805201457896'));
+        $this->account = $I->grabFromDatabase('accounts', 'accountNumber', array('id' => 1));
+        $this->accountId = $I->grabFromDatabase('accounts', 'id', array('accountNumber' => $this->account));
         $I->submitForm('#paymentWaysForm', array('name' => $this->name, 'account' => $this->accountId, 'discount' => 10));        
         $this->id = $I->grabFromDatabase('paymentWays', 'id', array('name' => $this->name));
         $I->see('Saved');       

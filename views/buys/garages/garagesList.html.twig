@@ -1,29 +1,17 @@
 {% extends "menu.html.twig" %}
+{% import 'macros.html.twig' as fields %}
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-md-10">
-                <h2> Talleres </h2>
+                <h2> {{ title }} </h2>
             </div>   
             <div class="col-md-2 d-flex justify-content-end align-items-end">
-                <a class="link " href="/Intranet/admin?selected_tab=buys">Volver</a> 
+                <a class="link " href="/Intranet/admin?selected_tab={{ tab }}">Volver</a> 
             </div>
         </div>
         <div class="row">
-            <div class="col">
-                <form id="searchForm" action="/Intranet/garages/search" method="post" class="form">
-                    <div class="container">
-                        <div id="formRow" class="form-row text-right">
-                            <div class="col-11">                                                                                
-                                <input id="searchField" type="text" name="searchFilter" class="form-control mb-2 mr-sm-2" id="inlineFormSearchFilter" placeholder="Nombre / Cif / Telefono / email">
-                            </div>
-                            <div class="col-1">
-                                <button type="submit" class="btn btn-primary mb-2">Buscar</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
+            {{ fields.searchList(search) }}
         </div>
         <div class="row">
             <div class="col">
@@ -52,10 +40,7 @@
         <div class="row">
             <div class="col d-flex justify-content-end">
                 <form id="addGarage" action="/Intranet/garages/form" method="get">
-                    <div class="form-group">
-                        <input id="submit" type="submit" class="btn btn-primary" value="Añadir">
-                        <a href="/Intranet/admin?selected_tab=buys" class="btn btn-primary">Cancelar</a>
-                    </div>
+                    {{ fields.buttonsList(tab) }}
                 </form>
             </div>
         </div>

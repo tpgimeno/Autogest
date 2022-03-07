@@ -12,8 +12,6 @@ use App\Controllers\BaseController;
 use App\Models\Accesories;
 use App\Services\ErrorService;
 use App\Services\Vehicle\AccesoriesService;
-use Illuminate\Database\Capsule\Manager as DB;
-use Illuminate\Database\QueryException;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\ServerRequest;
 use Respect\Validation\Validator as v;
@@ -29,99 +27,55 @@ use ZipStream\Exception;
 class AccesoriesController extends BaseController
 {
     protected $accesoriesService;
-    protected $responseMessage;
-    
+    protected $list = '/Intranet/vehicles/accesories/list';
+    protected $tab = 'buys';
+    protected $title = 'Accesorios';
+    protected $save = "/Intranet/vehicles/accesories/save";
+    protected $formName = "accesoriesForm";
+    protected $inputs = ['id' => ['id' => 'inputID', 'name' => 'id', 'title' => 'ID'],  
+        'name' => ['id' => 'inputName', 'name' => 'name', 'title' => 'Nombre']];    
     public function __construct(AccesoriesService $accesoriesService, ErrorService $errorService) {
         parent::__construct();
         $this->accesoriesService = $accesoriesService;
         $this->errorService = $errorService;
     }
-    public function getIndexAction()
-    {
-        $accesories = DB::table('accesories')               
-                ->select('accesories.id', 'accesories.name')
-                ->get();        
+    public function getIndexAction() {
+        $accesories = $this->accesoriesService->getAccesories();       
         return $this->renderHTML('/vehicles/accesories/accesoriesList.html.twig', [
+            'list' => $this->list,
+            'tab' => $this->tab,
+            'title' => $this->title,
             'accesories' => $accesories
         ]);
     }    
-    public function getAccesoryDataAction($request)
-    {        
-        $postData = $request->getParsedBody();
-        if($postData){
+    public function getAccesoryDataAction($request) {   
+        $responseMessage = null;        
+        if($request->getMethod() == 'POST'){
+            $postData = $request->getParsedBody();
             $accesoriesValidator = v::key('name', v::stringType()->notEmpty());
             try{
                 $accesoriesValidator->assert($postData);
+                $keyString = $this->accesoriesService->normalizeKeyString($postData['name']);
+                array_push($postData, $keyString);
+                $responseMessage = $this->accesoriesService->saveRegister(new Accesories(), $postData);
             } catch (Exception $ex) {
-                $this->responseMessage = $ex->getMessage();
+                $responseMessage = $ex->getMessage();
             } 
-            $accesory = new Accesories();
-            if(isset($postData['id']) && $postData['id']){
-                $accesory = Accesories::find($postData['id']);
-            }                              
-            $accesory->name = $postData['name'];                
-            $keystring = $this->normalizeKeyString($postData['name']);
-            $accesory->keystring = $keystring;
-            $this->responseMessage = $this->saveAccesory($accesory);
         }                            
-        $selected_accesory = $this->setAccesory($request);
+        $selected_accesory = $this->accesoriesService->setInstance(new Accesories(), $request->getQueryParams('id'));
         return $this->renderHTML('/vehicles/accesories/accesoriesForm.html.twig', [
-            'selected_accesory' => $selected_accesory,            
-            'responseMessage' => $this->responseMessage
+            'value' => $selected_accesory,
+            'inputs' => $this->inputs,
+            'save' => $this->save,
+            'list' => $this->list,
+            'formName' => $this->formName,
+            'tab' => $this->tab,
+            'title' => $this->title,
+            'responseMessage' => $responseMessage
         ]);
-    }
-    public function saveAccesory($accesory)
-    {
-        try
-        {
-            if(Accesories::find($accesory->id))
-            {
-                $accesory->update();
-                $message = 'Updated';
-            }
-            else
-            {
-                $accesory->save();
-                $message = 'Saved';
-            }
-        } catch(QueryException $ex) {
-            $message = $this->errorService->getError($ex);                    
-        }
-        return $message;
-    }
-    public function normalizeKeyString ($string)
-    {
-        $words = str_word_count($string);
-        if($words > 1)
-        {
-            $keystring = str_replace(" ", "-", $string);
-        }
-        else
-        {
-            $keystring = $string;
-        }
-        $keystring = "acc-".strtolower($keystring);
-        return $keystring;
-    }
-    public function setAccesory($request)
-    {   
-        $selected_accesory = null;
-        if($request->getMethod() === 'GET')
-        {            
-            $params = $request->getQueryParams();
-            if(isset($params['id']) && $params['id'])
-            {            
-                $selected_accesory = DB::table('accesories')                    
-                        ->select('accesories.id', 'accesories.keystring', 'accesories.name')
-                        ->where('accesories.id', '=', $params['id'])                   
-                        ->first();
-            }
-        }
-        return $selected_accesory;        
-    }
-    public function deleteAction(ServerRequest $request)
-    {         
-        $this->accesoriesService->deleteAccesories($request->getQueryParams('id'));               
-        return new RedirectResponse('/Intranet/vehicles/accesories/list');
+    }    
+    public function deleteAction(ServerRequest $request) {         
+        $this->accesoriesService->deleteRegister(new Accesories(), $request->getQueryParams('id'));               
+        return new RedirectResponse($this->list);
     }  
 }

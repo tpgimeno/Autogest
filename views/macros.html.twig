@@ -23,12 +23,24 @@
         <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
     </div>
 {% endmacro input2 %}
+{% macro inputDate2(id, name, title, value, type = 'date') %}
+    <div class="form-group col-md-2">
+        <label for="{{ id }}">{{ title }}</label>                        
+        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
+    </div>
+{% endmacro inputDate2 %}
 {% macro input2offset2(id, name, title, value, type = 'text') %}
     <div class="form-group col-md-2 offset-md-2">
         <label for="{{ id }}">{{ title }}</label>                        
         <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
     </div>
 {% endmacro input2offset2 %}
+{% macro input2offset6(id, name, title, value, type = 'text') %}
+    <div class="form-group col-md-2 offset-md-6">
+        <label for="{{ id }}">{{ title }}</label>                        
+        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
+    </div>
+{% endmacro input2offset6 %}
 {% macro input2offset8(id, name, title, value, type = 'text') %}
     <div class="form-group col-md-2 offset-md-8">
         <label for="{{ id }}">{{ title }}</label>                        
@@ -65,6 +77,12 @@
         <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
     </div>
 {% endmacro input4 %}
+{% macro input4offset2(id, name, title, value, type = 'text') %}
+    <div class="form-group col-md-4 offset-md-2">
+        <label for="{{ id }}">{{ title }}</label>                        
+        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
+    </div>
+{% endmacro input4offset2 %}
 {% macro input5password(id, name, title, value, type = 'password') %}
     <div class="form-group col-md-5">
         <label for="{{ id }}">{{ title }}</label>                        
@@ -83,6 +101,12 @@
         <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
     </div>
 {% endmacro input6 %}
+{% macro input6offset4(id, name, title, value, type = 'text') %}
+    <div class="form-group col-md-6 offset-md-4">
+        <label for="{{ id }}">{{ title }}</label>                        
+        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
+    </div>
+{% endmacro input6offset4 %}
 {% macro select(id, name, title, value, iterable, type = 'text') %}
     <div class="form-group col-md-4">                        
         <label for="{{ id }}">{{ title }}</label>

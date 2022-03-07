@@ -38,6 +38,9 @@ class CompanyController extends BaseController {
         $companies = $this->companyService->getAllRegisters(new Company());
         return $this->renderHTML('/Entitys/company/companyList.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
+            'title' => $this->title,
+            'tab' => $this->tab,
+            'list' => $this->list,
             'companies' => $companies
         ]);
     }       
@@ -46,6 +49,9 @@ class CompanyController extends BaseController {
         $companies = $this->companyService->searchCompanies($searchData['searchFilter']);
         return $this->renderHTML('/Entitys/company/companyList.html.twig', [
             'currentUser' => $this->currentUser->getCurrentUserEmailAction(),
+            'title' => $this->title,
+            'tab' => $this->tab,
+            'list' => $this->list,
             'companies' => $companies                
         ]);
     }    
