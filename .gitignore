@@ -1,10 +1,11 @@
 .env
-vendor
-.vscode
-_mmServerScripts
+vendor/
+.vscode/
+_mmServerScripts/
 phinx.*
-nbproject
+nbproject/
 .phpdoc
-build
-docs
+build/
+docs/
+codeception.yml
 
