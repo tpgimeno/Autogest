@@ -17,8 +17,6 @@ use Laminas\Diactoros\ServerRequest;
 use Respect\Validation\Validator as v;
 use ZipStream\Exception;
 
-
-
 /**
  * Description of AccesoriesController
  *

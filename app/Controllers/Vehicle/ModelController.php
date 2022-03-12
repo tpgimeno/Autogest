@@ -14,7 +14,7 @@ use App\Models\ModelVh;
 use App\Services\ErrorService;
 use App\Services\Vehicle\ModelService;
 use Exception;
-use Illuminate\Database\Capsule\Manager as DB;
+use Illuminate\Database\QueryException;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\ServerRequest;
 use Respect\Validation\Validator as v;
@@ -23,110 +23,76 @@ use Respect\Validation\Validator as v;
  *
  * @author TpGimeno
  */
-class ModelController extends BaseController
-{
+class ModelController extends BaseController  {
     protected $modelService;
     protected $errorService;
+    protected $list = '/Intranet/vehicles/models/list';
+    protected $tab = 'buys';
+    protected $title = 'Modelos';
+    protected $save = "/Intranet/vehicles/models/save";
+    protected $formName = "modelsForm";
+    protected $inputs = ['id' => ['id' => 'inputID', 'name' => 'id', 'title' => 'ID'],
+        'name' => ['id' => 'inputName', 'name' => 'name', 'title' => 'Nombre'],
+        'brandId' => ['id' => 'inputBrand', 'name' => 'brand', 'title' => 'Marca']];
     public function __construct(ModelService $modelService, ErrorService $errorService) {
         parent::__construct();
         $this->modelService = $modelService;
         $this->errorService = $errorService;
     }
-    public function getIndexAction()
-    {
-        $models = DB::table('models')
-                ->join('brands', 'brands.id', '=', 'models.brandId')                
-                ->select('models.id', 'brands.name as brand', 'models.name')
-                ->whereNull('models.deleted_at')
-                ->get();    
-        
+    public function getIndexAction() {       
+        $models = $this->modelService->getModels();
         return $this->renderHTML('/vehicles/models/modelsList.html.twig', [
             'currentUser' => $this->currentUser->getCurrentUserEmailAction(),
+            'list' => $this->list,
+            'title' => $this->title,
+            'tab' => $this->tab,
             'models' => $models
         ]);
     }
-    public function searchModelAction($request)
-    {
+    public function searchModelAction($request) {
         $searchData = $request->getParsedBody();        
         $searchString = $searchData['searchFilter'];        
-        $model = ModelVh::Where("name", "like", "%".$searchString."%")
-                ->orWhere("brandId", "like", "%".$searchString."%")                
-                ->get();       
-        $brands = Brand::All();       
+        $models = $this->modelService->searchModels($searchString);      
+        $brands = $this->modelService->getAllRegisters(new Brand());    
         return $this->renderHTML('/vehicles/models/modelsList.html.twig', [
             'currentUser' => $this->currenUser->getCurrentUserEmailAction(),
-            'models' => $model,
+            'list' => $this->list,
+            'title' => $this->title,
+            'tab' => $this->tab,
+            'models' => $models,
             'brands' => $brands                
         ]);
     }    
-    public function getModelDataAction($request)
-    {                
+    public function getModelDataAction($request) {                
         $responseMessage = null;
-        if($request->getMethod() == 'POST')
-        {
+        if($request->getMethod() == 'POST') {
             $postData = $request->getParsedBody();            
             $modelValidator = v::key('name', v::stringType()->notEmpty());        
             try{
-                $modelValidator->assert($postData); // true                                   
-            }
-            catch(Exception $e)
-            {                 
+                $modelValidator->assert($postData); // true 
+                $postData['brand'] = $this->modelService->getBrandByName($postData['brand']);
+                $responseMessage = $this->modelService->saveRegister(new ModelVh(), $postData);
+            }catch(Exception $e) {                 
                 $responseMessage = $e->getMessage();                
-            }
-            $model = $this->addModel($postData);
-            $responseMessage = $this->saveModel($model);
+            }            
         }
-        $modelSelected = $this->setModel($request);
-        $brands = Brand::All();
+        $modelSelected = $this->modelService->getModel($request->getQueryParams('id'));
+        $brands = $this->modelService->getBrands();
         return $this->renderHTML('/vehicles/models/modelsForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
-            'model' => $modelSelected,
+            'list' => $this->list,
+            'tab' => $this->tab,
+            'title' => $this->title,
+            'save' => $this->save,
+            'formName' => $this->formName,
+            'inputs' => $this->inputs,
+            'value' => $modelSelected,
             'brands' => $brands
         ]);
-    }
-    public function saveModel($model){
-        try{
-            if(ModelVh::find($model->id))
-            {
-                $model->update();
-                $message = 'Updated';                
-            }
-            else
-            {
-                $model->save();
-                $message = 'Saved';
-            }
-        } catch (QueryException $ex) {
-            $message = $this->errorService->getError($ex);
-        }
-        return $message;
-    }
-    public function setModel($request){
-        $modelSelected = null;
-        $params = $request->getQueryParams();
-        if(isset($params['id'])&& $params['id'])
-        {
-            $modelSelected = ModelVh::find($params['id']);
-        }
-        return $modelSelected;
-    } 
-    public function addModel($postData){
-        $model = new ModelVh();
-        if(isset($postData['id']) && $postData['id'])
-        {
-            $model = ModelVh::find($postData['id']);
-        }
-        $model->name = $postData['name'];
-        $brand_id = Brand::Where("name", "=", $postData['brand'])->first()['id'];                
-        $model->brandId = $brand_id;
-        return $model;
-    }
-            
-    public function deleteAction(ServerRequest $request)
-    {       
-        $this->modelService->deleteModel($request->getQueryParams('id'));               
+    }    
+    public function deleteAction(ServerRequest $request) {       
+        $this->modelService->deleteRegister(new ModelVh(), $request->getQueryParams('id'));               
         return new RedirectResponse('/Intranet/vehicles/models/list');
     }
-
 }

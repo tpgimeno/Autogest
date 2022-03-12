@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Brand extends Model 
 {
     use SoftDeletes;
-
     protected $table = "brands";
+    protected $properties = ['name'];
+    public function getProperties(){
+        return $this->properties;
+    }
 }

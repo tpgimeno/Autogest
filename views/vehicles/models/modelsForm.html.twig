@@ -1,48 +1,26 @@
-{% extends "dashboard.twig" %}
+{% extends "menu.html.twig" %}
+{% import 'macros.html.twig' as fields %}
 {% block content %}
 <div class="container">
     <div class="row">
         <div class="col-md-10">
-            <h2> Modelo </h2>
+            <h2> {{ title }} </h2>
         </div>   
-        <div class="col-md-2 d-flex justify-content-end align-items-end">
-            <a class="link pr-4" href="/Intranet/vehicles/models/list">Lista</a> 
-            <a class="link " href="/Intranet/admin">Volver</a> 
-        </div>        
+        {{ fields.return(list, tab) }}       
+    </div>
+    <div class="row">
+        {{ fields.alert(responseMessage) }}
     </div>
     <div class="row">
         <div class="col">
-            <div class="alert alert-dark" role="alert">
-                {{ responseMessage }}
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <form id="modelsForm" action="/Intranet/vehicles/models/save" method="post">
+            <form id="{{formName}}" action="{{ save }}" method="post">
                 <div class="form-row">
-                    <div class="form-group col-md-2">
-                        <label for="inputId">Id</label>                        
-                        <input type="text" name="id" class="form-control" id="inputId" placeholder="Id" value="{{ model.id }}">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="selectBrand">Marca</label> 
-                        <select name="brand" class="form-control" id="selectBrand">
-                            {% for brand in brands %}
-                                <option>{{ brand.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form-group col-md-7">
-                        <label for="inputName">Nombre</label>                        
-                        <input type="text" name="name" class="form-control" id="inputName" placeholder="Nombre" value="{{ model.name }}">
-                    </div>                    
+                    {{ fields.input2(inputs.id.id, inputs.id.name, inputs.id.title, value.id) }}
+                    {{ fields.select(inputs.brandId.id, inputs.brandId.name, inputs.brandId.title, value, brands) }}
+                    {{ fields.input6(inputs.name.id, inputs.name.name, inputs.name.title, value.name) }}                    
                 </div>              
                 <div class="form-row">
-                    <div class="col text-right">
-                        <button id="submit" type="submit" class="btn btn-primary">Guardar</button>
-                        <button type="reset" class="btn btn-primary">Cancelar</button>
-                    </div>
+                    {{ fields.buttonsForm(tab) }}
                 </div>
             </form>
         </div>

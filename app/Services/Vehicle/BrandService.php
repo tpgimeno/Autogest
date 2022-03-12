@@ -8,18 +8,14 @@
 
 namespace App\Services\Vehicle;
 
-use App\Models\Brand;
+use App\Services\BaseService;
 
 /**
  * Description of BrandService
  *
  * @author tonyl
  */
-class BrandService 
+class BrandService extends BaseService
 {
-    public function deleteBrand($id)
-    {        
-        $customer = Brand::find($id)->first();
-        $customer->delete();
-    }
+   
 }
