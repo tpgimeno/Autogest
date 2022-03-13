@@ -26,7 +26,7 @@
                 </div>
                 <div class="form-row">                    
                    {{ fields.input4(inputs.ref.id, inputs.ref.name, inputs.ref.title, value.ref) }}
-                   {{ fields.select(inputs.selectMader.id, inputs.selectMader.name, inputs.selectMader.title, value|json_encode(), iterable) }}
+                   {{ fields.select(inputs.selectMader.id, inputs.selectMader.name, inputs.selectMader.title, value, maders) }}
                    {{ fields.input4(inputs.serialNumber.id, inputs.serialNumber.name, inputs.serialNumber.title, value.serialNumber) }}
                 </div>
                 <div class="row">

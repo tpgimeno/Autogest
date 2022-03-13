@@ -60,13 +60,12 @@ class ComponentsCest
         $I->see('Updated');
             
     }
-    public function deleteComponentTest(AcceptanceTester $I)
-    {
+    public function deleteComponentTest(AcceptanceTester $I)  {
         $I->amOnPage('/Intranet/admin');
         $I->click('Componentes', '.list-group-item');
         $I->seeCurrentUrlEquals('/Intranet/vehicles/components/list');
         $I->wantTo('Delete Component');
         $I->amOnPage('/Intranet/vehicles/components/delete?id='.$this->id);
-    
+        $I->dontSeeInDatabase('components', array('id' => intval($this->id), 'deleted_at' => null));    
     }
 }

@@ -35,6 +35,13 @@ class SuppliesService extends BaseService {
         }
         return $mader->id;
     }
+     public function getMaders(){
+        $maders = DB::table('maders')
+                ->select('maders.id', 'maders.name as iter')
+                ->whereNull('maders.deleted_at')
+                ->get();
+        return $maders;
+    }
     public function setSupplyInstance($array){
         if(isset($array['id']) && $array['id']) {            
             $selected_supply = DB::table('supplies')
@@ -47,5 +54,16 @@ class SuppliesService extends BaseService {
             $selected_supply = new Supplies();
         }        
         return $selected_supply;
+    }
+    public function searchSupplies($searchString){
+        $supplies = Works::Where("id", "like", "%".$searchString."%")
+                ->orWhere("ref", "like", "%".$searchString."%") 
+                ->orWhere("maderCode", "like", "%".$searchString."%")
+                ->orWhere("name", "like", "%".$searchString."%")  
+                ->get(); 
+        if(!$supplies){
+            $supplies = $this->getAllRegisters(new Supplies());
+        }
+        return $supplies;
     }
 }

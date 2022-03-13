@@ -31,10 +31,10 @@ class SuppliesCest
         $I->wantTo('Create a new Supply');
         $I->click('#submit', '#addSupply');
         $I->submitForm('#suppliesForm', 
-                array('ref' => $this->reference,
+                array('name' => 'Lorem Ipsum',
+                    'ref' => $this->reference,
                     'mader' => 'Generico',
-                    'maderCode' => 'loremipsum',
-                    'name' => 'Lorem Ipsum',
+                    'maderCode' => 'loremipsum',                    
                     'observations' => 'Lorem ipsum lorem ipsum lorem ipsum sumotas',
                     'pvc' => '10,00€',
                     'pvp' => '16,00€'));   
@@ -49,10 +49,10 @@ class SuppliesCest
         $I->amOnPage('/Intranet/vehicles/supplies/form?id='.$this->id);
         $I->submitForm('#suppliesForm', 
                 array('id' => $this->id,
+                    'name' => 'Lorem Ipsum',
                     'ref' => $this->reference,
                     'mader' => 'Generico',
-                    'maderCode' => 'loremipsum',
-                    'name' => 'Lorem Ipsum',
+                    'maderCode' => 'loremipsum',                    
                     'observations' => 'Lorem ipsum lorem ipsum lorem ipsum sumotas',
                     'pvc' => '10,00€',
                     'pvp' => '16,00€'));  
@@ -66,6 +66,6 @@ class SuppliesCest
         $I->seeCurrentUrlEquals('/Intranet/vehicles/supplies/list');
         $I->wantTo('Delete Supply');
         $I->amOnPage('/Intranet/vehicles/supplies/delete?id='.$this->id);
-    
+        $I->dontSeeInDatabase('supplies', array('id' => intval($this->id), 'deleted_at' => null));    
     }
 }

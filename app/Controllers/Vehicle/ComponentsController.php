@@ -23,7 +23,7 @@ class ComponentsController extends BaseController {
     protected $componentsService;    
     protected $list = "/Intranet/vehicles/components/list";
     protected $tab = "buys";
-    protected $title = "Components";
+    protected $title = "Componentes";
     protected $save = "/Intranet/vehicles/components/save";
     protected $formName = 'componentsForm';  
     protected $search = '/Intranet/vehicles/components/search';    
@@ -46,13 +46,25 @@ class ComponentsController extends BaseController {
     }
     public function getIndexAction() {
         $components = $this->componentsService->getComponents();
-        $maders = $this->componentsService->getMaders();
-       
+        $maders = $this->componentsService->getMaders();       
         return $this->renderHTML('/vehicles/components/componentsList.html.twig', [
             'components' => $components,
-            'maders' => $maders,
-            'search' => $this->search,            
-            'tab' => $this->tab
+            'title' => $this->title,
+            'list' => $this->list,
+            'tab' => $this->tab,
+            'search' => $this->search,
+            'maders' => $maders            
+        ]);
+    }  
+    public function searchComponentAction($request) {
+        $searchData = $request->getParsedBody();      
+        $components = $this->componentsService->searchSupplies($searchData['searchFilter']);
+        return $this->renderHTML('/vehicles/components/componentsList.html.twig', [
+            'title' => $this->title,
+            'list' => $this->list,
+            'tab' => $this->tab,
+            'search' => $this->search,
+            'components' => $components
         ]);
     }    
     public function getComponentsDataAction($request) {       
@@ -76,7 +88,7 @@ class ComponentsController extends BaseController {
 //        var_dump($selected_component);die();
         return $this->renderHTML('/vehicles/components/componentsForm.html.twig', [
             'value' => $selected_component,
-            'iterable' => $maders,
+            'maders' => $maders,
             'title' => $this->title,
             'list' => $this->list,
             'tab' => $this->tab,

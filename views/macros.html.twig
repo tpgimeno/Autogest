@@ -3,20 +3,20 @@
         <a class="link pr-4" href={{ list }}>Lista</a> 
         <a class="link " href="/Intranet/admin?selected_tab={{ back }}">Volver</a>
     </div> 
-{% endmacro %}
+{% endmacro return %}
 {% macro alert(message) %}
     <div class="col">
         <div class="alert alert-dark" role="alert">
             {{ message }}
         </div>
     </div>
-{% endmacro %}
+{% endmacro alert %}
 {% macro inputRow(id, name, title, value, type = 'text') %}
     <div class="form-group col">
         <label for="{{ id }}">{{ title }}</label>
         <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
     </div>
-{% endmacro %}
+{% endmacro inputRow %}
 {% macro input2(id, name, title, value, type = 'text') %}
     <div class="form-group col-md-2">
         <label for="{{ id }}">{{ title }}</label>                        
@@ -52,7 +52,13 @@
         <label for="{{ id }}">{{ title }}</label>
         <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
     </div>
-{% endmacro %}
+{% endmacro input3 %}
+{% macro input3offset3(id, name, title, value, type = 'text') %}
+    <div class="form-group col-md-3 offset-md-3">
+        <label for="{{ id }}">{{ title }}</label>
+        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
+    </div>
+{% endmacro input3offset3 %}
 {% macro input3offset6(id, name, title, value, type = 'text') %}
     <div class="form-group col-md-3 offset-md-6">
         <label for="{{ id }}">{{ title }}</label>
@@ -70,7 +76,7 @@
         <label for="{{ id }}">{{ title }}</label>
         <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}" disabled>
     </div>
-{% endmacro %}
+{% endmacro input3offset6disabled %}
 {% macro input4(id, name, title, value, type = 'text') %}
     <div class="form-group col-md-4">
         <label for="{{ id }}">{{ title }}</label>                        
@@ -107,6 +113,12 @@
         <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
     </div>
 {% endmacro input6offset4 %}
+{% macro input8(id, name, title, value, type = 'text') %}
+    <div class="form-group col-md-8">
+        <label for="{{ id }}">{{ title }}</label>                        
+        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
+    </div>
+{% endmacro input8 %}
 {% macro select(id, name, title, value, iterable, type = 'text') %}
     <div class="form-group col-md-4">                        
         <label for="{{ id }}">{{ title }}</label>
@@ -132,13 +144,13 @@
         <button id="submit" type="submit" class="btn btn-primary">Guardar</button>
         <a href="/Intranet/admin?selected_tab={{ back }}" class="btn btn-primary">Cancelar</a>
     </div>
-{% endmacro %}
+{% endmacro buttonsForm %}
 {% macro buttonsList(back) %}
     <div class="col text-right">
         <button id="submit" type="submit" class="btn btn-primary">Añadir</button>
         <a href="/Intranet/admin?selected_tab={{ back }}" class="btn btn-primary">Cancelar</a>
     </div>
-{% endmacro %}
+{% endmacro buttonsList %}
 {% macro searchList(action) %}
     <div class="col">
         <form id="searchForm" action="{{ action }}" method="post" class="form">
@@ -154,4 +166,4 @@
             </div>
         </form>
     </div>
-{% endmacro %}
+{% endmacro searchList %}

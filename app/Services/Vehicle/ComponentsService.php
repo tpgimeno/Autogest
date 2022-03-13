@@ -2,7 +2,7 @@
 
 namespace App\Services\Vehicle;
 
-use App\Models\Mader;
+use App\Models\Components;
 use App\Services\BaseService;
 use Illuminate\Database\Capsule\Manager as DB;
 /**
@@ -23,7 +23,7 @@ class ComponentsService extends BaseService {
         $maders = DB::table('maders')
                 ->select('maders.id', 'maders.name as iter')
                 ->whereNull('maders.deleted_at')
-                ->get()->toArray();
+                ->get();
         return $maders;
     }
     public function getMaderByName($string){
@@ -49,5 +49,16 @@ class ComponentsService extends BaseService {
                 ->first();
         }
         return $component;        
+    }
+    public function searchComponents($searchString){
+        $components = Components::Where("id", "like", "%".$searchString."%")
+                ->orWhere("ref", "like", "%".$searchString."%") 
+                ->orWhere("serialNumber", "like", "%".$searchString."%")
+                ->orWhere("name", "like", "%".$searchString."%")  
+                ->get(); 
+        if(!$components){
+            $components = $this->getAllRegisters(new Components());
+        }
+        return $components;
     }
 }

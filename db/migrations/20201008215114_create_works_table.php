@@ -9,7 +9,8 @@ final class CreateWorksTable extends AbstractMigration
     {
         $table = $this->table('works');
         $table->addColumn('reference', 'string')
-                ->addColumn('description', 'string')               
+                ->addColumn('description', 'string') 
+                ->addColumn('pvc', 'float')
                 ->addColumn('pvp', 'float')
                 ->addColumn('observations', 'string', ['null' => true])                
                 ->addColumn('created_at', 'datetime')
