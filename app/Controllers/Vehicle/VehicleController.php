@@ -37,10 +37,82 @@ use function GuzzleHttp\json_decode;
  *
  * @author tonyl
  */
-class VehicleController extends BaseController
-{
+class VehicleController extends BaseController {
     protected $vehicleService;   
-    
+    protected $list = '/Intranet/vehicles/list';
+    protected $tab = 'buys';
+    protected $title = 'Vehículos';
+    protected $save = "/Intranet/vehicles/save";
+    protected $formName = "vehiclesForm";
+    protected $script = 'js/vehicles.js';
+    protected $inputs = ['id' => ['id' => 'inputID', 'name' => 'id', 'title' => 'ID'],
+        'registryDate' => ['id' => 'inputRegistryDate', 'name' => 'registryDate', 'title' => 'Fecha Matriculación'],
+        'plate' => ['id' => 'inputPlate', 'name' => 'plate', 'title' => 'Matricula'],
+        'vin' => ['id' => 'inputVin', 'name' => 'vin', 'title' => 'Bastidor'],
+        'selectBrand' => ['id' => 'selectBrand', 'name' => 'brand', 'title' => 'Marca'],
+        'selectModel' => ['id' => 'selectModel', 'name' => 'model', 'title' => 'Modelo'],
+        'description' => ['id' => 'inputDescription', 'name' => 'description', 'title' => 'Descripción'],
+        'selectVehicleType' => ['id' => 'selectVehicleType', 'name' => 'vehicleType', 'title' => 'Tipo de Vehículo'],
+        'selectStore' => ['id' => 'selectStore', 'name' => 'store', 'title' => 'Almacén'],
+        'selectLocation' => ['id' => 'selectLocation', 'name' => 'location', 'title' => 'Ubicación'],
+        'km' => ['id' => 'inputKm', 'name' => 'km', 'title' => 'Kilómetros'],
+        'power' => ['id' => 'inputPower', 'name' => 'power', 'title' => 'Potencia'],
+        'places' => ['id' => 'inputPlaces', 'name' => 'places', 'title' => 'Plazas'],
+        'doors' => ['id' => 'inputDoors', 'name' => 'doors', 'title' => 'Puertas'],
+        'color' => ['id' => 'inputColor', 'name' => 'color', 'title' => 'Color'],
+        'selectProvidor' => ['id' => 'inputProvidor', 'name' => 'providor', 'title' => 'Proveedor'],
+        'arrival' => ['id' => 'inputArrival', 'name' => 'arrival', 'title' => 'Fecha de Llegada'],
+        'dateBuy' => ['id' => 'inputDateBuy', 'name' => 'dateBuy', 'title' => 'Fecha de Compra'],
+        'transference' => ['id' => 'inputTransference', 'name' => 'transference', 'title' => 'Quién realiza el cambio de nombre'],
+        'service' => ['id' => 'inputService', 'name' => 'service', 'title' => 'Servicio al que se destina'],
+        'secondKey' => ['id' => 'inputSecondKey', 'name' => 'secondKey', 'title' => '2ª Llave'],
+        'rebu' => ['id' => 'inputRebu', 'name' => 'rebu', 'title' => 'R.E.B.U.'],
+        'technicCard' => ['id' => 'inputTechnicCard', 'name' => 'technicCard', 'title' => 'Ficha Tecnica'],
+        'permission' => ['id' => 'inputPermission', 'name' => 'permission', 'title' => 'Permiso Circulación'],
+        'cost' => ['id' => 'inputCost', 'name' => 'cost', 'title' => 'Precio Compra'],
+        'tvaBuy' => ['id' => 'inputTvaBuy', 'name' => 'tvaBuy', 'title' => 'Iva Compra'],
+        'totalBuy' => ['id' => 'inputTotalBuy', 'name' => 'totalBuy', 'title' => 'Total Compra'],
+        'seller' => ['id' => 'inputSeller', 'name' => 'seller', 'title' => 'Vendedor'],
+        'customer' => ['id' => 'inputCustomer', 'name' => 'customer', 'title' => 'Cliente'],
+        'appoint' => ['id' => 'inputAppoint', 'name' => 'appoint', 'title' => 'Reserva'],
+        'dateSell' => ['id' => 'inputDateSell', 'name' => 'dateSell', 'title' => 'Fecha de Venta'],        
+        'pvp' => ['id' => 'inputPvp', 'name' => 'pvp', 'title' => 'Precio Venta'],
+        'tvaSell' => ['id' => 'inputTvaSell', 'name' => 'tvaSell', 'title' => 'Iva Venta'],
+        'totalSell' => ['id' => 'inputTotalSell', 'name' => 'totalSell', 'title' => 'Total Venta'],
+        'componentId' => ['id' => 'inputComponentId', 'name' => 'componentId', 'title' => 'ID'],
+        'componentRef' => ['id' => 'inputComponentRef', 'name' => 'componentRef', 'title' => 'Referencia'],
+        'componentName' => ['id' => 'inputComponentName', 'name' => 'componentName', 'title' => 'Nombre'],
+        'componentPvp' => ['id' => 'inputComponentPvp', 'name' => 'componentPvp', 'title' => 'Precio'],
+        'componentCantity' => ['id' => 'inputComponentCantity', 'name' => 'componentCantity', 'title' => 'Cantidad'],
+        'componentTotal' => ['id' => 'inputComponentTotal', 'name' => 'componentTotal', 'title' => 'Total'],
+        'componentsPrice' => ['id' => 'inputComponentsPrice', 'name' => 'componentsPrice', 'title' => 'Importe'],
+        'componentsTva' => ['id' => 'inputComponentsTva', 'name' => 'componentsTva', 'title' => 'IVA'],
+        'componentTotal' => ['id' => 'inputComponentsTotal', 'name' => 'componentsTotal', 'title' => 'Total'],
+        'supplyId' => ['id' => 'inputSupplyId', 'name' => 'supplyId', 'title' => 'ID'],
+        'supplyRef' => ['id' => 'inputSupplyRef', 'name' => 'supplyRef', 'title' => 'Referencia'],
+        'supplyName' => ['id' => 'inputSupplyName', 'name' => 'supplyName', 'title' => 'Nombre'],
+        'supplyPvp' => ['id' => 'inputSupplyPvp', 'name' => 'supplyPvp', 'title' => 'Precio'],
+        'supplyCantity' => ['id' => 'inputSupplyCantity', 'name' => 'supplyCantity', 'title' => 'Cantidad'],
+        'supplyTotal' => ['id' => 'inputSupplyTotal', 'name' => 'supplyTotal', 'title' => 'Total'],
+        'suppliesPrice' => ['id' => 'inputSuppliesPrice', 'name' => 'suppliesPrice', 'title' => 'Importe'],
+        'suppliesTva' => ['id' => 'inputSuppliesTva', 'name' => 'suppliesTva', 'title' => 'IVA'],
+        'suppliesTotal' => ['id' => 'inputSuppliesTotal', 'name' => 'suppliesTotal', 'title' => 'Total'],
+        'workId' => ['id' => 'inputWorkId', 'name' => 'workId', 'title' => 'ID'],
+        'workRef' => ['id' => 'inputWorkRef', 'name' => 'workRef', 'title' => 'Referencia'],
+        'workDescription' => ['id' => 'inputWorkDescription', 'name' => 'workDescription', 'title' => 'Descripcion'],
+        'workPvp' => ['id' => 'inputWorkPvp', 'name' => 'workPvp', 'title' => 'Precio'],
+        'workCantity' => ['id' => 'inputWorkCantity', 'name' => 'workCantity', 'title' => 'Cantidad'],
+        'workTotal' => ['id' => 'inputWorkTotal', 'name' => 'workTotal', 'title' => 'Total'],
+        'worksPrice' => ['id' => 'inputWorksPrice', 'name' => 'worksPrice', 'title' => 'Importe'],
+        'worksTva' => ['id' => 'inputWorksTva', 'name' => 'worksTva', 'title' => 'IVA'],
+        'worksTotal' => ['id' => 'inputWorksTotal', 'name' => 'worksTotal', 'title' => 'Total'],
+        'dataType' => ['id' => 'inputDataType', 'name' => 'dataType', 'title' => 'Tipo'],
+        'variant' => ['id' => 'inputVariant', 'name' => 'variant', 'title' => 'Variante'],
+        'version' => ['id' => 'inputVersion', 'name' => 'version', 'title' => 'Version'],
+        'comercialName' => ['id' => 'inputComercialName', 'name' => 'comercialName', 'title' => 'Nombre Comercial'],
+        
+        'power' => ['id' => 'inputPower', 'name' => 'power', 'title' => 'Potencia'],
+        ];
     public function __construct(VehicleService $vehicleService) {
         parent::__construct();
         $this->vehicleService = $vehicleService;       

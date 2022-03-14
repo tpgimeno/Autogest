@@ -53,6 +53,6 @@ class CustomerTypesCest
         $I->click('Tipos Clientes', '.list-group-item');
         $I->seeCurrentUrlEquals('/Intranet/customers/type/list');
         $I->amOnPage('/Intranet/customers/type/delete?id='.$this->id); 
-        $I->dontSeeInDatabase('customerTypes', array('id' => intval($this->id)));
+        $I->dontSeeInDatabase('customertypes', array('id' => intval($this->id), 'deleted_at' => null));  
     }
 }

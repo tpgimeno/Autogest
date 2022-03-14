@@ -8,18 +8,14 @@
 
 namespace App\Services\Vehicle;
 
-use App\Models\VehicleTypes;
+use App\Services\BaseService;
 
 /**
  * Description of VehicleService
  *
  * @author tonyl
  */
-class VehicleTypeService 
+class VehicleTypeService extends BaseService
 {
-    public function deleteVehicleType($id)
-    {
-        $vehicle = VehicleTypes::find($id)->first();
-        $vehicle->delete();
-    }
+    
 }
