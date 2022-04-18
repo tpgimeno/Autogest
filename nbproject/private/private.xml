@@ -12,14 +12,14 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Intranet/db/migrations/20200621143216_create_vehicles_table.php</file>
+            <file>file:/C:/xampp/htdocs/Intranet/views/js/vehicles.js</file>
+            <file>file:/C:/xampp/htdocs/Intranet/App/Routes/BuyRoutes.php</file>
             <file>file:/C:/xampp/htdocs/Intranet/views/vehicles/vehiclesForm.html.twig</file>
             <file>file:/C:/xampp/htdocs/Intranet/views/vehicles/vehiclesList.html.twig</file>
             <file>file:/C:/xampp/htdocs/Intranet/views/macros.html.twig</file>
             <file>file:/C:/xampp/htdocs/Intranet/App/Services/Vehicle/VehicleService.php</file>
             <file>file:/C:/xampp/htdocs/Intranet/App/Controllers/Vehicle/VehicleController.php</file>
             <file>file:/C:/xampp/htdocs/Intranet/public/index.php</file>
-            <file>file:/C:/xampp/htdocs/Intranet/App/Models/Vehicle.php</file>
         </group>
     </open-files>
 </project-private>

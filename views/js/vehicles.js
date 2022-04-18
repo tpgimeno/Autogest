@@ -45,7 +45,7 @@ window.addEventListener('load', function () {
     var sell_tab = document.getElementById('sell-tab');
     var accesories = document.getElementById('accesories');
     var accesories_tab = document.getElementById('accesories-tab');
-    var selected_tab = "{{ selected_tab }}";
+    var selected_tab = "{{ selectedTab }}";
     switch (selected_tab)
     {
         case 'data':
@@ -174,20 +174,20 @@ window.addEventListener('load', function () {
         total_pvp = numeral(pvp.value() + tva_pvp.value());
         document.getElementById('inputTotalCost').value = total_pvp.format('(0,0.0$)');
     });
-    var json_components_response = '{{vehicle_components|raw}}';
+    var json_components_response = '{{vehicleComponents|raw}}';
     var vehicle = document.getElementById('inputId').value;   
     if (json_components_response.length > 0) {
-        vehicle_components = JSON.parse(json_components_response);
-        console.log(vehicle_components);
+        vehicle_components = JSON.parse(json_components_response);       
         var table_components = document.getElementById("ComponentsTable");
         while(table_components.childElementCount > 0) {
             table_components.removeChild(table_components.firstChild);
         }
+        
         table_components.innerHTML = "<tr><th>ID</th><th>Referencia</th><th>Nombre</th><th>Precio</th><th>Cantidad</th><th>Importe</th><th>Editar</th><th>Eliminar</th></tr>";
 
         for (let i = 0; i < vehicle_components.length; i++) {
-            vehicle_components[i]['total'] = numeral(numeral(vehicle_components[i]['cantity']).value() * numeral(vehicle_components[i]['price']).value()).value();
-            table_components.innerHTML += "<tr><td>" + vehicle_components[i]['componentId'] + "</td><td>" + vehicle_components[i]['ref'] + "</td><td>" + vehicle_components[i]['name'] + "</td><td>" + numeral(vehicle_components[i]['price']).format('(0,0.0$)') + "</td><td>" + numeral(vehicle_components[i]['cantity']).value() + "</td><td>" + numeral(vehicle_components[i]['total']).format('(0,0.0$)') + "</td><td><a href=/Intranet/vehicles/vehicleComponents/edit?componentId=" + numeral(vehicle_components[i]['componentId']).value() + "&vehicleId=" + numeral(vehicle).value() + "&cantity=" + numeral(vehicle_components[i]['cantity']).value() + "&price=" + numeral(vehicle_components[i]['price']).value() + ">Edit</a></td><td><a href=/Intranet/vehicles/vehicleComponents/del?componentId=" + numeral(vehicle_components[i]['componentId']).value() + "&vehicleId=" + numeral(vehicle).value() + "&cantity=" + numeral(vehicle_components[i]['cantity']).value() + "&price=" + numeral(vehicle_components[i]['price']).value() +">Eliminar</a></td>";
+            vehicle_components[i]['total'] = numeral(numeral(vehicle_components[i]['cantity']).value() * numeral(vehicle_components[i]['pvp']).value()).value();
+            table_components.innerHTML += "<tr><td>" + vehicle_components[i]['componentId'] + "</td><td>" + vehicle_components[i]['ref'] + "</td><td>" + vehicle_components[i]['name'] + "</td><td>" + numeral(vehicle_components[i]['pvp']).format('(0,0.0$)') + "</td><td>" + numeral(vehicle_components[i]['cantity']).value() + "</td><td>" + numeral(vehicle_components[i]['total']).format('(0,0.0$)') + "</td><td><a href=/Intranet/vehicles/vehicleComponents/edit?componentId=" + numeral(vehicle_components[i]['componentId']).value() + "&id=" + numeral(vehicle).value() + "&cantity=" + numeral(vehicle_components[i]['cantity']).value() + "&pvp=" + numeral(vehicle_components[i]['pvp']).value() + "&selectedTab=accesories>Edit</a></td><td><a href=/Intranet/vehicles/vehicleComponents/del?componentId=" + numeral(vehicle_components[i]['componentId']).value() + "&id=" + numeral(vehicle).value() + "&cantity=" + numeral(vehicle_components[i]['cantity']).value() + "&pvp=" + numeral(vehicle_components[i]['pvp']).value() +"&selectedTab=accesories>Eliminar</a></td>";
             suma_prices_components += numeral(price_components).value() + numeral(vehicle_components[i]['total']).value();
         }
         if(!price_supplies){
@@ -209,7 +209,7 @@ window.addEventListener('load', function () {
         total = numeral(base.value() + tva.value());
         document.getElementById("inputTotalSell").value = total.format('(0,0.0$)');
     }
-    var json_supplies_response = '{{vehicle_supplies|raw}}';
+    var json_supplies_response = '{{vehicleSupplies|raw}}';
     if (json_supplies_response.length > 0) {
         vehicle_supplies = JSON.parse(json_supplies_response);
         var table_supplies = document.getElementById("SuppliesTable");
@@ -221,8 +221,8 @@ window.addEventListener('load', function () {
 
         for (let i = 0; i < vehicle_supplies.length; i++)
         {
-            vehicle_supplies[i]['total'] = numeral(numeral(vehicle_supplies[i]['cantity']).value() * numeral(vehicle_supplies[i]['price']).value()).value();
-            table_supplies.innerHTML += "<tr><td>" + numeral(vehicle_supplies[i]['supplyId']).value() + "</td><td>" + vehicle_supplies[i]['reference'] + "</td><td>" + vehicle_supplies[i]['name'] + "</td><td>" + numeral(vehicle_supplies[i]['pvp']).format('(0,0.0$)') + "</td><td>" + numeral(vehicle_supplies[i]['cantity']).value() + "</td><td>" + numeral(vehicle_supplies[i]['total']).value() + "</td><td><a href=/Intranet/vehicles/vehicleSupplies/edit?supplyId=" + numeral(vehicle_supplies[i]['supplyId']).value() + "&vehicleId=" + numeral(vehicle_supplies[i]['vehicleId']).value() + ">Edit</a></td><td><a href=/Intranet/vehicles/vehicleSupplies/del?supplyId=" + numeral(vehicle_supplies[i]['supplyId']).value() + "&vehicleId=" + numeral(vehicle_supplies[i]['vehicleId']).value() + ">Eliminar</a></td>";
+            vehicle_supplies[i]['total'] = numeral(numeral(vehicle_supplies[i]['cantity']).value() * numeral(vehicle_supplies[i]['pvp']).value()).value();
+            table_supplies.innerHTML += "<tr><td>" + numeral(vehicle_supplies[i]['supplyId']).value() + "</td><td>" + vehicle_supplies[i]['ref'] + "</td><td>" + vehicle_supplies[i]['name'] + "</td><td>" + numeral(vehicle_supplies[i]['pvp']).format('(0,0.0$)') + "</td><td>" + numeral(vehicle_supplies[i]['cantity']).value() + "</td><td>" + numeral(vehicle_supplies[i]['total']).value() + "</td><td><a href=/Intranet/vehicles/vehicleSupplies/edit?supplyId=" + numeral(vehicle_supplies[i]['supplyId']).value() + "&id=" + numeral(vehicle_supplies[i]['vehicleId']).value() + "&selectedTab=accesories>Edit</a></td><td><a href=/Intranet/vehicles/vehicleSupplies/del?supplyId=" + numeral(vehicle_supplies[i]['supplyId']).value() + "&id=" + numeral(vehicle_supplies[i]['vehicleId']).value() + "&selectedTab=accesories>Eliminar</a></td>";
             suma_prices_supplies += numeral(price_supplies).value() + numeral(vehicle_supplies[i]['total']).value();
         }
         price_supplies = numeral(suma_prices_supplies);
@@ -230,7 +230,7 @@ window.addEventListener('load', function () {
         {
             price_supplies = numeral(0);
         }
-        document.getElementById('inputSuppliesBase').value = price_supplies.format('(0,0.0$)');
+        document.getElementById('inputSuppliesPrice').value = price_supplies.format('(0,0.0$)');
         tva_supplies = numeral(price_supplies.value() * 0.21);
         document.getElementById('inputSuppliesTva').value = tva_supplies.format('(0,0.0$)');
         total_supplies = numeral(price_supplies.value() + tva_supplies.value());
@@ -282,17 +282,6 @@ window.addEventListener('load', function () {
             }
         });
     }
-    var type = "{{ type_selected }}";
-    document.getElementById("selectType").value = type;
-    var brand = "{{ brand_selected }}";
-    document.getElementById("selectBrand").value = brand;
-    var model = "{{ model_selected}}";
-    document.getElementById("selectModel").value = model;
-    var store = "{{ store_selected}}";
-    document.getElementById("selectStore").value = store;
-    var location = "{{ location_selected }}";
-    document.getElementById("selectLocation").value = location;
-
 });
 function addSupply()
 {    
@@ -300,8 +289,7 @@ function addSupply()
     var id_supply = document.getElementById('inputSupplyId');
     price_vehicle = numeral(document.getElementById('inputPvp').value);
     var ref_supply = document.getElementById('inputSupplyReference');
-    var name_supply = document.getElementById('inputSupplyName');    
-    var id_component = document.getElementById('inputComponentId');    
+    var name_supply = document.getElementById('inputSupplyName');       
     var price_supply = numeral(document.getElementById('inputSupplyPrice').value);
     var cantity_supply = numeral(document.getElementById('inputSupplyCantity').value);    
     price_supplies = numeral(document.getElementById('inputSuppliesBase').value);
@@ -310,7 +298,7 @@ function addSupply()
     var importe = 0;
     importe = numeral(price_supply.value() * cantity_supply.value());    
     var vehicle_supply = new Array(); 
-    vehicle_supply = {'vehicleId':numeral(vehicle.value).value(),'supplyId':numeral(id_supply.value).value(),'reference':ref_supply.value,'name':name_supply.value,'price':price_supply.value(),'cantity':cantity_supply.value(),'total':importe.value()};
+    vehicle_supply = {'id':numeral(vehicle.value).value(),'supplyId':numeral(id_supply.value).value(),'reference':ref_supply.value,'name':name_supply.value,'price':price_supply.value(),'cantity':cantity_supply.value(),'total':importe.value()};
     
     var exists = false;
     if(vehicle_supplies.length > 0)
@@ -347,14 +335,14 @@ function addSupply()
     {
         for(let i = 0; i < vehicle_supplies.length ; i++)
         {            
-            table_supplies.innerHTML += "<tr><td>"+numeral(vehicle_supplies[i]['supplyId']).value()+"</td><td>"+vehicle_supplies[i]['reference']+"</td><td>"+vehicle_supplies[i]['name']+"</td><td>"+numeral(vehicle_supplies[i]['price']).format('(0,0.0$)')+"</td><td>"+numeral(vehicle_supplies[i]['cantity']).value()+"</td><td>"+numeral(vehicle_supplies[i]['total']).format('(0,0.0$)')+"</td><td><a href=/Intranet/vehicles/vehicleSupplies/edit?supplyId="+numeral(vehicle_supplies[i]['supplyId']).value()+"&vehicleId="+numeral(vehicle_supplies[i]['vehicleId']).value()+"&cantity=" + numeral(vehicle_supplies[i]['cantity']).value() + "&price=" + numeral(vehicle_supplies[i]['price']).value() +">Edit</a></td><td><a href=/Intranet/vehicles/vehicleSupplies/del?supplyId="+vehicle_supplies[i]['supplyId']+"&vehicleId="+numeral(vehicle.value).value()+">Eliminar</a></td>";
+            table_supplies.innerHTML += "<tr><td>"+numeral(vehicle_supplies[i]['supplyId']).value()+"</td><td>"+vehicle_supplies[i]['reference']+"</td><td>"+vehicle_supplies[i]['name']+"</td><td>"+numeral(vehicle_supplies[i]['price']).format('(0,0.0$)')+"</td><td>"+numeral(vehicle_supplies[i]['cantity']).value()+"</td><td>"+numeral(vehicle_supplies[i]['total']).format('(0,0.0$)')+"</td><td><a href=/Intranet/vehicles/vehicleSupplies/edit?supplyId="+numeral(vehicle_supplies[i]['supplyId']).value()+"&id="+numeral(vehicle_supplies[i]['vehicleId']).value()+"&cantity=" + numeral(vehicle_supplies[i]['cantity']).value() + "&price=" + numeral(vehicle_supplies[i]['price']).value() +">Edit</a></td><td><a href=/Intranet/vehicles/vehicleSupplies/del?supplyId="+vehicle_supplies[i]['supplyId']+"&id="+numeral(vehicle.value).value()+">Eliminar</a></td>";
             suma_prices_supplies += numeral(vehicle_supplies[i]['total']).value();           
         }  
     }       
     price_supplies = numeral(suma_prices_supplies).value();
     tva_supplies = numeral(numeral(price_supplies).value() * 0.21);
     total_supplies = numeral(price_supplies).value() + numeral(tva_supplies).value();
-    document.getElementById('inputSuppliesBase').value = numeral(price_supplies).format('(0,0.0$)');
+    document.getElementById('inputSuppliesPrice').value = numeral(price_supplies).format('(0,0.0$)');
     document.getElementById('inputSuppliesTva').value = numeral(tva_supplies).format('(0,0.0$)');
     document.getElementById('inputSuppliesTotal').value = numeral(total_supplies).format('(0,0.0$)');   
     base = numeral(price_vehicle.value() + numeral(price_supplies).value() + numeral(price_components).value());
@@ -377,12 +365,11 @@ function addSupply()
     request.addEventListener("load", reqListener);
     
 }
-function addComponent()
-{
+function addComponent() {
     var vehicle = document.getElementById('inputId');  
     price_vehicle = document.getElementById('inputPvp').value;
     var id_component = document.getElementById('inputComponentId');
-    var ref_component = document.getElementById('inputComponentReference');
+    var ref_component = document.getElementById('inputComponentRef');
     var name_component = document.getElementById('inputComponentName');
     var price_component = numeral(document.getElementById('inputComponentPrice').value);
     var cantity_component = numeral(document.getElementById('inputComponentCantity').value);
@@ -392,8 +379,8 @@ function addComponent()
     var importe = 0;
     importe = numeral(price_component.value() * cantity_component.value());
     var vehicle_component = new Array();
-    vehicle_component = {'vehicleId': numeral(vehicle.value).value(), 'componentId': numeral(id_component.value).value(), 'ref': ref_component.value, 'name': name_component.value, 'price': price_component.value(), 'cantity': cantity_component.value(), 'total': importe.value()};
-    
+    vehicle_component = {'id': numeral(vehicle.value).value(), 'componentId': numeral(id_component.value).value(), 'ref': ref_component.value, 'name': name_component.value, 'pvp': price_component.value(), 'cantity': cantity_component.value(), 'total': importe.value()};
+   
     if (vehicle_components.length > 0)
     {
         for (let i = 0; i < vehicle_components.length; i++)
@@ -401,7 +388,7 @@ function addComponent()
             if (vehicle_component['componentId'] === vehicle_components[i]['componentId'])
             {
                 vehicle_components[i]['cantity'] = numeral(numeral(vehicle_components[i]['cantity']).value() + numeral(vehicle_component['cantity']).value()).value();
-                vehicle_components[i]['total'] = numeral(numeral(vehicle_components[i]['price']).value() * numeral(vehicle_components[i]['cantity']).value()).value();
+                vehicle_components[i]['total'] = numeral(numeral(vehicle_components[i]['pvp']).value() * numeral(vehicle_components[i]['cantity']).value()).value();
             } else
             {
                 vehicle_components.push(vehicle_component);
@@ -424,7 +411,7 @@ function addComponent()
     {
         for (let i = 0; i < vehicle_components.length; i++)
         {
-            table_components.innerHTML += "<tr><td>" + numeral(vehicle_components[i]['componentId']).value() + "</td><td>" + vehicle_components[i]['ref'] + "</td><td>" + vehicle_components[i]['name'] + "</td><td>" + numeral(vehicle_components[i]['price']).format('(0,0.0$)') + "</td><td>" + numeral(vehicle_components[i]['cantity']).value() + "</td><td>" + numeral(vehicle_components[i]['total']).format('(0,0.0$)') + "</td><td><a href=/Intranet/vehicles/vehicleComponents/edit?componentId=" + numeral(vehicle_components[i]['componentId']).value() + "&vehicleId=" + numeral(vehicle.value).value() + "&cantity=" + numeral(vehicle_components[i]['cantity']).value() + "&price=" + numeral(vehicle_components[i]['price']).value() + ">Edit</a></td><td><a href=/Intranet/vehicles/vehicleComponents/del?componentId=" + numeral(vehicle_components[i]['componentId']).value() + "&vehicleId=" + numeral(vehicle.value).value() + ">Eliminar</a></td>";
+            table_components.innerHTML += "<tr><td>" + numeral(vehicle_components[i]['componentId']).value() + "</td><td>" + vehicle_components[i]['ref'] + "</td><td>" + vehicle_components[i]['name'] + "</td><td>" + numeral(vehicle_components[i]['pvp']).format('(0,0.0$)') + "</td><td>" + numeral(vehicle_components[i]['cantity']).value() + "</td><td>" + numeral(vehicle_components[i]['total']).format('(0,0.0$)') + "</td><td><a href=/Intranet/vehicles/vehicleComponents/edit?componentId=" + numeral(vehicle_components[i]['componentId']).value() + "&id=" + numeral(vehicle.value).value() + "&cantity=" + numeral(vehicle_components[i]['cantity']).value() + "&pvp=" + numeral(vehicle_components[i]['pvp']).value() + "&selectedTab=accesories'>Edit</a></td><td><a href=/Intranet/vehicles/vehicleComponents/del?componentId=" + numeral(vehicle_components[i]['componentId']).value() + "&id=" + numeral(vehicle.value).value() + "&selectedTab=accesories>Eliminar</a></td>";
             suma_prices_components += numeral(price_components).value() + numeral(vehicle_components[i]['total']).value();
         }
     }

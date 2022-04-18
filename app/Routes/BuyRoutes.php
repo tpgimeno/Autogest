@@ -271,9 +271,9 @@ class BuyRoutes
 
        $map->get('vehicleComponentsSelect', '/Intranet/vehicles/vehicleComponents/select', [
            'App\Controllers\Vehicle\VehicleController',
-           'selectComponentAction'
+           'getVehicleDataAction'
        ]);
-       $map->get('vehicleComponentsAdd', '/Intranet/vehicles/vehicleComponents/add', [
+       $map->post('vehicleComponentsAdd', '/Intranet/vehicles/vehicleComponents/add', [
            'App\Controllers\Vehicle\VehicleController',
            'addComponentAction'
        ]);
@@ -295,7 +295,7 @@ class BuyRoutes
 
        $map->get('vehicleSuppliesSelect', '/Intranet/vehicles/vehicleSupplies/select', [
            'App\Controllers\Vehicle\VehicleController',
-           'selectSupplyAction'
+           'getVehicleDataAction'
        ]);
        $map->post('vehicleSuppliesAdd', '/Intranet/vehicles/vehicleSupplies/add', [
            'App\Controllers\Vehicle\VehicleController',

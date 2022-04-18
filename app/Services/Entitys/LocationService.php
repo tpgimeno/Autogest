@@ -49,7 +49,7 @@ class LocationService extends BaseService {
         if(isset($array['id'])){
             $location = DB::table('locations')
                 ->join('stores', 'stores.id', '=', 'locations.storeId')
-                ->select('locations.id', 'locations.name', 'stores.name as iter')
+                ->select('locations.id', 'locations.storeId', 'locations.name', 'stores.name as iter')
                 ->where('locations.id', '=', intval($array['id']))
                 ->get()->first();
         }else{

@@ -1,30 +1,26 @@
 {% extends "menu.html.twig" %}
+{% import 'macros.html.twig' as fields %}
 {% block content %}
 <div class="container">
     {% block javascripts %}
+            {% if script %}
             <script>
-                {{ include('js/vehicles.js') }}
+                {{ include(script)}}
             </script>
+        {% endif %}
     {% endblock %}
     <div class="row">
         <div class="col-md-10">
-            <h2> Vehiculo </h2>
+            <h2> {{ title }} </h2>
         </div>   
-        <div class="col-md-2 d-flex justify-content-end align-items-end">
-            <a class="link pr-4" href="/Intranet/vehicles/list">Lista</a> 
-            <a class="link " href="/Intranet/admin">Volver</a> 
-        </div>        
+        {{ fields.return(list,tab) }}        
     </div>
     <div class="row">
-        <div class="col">
-            <div class="alert alert-dark" id="alert" role="alert">
-                {{ responseMessage }}
-            </div>
-        </div>
+        {{ fields.alert(responeMessage) }}
     </div>    
     <div class="row">
         <div class="col">
-            <form id="VehicleForm" action="/Intranet/vehicles/save" method="post">
+            <form id="{{formName}}" action="{{ save }}" method="post">
                 <div class="form-row">
                     <div class="col">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -50,184 +46,62 @@
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="data" role="tabpanel" aria-labelledby="data-tab">
                                 <div class="form-row mt-3">
-                                    <div class="form-group col-md-3">
-                                        <label for="inputId">Id</label>                        
-                                        <input type="text" name="id" class="form-control" id="inputId" placeholder="" value="{{ vehicle.id }}">
-                                    </div>
-                                    <div class="form-group col-md-3 offset-md-6">
-                                            <label for="inputRegistryDate">Fecha Matriculación</label>                        
-                                            <input type="date" name="registry_date" class="form-control" id="inputRegistryDate" placeholder="" value="{{ vehicle.registryDate }}">
-                                    </div>
+                                    {{ fields.input3(inputs.id.id, inputs.id.name, inputs.id.title, value.id) }}
+                                    {{ fields.input3offset6Date(inputs.registryDate.id, inputs.registryDate.name, inputs.registryDate.title, value.registryDate) }}
                                 </div>
                                 <div class="form-row mt-3">
-                                    <div class="form-group col-md-3">
-                                        <label for="inputPlate">Matricula</label>                        
-                                        <input type="text" name="plate" class="form-control" id="inputPlate" placeholder="" value="{{ vehicle.plate }}">
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label for="inputVin">Bastidor</label>
-                                        <input type="text" name="vin" class="form-control" id="inputVin" placeholder="" value="{{ vehicle.vin }}">
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label for="selectBrand">Marca</label>
-                                        <select name="brand" class="form-control" id="selectBrand">
-                                            {% for brand in brands %}
-                                                <option>{{ brand.name }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label for="inputModel">Modelo</label>
-                                        <select name="model" class="form-control" id="selectModel">
-                                            {% for model in models %}
-                                                <option>{{ model.name }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
+                                    {{ fields.input3(inputs.plate.id, inputs.plate.name, inputs.plate.title, value.plate) }}
+                                    {{ fields.input3(inputs.vin.id, inputs.vin.name, inputs.vin.title, value.vin) }}
+                                    {{ fields.select3(inputs.selectBrand.id, inputs.selectBrand.name, inputs.selectBrand.title, value.brand, brands) }}
+                                    {{ fields.select3(inputs.selectModel.id, inputs.selectModel.name, inputs.selectModel.title, value.model, models) }}
                                 </div>
                                 <div class="form-row">                    
-                                    <div class="form-group col-md-9">
-                                        <label for="inputDescription">Descripción</label>
-                                        <input type="text" name="description" class="form-control" id="inputDescription" placeholder="" value="{{ vehicle.description }}">
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label for="inputType">Tipo Vehículo</label>
-                                        <select name="type" class="form-control" id="selectType">
-                                            {% for type in types %}
-                                                <option>{{ type.name }}</option>
-                                            {% endfor %}                            
-                                        </select>
-                                    </div>
+                                    {{ fields.input9(inputs.description.id, inputs.description.name, inputs.description.title, value.description) }}
+                                    {{ fields.select3(inputs.selectVehicleType.id, inputs.selectVehicleType.name, inputs.selectVehicleType.title, value.type, types) }}
                                 </div>
                                 <div class="form-row">                                    
-                                    <div class="form-group col-md-3">
-                                        <label for="inputStore">Almacen</label>
-                                        <select name="store" class="form-control" id="selectStore" value="{{ store_selected }}">
-                                            {% for store in stores %}
-                                                <option>{{ store.name }}</option>
-                                            {% endfor %}                            
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label for="inputLocation">Ubicacion</label>
-                                        <select name="location" class="form-control" id="selectLocation" value="{{ location_selected }}">
-                                            {% for location in locations %}
-                                                <option>{{ location.name }}</option>
-                                            {% endfor %}                            
-                                        </select>
-                                    </div>
+                                    {{ fields.select3(inputs.selectStore.id, inputs.selectStore.name, inputs.selectStore.title, value.store, stores) }}
+                                    {{ fields.select3(inputs.selectLocation.id, inputs.selectLocation.name, inputs.selectLocation.title, value.location, locations) }}
                                 </div>
                                 <div class="form-row">                                    
-                                    <div class="form-group col-md-2">
-                                        <label for="inputKm">Kilómetros</label>
-                                        <input type="text" name="km" class="form-control" id="inputKm" placeholder="50000" value="{{ vehicle.km }}">
-                                    </div>                    
-                                    <div class="form-group col-md-2">
-                                        <label for="inputPower">Potencia</label>
-                                        <input type="text" name="power" class="form-control text-center" id="inputPower" placeholder="" value="{{ vehicle.power }}">
-                                    </div>                          
-                                    <div class="form-group col-md-2">
-                                        <label for="inputPlaces">Plazas</label>
-                                        <input type="text" name="places" class="form-control text-center" id="inputPlaces" placeholder="" value="{{ vehicle.places }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputDoors">Puertas</label>
-                                        <input type="text" name="doors" class="form-control text-center" id="inputDoors" placeholder="" value="{{ vehicle.doors }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputColor">Color</label>
-                                        <input type="text" name="color" class="form-control" id="inputColor" placeholder="" value="{{ vehicle.color }}">
-                                    </div>                    
+                                    {{ fields.input2(inputs.km.id, inputs.km.name, inputs.km.title, value.km) }}                    
+                                    {{ fields.input2(inputs.power.id, inputs.power.name, inputs.power.title, value.power) }}                          
+                                    {{ fields.input2(inputs.places.id, inputs.places.name, inputs.places.title, value.places) }}
+                                    {{ fields.input2(inputs.doors.id, inputs.doors.name, inputs.doors.title, value.doors) }}
+                                    {{ fields.input2(inputs.color.id, inputs.color.name, inputs.color.title, value.color) }}                    
                                 </div>
                             </div>                                
                             <div class="tab-pane fade" id="buy" role="tabpanel" aria-labelledby="buy-tab">
                                 <div class="form-row mt-3">
-                                    <div class="form-group col-md-6">
-                                        <label for="providor">Proveedor</label>                        
-                                        <input type="text" name="providor" class="form-control" id="inputProvidor" placeholder="" value="{{ vehicle.providor }}">
-                                    </div>
-                                    <div class="form-group offset-2 col-md-2">
-                                        <label for="inputArrival">Fecha Llegada</label>
-                                        <input type="date" name="arrival" class="form-control" id="inputArrival" placeholder="" value="{{ vehicle.arrival }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputDateBuy">Fecha Compra</label>
-                                        <input type="date" name="dateBuy" class="form-control" id="inputDateBuy" placeholder="" value="{{ vehicle.datebuy }}">
-                                    </div>                                    
+                                    {{ fields.select6(inputs.selectProvidor.id, inputs.selectProvidor.name, inputs.selectProvidor.title, value.providor, providors) }}
+                                    {{ fields.inputDate2offset2(inputs.arrival.id, inputs.arrival.name, inputs.arrival.title, value.arrival) }}
+                                    {{ fields.inputDate2(inputs.dateBuy.id, inputs.dateBuy.name, inputs.dateBuy.title, value.buyDate) }}                                   
                                 </div>
                                 <div class="form-row mt-3 d-flex align-items-baseline align-content-center">
-                                    <div class="form-group col-md-5">
-                                        <label for="transference">Quién Realiza el Cambio de Nombre</label>                        
-                                        <input type="text" name="transference" class="form-control" id="inputTransference" placeholder="" value="{{ vehicle.transference }}">
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label for="BuyService">Servicio anterior</label>                        
-                                        <input type="text" name="BuyService" class="form-control" id="inputBuyService" placeholder="" value="{{ vehicle.buyservice }}">
-                                    </div>
-                                    <div class="form-group col-md-1 text-center">
-                                        <label for="inputSecondKey">2ª Llave</label>
-                                        <input type="checkbox" name="secondKey" class="form-control" id="inputSecondKey" placeholder="" value="{{ vehicle.secondkey }}">
-                                    </div> 
-                                    <div class="form-group col-md-1 text-center">
-                                        <label for="inputRebu">R.E.B.U.</label>
-                                        <input type="checkbox" name="rebu" class="form-control" id="inputRebu" placeholder="" value="{{ vehicle.rebu }}">
-                                    </div> 
-                                    <div class="form-group col-md-1 text-center">
-                                        <label for="inputCard">Ficha Tecnica</label>
-                                        <input type="checkbox" name="dateCard" class="form-control" id="inputCard" placeholder="" value="{{ vehicle.card }}">
-                                    </div>
-                                    <div class="form-group col-md-1 text-center">
-                                        <label for="inputLicense">Permiso de Circulación</label>
-                                        <input type="checkbox" name="dateLicense" class="form-control" id="inputLicense" placeholder="" value="{{ vehicle.license }}">
-                                    </div>
+                                    {{ fields.input5(inputs.transference.id, inputs.transference.name, inputs.transference.title, value.transference) }}
+                                    {{ fields.input3(inputs.service.id, inputs.service.name, inputs.service.title, value.service) }}
+                                    {{ fields.checkbox(inputs.secondKey.id, inputs.secondKey.name, inputs.secondKey.title, value.secondKey) }}
+                                    {{ fields.checkbox(inputs.rebu.id, inputs.rebu.name, inputs.rebu.title, value.rebu) }}
+                                    {{ fields.checkbox(inputs.technicCard.id, inputs.technicCard.name, inputs.technicCard.title, value.technicCard) }}
+                                    {{ fields.checkbox(inputs.permission.id, inputs.permission.name, inputs.permission.title, value.permission) }}
                                 </div>                               
                                 <div class="form-row mt-3">
-                                    <div class="form-group col-md-2 offset-md-6">
-                                        <label for="inputCost">Precio Compra</label>
-                                        <input type="text" name="cost" class="form-control" id="inputCost" placeholder="" value="{{ vehicle.cost }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputTvaCost">Iva Compra</label>
-                                        <input type="text" name="tvaBuy" class="form-control" id="inputTvaCost" placeholder="" value="{{ vehicle.tva }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputTotalCost">Total Compra</label>
-                                        <input type="text" name="totalBuy" class="form-control" id="inputTotalCost" placeholder="" value="{{ vehicle.total }}">
-                                    </div>
+                                    {{ fields.input2offset6(inputs.cost.id, inputs.cost.name, inputs.cost.title, value.cost) }}
+                                    {{ fields.input2(inputs.tvaBuy.id, inputs.tvaBuy.name, inputs.tvaBuy.title, null) }}
+                                    {{ fields.input2(inputs.totalBuy.id, inputs.totalBuy.name, inputs.totalBuy.title, null) }}
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="sell" role="tabpanel" aria-labelledby="sell-tab">
                                 <div class="form-row mt-3">
-                                    <div class="form-group col-md-6">
-                                        <label for="seller">Vendedor</label>                        
-                                        <input type="text" name="seller" class="form-control" id="inputSeller" placeholder="" value="{{ vehicle.seller }}">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="customer">Cliente</label>                        
-                                        <input type="text" name="customer" class="form-control" id="inputCustomer" placeholder="" value="{{ vehicle.customer }}">
-                                    </div>
-                                    <div class="form-group offset-8 col-md-2">
-                                        <label for="inputAppoint">Reserva</label>
-                                        <input type="date" name="appoint" class="form-control" id="inputAppoint" placeholder="" value="{{ vehicle.appoint }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputDateSell">Fecha Venta</label>
-                                        <input type="date" name="dateSell" class="form-control" id="inputDateSell" placeholder="" value="{{ vehicle.datesell }}">
-                                    </div>                                    
+                                    {{ fields.input6(inputs.seller.id, inputs.seller.name, inputs.seller.title, value.seller) }}
+                                    {{ fields.input6(inputs.customer.id, inputs.customer.name, inputs.customer.title, value.customer) }}
+                                    {{ fields.inputDate2offset8(inputs.appoint.id, inputs.appoint.name, inputs.appoint.title, value.appoint) }}
+                                    {{ fields.inputDate2(inputs.dateSell.id, inputs.dateSell.name, inputs.dateSell.title, value.dateSell) }}                                   
                                 </div>                                    
                                 <div class="form-row mt-3">
-                                    <div class="form-group col-md-2 offset-md-6">
-                                        <label for="inputPvp">Precio Venta</label>
-                                        <input type="text" name="pvp" class="form-control" id="inputPvp" placeholder="" value="{{ vehicle.pvp }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputTvaSell">Iva Venta</label>
-                                        <input type="text" name="tvaSell" class="form-control" id="inputTvaSell" placeholder="" value="{{ vehicle.pvp * 0.21 }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputPvp">Total Venta</label>
-                                        <input type="text" name="totalSell" class="form-control" id="inputTotalSell" placeholder="" value="{{ vehicle.pvp + (vehicle.pvp * 0.21) }}">
-                                    </div>
+                                    {{ fields.input2offset6(inputs.pvp.id, inputs.pvp.name, inputs.pvp.title, value.pvp) }}
+                                    {{ fields.input2(inputs.tvaSell.id, inputs.tvaSell.name, inputs.tvaSell.title, null) }}
+                                    {{ fields.input2(inputs.totalSell.id, inputs.totalSell.name, inputs.totalSell.title, null) }}
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="accesories" role="tabpanel" aria-labelledby="accesories-tab">
@@ -244,30 +118,12 @@
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    <div class="form-group col-md-1">
-                                        <label for="inputComponentId">ID</label>
-                                        <input type="text" name="componentId" class="form-control" id="inputComponentId" placeholder="" value="{{ selected_component.id }}">
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label for="inputComponentReference">Referencia</label>
-                                        <input type="text" name="component_reference" class="form-control" id="inputComponentReference" placeholder="" value="{{ selected_component.ref }}">
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label for="inputComponentName">Nombre</label>
-                                        <input type="text" name="component_name" class="form-control" id="inputComponentName" placeholder="" value="{{ selected_component.name }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputComponentPrice">Precio</label>
-                                        <input type="text" name="component_price" class="form-control" id="inputComponentPrice" placeholder="" value="{{ edit_price_component }}">
-                                    </div>
-                                    <div class="form-group col-md-1">
-                                        <label for="inputComponentCantity">Cantidad</label>
-                                        <input type="text" name="component_cantity" class="form-control" id="inputComponentCantity" placeholder="" value="{{ edit_cantity_component }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputComponentTotal">Importe</label>
-                                        <input type="text" name="component_total" class="form-control" id="inputComponentTotal" placeholder="" value="">
-                                    </div>
+                                    {{ fields.input1(inputs.componentId.id, inputs.componentId.name, inputs.componentId.title, selectedComponent.id) }}
+                                    {{ fields.input3(inputs.componentRef.id, inputs.componentRef.name, inputs.componentRef.title, selectedComponent.ref) }}
+                                    {{ fields.input3(inputs.componentName.id, inputs.componentName.name, inputs.componentName.title, selectedComponent.name) }}
+                                    {{ fields.input2(inputs.componentPvp.id, inputs.componentPvp.name, inputs.componentPvp.title, editPriceComponent) }}
+                                    {{ fields.input1(inputs.componentCantity.id, inputs.componentCantity.name, inputs.componentCantity.title, editCantityComponent) }}
+                                    {{ fields.input2(inputs.componentTotal.id, inputs.componentTotal.name, inputs.componentTotal.title, null) }}
                                 </div>
                                 <div class="form-row mt-3 ml-3 mb-3">    
                                     <div class="col">                                        
@@ -281,15 +137,15 @@
                                                 <th>Edit</th>
                                                 <th>Delete</th>
                                             </tr>
-                                            {% for component in vehicle_components %}
+                                            {% for component in vehicleComponents %}
                                                 <tr>
                                                     <td>{{ component.ref }}</td>
                                                     <td>{{ component.mader }}</td>
                                                     <td>{{ component.name }}</td> 
                                                     <td>{{ component.cantity }}</td>
                                                     <td>{{ component.pvp }}</td> 
-                                                    <td><a href="/Intranet/vehicles/vehicleComponents/edit?id={{component.id}}">Edit</a></td>
-                                                    <td><a href="/Intranet/vehicles/vehicleComponents/delete?id={{component.id}}">Delete</a></td>
+                                                    <td><a href="/Intranet/vehicles/vehicleComponents/edit?componentId={{component.id}}&selectedTab=accesories&id={{ value.id }}">Edit</a></td>
+                                                    <td><a href="/Intranet/vehicles/vehicleComponents/delete?componentId={{component.id}}&selectedTab=accesories&id={{ value.id }}">Delete</a></td>
                                                 </tr>
                                             {% endfor %}                
                                         </table>                                        
@@ -303,18 +159,9 @@
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    <div class="form-group col-md-2 offset-md-6">
-                                        <label for="inputComponentsPrice">P.V.P.</label>
-                                        <input type="text" name="components_price" step="0.01" class="euros form-control" id="inputComponentsPrice" placeholder="" value="">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputComponentsTva">I.V.A.</label>
-                                        <input type="text" name="components_tva" step="0.01" class="euros form-control" id="inputComponentsTva" placeholder="" value="">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputComponentsTotal">Total</label>
-                                        <input type="text" name="components_total" class="euros form-control" id="inputComponentsTotal" placeholder="" value="">
-                                    </div>
+                                    {{ fields.input2offset6(inputs.componentsPrice.id, inputs.componentsPrice.name, inputs.componentsPrice.title, null) }}
+                                    {{ fields.input2(inputs.componentsTva.id, inputs.componentsTva.name, inputs.componentsTva.title, null) }}
+                                    {{ fields.input2(inputs.componentsTotal.id, inputs.componentsTotal.name, inputs.componentsTotal.title, null) }}
                                 </div>
                                 <div class="form-row mt-3 ml-3 mb-3">
                                     <div class="col">
@@ -329,30 +176,12 @@
                                     </div>
                                 </div>               
                                 <div class="form-row">
-                                    <div class="form-group col-md-1">
-                                        <label for="inputSupplyId">ID</label>
-                                        <input type="text" name="supplyId" class="form-control" id="inputSupplyId" placeholder="" value="{{ selected_supply.id }}">
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label for="inputSupplyReference">Referencia</label>
-                                        <input type="text" name="supply_reference" class="form-control" id="inputSupplyReference" placeholder="" value="{{ selected_supply.ref }}">
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label for="inputSupplyName">Nombre</label>
-                                        <input type="text" name="supply_name" class="form-control" id="inputSupplyName" placeholder="" value="{{ selected_supply.name }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputSupplyPrice">Precio</label>
-                                        <input type="text" name="supply_price" class="form-control" id="inputSupplyPrice" placeholder="" value="{{ edit_price_supply }}">
-                                    </div>
-                                    <div class="form-group col-md-1">
-                                        <label for="inputSupplyCantity">Cantidad</label>
-                                        <input type="text" name="supply_cantity" class="form-control" id="inputSupplyCantity" placeholder="" value="{{ edit_cantity_supply }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputSupplyTotal">Importe</label>
-                                        <input type="text" name="supply_reference" class="form-control" id="inputSupplyTotal" placeholder="" value="">
-                                    </div>
+                                    {{ fields.input1(inputs.supplyId.id, inputs.supplyId.name, inputs.supplyId.title, selectedSupply.id) }}
+                                    {{ fields.input3(inputs.supplyRef.id, inputs.supplyRef.name, inputs.supplyRef.title, selectedSupply.ref) }}
+                                    {{ fields.input3(inputs.supplyName.id, inputs.supplyName.name, inputs.supplyName.title, selectedSupply.name) }}
+                                    {{ fields.input2(inputs.supplyPvp.id, inputs.supplyPvp.name, inputs.supplyPvp.title, selectedSupply.pvp) }}
+                                    {{ fields.input1(inputs.supplyCantity.id, inputs.supplyCantity.name, inputs.supplyCantity.title, selectedSupply.cantity) }}
+                                    {{ fields.input2(inputs.supplyTotal.id, inputs.supplyTotal.name, inputs.supplyTotal.title, null) }}
                                 </div>
                                 <div class="row">
                                     <div class="col">
@@ -371,8 +200,8 @@
                                                     <td>{{ supply.mader }}</td>
                                                     <td>{{ supply.name }}</td>
                                                     <td>{{ supply.stock }}</td>
-                                                    <td><a href="/Intranet/vehicles/vehicleSupplies/edit?id={{supply.id}}">Edit</a></td>
-                                                    <td><a href="/Intranet/vehicles/vehicleSupplies/delete?id={{supply.id}}">Delete</a></td>
+                                                    <td><a href="/Intranet/vehicles/vehicleSupplies/edit?supplyId={{supply.id}}&selectedTab=accesories&id={{ value.id }}">Edit</a></td>
+                                                    <td><a href="/Intranet/vehicles/vehicleSupplies/delete?supplyId={{supply.id}}&selectedTab=accesories&id={{ value.id }}">Delete</a></td>
                                                 </tr>
                                             {% endfor %}                
                                         </table>
@@ -386,18 +215,9 @@
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    <div class="form-group col-md-2 offset-md-6">
-                                        <label for="inputSuppliesPrice">P.V.P.</label>
-                                        <input type="text" name="supplies_price" step="0.01" class="euros form-control" id="inputSuppliesBase" placeholder="" value="">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputSuppliesTva">I.V.A.</label>
-                                        <input type="text" name="supplies_tva" step="0.01" class="euros form-control" id="inputSuppliesTva" placeholder="" value="">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputSuppliesTotal">Total</label>
-                                        <input type="text" name="supplies_total" class="euros form-control" id="inputSuppliesTotal" placeholder="" value="">
-                                    </div>
+                                    {{ fields.input2offset6(inputs.suppliesPrice.id, inputs.suppliesPrice.name, inputs.suppliesPrice.title, null) }}
+                                    {{ fields.input2(inputs.suppliesTva.id, inputs.suppliesTva.name, inputs.suppliesTva.title, null) }}
+                                    {{ fields.input2(inputs.suppliesTotal.id, inputs.suppliesTotal.name, inputs.suppliesTotal.title, null) }}
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="equipment" role="tabpanel" aria-labelledby="equipment-tab">
@@ -421,102 +241,36 @@
                             </div>
                             <div class="tab-pane fade" id="tecnicos" role="tabpanel" aria-labelledby="technics-tab">
                                 <div class="form-row mt-3">
-                                    <div class="form-group col-md-4">
-                                        <label for="dataType">Tipo</label>
-                                        <input type="text" name="dataType" class="form-control" id="dataType" placeholder="" value="{{ vehicle.dataType }}">
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="variant">Variante</label>
-                                        <input type="text" name="variant" class="form-control" id="variant" placeholder="" value="{{ vehicle.variant }}">
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label for="version">Versión</label>
-                                        <input type="text" name="version" class="form-control" id="version" placeholder="" value="{{ vehicle.version }}">
-                                    </div>
+                                    {{ fields.input4(inputs.dataType.id, inputs.dataType.name, inputs.dataType.title, value.dataType) }}
+                                    {{ fields.input4(inputs.variant.id, inputs.variant.name, inputs.variant.title, value.variant) }}
+                                    {{ fields.input4(inputs.version.id, inputs.version.name, inputs.version.title, value.version) }}
                                 </div>
                                 <div class="form-row mt-3">
-                                    <div class="form-group col">
-                                        <label for="comercialName">Denominación Comercial</label>
-                                        <input type="text" name="version" class="form-control" id="version" placeholder="" value="{{ vehicle.version }}">
-                                    </div>
+                                    {{ fields.inputRow(inputs.comercialName.id, inputs.comercialName.name, inputs.comercialName.title, value.comercialName) }}
                                 </div>
                                 <div class="form-row mt-3">
-                                    <div class="form-group col-md-2">
-                                        <label for="mma">M.M.A.</label>
-                                        <input type="text" name="mma" class="form-control" id="mma" placeholder="" value="{{ vehicle.mma }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="mmaAxe1">M.M.A. Eje1</label>
-                                        <input type="text" name="mmaAxe1" class="form-control" id="mmaAxe1" placeholder="" value="{{ vehicle.mmaAxe1 }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="mmaAxe2">M.M.A. Eje2</label>
-                                        <input type="text" name="mmaAxe2" class="form-control" id="mmaAxe2" placeholder="" value="{{ vehicle.mmaAxe2 }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="mmac">M.M.A.C.</label>
-                                        <input type="text" name="mmac" class="form-control" id="mmac" placeholder="" value="{{ vehicle.mmac }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="mmr">M.M.R.(Sin Freno)</label>
-                                        <input type="text" name="mmr" class="form-control" id="mmr" placeholder="" value="{{ vehicle.mmr }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="mmrf">M.M.R.(Con Freno)</label>
-                                        <input type="text" name="mmrf" class="form-control" id="mmrf" placeholder="" value="{{ vehicle.mmrf }}">
-                                    </div>
+                                    {{ fields.input2(inputs.mma.id, inputs.mma.name, inputs.mma.title, value.mma) }}
+                                    {{ fields.input2(inputs.mmaAxe1.id, inputs.mmaAxe1.name, inputs.mmaAxe1.title, value.mmaAxe1) }}
+                                    {{ fields.input2(inputs.mmaAxe2.id, inputs.mmaAxe2.name, inputs.mmaAxe2.title, value.mmaAxe2) }}
+                                    {{ fields.input2(inputs.mmac.id, inputs.mmac.name, inputs.mmac.title, value.mmac) }}
+                                    {{ fields.input2(inputs.mmar.id, inputs.mmar.name, inputs.mmar.title, value.mmar) }}
+                                    {{ fields.input2(inputs.mmarf.id, inputs.mmarf.name, inputs.mmarf.title, value.mmarf) }}
                                 </div>
                                 <div class="form-row mt-3">
-                                    <div class="form-group col-md-2">
-                                        <label for="mom">M.O.M.</label>
-                                        <input type="text" name="mom" class="form-control" id="mom" placeholder="" value="{{ vehicle.mom }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="momAxe1">M.O.M. Eje1</label>
-                                        <input type="text" name="momAxe1" class="form-control" id="momAxe1" placeholder="" value="{{ vehicle.momAxe1 }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="momAxe2">M.O.M. Eje2</label>
-                                        <input type="text" name="momAxe2" class="form-control" id="momAxe2" placeholder="" value="{{ vehicle.momAxe2 }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="large">Largo</label>
-                                        <input type="text" name="large" class="form-control" id="large" placeholder="" value="{{ vehicle.large }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="width">Anchura</label>
-                                        <input type="text" name="width" class="form-control" id="width" placeholder="" value="{{ vehicle.width }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="height">Altura</label>
-                                        <input type="text" name="height" class="form-control" id="height" placeholder="" value="{{ vehicle.height }}">
-                                    </div>
+                                    {{ fields.input2(inputs.mom.id, inputs.mom.name, inputs.mom.title, value.mom) }}
+                                    {{ fields.input2(inputs.momAxe1.id, inputs.momAxe1.name, inputs.momAxe1.title, value.momAxe1) }}
+                                    {{ fields.input2(inputs.momAxe2.id, inputs.momAxe2.name, inputs.momAxe2.title, value.momAxe2) }}
+                                    {{ fields.input2(inputs.large.id, inputs.large.name, inputs.large.title, value.large) }}
+                                    {{ fields.input2(inputs.width.id, inputs.width.name, inputs.width.title, value.width) }}
+                                    {{ fields.input2(inputs.height.id, inputs.height.name, inputs.height.title, value.height) }}
                                 </div>
                                 <div class="form-row">
-                                    <div class="form-group col-md-2">
-                                        <label for="volFront">Voladizo Delantero</label>
-                                        <input type="text" name="volFront" class="form-control" id="volFront" placeholder="" value="{{ vehicle.volFront }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="volRear">Voladizo Trasero</label>
-                                        <input type="text" name="volRear" class="form-control" id="volRear" placeholder="" value="{{ vehicle.volRear }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="axeDistance">Distancia Ejes</label>
-                                        <input type="text" name="axeDistance" class="form-control" id="axeDistance" placeholder="" value="{{ vehicle.axeDistance }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="chargeLength">Logitud Carga</label>
-                                        <input type="text" name="chargeLength" class="form-control" id="chargeLength" placeholder="" value="{{ vehicle.chargeLength }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="deposit">Deposito</label>
-                                        <input type="text" name="deposit" class="form-control" id="deposit" placeholder="" value="{{ vehicle.deposit }}">
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="initCharge">Inicio Carga</label>
-                                        <input type="text" name="initCharge" class="form-control" id="initCharge" placeholder="" value="{{ vehicle.initCharge }}">
-                                    </div>
+                                    {{ fields.input2(inputs.frontOverhang.id, inputs.frontOverhang.name, inputs.frontOverhang.title, value.frontOverhang) }}
+                                    {{ fields.input2(inputs.rearOverhang.id, inputs.rearOverhang.name, inputs.rearOverhang.title, value.rearOverhang) }}
+                                    {{ fields.input2(inputs.axeDistance.id, inputs.axeDistance.name, inputs.axeDistance.title, value.axeDistance) }}
+                                    {{ fields.input2(inputs.chargeLength.id, inputs.chargeLength.name, inputs.chargeLength.title, value.chargeLength) }}
+                                    {{ fields.input2(inputs.deposit.id, inputs.deposit.name, inputs.deposit.title, value.deposit) }}
+                                    {{ fields.input2(inputs.initCharge.id, inputs.initCharge.name, inputs.initCharge.title, value.initCharge) }}
                                 </div>                                        
                             </div>
                         </div>
@@ -577,7 +331,7 @@
                                     <td>{{ component.name }}</td>
                                     <td>{{ component.stock }}</td>
                                     <td>{{ component.pvp }}</td>                                        
-                                    <td><a href="/Intranet/vehicles/vehicleComponents/select?componentId={{component.id}}&vehicleId={{vehicle.id}}">Select</a></td>                                        
+                                    <td><a href="/Intranet/vehicles/vehicleComponents/select?componentId={{component.id}}&id={{value.id}}&selectedTab=accesories">Select</a></td>                                        
                                 </tr>  
                             {% endfor %}                
                         </table>
@@ -636,7 +390,7 @@
                                     <td>{{ supply.name }}</td>
                                     <td>{{ supply.stock }}</td>
                                     <td>{{ supply.pvp }}</td>
-                                    <td><a href="/Intranet/vehicles/vehicleSupplies/select?supplyId={{ supply.id }}&vehicleId={{ vehicle.id }}">Select</a></td>                                        
+                                    <td><a href="/Intranet/vehicles/vehicleSupplies/select?supplyId={{supply.id}}&id={{value.id}}&selectedTab=accesories">Select</a></td>                                        
                                 </tr>  
                             {% endfor %}                
                         </table>

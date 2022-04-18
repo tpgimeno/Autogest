@@ -78,6 +78,7 @@ class LocationController extends BaseController {
         }        
         $locationSelected = $this->locationService->setLocationData($request->getQueryParams());   
         $stores = $this->locationService->getStoresNames();
+        
         return $this->renderHTML('/Entitys/stores/locationForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
