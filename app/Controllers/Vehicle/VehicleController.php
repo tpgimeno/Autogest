@@ -12,15 +12,14 @@ use App\Controllers\BaseController;
 use App\Models\Accesories;
 use App\Models\Brand;
 use App\Models\Components;
-use App\Models\Location;
 use App\Models\ModelVh;
 use App\Models\Store;
 use App\Models\Supplies;
 use App\Models\Vehicle;
-use App\Models\VehicleSupplies;
 use App\Models\VehicleTypes;
 use App\Models\Works;
 use App\Reports\Vehicles\VehiclesReport;
+use App\Services\Vehicle\ImportVehiclesService;
 use App\Services\Vehicle\VehicleService;
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Database\QueryException;
@@ -38,6 +37,7 @@ use function GuzzleHttp\json_decode;
  */
 class VehicleController extends BaseController {
     protected $vehicleService;   
+    protected $importVehicleService;
     protected $list = '/Intranet/vehicles/list';
     protected $tab = 'buys';
     protected $title = 'Vehículos';
@@ -122,15 +122,16 @@ class VehicleController extends BaseController {
         'large' => ['id' => 'inputLarge', 'name' => 'large', 'title' => 'Largo'],
         'width' => ['id' => 'inputWidth', 'name' => 'width', 'title' => 'Ancho'],
         'height' => ['id' => 'inputHeight', 'name' => 'height', 'title' => 'Alto'],
-        'frontOverhang' => ['id' => 'inputFrontOverhang', 'name' => 'frontOverHang', 'title' => 'Voladizo delantero'],
+        'frontOverhang' => ['id' => 'inputFrontOverhang', 'name' => 'frontOverhang', 'title' => 'Voladizo delantero'],
         'rearOverhang' => ['id' => 'inputRearOverhang', 'name' => 'rearOverhang', 'title' => 'Voladizo trasero'],
         'axeDistance' => ['id' => 'inputAxeDistance', 'name' => 'axeDistance', 'title' => 'Distancia entre ejes'],        
         'chargeLength' => ['id' => 'inputChargeLength', 'name' => 'chargeLength', 'title' => 'Longitud de Carga'],
         'deposit' => ['id' => 'inputDeposit', 'name' => 'deposit', 'title' => 'Deposito'],
         'initCharge' => ['id' => 'inputInitCharge', 'name' => 'initCharge', 'title' => 'Inicio Carga']];
-    public function __construct(VehicleService $vehicleService) {
+    public function __construct(VehicleService $vehicleService, ImportVehiclesService $importVehiclesService) {
         parent::__construct();
-        $this->vehicleService = $vehicleService;       
+        $this->vehicleService = $vehicleService;
+        $this->importVehicleService = $importVehiclesService;
     }    
     public function getIndexAction() {
         $vehicles = $this->vehicleService->getVehicles();
@@ -157,20 +158,22 @@ class VehicleController extends BaseController {
         ]);
     }    
     public function getVehicleDataAction($request) {                
-        $responseMessage = null;        
+        $responseMessage = null; 
+        $params = null;
         if($request->getMethod() == 'POST') {
             $postData = $request->getParsedBody();            
             $vehicleValidator = v::key('plate', v::stringType()->notEmpty());                       
             try{
-                $vehicleValidator->assert($postData); // true
-                $postData['brand'] = $this->vehicleService->getBrandByName($postData);
-                $postData['model'] = $this->vehicleService->getModelByName($postData);
-                $postData['type'] = $this->vehicleService->getVehicleTypeByName($postData);
-                $responseMessage = $this->vehicleService->saveRegister(new Vehicle(), $postData);
+                $vehicleValidator->assert($postData); // true               
+                $responseMessage = $this->vehicleService->saveVehicle($postData);                 
+                $params = $postData;
             }catch(Exception $e) {                
                 $responseMessage = $e->getMessage();
             }           
         } 
+        if(!$params){
+            $params = $request->getQueryParams();
+        }       
         $brands = $this->vehicleService->getBrands();
         $models = $this->vehicleService->getModels();
         $stores = $this->vehicleService->getStores();
@@ -181,21 +184,20 @@ class VehicleController extends BaseController {
         $accesories = $this->vehicleService->getAllRegisters(new Accesories());
         $types = $this->vehicleService->getTypes();
         $providors = $this->vehicleService->getProvidors();
-        $selectedTab = $this->vehicleService->getSelectedTab($request->getQueryParams());
-        $vehicleSelected = $this->vehicleService->setVehicle($request->getQueryParams('id')); 
+        $selectedTab = $this->vehicleService->getSelectedTab($params);
+        $vehicleSelected = $this->vehicleService->setVehicle($params); 
         $selectedAccesories = $this->vehicleService->getVehicleAccesories($vehicleSelected);
         $vehicleComponents = $this->vehicleService->getVehicleComponents($vehicleSelected);
         $vehicleSupplies = $this->vehicleService->getVehicleSupplies($vehicleSelected);
-        $selectedComponent = $this->vehicleService->getSelectedComponent($request->getQueryParams());
-        $selectedSupply = $this->vehicleService->getSelectedSupply($request->getQueryParams());
-        $editPriceComponent = $this->vehicleService->getComponentPrice($request->getQueryParams(), $selectedComponent);
-        $editCantityComponent = $this->vehicleService->getComponentCantity($request->getQueryParams());
-        $editPriceSupply = $this->vehicleService->getSupplyPrice($request->getQueryParams());
-        $editCantitySupply = $this->vehicleService->getSupplyCantity($request->getQueryParams());
-        if(isset($request->getQueryParams()['responseMessage'])){
-            $responseMessage = $request->getQueryParams()['responseMessage'];
+        $selectedComponent = $this->vehicleService->getSelectedComponent($params);
+        $selectedSupply = $this->vehicleService->getSelectedSupply($params);
+        $editPriceComponent = $this->vehicleService->getComponentPrice($params, $selectedComponent);
+        $editCantityComponent = $this->vehicleService->getComponentCantity($params);
+        $editPriceSupply = $this->vehicleService->getSupplyPrice($params, $selectedSupply);
+        $editCantitySupply = $this->vehicleService->getSupplyCantity($params);
+        if(isset($params['responseMessage'])){
+            $responseMessage = $params['responseMessage'];
         }       
-//        var_dump($brands);die();
         return $this->renderHTML('/vehicles/vehiclesForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
@@ -267,13 +269,6 @@ class VehicleController extends BaseController {
         $this->vehicleService->deleteVehicleComponent($request->getQueryParams());             
         return $this->getVehicleDataAction($request);       
     }    
-    public function getSelectedComponent($params){
-        $selected_component = null;
-        if(isset($params['componentId'])&& $params['componentId']){
-            $selected_component = Components::find($params['componentId'])->first();                       
-        }
-        return $selected_component;
-    }
     public function searchSupplyAction($request){
         $searchString = null;
         $postData = $request->getParsedBody();
@@ -290,48 +285,13 @@ class VehicleController extends BaseController {
         $response = new JsonResponse($responseMessage);
         return $response;        
     }    
-    public function delSupplyAction($request){
-        $responseMessage = 'Recambio eliminado';
-        $selected_tab = 'accesories';
-        $params = $request->getQueryParams();        
-        $supply = VehicleSupplies::where('supplyId', '=', $params['supplyId'])
-                ->where('vehicleId', '=', $params['vehicleId'])
-                ->first();
-        
-        if($supply)
-        {
-            $supply->delete();
-        }
-        if(isset($params['vehicleId'])&& $params['vehicleId']){
-            $vehicleSelected = Vehicle::find($params['vehicleId'])->first();
-        }
-        return $this->renderAgain($params, $vehicleSelected, $responseMessage, $selected_tab);        
+    public function delSupplyAction($request){               
+        $this->vehicleService->deleteVehicleSupply($request->getQueryParams());
+        return $this->getVehicleDataAction($request);        
     }
     public function editSupplyAction($request) {
-        $responseMessage = 'Editando Supply';
-        $selected_tab = 'accesories';
-        $params = $request->getQueryParams();        
-        $supply = DB::table('vehicleSupplies')                
-                ->join('supplies', 'vehicleSupplies.supplyId', '=', 'supplies.id')
-                ->join('maders', 'supplies.mader', '=', 'maders.id')
-                ->select('vehicleSupplies.id', 'vehicleSupplies.vehicleId', 'vehicleSupplies.supplyId', 'supplies.ref as reference', 'maders.name as mader', 'supplies.name as name', 'vehicleSupplies.cantity as cantity', 'vehicleSupplies.price as price')
-                ->where('vehicleSupplies.vehicleId', '=', $params['vehicleId'])
-                ->where('vehicleSupplies.supplyId', '=', $params['supplyId'])
-                ->first();        
-        if($supply)
-        {
-            $array = (['supply_price' => $supply->price ,'supply_cantity' => $supply->cantity]);
-            $params = array_merge($params, $array);
-            $editSupply = VehicleSupplies::find($supply->id)->first();            
-            if($editSupply)
-            {
-                $editSupply->delete();
-            } 
-        }        
-        if(isset($params['vehicleId'])&& $params['vehicleId']){
-            $vehicleSelected = Vehicle::find($params['vehicleId'])->first();           
-        }        
-        return $this->renderAgain($params, $vehicleSelected, $responseMessage, $selected_tab);        
+        $this->vehicleService->deleteVehicleSupply($request->getQueryParams());
+        return $this->getVehicleDataAction($request);        
     }
     public function getSelectedSupply($params){
         $selected_supply = null;
@@ -340,8 +300,7 @@ class VehicleController extends BaseController {
         }
         return $selected_supply;
     }
-    public function importVehiclesExcel()
-    {
+    public function importVehiclesExcel() {
         setlocale(LC_ALL, 'es_ES');
         $responseMessage = null;
         $reader = new Xls();
@@ -498,112 +457,10 @@ class VehicleController extends BaseController {
         }
         return $responseMessage;
     }
-    public function deleteAction(ServerRequest $request)
-    {         
+    public function deleteAction(ServerRequest $request) {         
         $this->vehicleService->deleteVehicle($request->getQueryParams('id'));               
-        return new RedirectResponse('/Intranet/vehicles/list');
-    }
-    public function renderAgain($params, $vehicleSelected, $responseMessage, $selected_tab){
-        $brandSelected = null;
-        $modelSelected = null;
-        $storeSelected = null;
-        $locationSelected = null;
-        $selectedAccesories = null;
-        $typeSelected = null;
-        $vehicleComponents = null;
-        $vehicleSupplies = null;  
-        $editPriceComponent = null;
-        $editCantityComponent = null;
-        $editPriceSupply = null;
-        $editCantitySupply = null;
-        if($vehicleSelected)
-        {
-            $brandSelected = $this->setBrand($vehicleSelected);
-            $modelSelected = $this->setModel($vehicleSelected);
-            $storeSelected = $this->setStore($vehicleSelected);
-            $locationSelected = $this->setLocation($vehicleSelected);
-            $selectedAccesories = $this->setAccesories($vehicleSelected);
-            $typeSelected = $this->setVehicleType($vehicleSelected);
-            $vehicleComponents = $this->setVehicleComponents($vehicleSelected);
-            $vehicleSupplies = $this->setVehicleSupplies($vehicleSelected);
-        }
-        $selected_component = $this->getSelectedComponent($params);   
-        if(isset($params['componentId'])){
-            if(isset($params['cantity'])&& $params['cantity']){                
-            $editCantityComponent = $params['cantity'];
-            }
-            if(isset($params['price'])&& $params['price']){
-                $editPriceComponent = $params['price'];
-            }
-            if(!$editPriceComponent && $selected_component){
-                $editPriceComponent = $selected_component->pvp;
-            }
-        }        
-        $selected_supply = $this->getSelectedSupply($params);
-        if(isset($params['supplyId'])){
-            if(isset($params['cantity'])&& $params['cantity']){          
-            $editCantitySupply = $params['cantity'];
-            }
-            if(isset($params['price']) && $params['price']){
-                $editPriceSupply = $params['price'];
-            }
-            if(!$editPriceSupply && $selected_supply){
-                $editPriceSupply = $selected_supply->pvp;
-            } 
-        }             
-        $accesories = Accesories::All();
-        $brands = Brand::All();
-        $models = ModelVh::All();
-        $types = VehicleTypes::All();
-        $stores = Store::All();
-        $components = Components::All();
-        $supplies = Supplies::All();
-        $locations = Location::All();
-        return $this->renderHTML('/vehicles/vehiclesForm.html.twig', [
-            'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
-            'responseMessage' => $responseMessage,
-            'brands' => $brands,
-            'models' => $models,
-            'stores' => $stores,
-            'components' => $components,
-            'supplies' => $supplies,
-            'locations' => $locations,
-            'selected_tab' => $selected_tab,
-            'store_selected' => $storeSelected,
-            'location_selected' => $locationSelected,
-            'types' => $types,
-            'type_selected' => $typeSelected,
-            'vehicle' => $vehicleSelected,
-            'brand_selected' => $brandSelected,
-            'model_selected' => $modelSelected,
-            'accesories' => $accesories,
-            'selected_accesories' => $selectedAccesories,
-            'vehicle_components' => $vehicleComponents,
-            'vehicle_supplies' => $vehicleSupplies,
-            'selected_component' => $selected_component,
-            'edit_price_component' => $editPriceComponent,
-            'edit_cantity_component' => $editCantityComponent,
-            'edit_price_supply' => $editPriceSupply,
-            'edit_cantity_supply' => $editCantitySupply,
-            'selected_supply' => $selected_supply
-        ]);
-    }
-    public function tofloat($num) 
-    {
-        $dotPos = strrpos($num, '.');
-        $commaPos = strrpos($num, ',');
-        $sep = (($dotPos > $commaPos) && $dotPos) ? $dotPos :
-            ((($commaPos > $dotPos) && $commaPos) ? $commaPos : false);
-
-        if (!$sep) {
-            return floatval(preg_replace("/[^0-9]/", "", $num));
-        }
-
-        return floatval(
-            preg_replace("/[^0-9]/", "", substr($num, 0, $sep)) . '.' .
-            preg_replace("/[^0-9]/", "", substr($num, $sep+1, strlen($num)))
-        );
-    } 
+        return new RedirectResponse($this->list);
+    }    
     public function getVehiclesReportAction(){
         $vehicles = DB::table('vehicles')  
                 ->join('brands', 'vehicles.brand', '=', 'brands.id')
