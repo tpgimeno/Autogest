@@ -174,6 +174,10 @@ window.addEventListener('load', function () {
         total_pvp = numeral(pvp.value() + tva_pvp.value());
         document.getElementById('inputTotalCost').value = total_pvp.format('(0,0.0$)');
     });
+//    var brand = document.getElementById('selectBrand');
+//    
+//    brand.addEventListener("onchange", loadModelsByBrand());
+//    console.log(brand);
     var json_components_response = '{{vehicleComponents|raw}}';
     var vehicle = document.getElementById('inputId').value;   
     if (json_components_response.length > 0) {
@@ -253,8 +257,7 @@ window.addEventListener('load', function () {
         {
             var vehicle = document.getElementById('inputId');
             var sender = {'accesory': this.value, 'accesory_name': this.name, 'vehicleId': numeral(vehicle.value).value()};
-            if (this.checked)
-            {
+            if (this.checked) {
                 var request = new XMLHttpRequest();
                 request.open('POST', '/Intranet/vehicles/accesories/add', true);
                 request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -266,8 +269,7 @@ window.addEventListener('load', function () {
                     alert.innerHTML = response;
                 }
                 request.addEventListener("load", reqListener);
-            } else
-            {
+            } else {
                 var request = new XMLHttpRequest();
                 request.open('POST', '/Intranet/vehicles/accesories/del', true);
                 request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -283,6 +285,44 @@ window.addEventListener('load', function () {
         });
     }
 });
+function loadModelsByBrand(){
+    var brand = document.getElementById('selectBrand');    
+    var request = new XMLHttpRequest();
+    request.open('POST', '/Intranet/vehicles/models/reload', true);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    request.send("brand=" + brand.value);
+    function reqListener(){
+        var model = document.getElementById('selectModel');
+        var response = request.responseText;        
+        while(model.childElementCount > 0){
+            model.removeChild(model.firstElementChild);
+        }        
+        var models = JSON.parse(response);        
+        for(let i=0; i < models.length; i++){
+            model.innerHTML += "<option>"+models[i].iter+"</option>";
+        }       
+    }
+    request.addEventListener("readystatechange", reqListener);
+}
+function loadLocationsByStore(){
+    var store = document.getElementById('selectStore');
+    var request = new XMLHttpRequest();
+    request.open('POST', '/Intranet/vehicles/locations/reload', true);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    request.send("store=" + store.value);
+    function reqListener(){
+        var location = document.getElementById('selectLocation');
+        var response = request.responseText;
+        while(location.childElementCount > 0){
+            location.removeChild(location.firstChild);
+        }       
+        var locations = JSON.parse(response);
+        for(let i = 0; i < locations.length; i++){
+            location.innerHTML += "<option>"+locations[i].iter+"</option>";
+        }
+    }
+    request.addEventListener("readystatechange", reqListener);
+}
 function addSupply()
 {    
     var vehicle = document.getElementById('inputId');
@@ -380,7 +420,7 @@ function addComponent() {
     importe = numeral(price_component.value() * cantity_component.value());
     var vehicle_component = new Array();
     vehicle_component = {'id': numeral(vehicle.value).value(), 'componentId': numeral(id_component.value).value(), 'ref': ref_component.value, 'name': name_component.value, 'pvp': price_component.value(), 'cantity': cantity_component.value(), 'total': importe.value()};
-   
+    console.log(vehicle_component);
     if (vehicle_components.length > 0)
     {
         for (let i = 0; i < vehicle_components.length; i++)
@@ -439,5 +479,5 @@ function addComponent() {
         var alert = document.getElementById('alert');
         alert.innerHTML = response;
     }
-    request.addEventListener("load", reqListener);
+    request.addEventListener("readystatechange", reqListener);
 }

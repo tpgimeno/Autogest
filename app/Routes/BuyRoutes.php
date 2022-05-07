@@ -51,6 +51,14 @@ class BuyRoutes
            'App\Controllers\Vehicle\VehicleController',
            'deleteAction'   
        ]);
+       $map->post('reloadModels', '/Intranet/vehicles/models/reload', [
+           'App\Controllers\Vehicle\VehicleController',
+           'reloadModelsAction'
+       ]);
+       $map->post('reloadLocations', '/Intranet/vehicles/locations/reload', [
+           'App\Controllers\Vehicle\VehicleController',
+           'reloadLocationsAction'
+       ]);
 
        //ACCESORIES
 
@@ -128,6 +136,7 @@ class BuyRoutes
            'App\Controllers\Vehicle\ModelController',
            'deleteAction'   
        ]);
+       
 
        //COMPONENTS
 

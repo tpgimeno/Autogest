@@ -9,8 +9,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CreateUserCommand extends Command
-{
+class CreateUserCommand extends Command {
     protected static $defaultName = 'app:create-user';
 
     protected function configure()

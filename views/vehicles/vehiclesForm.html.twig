@@ -52,15 +52,16 @@
                                 <div class="form-row mt-3">
                                     {{ fields.input3(inputs.plate.id, inputs.plate.name, inputs.plate.title, value.plate) }}
                                     {{ fields.input3(inputs.vin.id, inputs.vin.name, inputs.vin.title, value.vin) }}
-                                    {{ fields.select3(inputs.selectBrand.id, inputs.selectBrand.name, inputs.selectBrand.title, value.brand, brands) }}
-                                    {{ fields.select3(inputs.selectModel.id, inputs.selectModel.name, inputs.selectModel.title, value.model, models) }}
+                                    {{ fields.select3(inputs.selectBrand.id, inputs.selectBrand.name, inputs.selectBrand.title, value.brand, brands, loadModelsFunction) }}                                    
+                                    {{ fields.select3(inputs.selectModel.id, inputs.selectModel.name, inputs.selectModel.title, value.model, models, null) }}
                                 </div>
+                                
                                 <div class="form-row">                    
                                     {{ fields.input9(inputs.description.id, inputs.description.name, inputs.description.title, value.description) }}
                                     {{ fields.select3(inputs.selectVehicleType.id, inputs.selectVehicleType.name, inputs.selectVehicleType.title, value.type, types) }}
                                 </div>
                                 <div class="form-row">                                    
-                                    {{ fields.select3(inputs.selectStore.id, inputs.selectStore.name, inputs.selectStore.title, value.store, stores) }}
+                                    {{ fields.select3(inputs.selectStore.id, inputs.selectStore.name, inputs.selectStore.title, value.store, stores, loadLocationsFunction) }}
                                     {{ fields.select3(inputs.selectLocation.id, inputs.selectLocation.name, inputs.selectLocation.title, value.location, locations) }}
                                 </div>
                                 <div class="form-row">                                    
@@ -93,10 +94,10 @@
                             </div>
                             <div class="tab-pane fade" id="sell" role="tabpanel" aria-labelledby="sell-tab">
                                 <div class="form-row mt-3">
-                                    {{ fields.input6(inputs.seller.id, inputs.seller.name, inputs.seller.title, value.seller) }}
-                                    {{ fields.input6(inputs.customer.id, inputs.customer.name, inputs.customer.title, value.customer) }}
-                                    {{ fields.inputDate2offset8(inputs.appoint.id, inputs.appoint.name, inputs.appoint.title, value.appoint) }}
-                                    {{ fields.inputDate2(inputs.dateSell.id, inputs.dateSell.name, inputs.dateSell.title, value.dateSell) }}                                   
+                                    {{ fields.select6(inputs.seller.id, inputs.seller.name, inputs.seller.title, value.seller, sellers) }}
+                                    {{ fields.select6(inputs.customer.id, inputs.customer.name, inputs.customer.title, value.customer, customers) }}
+                                    {{ fields.inputDate2offset8(inputs.appoint.id, inputs.appoint.name, inputs.appoint.title, value.appointDate) }}
+                                    {{ fields.inputDate2(inputs.dateSell.id, inputs.dateSell.name, inputs.dateSell.title, value.sellDate) }}                                   
                                 </div>                                    
                                 <div class="form-row mt-3">
                                     {{ fields.input2offset6(inputs.pvp.id, inputs.pvp.name, inputs.pvp.title, value.pvp) }}
@@ -277,10 +278,7 @@
                     </div>  
                 </div>
                 <div class="form-row mt-2 mb-4">
-                    <div class="col text-right">
-                        <button id="submit" type="submit" class="btn btn-primary">Guardar</button>
-                        <a href="/Intranet/admin" class="btn btn-primary">Cancelar</a>
-                    </div>
+                    {{ fields.buttonsForm(tab) }}
                 </div>
             </form>
         </div>

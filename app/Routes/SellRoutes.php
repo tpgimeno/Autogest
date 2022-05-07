@@ -209,19 +209,19 @@ class SellRoutes
         //SELLERS
 
         $map->get('sellerList', '/Intranet/sellers/form', [
-            'App\Controllers\Entitys\SellersController',
+            'App\Controllers\Sales\SellersController',
             'getSellersDataAction'
         ]);
         $map->get('sellerForm', '/Intranet/sellers/list', [
-            'App\Controllers\Entitys\SellersController',
+            'App\Controllers\Sales\SellersController',
             'getIndexAction'
         ]);
         $map->post('saveSeller', '/Intranet/sellers/save', [
-            'App\Controllers\Entitys\SellersController',
+            'App\Controllers\Sales\SellersController',
             'getSellersDataAction'
         ]);
         $map->get('sellerDelete', '/Intranet/sellers/delete', [
-            'App\Controllers\Entitys\SellersController',
+            'App\Controllers\Sales\SellersController',
             'deleteAction'
         ]);
         //RECIPES

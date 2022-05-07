@@ -163,10 +163,10 @@
         </select>
     </div>
 {% endmacro select %}
-{% macro select3(id, name, title, value, iterable, type = 'text') %}
+{% macro select3(id, name, title, value, iterable, function, type = 'text') %}
     <div class="form-group col-md-3">                        
         <label for="{{ id }}">{{ title }}</label>
-        <select type="{{ type }}" name="{{ name }}" class="form-control" id="{{ id }}">
+        <select type="{{ type }}" name="{{ name }}" class="form-control" id="{{ id }}" onchange="{{ function }}">
             {% for iter in iterable %}                
                 {% if iter.id == value %}
                     <option selected="selected">{{ iter.iter }}</option>
@@ -177,29 +177,13 @@
         </select>
     </div>
 {% endmacro select3 %}
-{% macro select3filtered(id, name, title, value, iterable, filter, type = 'text') %}
-    <div class="form-group col-md-3">                        
-        <label for="{{ id }}">{{ title }}</label>
-        <select type="{{ type }}" name="{{ name }}" class="form-control" id="{{ id }}">
-            {% for iter in iterable %} 
-                {% if iter.filter == filter %}
-                    {% if iter.id == value %}
-                        <option selected="selected">{{ iter.iter }}</option>
-                    {% else %}
-                        <option>{{ iter.iter }}</option>
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
-        </select>
-    </div>
-{% endmacro select3filtered %}
 {% macro select6(id, name, title, value, iterable, type = 'text') %}
-    <div class="form-group col-md-6">                        
+    <div class="form-group col-md-6">       
         <label for="{{ id }}">{{ title }}</label>
         <select type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}">
             {% for iter in iterable %}                
                 {% if iter.id == value %}
-                    <option selected="selected">{{ iter.iter }}</option>
+                    <option selected="selected">{{ iter.iter }}</option>                    
                 {% else %}
                     <option>{{ iter.iter }}</option>
                 {% endif %}
@@ -215,11 +199,11 @@
 {% endmacro textarea %}
 {% macro checkbox(id, name, title, value, type = 'checkbox')%}
     <div class="form-group col-md-1 text-center">
-        <label for="{{ id }}">{{ title }}</label>
-        {% if value is same as(0) %}
+        <label for="{{ id }}">{{ title }}</label>        
+        {% if value is same as 0 %}
             <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
-        {% elseif value is same as (1) %}
-            <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }} checked">
+        {% elseif value is same as 1 %}
+            <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}" checked>
         {% endif %}
     </div> 
 {% endmacro checkbox %}

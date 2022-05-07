@@ -68,11 +68,19 @@ class VehicleService extends BaseService {
        return $brands;
    }
    public function getModels(){
-       $models = DB::table('models')
-               ->join('brands', 'models.brandId', '=', 'brands.id')
-               ->select('models.id', 'models.brandId as filter', 'brands.name', 'models.name as iter')
+       $models = DB::table('models')               
+               ->select('models.id', 'models.brandId as filter', 'models.name as iter')
                ->whereNull('models.deleted_at')
                ->get();
+       return $models;
+   }
+   public function reloadModels($array){
+       $models = DB::table('models')
+               ->join('brands', 'models.brandId', '=', 'brands.id')
+               ->select('models.id', 'models.name as iter')
+               ->where('brands.name', 'like', "%".$array['brand']."%")
+               ->whereNull('models.deleted_at')
+               ->get();       
        return $models;
    }
    public function getStores(){
@@ -85,6 +93,15 @@ class VehicleService extends BaseService {
    public function getLocations(){
        $locations = DB::table('locations')
                ->select('locations.id', 'locations.storeId as filter', 'locations.name as iter')
+               ->whereNull('locations.deleted_at')
+               ->get();
+       return $locations;
+   }
+   public function reloadLocations($array){
+       $locations = DB::table('locations')
+               ->join('stores', 'locations.storeId', '=', 'stores.id')
+               ->select('locations.id', 'locations.name as iter')
+               ->where('stores.name', 'like', "%".$array['store']."%")
                ->whereNull('locations.deleted_at')
                ->get();
        return $locations;
@@ -102,6 +119,20 @@ class VehicleService extends BaseService {
                ->whereNull('providers.deleted_at')
                ->get();
        return $providors;
+   }
+   public function getSellers(){
+       $sellers = DB::table('sellers')
+               ->select('sellers.id', 'sellers.name as iter')
+               ->whereNull('sellers.deleted_at')
+               ->get();
+       return $sellers;
+   }
+   public function getCustomers(){
+       $customers = DB::table('customers')
+               ->select('customers.id', 'customers.name as iter')
+               ->whereNull('customers.deleted_at')
+               ->get();
+       return $customers;
    }
    public function getBrandByName($array){
        $brand = DB::table('brands')
@@ -147,15 +178,16 @@ class VehicleService extends BaseService {
    }
    public function getSecondKeyValue($array){
        if(isset($array['secondKey'])){
-           $secondKey = intval($array['secondKey']);
+           $secondKey = 1;
        }else{
            $secondKey = 0;
        }
+       
        return $secondKey;
    }
    public function getRebuValue($array){
        if(isset($array['rebu'])){
-           $rebu = intval($array['rebu']);
+           $rebu = 1;
        }else{
            $rebu = 0;
        }
@@ -163,7 +195,7 @@ class VehicleService extends BaseService {
    }
    public function getTechnicCardValue($array){
        if(isset($array['technicCard'])){
-           $technicCard = intval($array['tecnichCard']);
+           $technicCard = 1;
        }else{
            $technicCard = 0;
        }
@@ -171,9 +203,9 @@ class VehicleService extends BaseService {
    }
    public function getPermissionValue($array){
        if(isset($array['permission'])){
-           $permission = intval($array['permission']);
+           $permission = 1;
       }else{
-          $permission = 0;
+           $permission = 0;
       }
       return $permission;
    }
@@ -285,8 +317,8 @@ class VehicleService extends BaseService {
         return $componentCantity;
     }
     public function findVehicleComponent($data){        
-        $component = VehicleComponents::where('componentId', '=', intval($data['componentId']))
-                ->where('vehicleId', '=', intval($data['id']))->get()->first();
+        $component = VehicleComponents::where('componentId', '=', intval($data->componentId))
+                ->where('vehicleId', '=', intval($data->id))->get()->first();
         return $component;
     }
     public function addVehicleComponent($array){
@@ -295,7 +327,7 @@ class VehicleService extends BaseService {
         $vehicleComponent->componentId = $data->componentId;
         $vehicleComponent->vehicleId = $data->id;
         $vehicleComponent->cantity = $data->cantity;
-        $vehicleComponent->pvp = $data->price;
+        $vehicleComponent->pvp = $data->pvp;
         try{
             if($this->findVehicleComponent($data)){
             $vehicleComponent->id = $this->findVehicleComponent($data)->id;
@@ -432,9 +464,13 @@ class VehicleService extends BaseService {
        $vehicle->power = intval($array['power']);
        $vehicle->places = intval($array['places']);
        $vehicle->doors = intval($array['doors']);
-       $vehicle->providor = $this->getProvidorByName($array);       
-       $vehicle->arrival = Date('y-m-d', strtotime($array['arrival']));      
-       $vehicle->buyDate = Date('y-m-d', strtotime($array['dateBuy']));       
+       $vehicle->providor = $this->getProvidorByName($array);
+       if(isset($array['arrival'])&& $array['arrival']){
+           $vehicle->arrival = Date('y-m-d', strtotime($array['arrival'])); 
+       }
+       if(isset($array['dateBuy'])&& $array['dateBuy']){
+           $vehicle->buyDate = Date('y-m-d', strtotime($array['dateBuy'])); 
+       }             
        $vehicle->transference = $array['transference'];       
        $vehicle->service = $array['service'];       
        $vehicle->secondKey = $this->getSecondKeyValue($array);
@@ -443,8 +479,12 @@ class VehicleService extends BaseService {
        $vehicle->permission = $this->getPermissionValue($array);
        $vehicle->cost = $this->tofloat($array['cost']);
        $vehicle->pvp = $this->tofloat($array['pvp']);
-       $vehicle->sellDate = Date('y-m-d', strtotime($array['dateSell']));
-       $vehicle->appointDate = Date('y-m-d', strtotime($array['appoint']));
+       if(isset($array['dateSell']) && $array['dateSell']){
+           $vehicle->sellDate = Date('y-m-d', strtotime($array['dateSell']));
+       }
+       if(isset($array['appoint'])&& $array['appoint']){
+            $vehicle->appointDate = Date('y-m-d', strtotime($array['appoint']));
+       }      
        $vehicle->dataType = $array['dataType'];
        $vehicle->variant = $array['variant'];
        $vehicle->version = $array['version'];
@@ -466,7 +506,8 @@ class VehicleService extends BaseService {
        $vehicle->axeDistance = intval($array['axeDistance']);
        $vehicle->chargeLength = intval($array['chargeLength']);
        $vehicle->deposit = intval($array['deposit']);
-       $vehicle->initCharge = intval($array['initCharge']);
+       $vehicle->initCharge = intval($array['initCharge']); 
+       
        try{
             if($this->setVehicle($array)){                
                 $vehicle->update();
@@ -477,23 +518,21 @@ class VehicleService extends BaseService {
             }
        } catch (Exception $ex) {
             $responseMessage = $ex->getMessage();
-       }
-       
+       }       
        return $responseMessage;
    }   
-   public function tofloat($num) 
-    {
+   public function tofloat($num) {
         $dotPos = strrpos($num, '.');
         $commaPos = strrpos($num, ',');
         $sep = (($dotPos > $commaPos) && $dotPos) ? $dotPos :
             ((($commaPos > $dotPos) && $commaPos) ? $commaPos : false);
-
         if (!$sep) {
-            return floatval(preg_replace("/[^0-9]/", "", $num));
+            $result = floatval(preg_replace("/[^0-9]/", "", $num));
+        }else{
+            $result = floatval(
+                preg_replace("/[^0-9]/", "", substr($num, 0, $sep)) . '.' .
+                preg_replace("/[^0-9]/", "", substr($num, $sep+1, strlen($num))));
         }
-        return floatval(
-            preg_replace("/[^0-9]/", "", substr($num, 0, $sep)) . '.' .
-            preg_replace("/[^0-9]/", "", substr($num, $sep+1, strlen($num)))
-        );
+        return $result;
     } 
 }

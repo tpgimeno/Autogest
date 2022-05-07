@@ -4,7 +4,7 @@ namespace App\Controllers\Sales;
 
 use App\Controllers\BaseController;
 use App\Models\Sellers;
-use App\Services\Sells\SellersService;
+use App\Services\Sales\SellersService;
 use Exception;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\ServerRequest;
@@ -34,7 +34,7 @@ class SellersController extends BaseController {
     }   
     public function getIndexAction() {
         $sellers = $this->sellersService->getAllRegisters(new Sellers());
-        return $this->renderHTML('/sells/sellers/sellersList.html.twig', [
+        return $this->renderHTML('/sales/sellers/sellersList.html.twig', [
             'list' => $this->list,
             'tab' => $this->tab,
             'title' => $this->title,
@@ -57,7 +57,7 @@ class SellersController extends BaseController {
             }              
         }
         $sellersSelected = $this->sellersService->setInstance(new Sellers(), $request->getQueryParams('id'));
-        return $this->renderHTML('/sells/sellers/sellersForm.html.twig', [
+        return $this->renderHTML('/sales/sellers/sellersForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
             'inputs' => $this->inputs,

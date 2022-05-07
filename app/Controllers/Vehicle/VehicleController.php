@@ -24,6 +24,7 @@ use App\Services\Vehicle\VehicleService;
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Database\QueryException;
 use Laminas\Diactoros\Response\JsonResponse;
+use Laminas\Diactoros\Response\TextResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\ServerRequest;
 use PhpOffice\PhpSpreadsheet\Reader\Xls;
@@ -44,6 +45,8 @@ class VehicleController extends BaseController {
     protected $save = "/Intranet/vehicles/save";
     protected $search = "/Intranet/vehicles/search";
     protected $formName = "vehiclesForm";
+    protected $loadModelsFunction = "loadModelsByBrand();";
+    protected $loadLocationsFunction = "loadLocationsByStore();";
     protected $script = 'js/vehicles.js';
     protected $inputs = ['id' => ['id' => 'inputId', 'name' => 'id', 'title' => 'ID'],
         'registryDate' => ['id' => 'inputRegistryDate', 'name' => 'registryDate', 'title' => 'Fecha Matriculación'],
@@ -184,6 +187,8 @@ class VehicleController extends BaseController {
         $accesories = $this->vehicleService->getAllRegisters(new Accesories());
         $types = $this->vehicleService->getTypes();
         $providors = $this->vehicleService->getProvidors();
+        $sellers = $this->vehicleService->getSellers();
+        $customers = $this->vehicleService->getCustomers();
         $selectedTab = $this->vehicleService->getSelectedTab($params);
         $vehicleSelected = $this->vehicleService->setVehicle($params); 
         $selectedAccesories = $this->vehicleService->getVehicleAccesories($vehicleSelected);
@@ -197,20 +202,24 @@ class VehicleController extends BaseController {
         $editCantitySupply = $this->vehicleService->getSupplyCantity($params);
         if(isset($params['responseMessage'])){
             $responseMessage = $params['responseMessage'];
-        }       
+        }          
         return $this->renderHTML('/vehicles/vehiclesForm.html.twig', [
             'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
             'responseMessage' => $responseMessage,
             'brands' => $brands,
             'models' => $models,
+            'loadModelsFunction' => $this->loadModelsFunction,
             'stores' => $stores,
             'components' => $components,
             'supplies' => $supplies,
             'works' => $works,
             'locations' => $locations,
+            'loadLocationsFunction' => $this->loadLocationsFunction,
             'selectedTab' => $selectedTab,            
             'types' => $types,    
             'providors' => $providors,
+            'sellers' => $sellers,
+            'customers' => $customers,
             'value' => $vehicleSelected,            
             'accesories' => $accesories,
             'selectedAccesories' => $selectedAccesories,
@@ -299,6 +308,16 @@ class VehicleController extends BaseController {
             $selected_supply = Supplies::find($params['supplyId'])->first();                        
         }
         return $selected_supply;
+    }
+    public function reloadModelsAction($request){
+        $models = $this->vehicleService->reloadModels($request->getParsedBody());        
+        $response = new JsonResponse($models);
+        return $response;
+    }
+    public function reloadLocationsAction($request){
+        $locations = $this->vehicleService->reloadLocations($request->getParsedBody());
+        $response = new JsonResponse($locations);
+        return $response;
     }
     public function importVehiclesExcel() {
         setlocale(LC_ALL, 'es_ES');
