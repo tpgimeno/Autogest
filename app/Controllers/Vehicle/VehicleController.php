@@ -24,7 +24,6 @@ use App\Services\Vehicle\VehicleService;
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Database\QueryException;
 use Laminas\Diactoros\Response\JsonResponse;
-use Laminas\Diactoros\Response\TextResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\ServerRequest;
 use PhpOffice\PhpSpreadsheet\Reader\Xls;

@@ -134,47 +134,85 @@ class VehicleService extends BaseService {
                 ->get();
         return $customers;
     }
-    public function getBrandByName($array){
-        $brand = DB::table('brands')
-                ->select('brands.id')
-                ->where('brands.name', 'like', "%".$array['brand']."%")
-                ->first();       
-        return $brand->id;
+    public function getBrandIdByName($array){
+        $brand = null;
+        if(isset($array['brand']) && $array['brand']){
+            $brand = DB::table('brands')
+                    ->select('brands.id')
+                    ->where('brands.name', 'like', "%".$array['brand']."%")
+                    ->get()->first()->id;
+        }
+        return $brand;
     }
-    public function getModelByName($array){
-        $model = DB::table('models')
-                ->select('models.id')
-                ->where('models.name', 'like', "%".$array['model']."%")
-                ->get()->first();       
-        return $model->id;
+    public function getModelByIdName($array){
+        $model = null;
+        if(isset($array['model']) && $array['model']){
+            $model = DB::table('models')
+                    ->select('models.id')
+                    ->where('models.name', 'like', "%".$array['model']."%")
+                    ->get()->first()->id;
+        }
+        return $model;
     }
-    public function getVehicleTypeByName($array){
-        $type = DB::table('vehicletypes')
+    public function getVehicleTypeIdByName($array){
+        $type = null;
+        if(isset($array['vehicleType']) && $array['vehicleType']){
+           $type = DB::table('vehicletypes')
                 ->select('vehicletypes.id')
                 ->where('vehicletypes.name', 'like', "%".$array['vehicleType']."%")
-                ->first();
-        return $type->id;
+                ->get()->first()->id; 
+        }        
+        return $type;
     }
-    public function getStoreByName($array){
-        $store = DB::table('stores')
-                ->select('stores.id')
-                ->where('stores.name', 'like', "%".$array['store']."%")
-                ->get()->first();
-        return $store->id;
+    public function getStoreByIdName($array){
+        $store = null;
+        if(isset($array['store']) && $array['store']){
+            $store = DB::table('stores')
+                    ->select('stores.id')
+                    ->where('stores.name', 'like', "%".$array['store']."%")
+                    ->get()->first()->id;
+        }
+        return $store;
     }
-    public function getLocationByName($array){
-        $location = DB::table('locations')
-                ->select('locations.id')
-                ->where('locations.name', 'like', "%".$array['location'])
-                ->get()->first();
-        return $location->id;
+    public function getLocationIdByName($array){
+        $location = null;
+        if(isset($array['location']) && $array['location']){
+            $location = DB::table('locations')
+                    ->select('locations.id')
+                    ->where('locations.name', 'like', "%".$array['location']."%")
+                    ->get()->first()->id;
+        }
+        return $location;
     }
-    public function getProvidorByName($array){
-        $providor = DB::table('providers')
-                ->select('providers.id')
-                ->where('providers.name', 'like', "%".$array['providor']."%")
-                ->get()->first();
-        return $providor->id;
+    public function getProvidorIdByName($array){
+        $providor = null;
+        if(isset($array['providor']) && $array['providor']){
+            $providor = DB::table('providers')
+                    ->select('providers.id')
+                    ->where('providers.name', 'like', "%".$array['providor']."%")
+                    ->get()->first()->id;
+        }
+        return $providor;
+    }
+    public function getCustomerIdByName($array){
+        $customer = null;
+        if(isset($array['customer']) && $array['customer']){
+            $customer = DB::table('customers')
+                    ->select('customers.name')
+                    ->where('name', 'like', "%".$array['customer']."%")
+                    ->get()->first()->name;
+        }
+        return $customer;
+    }
+    public function getSellerIdByName($array){
+        $seller = null;
+        if(isset($array['seller']) && $array['seller']){
+            $seller = DB::table('sellers')
+                    ->select('sellers.id')
+                    ->where('sellers.name', 'like', "%".$array['seller']."%")
+                    ->get()->first()->id;
+        }
+        return $seller;
     }
     public function getRegistryDateValue($array){
         $registryDate = null;
@@ -487,17 +525,17 @@ class VehicleService extends BaseService {
         $vehicle->registryDate = $this->getRegistryDateValue($array);
         $vehicle->plate = $array['plate'];
         $vehicle->vin = $array['vin'];
-        $vehicle->brand = $this->getBrandByName($array);       
-        $vehicle->model = $this->getModelByName($array);       
+        $vehicle->brand = $this->getBrandIdByName($array);       
+        $vehicle->model = $this->getModelIdByName($array);       
         $vehicle->description = $array['description'];
-        $vehicle->type = $this->getVehicleTypeByName($array);
-        $vehicle->store = $this->getStoreByName($array);
-        $vehicle->location = $this->getLocationByName($array);
+        $vehicle->type = $this->getVehicleTypeIdByName($array);
+        $vehicle->store = $this->getStoreIdByName($array);
+        $vehicle->location = $this->getLocationIdByName($array);
         $vehicle->km = intval($array['km']);
         $vehicle->power = intval($array['power']);
         $vehicle->places = intval($array['places']);
         $vehicle->doors = intval($array['doors']);
-        $vehicle->providor = $this->getProvidorByName($array);       
+        $vehicle->providor = $this->getProvidorIdByName($array);       
         $vehicle->arrival = $this->getArrivalValue($array);        
         $vehicle->buyDate = $this->getDateBuyValue($array);         
         $vehicle->transference = $array['transference'];       
@@ -509,7 +547,9 @@ class VehicleService extends BaseService {
         $vehicle->cost = $this->tofloat($array['cost']);
         $vehicle->pvp = $this->tofloat($array['pvp']);
         $vehicle->sellDate = $this->getSellDateValue($array);
-        $vehicle->appointDate = $this->getAppointValue($array);             
+        $vehicle->appointDate = $this->getAppointValue($array); 
+        $vehicle->customer = $this->getCustomerIdByName($array);
+        $vehicle->seller = $this->getSellerIdByName($array);
         $vehicle->dataType = $array['dataType'];
         $vehicle->variant = $array['variant'];
         $vehicle->version = $array['version'];

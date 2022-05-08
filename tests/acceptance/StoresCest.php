@@ -5,7 +5,7 @@ use AcceptanceTester;
 use Tests\acceptance\FirstCest;
 class StoresCest
 {
-    protected $id;
+    public $id;
     protected $name;
     public function _before(AcceptanceTester $I) {
         FirstCest::loginTest($I);

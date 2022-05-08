@@ -7,7 +7,7 @@ use Tests\acceptance\FirstCest;
 
 class BrandsCest
 {
-    protected $id;   
+    public $id;   
     protected $name;  
     public function _before(AcceptanceTester $I) {
         FirstCest::loginTest($I);

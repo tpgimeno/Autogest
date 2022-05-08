@@ -7,7 +7,7 @@ use Tests\acceptance\FirstCest;
 
 class LocationsCest
 {
-    protected $id;   
+    public $id;   
     protected $name;
     protected $storeId;
     protected $store;

@@ -40,11 +40,13 @@ class BaseService {
        $content = array_values($array);       
        if($this->findRegister($model, $array) == true){
            $model = $model::find(intval($array['id']));
-       }       
+       }  
+      
        for ($i = 0; $i<sizeof($properties); $i++){
            if($properties[$i] == 'password'){
                $model->{$properties[$i]} = password_hash($content[$i+1], PASSWORD_DEFAULT);
            }
+           
            $model->{$properties[$i]} = $content[$i+1];
        }       
        try{

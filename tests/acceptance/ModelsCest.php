@@ -7,7 +7,7 @@ use Tests\acceptance\FirstCest;
 
 class ModelsCest
 {
-    protected $id;   
+    public $id;   
     protected $name;  
     protected $brand;
     public function _before(AcceptanceTester $I) {

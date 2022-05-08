@@ -5,7 +5,7 @@ use AcceptanceTester;
 use Tests\acceptance\FirstCest;
 class ProvidersCest
 {
-    protected $id;
+    public $id;
     protected $fiscalId;
     public function _before(AcceptanceTester $I) {
         FirstCest::loginTest($I);

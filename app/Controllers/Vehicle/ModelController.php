@@ -1,21 +1,13 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace App\Controllers\Vehicle;
+
 
 use App\Controllers\BaseController;
 use App\Models\Brand;
 use App\Models\ModelVh;
 use App\Services\ErrorService;
 use App\Services\Vehicle\ModelService;
-use Exception;
-use Illuminate\Database\QueryException;
-use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\ServerRequest;
 use Respect\Validation\Validator as v;
 /**
