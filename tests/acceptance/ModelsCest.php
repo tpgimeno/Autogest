@@ -4,12 +4,14 @@ namespace Tests\acceptance;
 
 use AcceptanceTester;
 use Tests\acceptance\FirstCest;
+use Tests\acceptance\BrandsCest;
 
 class ModelsCest
 {
     public $id;   
-    protected $name;  
-    protected $brand;
+    protected $name; 
+    protected $brandName;
+    protected $brandId;
     public function _before(AcceptanceTester $I) {
         FirstCest::loginTest($I);
     }
@@ -24,17 +26,27 @@ class ModelsCest
     }
     public function saveModelTest(AcceptanceTester $I){
         $I->amOnPage('/Intranet/admin');
+        $I->click('Marcas', '.list-group-item');
+        $I->seeCurrentUrlEquals('/Intranet/vehicles/brands/list');
+        $caracteres_permitidos = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';       
+        $longitudBrand = 8;        
+        $this->brandName = substr(str_shuffle($caracteres_permitidos), 0, $longitudBrand);        
+        $I->wantTo('Create a new Brand');
+        $I->click('#submit', '#addBrand');
+        $I->seeCurrentUrlEquals('/Intranet/vehicles/brands/form');       
+        $I->submitForm('#brandsForm', array('name' => $this->brandName));        
+        $I->see('Saved');
+        $I->amOnPage('/Intranet/admin');
         $I->click('Modelos', '.list-group-item');
-        $I->seeCurrentUrlEquals('/Intranet/vehicles/models/list');
-        $caracteres_permitidos = '1234567890ABCDEFGHIJKLMNÑOPQRSTUVWXYZ';        
+        $I->seeCurrentUrlEquals('/Intranet/vehicles/models/list');   
         $longitud = 8;        
         $this->name = substr(str_shuffle($caracteres_permitidos), 0, $longitud);        
         $I->wantTo('Create a new Model');
         $I->click('#submit', '#addModel');
-        $I->seeCurrentUrlEquals('/Intranet/vehicles/models/form'); 
-        $this->brand = $I->grabFromDatabase('brands', 'name', array('id' => 1));
-        $I->submitForm('#modelsForm', array('name' => $this->name, 'brand' => $this->brand));        
+        $I->seeCurrentUrlEquals('/Intranet/vehicles/models/form');        
+        $I->submitForm('#modelsForm', array('name' => $this->name, 'brand' => $this->brandName));        
         $this->id = $I->grabFromDatabase('models', 'id', array('name' => $this->name));
+        $this->brandId = $I->grabFromDatabase('brands', 'id', array('name' => $this->brandName));
         $I->see('Saved');       
     }
     public function updateModelTest(AcceptanceTester $I){
@@ -46,7 +58,7 @@ class ModelsCest
         $caracteres_permitidos = '123456789012345678901234567890';
         $longitud = 8;        
         $this->name = substr(str_shuffle($caracteres_permitidos), 0, $longitud); 
-        $I->submitForm('#modelsForm', array('id' => $this->id, 'name' => $this->name, 'brand' => $this->brand));
+        $I->submitForm('#modelsForm', array('id' => $this->id, 'name' => $this->name, 'brand' => $this->brandName));
         $I->see('Updated'); 
     }
      public function deleteModelTest(AcceptanceTester $I){
@@ -55,6 +67,8 @@ class ModelsCest
         $I->click('Modelos', '.list-group-item');
         $I->seeCurrentUrlEquals('/Intranet/vehicles/models/list');
         $I->amOnPage('/Intranet/vehicles/models/delete?id='.$this->id); 
+        $I->amOnPage('/Intranet/vehicles/brands/delete?id='.$this->brandId);
+        $I->dontSeeInDatabase('brands', array('id' => intval($this->brandId), 'deleted_at' => null));
         $I->dontSeeInDatabase('models', array('id' => intval($this->id), 'deleted_at' => null));
     }
 }

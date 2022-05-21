@@ -476,7 +476,7 @@ class VehicleController extends BaseController {
         return $responseMessage;
     }
     public function deleteAction(ServerRequest $request) {         
-        $this->vehicleService->deleteVehicle($request->getQueryParams('id'));               
+        $this->vehicleService->deleteRegister(new Vehicle(), $request->getQueryParams('id'));               
         return new RedirectResponse($this->list);
     }    
     public function getVehiclesReportAction(){

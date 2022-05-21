@@ -144,7 +144,7 @@ class VehicleService extends BaseService {
         }
         return $brand;
     }
-    public function getModelByIdName($array){
+    public function getModelIdByName($array){
         $model = null;
         if(isset($array['model']) && $array['model']){
             $model = DB::table('models')
@@ -164,7 +164,7 @@ class VehicleService extends BaseService {
         }        
         return $type;
     }
-    public function getStoreByIdName($array){
+    public function getStoreIdByName($array){
         $store = null;
         if(isset($array['store']) && $array['store']){
             $store = DB::table('stores')
@@ -584,7 +584,8 @@ class VehicleService extends BaseService {
              $responseMessage = $ex->getMessage();
         }       
         return $responseMessage;
-    }   
+    } 
+    
     public function tofloat($num) {
         $dotPos = strrpos($num, '.');
         $commaPos = strrpos($num, ',');
