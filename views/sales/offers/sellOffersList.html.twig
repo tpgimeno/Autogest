@@ -1,29 +1,17 @@
-{% extends "dashboard.twig" %}
+{% extends "menu.html.twig" %}
+{% import 'macros.html.twig' as fields %}
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-md-10">               
-                <h2> Ofertas </h2>
+                <h2> {{ title }} </h2>
             </div>   
             <div class="col-md-2 d-flex justify-content-end align-items-end">
-                <a class="link " href="/Intranet/admin">Volver</a> 
+                <a class="link " href="/Intranet/admin?selected_tab={{ tab }}">Volver</a> 
             </div>
         </div>
         <div class="row">
-            <div class="col">
-                <form id="searchForm" action="/Intranet/sells/offers/search" method="post" class="form">
-                    <div class="container">
-                        <div id="formRow" class="form-row text-right">
-                            <div class="col-11">                                                                                
-                                <input id="searchField" type="text" name="searchFilter" class="form-control mb-2 mr-sm-2" id="inlineFormSearchFilter" placeholder="Nombre / Cif / Telefono / email">
-                            </div>
-                            <div class="col-1">
-                                <button type="submit" class="btn btn-primary mb-2">Buscar</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
+            {{ fields.searchList(search) }}
         </div>
         <div class="row">
             <div class="col">
@@ -42,8 +30,8 @@
                             <td>{{ offer.offerDate|date('d-m-Y') }}</td>
                             <td>{{ offer.name }}</td>
                             <td>{{ offer.brand }} {{ offer.model }}</td>                           
-                            <td><a href="/Intranet/sells/offers/form?offer_id={{offer.id}}">Edit</a></td>
-                            <td><a href="/Intranet/sells/offers/delete?offer_id={{offer.id}}">Delete</a></td>
+                            <td><a href="/Intranet/sales/offers/form?offer_id={{offer.id}}">Edit</a></td>
+                            <td><a href="/Intranet/sales/offers/delete?offer_id={{offer.id}}">Delete</a></td>
                         </tr>
                     {% endfor %}                
                 </table>
@@ -51,11 +39,8 @@
         </div>
         <div class="row">
             <div class="col d-flex justify-content-end">
-                <form id="addSellOffer" action="/Intranet/sells/offers/form" method="get">
-                    <div class="form-group">
-                        <input id="submit" type="submit" class="btn btn-primary" value="Añadir">
-                        <a href="/Intranet/admin" class="btn btn-primary">Cancelar</a>
-                    </div>
+                <form id="addSellOffer" action="/Intranet/sales/offers/form" method="get">
+                    {{ fields.buttonsList(tab) }}
                 </form>
             </div>
         </div>

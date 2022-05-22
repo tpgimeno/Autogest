@@ -1,20 +1,21 @@
-{% extends "dashboard.twig" %}
+{% extends "menu.html.twig" %}
+{% import 'macros.html.twig' as fields %}
 {% block content %}
+    {% block javascripts %}
+            {% if script %}
+            <script>
+                {{ include(script)}}
+            </script>
+        {% endif %}
+    {% endblock %}
     <div class="row">
         <div class="col-md-10">
-            <h2> Oferta </h2>
+            <h2> {{ title }} </h2>
         </div>   
-        <div class="col-md-2 d-flex justify-content-end align-items-end">
-            <a class="link pr-4" href="/Intranet/sells/offers/list">Lista</a> 
-            <a class="link " href="/Intranet/admin">Volver</a> 
-        </div>        
+        {{ fields.return(list, tab) }}        
     </div>
     <div class="row">
-        <div class="col">
-            <div id="alert" class="alert alert-dark" role="alert">
-                {{ responseMessage }}
-            </div>
-        </div>
+        {{ fields.alert(responseMessage) }}
     </div>              
     <div class="row">
         <div class="col">
@@ -40,7 +41,7 @@
             </ul>
         </div>
     </div>      
-    <form id="SellOfferForm" action="/Intranet/sells/offers/save" method="post" class="form">
+    <form id="{{formName}}" action="{{ save }}" method="post" class="form">
         <div class="tab-content" id="myTabContent">    
             <div class="tab-pane fade show active" id="offer" role="tabpanel" aria-labelledby="offer-tab">
                 <div class="form-row mt-3">
@@ -160,7 +161,7 @@
                 </div>
                 <div class="form-row">                    
                     <div class="form-group col-md-6">
-                        <label for="inputFiscalId">Email</label>
+                        <label for="inputEmail">Email</label>
                         <input type="text" name="email" class="form-control" id="inputEmail" placeholder="" value="{{ selected_customer.email }}">
                     </div>                    
                 </div>
@@ -413,8 +414,8 @@
                                      <td>{{ component.price }}</td>
                                      <td>{{ component.cantity }}</td>
                                      <td>{{ import }}</td>
-                                     <td><a href="/Intranet/sells/offers/components/edit?componentId={{ component.id }}&offer_id={{ new_selloffer }}">Edit</a></td>
-                                     <td><a href="/Intranet/sells/offers/components/del?componentId={{ component.id }}&offer_id={{ new_selloffer }}">Edit</a></td>                                     
+                                     <td><a href="/Intranet/sales/offers/components/edit?componentId={{ component.id }}&offer_id={{ new_selloffer }}">Edit</a></td>
+                                     <td><a href="/Intranet/sales/offers/components/del?componentId={{ component.id }}&offer_id={{ new_selloffer }}">Edit</a></td>                                     
                             {% endfor %} 
                         </table>
                     </div>
@@ -546,7 +547,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
-                            <form id="searchCustomerForm" action="/Intranet/sells/offers/customer/search" method="post" class="form">
+                            <form id="searchCustomerForm" action="/Intranet/sales/offers/customer/search" method="post" class="form">
                                 <div class="container">
                                     <div id="formRow" class="form-row text-right">
                                         <div class="col-11">                                                                                
@@ -576,7 +577,7 @@
                                         <td>{{ customer.city }}</td>
                                         <td>{{ customer.phone }}</td>
                                         <td>{{ customer.email }}</td>
-                                        <td><a href="/Intranet/sells/offers/customer/select?customer_id={{ customer.id }}&offer_id={{ new_selloffer }}&vehicle_id={{selected_vehicle.id}}&work_id={{selected_work.id}}&supplyId={{ selected_supply.id }}&componentId={{ selected_component.id }}">Select</a></td>                                        
+                                        <td><a href="/Intranet/sales/offers/customer/select?customer_id={{ customer.id }}&offer_id={{ new_selloffer }}&vehicle_id={{selected_vehicle.id}}&work_id={{selected_work.id}}&supplyId={{ selected_supply.id }}&componentId={{ selected_component.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>
@@ -607,7 +608,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
-                            <form id="searchVehicleForm" action="/Intranet/sells/offers/vehicle/search" method="post" class="form">
+                            <form id="searchVehicleForm" action="/Intranet/sales/offers/vehicle/search" method="post" class="form">
                                 <div class="container">
                                     <div id="formRow" class="form-row text-right">
                                         <div class="col-11">                                                                                
@@ -639,7 +640,7 @@
                                         <td>{{ vehicle.brand }}</td>
                                         <td>{{ vehicle.model }}</td>
                                         <td>{{ vehicle.description }}</td>
-                                        <td><a href="/Intranet/sells/offers/vehicle/select?vehicle_id={{vehicle.id}}&offer_id={{ new_selloffer }}&work_id={{selected_work.id}}&customer_id={{ selected_customer.id }}&supplyId={{ selected_supply.id }}&componentId={{ selected_component.id }}">Select</a></td>                                        
+                                        <td><a href="/Intranet/sales/offers/vehicle/select?vehicle_id={{vehicle.id}}&offer_id={{ new_selloffer }}&work_id={{selected_work.id}}&customer_id={{ selected_customer.id }}&supplyId={{ selected_supply.id }}&componentId={{ selected_component.id }}">Select</a></td>                                        
                                     </tr>
                                 {% endfor %}                
                             </table>
@@ -698,7 +699,7 @@
                                         <td>{{ supply.name }}</td>
                                         <td>{{ supply.stock }}</td>
                                         <td>{{ supply.pvp }}</td>
-                                        <td><a href="/Intranet/sells/offers/supplies/select?supplyId={{ supply.id }}&offer_id={{ new_selloffer }}&work_id={{selected_work.id}}&vehicle_id={{ selected_vehicle.id }}&customer_id={{ selected_customer.id }}&componentId={{ selected_component.id }}">Select</a></td>                                        
+                                        <td><a href="/Intranet/sales/offers/supplies/select?supplyId={{ supply.id }}&offer_id={{ new_selloffer }}&work_id={{selected_work.id}}&vehicle_id={{ selected_vehicle.id }}&customer_id={{ selected_customer.id }}&componentId={{ selected_component.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>
@@ -724,7 +725,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
-                            <form id="searchComponentsForm" action="/Intranet/sells/offers/components/search" method="post" class="form">
+                            <form id="searchComponentsForm" action="/Intranet/sales/offers/components/search" method="post" class="form">
                                 <div class="container">
                                     <div id="formRow" class="form-row text-right">
                                         <div class="col-11">                                                                                
@@ -755,7 +756,7 @@
                                         <td>{{ component.serial_number }}</td>
                                         <td>{{ component.name }}</td>                                        
                                         <td>{{ component.pvp }}</td>                                        
-                                        <td><a href="/Intranet/sells/offers/components/select?componentId={{component.id}}&offer_id={{new_selloffer}}&work_id={{selected_work.id}}&vehicle_id={{ selected_vehicle.id }}&supplyId={{ selected_supply.id }}&customer_id={{ selected_customer.id }}">Select</a></td>                                        
+                                        <td><a href="/Intranet/sales/offers/components/select?componentId={{component.id}}&offer_id={{new_selloffer}}&work_id={{selected_work.id}}&vehicle_id={{ selected_vehicle.id }}&supplyId={{ selected_supply.id }}&customer_id={{ selected_customer.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>
@@ -781,7 +782,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col">
-                            <form id="searchWorksForm" action="/Intranet/sells/offers/works/search" method="post" class="form">
+                            <form id="searchWorksForm" action="/Intranet/sales/offers/works/search" method="post" class="form">
                                 <div class="container">
                                     <div id="formRow" class="form-row text-right">
                                         <div class="col-11">                                                                                
@@ -808,7 +809,7 @@
                                         <td>{{ work.reference }}</td>
                                         <td>{{ work.description }}</td>                                                                               
                                         <td>{{ work.price }}</td>                                        
-                                        <td><a href="/Intranet/sells/offers/works/select?work_id={{work.id}}&offer_id={{new_selloffer}}&vehicle_id={{ selected_vehicle.id }}&supplyId={{ selected_supply.id }}&componentId={{ selected_component.id }}&customer_id={{ selected_customer.id }}">Select</a></td>                                        
+                                        <td><a href="/Intranet/sales/offers/works/select?work_id={{work.id}}&offer_id={{new_selloffer}}&vehicle_id={{ selected_vehicle.id }}&supplyId={{ selected_supply.id }}&componentId={{ selected_component.id }}&customer_id={{ selected_customer.id }}">Select</a></td>                                        
                                     </tr>  
                                 {% endfor %}                
                             </table>

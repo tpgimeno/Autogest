@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Controllers\Sells;
+namespace App\Controllers\Sales;
 
 use App\Controllers\BaseController;
 use App\Models\Accesories;
@@ -19,9 +19,9 @@ use App\Models\Taxes;
 use App\Models\Vehicle;
 use App\Models\VehicleTypes;
 use App\Models\Works;
-use App\Reports\Sells\SellOfferDetailedReport;
-use App\Reports\Sells\SellOfferVehicleReport;
-use App\Services\Sells\SellOfferService;
+use App\Reports\Sales\SellOfferDetailedReport;
+use App\Reports\Sales\SellOfferVehicleReport;
+use App\Services\Sales\SellOfferService;
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Database\QueryException;
 use Laminas\Diactoros\Response\JsonResponse;
@@ -38,57 +38,121 @@ use function PHPUnit\Framework\isEmpty;
  *
  * @author tonyl
  */
-class SellOffersController extends BaseController {  
-    
-    protected $sellOfferService;    
+class SellOffersController extends BaseController {    
+    protected $sellOfferService; 
+    protected $list = "/Intranet/sales/offers/list";
+    protected $tab = 'sales';
+    protected $title = 'Vehículos';
+    protected $save = "/Intranet/sales/offers/save";
+    protected $search = "/Intranet/sales/offers/search";
+    protected $formName = "SellOfferForm";    
+    protected $script = 'js/sellOfers.js';
+    protected $inputs = ['id' => ['id' => 'inputId', 'name' => 'id', 'title' => 'ID'],
+        'offerNumber' => ['id' => 'inputOfferNumber', 'name' => 'offerNumber', 'title' => 'Numero Oferta'],
+        'offerDate' => ['id' => 'inputOfferDate', 'name' => 'offerDate', 'title' => 'Fecha Oferta'],
+        'selectTaxes' => ['id' => 'selectTaxes', 'name' => 'taxes', 'title' => 'Tipo de Iva'],
+        'selectPaymentWay' => ['id' => 'selectPaymentWay', 'name' => 'paymentWay', 'title' => 'Forma de Pago'],
+        'texts' => ['id' => 'inputTexts', 'name' => 'texts', 'title' => 'Textos'],
+        'observations' => ['id' => 'inputObservations', 'name' => 'observations', 'title' => 'Observaciones'],
+        'price' => ['id' => 'inputPrice', 'name' => 'price', 'title' => 'Precio Venta'],
+        'discount' => ['id' => 'inputDiscount', 'name' => 'discount', 'title' => 'Descuento'],
+        'tva' => ['id' => 'inputTva', 'name' => 'tva', 'title' => 'Iva'],
+        'total' => ['id' => 'inputTotal', 'name' => 'total', 'title' => 'Total'],
+        'customerId' => ['id' => 'inputCustomerId', 'name' => 'customerId', 'title' => 'ID'],
+        'customerName' => ['id' => 'inputCustomerName', 'name' => 'customerName', 'title' => 'Nombre'],
+        'customerFiscalId' => ['id' => 'inputCustomerFiscalId', 'name' => 'customerFiscalId', 'title' => 'NIF/CIF'],
+        'customerAddress' => ['id' => 'inputCustomerAddress', 'name' => 'customerAddress', 'title' => 'Direccion'],
+        'customerPostalCode' => ['id' => 'inputCustomerPostalCode', 'name' => 'customerPostalCode', 'title' => 'Codigo Postal'],
+        'customerCity' => ['id' => 'inputCustomerCity', 'name' => 'customerCity', 'title' => 'Población'],
+        'customerState' => ['id' => 'inputCustomerState', 'name' => 'customerState', 'title' => 'Provincia'],
+        'customerCountry' => ['id' => 'inputCustomerCountry', 'name' => 'customerCountry', 'title' => 'Pais'],
+        'customerPhone' => ['id' => 'inputCustomerPhone', 'name' => 'customerPhone', 'title' => 'Telefono'],
+        'customerEmail' => ['id' => 'inputCustomerEmail', 'name' => 'customerEmail', 'title' => 'Email'],
+        'vehicleId' => ['id' => 'inputVehicleId', 'name' => 'vehicleId', 'title' => 'ID'],
+        'vehiclePlate' => ['id' => 'inputVehiclePlate', 'name' => 'vehiclePlate', 'title' => 'Matricula'],
+        'vehicleBrand' => ['id' => 'inputVehicleBrand', 'name' => 'vehicleBrand', 'title' => 'Marca'],
+        'vehicleModel' => ['id' => 'inputVehicleModel', 'name' => 'vehicleModel', 'title' => 'Modelo'],
+        'vehicleRegistryDate' => ['id' => 'inputVehicleDate', 'name' => 'vehicleRegistryDate', 'title' => 'Fecha Matriculación'],
+        'vehicleVin' => ['id' => 'inputVehicleVin', 'name' => 'vehicleVin', 'title' => 'Bastidor'],
+        'vehicleDescription' => ['id' => 'inputVehicleDescription', 'name' => 'vehicleDescription', 'title' => 'Descripción'],
+        'vehicleColor' => ['id' => 'inputVehicleColor', 'name' => 'vehicleColor', 'title' => 'Color'],
+        'vehicleDoors' => ['id' => 'inputVehicleDoors', 'name' => 'vehicleDoors', 'title' => 'Puertas'],
+        'vehiclePlaces' => ['id' => 'inputVehiclePlaces', 'name' => 'vehiclePlaces', 'title' => 'Plazas'],
+        'vehicleType' => ['id' => 'inputVehicleTypes', 'name' => 'vehicleTypes', 'title' => 'Tipo Vehiculo'],
+        'vehiclePrice' => ['id' => 'inputVehiclePrice', 'name' => 'vehiclePrice', 'title' => 'Precio'],
+        'vehicleDiscount' => ['id' => 'inputVehicleDiscount', 'name' => 'vehicleDiscount', 'title' => 'Descuento'],
+        'vehicleTva' => ['id' => 'inputVehicleTva', 'name' => 'vehicleTva', 'title' => 'Iva'],
+        'vehicleTotal' => ['id' => 'inputVehicleTotal', 'name' => 'vehicleTotal', 'title' => 'Total'],
+        'vehicleEquipment' => ['id' => 'inputVehicleEquipment', 'name' => 'vehicleEquipment', 'title' => 'Equipamiento'],
+        'vehicleComments' => ['id' => 'inputVehicleComments', 'name' => 'vehicleComments', 'title' => 'Comentarios'],
+        'supplyId' => ['id' => 'inputSupplyId', 'name' => 'supplyId', 'title' => 'ID'],
+        'supplyRef' => ['id' => 'inputSupplyRef', 'name' => 'supplyRef', 'title' => 'Referencia'],
+        'supplyName' => ['id' => 'inputSupplyName', 'name' => 'supplyName', 'title' => 'Nombre'],
+        'supplyPrice' => ['id' => 'inputSupplyPrice', 'name' => 'supplyPrice', 'title' => 'Precio'],
+        'supplyCantity' => ['id' => 'inputSupplyCantity', 'name' => 'supplyCantity', 'title' => 'Cantidad'],
+        'supplyTotal' => ['id' => 'inputSupplyTotal', 'name' => 'supplyTotal', 'title' => 'Total'],
+        'suppliesPrice' => ['id' => 'inputSuppliesPrice', 'name' => 'suppliesPrice', 'title' => 'Importe'],
+        'suppliesTva' => ['id' => 'inputSuppliesTva', 'name' => 'suppliesTva', 'title' => 'Iva'],
+        'suppliesTotal' => ['id' => 'inputSuppliesTotal', 'name' => 'suppliesTotal', 'title' => 'Total'],
+        'componentId' => ['id' => 'inputComponentId', 'name' => 'componentId', 'title' => 'ID'],
+        'componentRef' => ['id' => 'inputComponentRef', 'name' => 'componentRef', 'title' => 'Referencia'],
+        'componentName' => ['id' => 'inputComponentName', 'name' => 'componentName', 'title' => 'Nombre'],
+        'componentPrice' => ['id' => 'inputComponentPrice', 'name' => 'componentPrice', 'title' => 'Precio'],
+        'componentCantity' => ['id' => 'inputComponentCantity', 'name' => 'componentCantity', 'title' => 'Cantidad'],
+        'componentTotal' => ['id' => 'inputComponentTotal', 'name' => 'componentTotal', 'title' => 'Total'],
+        'componentsPrice' => ['id' => 'inputComponentsPrice', 'name' => 'componentsPrice', 'title' => 'Importe'],
+        'componentsTva' => ['id' => 'inputComponentsTva', 'name' => 'componentsTva', 'title' => 'Iva'],
+        'componentsTotal' => ['id' => 'inputComponentsTotal', 'name' => 'componentsTotal', 'title' => 'Total'],
+        'workId' => ['id' => 'inputWorkId', 'name' => 'workId', 'title' => 'ID'],
+        'workDescription' => ['id' => 'inputWorkDescription', 'name' => 'workDescription', 'title' => 'Descripción'],
+        'workPrice' => ['id' => 'inputWorkPrice', 'name' => 'workPrice', 'title' => 'Precio'],
+        'workCantity' => ['id' => 'inputWorkCantity', 'name' => 'workCantity', 'title' => 'Cantidad'],
+        'workTotal' => ['id' => 'inputWorkTotal', 'name' => 'workTotal', 'title' => 'Total'],
+        'worksPrice' => ['id' => 'inputWorksPrice', 'name' => 'worksPrice', 'title' => 'Importe'],
+        'worksTva' => ['id' => 'inputWorksTva', 'name' => 'worksTva', 'title' => 'Iva'],
+        'worksTotal' => ['id' => 'inputsWorksTotal', 'name' => 'worksTotal', 'title' => 'Total']];
     public function __construct(SellOfferService $sellOfferService){
         parent::__construct();
         $this->sellOfferService = $sellOfferService;
     }
 //    Funcion que muestra la lista de ofertas
     public function getIndexAction(){
-        $offers = DB::table('selloffers')
-                ->join('customers', 'selloffers.customerId', '=', 'customers.id')
-                ->join('vehicles', 'selloffers.vehicleId', '=', 'vehicles.id')
-                ->join('brands', 'vehicles.brand', '=', 'brands.id')
-                ->join('models', 'vehicles.model', '=', 'models.id')
-                ->select('selloffers.id', 'selloffers.offerNumber', 'selloffers.offerDate', 'customers.name as name', 'brands.name as brand', 'models.name as model')
-                ->whereNull('selloffers.deleted_at')
-                ->get();        
-        return $this->renderHTML('/sells/offers/sellOffersList.html.twig', [
+        $offers = $this->sellOfferService->getSellOffers();      
+        return $this->renderHTML('/sales/offers/sellOffersList.html.twig', [
             'currentUser' => $this->currentUser->getCurrentUserEmailAction(),
+            'list' => $this->list,
+            'tab' => $this->tab,
+            'title' => $this->title,            
+            'search' => $this->search,            
             'offers' => $offers
         ]);
     }
     public function searchSellOffersAction($request){
         $postData = $request->getParsedBody();
         $searchString = $postData['searchFilter'];
-        $offers = DB::table('selloffers')
-                ->join('customers', 'selloffers.customerId', '=', 'customers.id')
-                ->join('vehicles', 'selloffers.vehicleId', '=', 'vehicles.id')
-                ->join('brands', 'vehicles.brand', '=', 'brands.id')
-                ->join('models', 'vehicles.model', '=', 'models.id')          
-                ->select('selloffers.offerNumber', 'customers.name as customerName', 'brands.name as brand',
-                        'models.name as model')
-                ->where('selloffers.offerDate', 'like', '%'.$searchString.'%')
-                ->orWhere('selloffers.offerNumber', 'like', '%'.$searchString.'%')
-                ->orWhere('customers.name', 'like', '%'.$searchString.'%')
-                ->orWhere('brands.name', 'like', '%'.$searchString.'%')
-                ->orWhere('models.name', 'like', '%'.$searchString.'%')
-                ->whereNull('deleted_at')
-                ->get();        
-        return $this->renderHTML('/sells/offers/sellOffersList.html.twig', [
+        $offers = $this->sellOfferService->searchSellOffer($searchString);
+        return $this->renderHTML('/sales/offers/sellOffersList.html.twig', [
             'currentUser' => $this->currentUser->getCurrentUserEmailAction(),
+            'list' => $this->list,
+            'tab' => $this->tab,
+            'title' => $this->title,            
+            'search' => $this->search, 
             'offers' => $offers
         ]);
     }
     public function getSellOffersDataAction($request){
-        $responseMessage = null;
-        $offer = null;
+        $responseMessage = null;        
         if($request->getMethod() == 'POST'){
             $postData = $request->getParsedBody();            
-            if($this->validateData($postData)){
-                $responseMessage = $this->validateData($postData);
+            $offerValidator = v::key('offer_number', v::stringType()->notEmpty())
+                    ->key('customer_id', v::notEmpty())
+                    ->key('vehicle_id', v::notEmpty());
+            try{
+                 $offerValidator->assert($postData);
+                 
+            } 
+            catch (Exception $ex){
+                $responseMessage = $ex->getMessage();
             }
             $offer = $this->getPostDataSellOffer($postData);
             $responseMessage = $this->saveSellOffersDataAction($offer);            
@@ -632,7 +696,7 @@ class SellOffersController extends BaseController {
         $customers = Customer::All();
         $vehicles = Vehicle::All();
         $accesories = Accesories::All();        
-        return $this->renderHTML('/sells/offers/sellOffersForm.html.twig', [
+        return $this->renderHTML('/sales/offers/sellOffersForm.html.twig', [
             'sellOffer' => $selected_offer,
             'offer_number' => $offer_number,
             'customers' => $customers,
@@ -718,13 +782,11 @@ class SellOffersController extends BaseController {
     public function getSelectedTaxe($offer){
         $taxe = null;        
         if($offer){            
-            $taxe = Taxes::find($offer->taxesId);
-            return $taxe;  
+            $taxe = Taxes::find($offer->taxesId);              
         }
         return $taxe;        
     }  
-    public function getSelectedPaymentWay($offer){
-        
+    public function getSelectedPaymentWay($offer){        
         $paymentWay = null;
         if($offer){
             $paymentWay = PaymentWays::find($offer->paymentWayId);
