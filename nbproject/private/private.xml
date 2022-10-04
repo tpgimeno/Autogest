@@ -12,13 +12,14 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Intranet/views/vehicles/vehiclesForm.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Intranet/App/Services/Sales/SellOfferService.php</file>
-            <file>file:/C:/xampp/htdocs/Intranet/views/sales/offers/sellOffersForm.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Intranet/App/Controllers/Sales/SellOffersController.php</file>
-            <file>file:/C:/xampp/htdocs/Intranet/views/macros.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Intranet/App/Controllers/Vehicle/VehicleController.php</file>
-            <file>file:/C:/xampp/htdocs/Intranet/public/index.php</file>
+            <file>file:/C:/xampp/htdocs/Autogest/views/login-panel.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Autogest/views/layout.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Autogest/views/login.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Autogest/public/index.php</file>
+            <file>file:/C:/xampp/htdocs/Autogest/views/menu.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Autogest/views/panel.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Autogest/app/Routes/GenericRoutes.php</file>
+            <file>file:/C:/xampp/htdocs/Autogest/app/Controllers/IndexController.php</file>
         </group>
     </open-files>
 </project-private>

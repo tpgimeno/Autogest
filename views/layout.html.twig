@@ -6,11 +6,96 @@
 <base href="/">
 <title>Intranet Automotive</title>
 {% block stylesheets %}
-    <link rel="stylesheet" href="Intranet/public/style.css" type="text/css">
+    
+    
  <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">   
+    <!-- DataTables Autofill -->
+    <link rel="stylesheet" href="Intranet/panel/plugins/datatables-autofill/css/autoFill.bootstrap4.css" type="text/css">
+    <!-- DataTables BS4 -->
+    <link rel="stylesheet" href="Intranet/panel/plugins/datatables-bs4/css/dataTables.bootstrap4.css" type="text/css">
+    <!-- DataTables Buttons -->
+    <link rel="stylesheet" href="Intranet/panel/plugins/datatables-buttons/css/buttons.bootstrap4.css" type="text/css">
+    <!-- DataTables ColReorder -->
+    <link rel="stylesheet" href="Intranet/panel/plugins/datatables-colreorder/css/colReorder.bootstrap4.css" type="text/css">
+    <!-- DataTables  FixedColumns-->
+    <link rel="stylesheet" href="Intranet/panel/plugins/datatables-fixedcolumns/css/fixedColumns.bootstrap4.css" type="text/css">
+    <!-- DataTables FixedHeader -->
+    <link rel="stylesheet" href="Intranet/panel/plugins/datatables-fixedheader/css/fixedHeader.bootstrap4.css" type="text/css">
+    <!-- DataTables KeyTable -->
+    <link rel="stylesheet" href="Intranet/panel/plugins/datatables-keytable/css/keyTable.bootstrap4.css" type="text/css">
+    <!-- DataTables Responsive -->
+    <link rel="stylesheet" href="Intranet/panel/plugins/datatables-responsive/css/responsive.bootstrap4.css" type="text/css">
+    <!-- DataTables RowReorder -->
+    <link rel="stylesheet" href="Intranet/panel/plugins/datatables-rowreorder/css/rowReorder.bootstrap4.css" type="text/css">
+    <!-- DataTables Scroller -->
+    <link rel="stylesheet" href="Intranet/panel/plugins/datatables-scroller/css/scroller.bootstrap4.css" type="text/css">
+    <!-- DataTables SearchBuilder -->
+    <link rel="stylesheet" href="Intranet/panel/plugins/datatables-searchBuilder/css/searchBuilder.bootstrap4.css" type="text/css">
+    <!-- DataTables Select -->
+    <link rel="stylesheet" href="Intranet/panel/plugins/datatables-select/css/select.bootstrap4.css" type="text/css">
+    <!-- Jquery UI -->
+    <link rel="stylDataTables Autofillesheet" href="Intranet/panel/plugins/jquery-ui/jquery-ui.css" type="text/css">
+    <!-- JS Grid -->
+    <link rel="stylesheet" href="Intranet/panel/plugins/jsgrid/jsgrid-theme.css" type="text/css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="Intranet/panel/plugins/select2/css/select2.css" type="text/css">
+    <!-- Select2 Bootstrap Theme -->
+    <link rel="stylesheet" href="Intranet/panel/plugins/select2-bootstrap-theme/select2-bootstrap4.css" type="text/css">
+    <!-- Admin LTE -->
+    <link rel="stylesheet" href="Intranet/panel/dist/css/adminlte.css" type="text/css">
+    <!-- TpGimeno CSS -->
+    <link rel="stylesheet" href="Intranet/public/style.css" type="text/css">
 {% endblock %}
-
+{% block scripts %}
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script  src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+  <!-- DataTables JS -->
+  <script src="Intranet/panel/plugins/datatables/jquery.dataTables.js"></script>
+  <!-- DataTables AutoFill JS -->
+  <script src="Intranet/panel/plugins/datatables-autofill/js/autoFill.bootstrap4.js"></script>
+  <!-- DataTables BS4 JS -->
+  <script src="Intranet/panel/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+  <!-- DataTables Buttons JS -->
+  <script src="Intranet/panel/plugins/datatables-buttons/js/buttons.bootstrap4.js"></script>
+  <!-- DataTables ColReorder JS -->
+  <script src="Intranet/panel/plugins/datatables-colreorder/js/colReorder.bootstrap4.js"></script>
+  <script src="Intranet/panel/plugins/datatables-colreorder/js/dataTables.colReorder.js"></script>
+  <!-- DataTables FixedColumns JS -->
+  <script src="Intranet/panel/plugins/datatables-fixedcolumns/js/fixedColumns.bootstrap4.js"></script>
+  <script src="Intranet/panel/plugins/datatables-fixedcolumns/js/dataTables.fixedColumns.js"></script>
+  <!-- DataTables FixedHeader JS -->
+  <script src="Intranet/panel/plugins/datatables-fixedheader/js/fixedHeader.bootstrap4.js"></script>
+  <script src="Intranet/panel/plugins/datatables-fixedheader/js/dataTables.fixedHeader.js"></script>
+  <!-- DataTables KeyTable JS -->
+  <script src="Intranet/panel/plugins/datatables-keytable/js/keyTable.bootstrap4.js"></script>
+  <script src="Intranet/panel/plugins/datatables-keytable/js/dataTables.keyTable.js"></script>
+  <!-- DataTables Responsive JS -->
+  <script src="Intranet/panel/plugins/datatables-responsive/js/dataTables.responsive.js"></script>
+  <script src="Intranet/panel/plugins/datatables-responsive/js/responsive.bootstrap4.js"></script>
+  <!-- DataTables RowReorder JS -->
+  <script src="Intranet/panel/plugins/datatables-rowreorder/rowReorder.bootstrap4.js"></script>
+  <script src="Intranet/panel/plugins/datatables-rowreorder/dataTables.rowReorder.js"></script>
+  <!-- DataTables Scroller JS -->
+  <script src="Intranet/panel/plugins/datatables-scroller/js/scroller.bootstrap4.js"></script>
+  <script src="Intranet/panel/plugins/datatables-scroller/js/dataTables.scroller.js"></script>
+  <!-- DataTables SearchBuilder JS -->
+  <script src="Intranet/panel/plugins/datatables-searchbuilder/js/searchBuilder.bootstrap4.js"></script>
+  <script src="Intranet/panel/plugins/datatables-searchbuilder/js/dataTables.searchBuilder.js"></script>
+  <!-- DataTables Select JS -->
+  <script src="Intranet/panel/plugins/datatables-select/js/select.bootstrap4.js"></script>
+  <script src="Intranet/panel/plugins/datatables-select/js/dataTables.select.js"></script>
+  <!-- Jquery UI JS -->
+  <script src="Intranet/panel/plugins/jquery-ui/jquery-ui.js"></script>
+  <!-- JSGrid JS -->
+  <script src="Intranet/panel/plugins/jsgrid/jsgrid.js"></script>
+  <!-- Select2 JS -->
+  <script src="Intranet/panel/plugins/select2/js/select2.js"></script>  
+{% endblock %}
 </head>
 <body>
 <div class="container">         
@@ -45,18 +130,7 @@
     {% block content %}       
     {% endblock %}    
 </div>
-<!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
- <script
-  src="https://code.jquery.com/jquery-3.5.1.js"
-  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-  crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
-    crossorigin="anonymous"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
-  
+
     
 </body>
 </html>

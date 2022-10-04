@@ -1,0 +1,213 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 22-ago-2022, 9:10:48
+    Author     : tonyl
+*/
+
+:root{
+    --primary-color: #FF8323;
+    --secondary-color: #34495E;
+}
+
+
+
+
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+/*
+
+Aside Nav Style
+
+*/
+.sidebar{
+    padding-left: 0px;
+}
+.section-title{
+    background-color: rgba(255,255,255,.2);
+    padding: 5px;    
+}
+ul.nav-pills.nav-sidebar li.nav-item{
+    font-size: 14px;
+    
+}
+
+/*
+Tabs Style
+*/
+#form_base{
+    margin: .5em;
+}
+.content-wrapper {    
+    height: initial;    
+}
+.content-header h1{
+    color: #000;
+}
+.nav-tabs-custom a{
+    color: #000;
+}
+.nav-tabs-custom a:hover{
+    color:#99999B;
+}
+.nav-tabs-custom{
+    background-color: #fff;
+    color: #000;   
+    border: 5px;
+}
+ul.nav-tabs li.nav-item{ 
+    background-color: white;
+    border-bottom: 2px blue solid;
+}
+ul.nav-tabs li.nav-item:hover{   
+    background-color:whitesmoke; 
+    border-bottom: 2px white solid;
+}
+li.nav-item a{
+    text-decoration: none;
+}
+.retorno-lista{
+    float: right;
+    text-align: right;
+    padding-right: 2em;
+    padding-top: 1em;
+    margin-left: auto;
+}
+a.link-lista{
+    color: blue;
+    font-weight: bold;
+}
+a.link-lista:hover{
+    color: #FF8323;
+}
+
+/*
+Select Styles
+*/
+
+#socialName{
+    width: 100%;
+}
+#socialIcon{
+    width: 100%;
+}
+
+
+/* 
+Datatables Styles
+*/
+
+.table-listados{
+    color: #000;
+    width: 100%;
+    vertical-align: middle;
+}
+table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td {
+    max-width: 15em;
+}
+table.dataTable>thead .sorting:before, table.dataTable>thead .sorting:after, 
+table.dataTable>thead .sorting_asc:before, table.dataTable>thead .sorting_asc:after, 
+table.dataTable>thead .sorting_desc:before, table.dataTable>thead .sorting_desc:after, 
+table.dataTable>thead .sorting_asc_disabled:before, table.dataTable>thead .sorting_asc_disabled:after, table.dataTable>thead .sorting_desc_disabled:before, table.dataTable>thead .sorting_desc_disabled:after{
+    bottom: 0.1em;
+}
+.table-listados tr td{
+    vertical-align: initial;
+
+}
+.table-listados tr td a.btn.btn-app{
+    height: auto;
+    min-width: 40px;
+    padding: 5px 0px 5px 0px;
+    margin: 0;
+}
+.btn-app>.fa{
+    font-size: 15px;
+}
+
+/* Form Style */
+
+.form-horizontal{
+    background-color: #fff;   
+}
+#dades .form-group{
+    display: flex;
+}
+#dades .foto-group{
+    display: block;
+}
+#dades .foto-group .input-group button{
+    margin-left: 8px;
+}
+.input-group .form-control{
+    width: 100%;   
+}
+
+.item_button{
+    justify-content: flex-end;
+}
+a.combinado_item{
+    min-width: 35px;
+    height: 38px;
+    margin: 0;
+    margin-top: auto;
+    padding: 10px 5px;    
+}
+.add_button{
+    padding: 0;
+    justify-content: flex-end;
+}
+#add_servicio{
+    min-width: 45px;
+    height: 38px;   
+    padding: 10px 5px;
+    background-color: blue;
+    color: white;
+}
+.boton-add{
+    float: right;
+}
+div.boton-add a{    
+    cursor: pointer;
+}
+.boton-add i.fa.fa-plus-circle{
+    color: var(--primary-color);
+}
+
+/* Croppie */
+
+.foto-croppie {cursor:pointer}
+.foto-croppie-foto{position:relative;}
+.foto-croppie-foto img {max-width:350px;}
+.foto-croppie-legend{
+    position:absolute;
+    bottom:20px;
+    width:100%;
+    height:30px;
+    background-color:rgb(255,255,255,0.8);
+    padding:5px 25px 5px 0;
+    text-align:center;z-index:20
+}
+/*
+
+Summernote
+
+*/
+.cke.cke_reset{
+    width: 100%;
+}
+/*
+
+Modal
+
+*/
+
+.modal-danger{
+    color:#000;
+}
+
+/* Footer */
+
