@@ -1,0 +1,22 @@
+{
+  "name": "Intranet",
+  "homepage": "https://github.com/tpgimeno/Autogest",
+  "authors": [
+    "TpGimeno <tony@tpgimeno.com>"
+  ],
+  "description": "Software Vehicle Sellers",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ckeditor": "^4.20.0",
+    "datatables": "datatable#^1.10.21"
+  }
+}
