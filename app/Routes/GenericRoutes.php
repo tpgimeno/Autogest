@@ -22,7 +22,7 @@ class GenericRoutes {
         /*
         * GENERIC ROUTES
         */
-       $map->get('index', '/Autogest/', [
+       $map->get('index', '/Intranet/', [
            'App\Controllers\IndexController',
            'indexAction'    
        ]);

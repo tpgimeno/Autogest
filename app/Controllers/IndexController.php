@@ -9,6 +9,6 @@ class IndexController extends BaseController
 {
     public function indexAction()
     {        
-        return $this->renderHTML('login-panel.html.twig'); 
+        return $this->renderHTML('login.html.twig'); 
     }     
 }
