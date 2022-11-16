@@ -1,5 +1,7 @@
 .env
 vendor/
+bower_components/
+panel/
 .vscode/
 _mmServerScripts/
 phinx.*
