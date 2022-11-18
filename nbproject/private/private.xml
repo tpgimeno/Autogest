@@ -12,14 +12,9 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Intranet/App/Controllers/IndexController.php</file>
-            <file>file:/C:/xampp/htdocs/Intranet/App/Routes/GenericRoutes.php</file>
-            <file>file:/C:/xampp/htdocs/Intranet/views/panel/pages/examples/login.html</file>
+            <file>file:/C:/xampp/htdocs/Intranet/public/style.css</file>
             <file>file:/C:/xampp/htdocs/Intranet/views/login.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Intranet/.htaccess</file>
-            <file>file:/C:/xampp/htdocs/Intranet/logs/app.log</file>
             <file>file:/C:/xampp/htdocs/Intranet/public/index.php</file>
-            <file>file:/C:/xampp/htdocs/Intranet/views/layout.html.twig</file>
         </group>
     </open-files>
 </project-private>

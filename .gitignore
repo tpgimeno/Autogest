@@ -1,5 +1,7 @@
 .env
 vendor/
+panel/
+public/panel_old
 bower_components/
 views/panel/
 .vscode/

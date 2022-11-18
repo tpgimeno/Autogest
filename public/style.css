@@ -1,3 +1,18 @@
+/*
+*   Login Page
+*/
+
+*, ::after, ::before{
+    box-sizing: border-box;
+}
+
+#logo-login{
+    max-width: 250px;
+}
+
+/*
+*   Home Page
+*/
 #home_icon{
     height: 20px;
 }

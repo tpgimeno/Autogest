@@ -1,4 +1,13 @@
+Options +FollowSymLinks
 RewriteEngine On
+
+# Ignore anything in js/css folders
+RewriteRule ^(js|css)/|\.(css|js)$ - [L,NC]
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{THE_REQUEST} /Intranet/public/([^\s?]*) [NC]
 RewriteRule ^ %1 [L,NE,R=302]
 RewriteRule ^((?!public/).*)$ public/$1 [L,NC]
+
+
