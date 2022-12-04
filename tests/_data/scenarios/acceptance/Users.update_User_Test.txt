@@ -1,9 +1,0 @@
-I WANT TO UPDATE USER
-
-I am on page '/Intranet/admin' 
-I click 'Usuarios'," '.list-group-item' 
-I see current url equals '/Intranet/users/list' 
-I am on page '/Intranet/users/form?id='.$this->id" 
-I submit form('#user form', array  'email' => $email)" 
-I see 'Updated'
-

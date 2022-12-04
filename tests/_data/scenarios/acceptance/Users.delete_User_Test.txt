@@ -1,8 +1,0 @@
-I WANT TO DELETE USER
-
-I am on page '/Intranet/admin' 
-I click 'Usuarios'," '.list-group-item' 
-I see current url equals '/Intranet/users/list' 
-I am on page '/Intranet/users/delete?id='.$this->id" 
-I don't see in database('users', array('id' => intval "$this->id)"," 'deleted_at' => null)"
-

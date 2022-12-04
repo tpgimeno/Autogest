@@ -29,13 +29,13 @@
         "symfony/twig-bridge": "^5.1",
         "symfony/finder": "^5.1",
         "psr/http-server-middleware": "^1.0",
-        "psr/http-server-handler": "^1.0"
+        "psr/http-server-handler": "^1.0",
+        "codeception/codeception": "^4.2"
     },
     "require-dev": {
         "symfony/browser-kit": "^5.1",
         "symfony/css-selector": "^5.1",
         "phpunit/phpunit": "^9.4",
-        "codeception/codeception": "^4.1",
         "codeception/module-phpbrowser": "^1.0.0",
         "codeception/module-asserts": "^1.0.0",
         "codeception/module-laravel5": "^1.1",
@@ -46,5 +46,5 @@
         "codeception/module-datafactory": "^2.0",
         "league/factory-muffin": "^3.3",
         "league/factory-muffin-faker": "^2.3"
-    }
+    }    
 }

@@ -1,7 +1,0 @@
-I WANT TO ACCES TEST
-
-I am on page '/Intranet/' 
-I am on page '/Intranet/admin' 
-I click 'Empresas'," '.list-group-item' 
-I see current url equals '/Intranet/company/list'
-

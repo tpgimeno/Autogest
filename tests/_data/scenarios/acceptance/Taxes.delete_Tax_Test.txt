@@ -1,8 +1,0 @@
-I WANT TO DELETE TAX TEST
-
-I am on page '/Intranet/admin' 
-I click 'Tipos Iva'," '.list-group-item' 
-I see current url equals '/Intranet/taxes/list' 
-I am on page '/Intranet/taxes/delete?id='.$this->id" 
-I don't see in database('taxes', array('id' => intval "$this->id))"
-

@@ -1,8 +1,0 @@
-I WANT TO DELETE FINANCE
-
-I am on page '/Intranet/admin' 
-I click 'Financieras'," '.list-group-item' 
-I see current url equals '/Intranet/finance/list' 
-I am on page '/Intranet/finance/delete?id='.$this->id" 
-I don't see in database('finance', array('id' => intval "$this->id)"," 'deleted_at' => null)"
-

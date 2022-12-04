@@ -1,8 +1,0 @@
-I WANT TO DELETE STORE
-
-I am on page '/Intranet/admin' 
-I click 'Almacenes'," '.list-group-item' 
-I see current url equals '/Intranet/stores/list' 
-I am on page '/Intranet/stores/delete?id='.$this->id" 
-I don't see in database('stores', array('id' => intval "$this->id)"," 'deleted_at' => null)"
-

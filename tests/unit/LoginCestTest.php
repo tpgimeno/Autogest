@@ -1,6 +1,6 @@
 <?php
 
-class IndexControllerTest extends \Codeception\Test\Unit
+class LoginCestTest extends \Codeception\Test\Unit
 {
     /**
      * @var \UnitTester
