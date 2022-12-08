@@ -7,4 +7,14 @@ modules:
     enabled:
         - Asserts
         - \Helper\Unit
+        - Db:
+            dsn: 'mysql:host=localhost;dbname=automotive'
+            user: 'root'
+            password: ''
+            dump: 
+                - 'tests/_data/dump.sql'
+            
+        - PhpBrowser:
+            url: http://localhost
+        
     step_decorators: ~        

@@ -1,6 +1,6 @@
 <?php
 
-use App\Controllers\AuthController;
+use App\Services\AuthService;
 use Codeception\Test\Unit;
 
 class LoginTest extends Unit {
@@ -12,6 +12,8 @@ class LoginTest extends Unit {
 
     protected function _before() {
         
+        
+        
     }
 
     protected function _after() {
@@ -19,12 +21,10 @@ class LoginTest extends Unit {
     }
 
     // tests
-    public function testPostLoginFunction() {
+    public function testPostLoginFailFunction() {
         $arrayPost = ["email" => null, "password" => null];
-        $new_request = new \Laminas\Diactoros\ServerRequest();
-        
-        $post = new AuthController();
-        $post->postLogin($request)
+        $loginService = new AuthService();        
+        $this->tester->assertNull($loginService->idUserRegistered($arrayPost));    
     }
 
 }
