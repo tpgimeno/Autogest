@@ -25,7 +25,7 @@ final class CreatePaymentWaysTable extends AbstractMigration
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime', ['null' => true])
                 ->addColumn('deleted_at', 'datetime', ['null' => true])
-                ->addForeignKey('account', 'accounts', array('account' => 'accounts.id'))
+                ->addForeignKey(['account'], 'accounts', array('id'))
                 ->create();
     }
 }
