@@ -17,20 +17,24 @@ class AuthController extends BaseController {
     public function postLogin(ServerRequest $request) {
         $responseMessage = null;
         $postData = $request->getParsedBody();        
-        if ($request->getMethod() == 'POST') {  
+        if ($request->getMethod() == 'POST') {             
+            $user = $this->authService->idUserRegistered($postData);
             
-            $user = $this->authService->idUserRegistered($postData);            
             if ($user) {                
-                $_SESSION['userId'];              
+                setcookie("AutoGest", $user->email, time() + 5184000);
+                setcookie("userId", $user->id, time() + 5184000);               
                 return new RedirectResponse('/Intranet/admin');                
             } else {
                 $responseMessage = 'El usuario o el Password no es correcto';                
+                setcookie("AutoGest", "", 0, "/");
                 return $this->renderHTML('login.html.twig', [
                             'responseMessage' => $responseMessage
                 ]);
             }
         }
     }    
+
+    
 
     public function getLogout() {
         unset($_SESSION['userId']);
