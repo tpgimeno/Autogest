@@ -14,7 +14,6 @@
         <group>
             <file>file:/C:/xampp/htdocs/Intranet/App/Controllers/AdminController.php</file>
             <file>file:/C:/xampp/htdocs/Intranet/App/Controllers/AuthController.php</file>
-            <file>file:/C:/xampp/htdocs/Intranet/logs/app.log</file>
             <file>file:/C:/xampp/htdocs/Intranet/public/index.php</file>
         </group>
     </open-files>

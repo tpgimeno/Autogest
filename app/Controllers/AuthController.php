@@ -18,11 +18,10 @@ class AuthController extends BaseController {
         $responseMessage = null;
         $postData = $request->getParsedBody();        
         if ($request->getMethod() == 'POST') {             
-            $user = $this->authService->idUserRegistered($postData);
-            
+            $user = $this->authService->idUserRegistered($postData);            
             if ($user) {                
                 setcookie("AutoGest", $user->email, time() + 5184000);
-                setcookie("userId", $user->id, time() + 5184000);               
+                $__SESSION['userId'] = $user->id;              
                 return new RedirectResponse('/Intranet/admin');                
             } else {
                 $responseMessage = 'El usuario o el Password no es correcto';                
@@ -32,10 +31,7 @@ class AuthController extends BaseController {
                 ]);
             }
         }
-    }    
-
-    
-
+    }
     public function getLogout() {
         unset($_SESSION['userId']);
         return new RedirectResponse('/Intranet/');
