@@ -10,4 +10,12 @@ modules:
     enabled:
         # add a framework module here
         - \Helper\Functional
+        - PhpBrowser:
+            url: http://localhost/Intranet
+        - Db:
+            dsn: 'mysql:host=localhost;dbname=automotive'
+            user: 'root'
+            password: ''
+            dump: 
+                - 'tests/_data/dump.sql'
     step_decorators: ~        

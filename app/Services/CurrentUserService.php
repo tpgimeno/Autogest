@@ -13,7 +13,7 @@ class CurrentUserService
     protected $user;
     public function getCurrentUserEmailAction()
     {
-        $this->user = User::find($_SESSION['userId']); 
+        $this->user = User::find($_COOKIE['userId']); 
         
         if(!$this->user)
         {

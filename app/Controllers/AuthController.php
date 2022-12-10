@@ -21,7 +21,7 @@ class AuthController extends BaseController {
             $user = $this->authService->idUserRegistered($postData);            
             if ($user) {                
                 setcookie("AutoGest", $user->email, time() + 5184000);
-                $__SESSION['userId'] = $user->id;              
+                $__COOKIE['userId'] = $user->id;              
                 return new RedirectResponse('/Intranet/admin');                
             } else {
                 $responseMessage = 'El usuario o el Password no es correcto';                
