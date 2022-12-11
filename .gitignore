@@ -3,6 +3,7 @@ vendor/
 panel/
 public/panel_old
 bower_components/
+node_modules/
 views/panel/
 .vscode/
 _mmServerScripts/
@@ -11,5 +12,5 @@ nbproject/
 .phpdoc
 build/
 docs/
-codeception.yml
+
 

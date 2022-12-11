@@ -18,9 +18,8 @@ class LoginFunctionalTestCest
     public function LoginPassTest(FunctionalTester $I) {
         $I->amOnPage("/");
         $I->see("Iniciar sesión");
-        $I->submitForm('#loginForm', ['email' => 'tonyllomouse@gmail.com', 'password' => '12345']);
-        
-        $I->seeLink('Empresas');
+        $I->submitForm('#loginForm', ['email' => 'tonyllomouse@gmail.com', 'password' => '12345']);        
+        $I->canSee("Mantenimiento");
         
     }
 }

@@ -11,15 +11,6 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/xampp/htdocs/Intranet/tests/acceptance/LoginTestCest.php</file>
-            <file>file:/C:/xampp/htdocs/Intranet/tests/functional/LoginFunctionalTestCest.php</file>
-            <file>file:/C:/xampp/htdocs/Intranet/App/Controllers/AdminController.php</file>
-            <file>file:/C:/xampp/htdocs/Intranet/views/menu.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Intranet/App/Services/AuthService.php</file>
-            <file>file:/C:/xampp/htdocs/Intranet/App/Controllers/AuthController.php</file>
-            <file>file:/C:/xampp/htdocs/Intranet/views/login.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Intranet/public/index.php</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

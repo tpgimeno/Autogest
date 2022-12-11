@@ -1,4 +1,13 @@
 {
+    "name": "tonyl/intranet",
+    "description": "Software Car Sellers",
+    "type": "project",
+    "authors": [
+        {
+            "name": "TpGimeno",
+            "email": "tony@tpgimeno.com"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "App\\": "app/",
@@ -28,11 +37,11 @@
         "phpoffice/phpspreadsheet": "^1.16",
         "symfony/twig-bridge": "^5.1",
         "symfony/finder": "^5.1",
-        "psr/http-server-middleware": "^1.0",
+        "psr/http-server-middleware": "^1.0",        
         "codeception/codeception": "^4.2",
         "codeception/module-phpbrowser": "^1.0.0",
-        "codeception/module-asserts": "^1.0.0",
-        "psr/http-server-handler": "^1.0"
+        "codeception/module-asserts": "^1.0.0"
+        
     },
     "require-dev": {
         "symfony/browser-kit": "^5.1",
@@ -41,7 +50,7 @@
         "codeception/module-phpbrowser": "^1.0.0",
         "codeception/module-asserts": "^1.0.0",
         "codeception/module-laravel5": "^1.1",
-        "codeception/module-webdriver": "^1.1",
+        "codeception/module-webdriver": "^2.0",
         "codeception/module-db": "^1.1",
         "hoa/console": "^3.17",
         "phpunit/php-code-coverage": "^9.2",

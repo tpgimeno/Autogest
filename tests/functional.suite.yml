@@ -12,6 +12,8 @@ modules:
         - \Helper\Functional
         - PhpBrowser:
             url: http://localhost/Intranet
+            
+            
         - Db:
             dsn: 'mysql:host=localhost;dbname=automotive'
             user: 'root'

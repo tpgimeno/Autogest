@@ -1,0 +1,7 @@
+I WANT TO LOGIN FAIL TEST
+
+I am on page ""/Intranet"" 
+I see ""Iniciar sesión"" 
+I submit form '#loginForm'," ['email' => 'tony@hotmail.com'," 'password' => '435665']" 
+I see 'El usuario o el Password no es correcto'
+
