@@ -8,6 +8,7 @@ class LoginTestCest {
 
     // tests
     public function LoginAccesTest(AcceptanceTester $I) {
+        $I->amGoingTo("Verificar que hay acceso a la página de Login");
         $I->amOnPage("/");
         $I->see("Iniciar sesión");
     }

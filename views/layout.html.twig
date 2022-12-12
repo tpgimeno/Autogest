@@ -7,9 +7,15 @@
 <title>Intranet Automotive</title>
 {% block stylesheets %}
     
-    
- <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">   
+    <!-- jQuery -->
+    <script src="Intranet/panel/plugins/jquery/jquery.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="Intranet/panel/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <!-- Bootstrap 4 -->
+    <script src="Intranet/panel/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="Intranet/panel/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
     <!-- DataTables Autofill -->
     <link rel="stylesheet" href="Intranet/panel/plugins/datatables-autofill/css/autoFill.bootstrap4.css" type="text/css">
     <!-- DataTables BS4 -->
@@ -41,92 +47,240 @@
     <!-- Select2 -->
     <link rel="stylesheet" href="Intranet/panel/plugins/select2/css/select2.css" type="text/css">
     <!-- Select2 Bootstrap Theme -->
-    <link rel="stylesheet" href="Intranet/panel/plugins/select2-bootstrap-theme/select2-bootstrap4.css" type="text/css">
+    <link rel="stylesheet" href="Intranet/panel/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css" type="text/css">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="Intranet/panel/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    
+    <!-- iCheck -->
+    <link rel="stylesheet" href="Intranet/panel/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="Intranet/panel/plugins/jqvmap/jqvmap.min.css">   
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="Intranet/panel/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="Intranet/panel/plugins/daterangepicker/daterangepicker.css">
+    <!-- summernote -->
+    <link rel="stylesheet" href="Intranet/panel/plugins/summernote/summernote-bs4.min.css">
     <!-- Admin LTE -->
     <link rel="stylesheet" href="Intranet/panel/dist/css/adminlte.css" type="text/css">
     <!-- TpGimeno CSS -->
     <link rel="stylesheet" href="Intranet/public/style.css" type="text/css">
 {% endblock %}
 {% block scripts %}
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script  src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+  <!-- Optional JavaScript -->    
     <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
-  <!-- DataTables JS -->
-  <script src="Intranet/panel/plugins/datatables/jquery.dataTables.js"></script>
-  <!-- DataTables AutoFill JS -->
-  <script src="Intranet/panel/plugins/datatables-autofill/js/autoFill.bootstrap4.js"></script>
-  <!-- DataTables BS4 JS -->
-  <script src="Intranet/panel/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
-  <!-- DataTables Buttons JS -->
-  <script src="Intranet/panel/plugins/datatables-buttons/js/buttons.bootstrap4.js"></script>
-  <!-- DataTables ColReorder JS -->
-  <script src="Intranet/panel/plugins/datatables-colreorder/js/colReorder.bootstrap4.js"></script>
-  <script src="Intranet/panel/plugins/datatables-colreorder/js/dataTables.colReorder.js"></script>
-  <!-- DataTables FixedColumns JS -->
-  <script src="Intranet/panel/plugins/datatables-fixedcolumns/js/fixedColumns.bootstrap4.js"></script>
-  <script src="Intranet/panel/plugins/datatables-fixedcolumns/js/dataTables.fixedColumns.js"></script>
-  <!-- DataTables FixedHeader JS -->
-  <script src="Intranet/panel/plugins/datatables-fixedheader/js/fixedHeader.bootstrap4.js"></script>
-  <script src="Intranet/panel/plugins/datatables-fixedheader/js/dataTables.fixedHeader.js"></script>
-  <!-- DataTables KeyTable JS -->
-  <script src="Intranet/panel/plugins/datatables-keytable/js/keyTable.bootstrap4.js"></script>
-  <script src="Intranet/panel/plugins/datatables-keytable/js/dataTables.keyTable.js"></script>
-  <!-- DataTables Responsive JS -->
-  <script src="Intranet/panel/plugins/datatables-responsive/js/dataTables.responsive.js"></script>
-  <script src="Intranet/panel/plugins/datatables-responsive/js/responsive.bootstrap4.js"></script>
-  <!-- DataTables RowReorder JS -->
-  <script src="Intranet/panel/plugins/datatables-rowreorder/rowReorder.bootstrap4.js"></script>
-  <script src="Intranet/panel/plugins/datatables-rowreorder/dataTables.rowReorder.js"></script>
-  <!-- DataTables Scroller JS -->
-  <script src="Intranet/panel/plugins/datatables-scroller/js/scroller.bootstrap4.js"></script>
-  <script src="Intranet/panel/plugins/datatables-scroller/js/dataTables.scroller.js"></script>
-  <!-- DataTables SearchBuilder JS -->
-  <script src="Intranet/panel/plugins/datatables-searchbuilder/js/searchBuilder.bootstrap4.js"></script>
-  <script src="Intranet/panel/plugins/datatables-searchbuilder/js/dataTables.searchBuilder.js"></script>
-  <!-- DataTables Select JS -->
-  <script src="Intranet/panel/plugins/datatables-select/js/select.bootstrap4.js"></script>
-  <script src="Intranet/panel/plugins/datatables-select/js/dataTables.select.js"></script>
-  <!-- Jquery UI JS -->
-  <script src="Intranet/panel/plugins/jquery-ui/jquery-ui.js"></script>
-  <!-- JSGrid JS -->
-  <script src="Intranet/panel/plugins/jsgrid/jsgrid.js"></script>
-  <!-- Select2 JS -->
-  <script src="Intranet/panel/plugins/select2/js/select2.js"></script>  
+    <!-- DataTables JS -->
+    <script src="Intranet/panel/plugins/datatables/jquery.dataTables.js"></script>
+    <!-- DataTables AutoFill JS -->
+    <script src="Intranet/panel/plugins/datatables-autofill/js/autoFill.bootstrap4.js"></script>
+    <!-- DataTables BS4 JS -->
+    <script src="Intranet/panel/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+    <!-- DataTables Buttons JS -->
+    <script src="Intranet/panel/plugins/datatables-buttons/js/buttons.bootstrap4.js"></script>
+    <!-- DataTables ColReorder JS -->
+    <script src="Intranet/panel/plugins/datatables-colreorder/js/colReorder.bootstrap4.js"></script>
+    <script src="Intranet/panel/plugins/datatables-colreorder/js/dataTables.colReorder.js"></script>
+    <!-- DataTables FixedColumns JS -->
+    <script src="Intranet/panel/plugins/datatables-fixedcolumns/js/fixedColumns.bootstrap4.js"></script>
+    <script src="Intranet/panel/plugins/datatables-fixedcolumns/js/dataTables.fixedColumns.js"></script>
+    <!-- DataTables FixedHeader JS -->
+    <script src="Intranet/panel/plugins/datatables-fixedheader/js/fixedHeader.bootstrap4.js"></script>
+    <script src="Intranet/panel/plugins/datatables-fixedheader/js/dataTables.fixedHeader.js"></script>
+    <!-- DataTables KeyTable JS -->
+    <script src="Intranet/panel/plugins/datatables-keytable/js/keyTable.bootstrap4.js"></script>
+    <script src="Intranet/panel/plugins/datatables-keytable/js/dataTables.keyTable.js"></script>
+    <!-- DataTables Responsive JS -->
+    <script src="Intranet/panel/plugins/datatables-responsive/js/dataTables.responsive.js"></script>
+    <script src="Intranet/panel/plugins/datatables-responsive/js/responsive.bootstrap4.js"></script>
+    <!-- DataTables RowReorder JS -->
+    <script src="Intranet/panel/plugins/datatables-rowreorder/js/rowReorder.bootstrap4.js"></script>
+    <script src="Intranet/panel/plugins/datatables-rowreorder/js/dataTables.rowReorder.js"></script>
+    <!-- DataTables Scroller JS -->
+    <script src="Intranet/panel/plugins/datatables-scroller/js/scroller.bootstrap4.js"></script>
+    <script src="Intranet/panel/plugins/datatables-scroller/js/dataTables.scroller.js"></script>
+    <!-- DataTables SearchBuilder JS -->
+    <script src="Intranet/panel/plugins/datatables-searchbuilder/js/searchBuilder.bootstrap4.js"></script>
+    <script src="Intranet/panel/plugins/datatables-searchbuilder/js/dataTables.searchBuilder.js"></script>
+    <!-- DataTables Select JS -->
+    <script src="Intranet/panel/plugins/datatables-select/js/select.bootstrap4.js"></script>
+    <script src="Intranet/panel/plugins/datatables-select/js/dataTables.select.js"></script>
+    <!-- Jquery UI JS -->
+    <script src="Intranet/panel/plugins/jquery-ui/jquery-ui.js"></script>
+    <!-- JSGrid JS -->
+    <script src="Intranet/panel/plugins/jsgrid/jsgrid.js"></script>
+    <!-- Select2 JS -->
+    <script src="Intranet/panel/plugins/select2/js/select2.js"></script>   
+    <!-- ChartJS -->
+    <script src="Intranet/panel/plugins/chart.js/Chart.min.js"></script>
+    <!-- Sparkline -->
+    <script src="Intranet/panel/plugins/sparklines/sparkline.js"></script>
+    <!-- JQVMap -->
+    <script src="Intranet/panel/plugins/jqvmap/jquery.vmap.min.js"></script>
+    <script src="Intranet/panel/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+    <!-- jQuery Knob Chart -->
+    <script src="Intranet/panel/plugins/jquery-knob/jquery.knob.min.js"></script>
+    <!-- daterangepicker -->
+    <script src="Intranet/panel/plugins/moment/moment.min.js"></script>
+    <script src="Intranet/panel/plugins/daterangepicker/daterangepicker.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="Intranet/panel/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- Summernote -->
+    <script src="Intranet/panel/plugins/summernote/summernote-bs4.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="Intranet/panel/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="Intranet/panel/dist/js/adminlte.js"></script>
 {% endblock %}
 </head>
 <body>
-<div class="container">         
-    <div class="row">
-        <div class="col-3">              
-            <img class="img-fluid" src="/Intranet/public/images/image63.png" alt="Logotipo Automotive">  
+<div class="wrapper">
+
+  <!-- Preloader -->
+  <div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+  </div>
+
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="index3.html" class="nav-link">Home</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="#" class="nav-link">Contact</a>
+      </li>
+    </ul>
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <!-- Navbar Search -->
+      <li class="nav-item">
+        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+          <i class="fas fa-search"></i>
+        </a>
+        <div class="navbar-search-block">
+          <form class="form-inline">
+            <div class="input-group input-group-sm">
+              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+              <div class="input-group-append">
+                <button class="btn btn-navbar" type="submit">
+                  <i class="fas fa-search"></i>
+                </button>
+                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
-        <div class="col-6">
-            <nav class="navbar navbar-expand-lg navbar-light">
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-auto mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#"><img id="home_icon" class="img-fluid mb-1" src="Intranet/public/images/home.svg" alt="Home"><span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Quienes somos?</a>
-                    </li>
-                        <li class="nav-item">
-                        <a class="nav-link" href="#">Contacto</a>
-                    </li>                       
-                </div>
-                </nav>
+      </li>
+
+      <!-- Messages Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="far fa-comments"></i>
+          <span class="badge badge-danger navbar-badge">3</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <a href="#" class="dropdown-item">
+            <!-- Message Start -->
+            <div class="media">
+              <img src="dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+              <div class="media-body">
+                <h3 class="dropdown-item-title">
+                  Brad Diesel
+                  <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                </h3>
+                <p class="text-sm">Call me whenever you can...</p>
+                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+              </div>
+            </div>
+            <!-- Message End -->
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <!-- Message Start -->
+            <div class="media">
+              <img src="dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+              <div class="media-body">
+                <h3 class="dropdown-item-title">
+                  John Pierce
+                  <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
+                </h3>
+                <p class="text-sm">I got your message bro</p>
+                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+              </div>
+            </div>
+            <!-- Message End -->
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <!-- Message Start -->
+            <div class="media">
+              <img src="dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+              <div class="media-body">
+                <h3 class="dropdown-item-title">
+                  Nora Silvester
+                  <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
+                </h3>
+                <p class="text-sm">The subject goes here</p>
+                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+              </div>
+            </div>
+            <!-- Message End -->
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
         </div>
-        <div class="col-3">
-        {% block loginForm %}         
-        {% endblock %} 
+      </li>
+      <!-- Notifications Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="far fa-bell"></i>
+          <span class="badge badge-warning navbar-badge">15</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <span class="dropdown-item dropdown-header">15 Notifications</span>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-envelope mr-2"></i> 4 new messages
+            <span class="float-right text-muted text-sm">3 mins</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-users mr-2"></i> 8 friend requests
+            <span class="float-right text-muted text-sm">12 hours</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-file mr-2"></i> 3 new reports
+            <span class="float-right text-muted text-sm">2 days</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
-    </div>  
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+          <i class="fas fa-expand-arrows-alt"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
+          <i class="fas fa-th-large"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.navbar -->
     {% block content %}       
     {% endblock %}    
 </div>
