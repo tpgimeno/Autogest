@@ -1,5 +1,7 @@
 /*
+* ================
 *   Login Page
+* ================
 */
 
 *, ::after, ::before{
@@ -11,8 +13,11 @@
 }
 
 /*
+* ================
 *   Home Page
+* ================
 */
+
 #home_icon{
     height: 20px;
 }
@@ -40,5 +45,15 @@
 .disabled:hover{
     pointer-events: none;
     text-decoration: none;
+}
+
+/*
+* ================
+*   Company
+* ================
+*/
+
+#dataTableCompanies{
+    width: 100%;
 }
 
