@@ -1,46 +1,36 @@
-{% extends "menu.html.twig" %}
-{% import 'macros.html.twig' as fields %}
+{% extends "layout.html.twig" %}
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-10">
-            <h2> {{ title }} </h2>
-        </div>   
-        {{ fields.return(list, tab) }}
-    </div>
-    <div class="row">
-        {{ fields.alert(responseMessage) }}
-    </div>
-    <div class="row">
-        <div class="col">
-            <form id="{{formName}}" action="{{ save }}" method="post">
-                <div class="form-row">
-                    {{ fields.input2(inputs.id.id, inputs.id.name, inputs.id.title, value.id) }}                 
-                </div>
-                <div class="form-row">
-                    {{ fields.input4(inputs.name.id, inputs.name.name, inputs.name.title, value.name) }}
-                    {{ fields.input2(inputs.fiscalId.id, inputs.fiscalId.name, inputs.fiscalId.title, value.fiscalId) }}
-                    {{ fields.input6(inputs.fiscalName.id, inputs.fiscalName.name, inputs.fiscalName.title, value.fiscalName) }}
-                </div>
-                <div class="form-row">
-                    {{ fields.input6(inputs.address.id, inputs.address.name, inputs.address.title, value.address) }}
-                    {{ fields.input2(inputs.postalCode.id, inputs.postalCode.name, inputs.postalCode.title, value.postalCode) }}
-                    {{ fields.input4(inputs.city.id, inputs.city.name, inputs.city.title, value.city) }}
-                </div>                   
-                <div class="form-row"> 
-                    {{ fields.input3(inputs.state.id, inputs.state.name, inputs.state.title, value.state) }} 
-                    {{ fields.input3(inputs.country.id, inputs.country.name, inputs.country.title, value.country) }}                          
-                    {{ fields.input2(inputs.phone.id, inputs.phone.name, inputs.phone.title, value.phone) }}
-                    {{ fields.input4(inputs.email.id, inputs.email.name, inputs.email.title, value.email) }}
-                </div>
-                <div class="form-row">                                  
-                    {{ fields.input6(inputs.site.id, inputs.site.name, inputs.site.title, value.site) }}                    
-                </div>
-                <div class="form-row">
-                    {{ fields.buttonsForm(tab) }}
+<div class="content-wrapper pb-2" style="min-height: 960px">
+    <section class="content-header"><h2>Empresa</h2></section>
+    <section class="content">
+        <div class="container-fluid">
+            <form class="form-horizontal " id="formCompany" action="Intranet/company/save">
+                <div class="form-group col">
+                    <div class="input-group">
+                        <label class="label" for="name">Nombre</label>
+                        <input type="text" id="name" name="name" class="form-control">
+                    </div>
+                    <div class="input-group">
+                        <label class="label" for="name">CIF</label>
+                        <input type="text" id="fiscalId" name="fiscalId" class="form-control">
+                    </div>
+                    <div class="input-group">
+                        <label class="label" for="name">Nombre Fiscal</label>
+                        <input type="text" id="fiscalName" name="fiscalName" class="form-control">
+                    </div>
+                    <div class="input-group">
+                        <label class="label" for="name">Direccion</label>
+                        <input type="text" id="address" name="address" class="form-control">
+                    </div>
+                    <div class="input-group">
+                        <label class="label" for="name">Codigo Postal</label>
+                        <input type="text" id="postalCode" name="postalCode" class="form-control">
+                    </div>
                 </div>
             </form>
         </div>
-    </div>
-</div>    
+    </section>
+</div>
+            
+            
 {% endblock %}

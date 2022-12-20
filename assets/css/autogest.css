@@ -18,42 +18,34 @@
 * ================
 */
 
-#home_icon{
-    height: 20px;
-}
-#colmenu{
-    background-color: red;
-    height: 100%;
-}
-#searchField{
-    width:75%;
-}
-#headerimg{
-    width: 40%;
-}
-.form-inline .form-control{
-    max-width: 100%;
-}
-.euros
-{
-    text-align: right;    
-}
-.disabled {
-    pointer-events: none;
-    text-decoration: none;
-}
-.disabled:hover{
-    pointer-events: none;
-    text-decoration: none;
-}
 
 /*
 * ================
-*   Company
+*   DataTables
 * ================
 */
 
-#dataTableCompanies{
+.dataTable{
     width: 100%;
 }
+table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td {
+    max-width: 15em;
+}
+table.dataTable>thead .sorting:before, table.dataTable>thead .sorting:after, 
+table.dataTable>thead .sorting_asc:before, table.dataTable>thead .sorting_asc:after, 
+table.dataTable>thead .sorting_desc:before, table.dataTable>thead .sorting_desc:after, 
+table.dataTable>thead .sorting_asc_disabled:before, table.dataTable>thead .sorting_asc_disabled:after, table.dataTable>thead .sorting_desc_disabled:before, table.dataTable>thead .sorting_desc_disabled:after{
+    bottom: 0.1em;
+}
 
+
+/*
+* ================
+*   Forms
+* ================
+*/
+
+.form-horizontal .form-group .input-group label{
+    margin-right: 1em;
+    margin-top: auto;
+}

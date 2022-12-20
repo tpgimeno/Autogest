@@ -26,8 +26,6 @@ class CompanyController extends BaseController {
         ]);
     }
 
-    
-
     public function getCompanyDataAction($request) {
         $responseMessage = null;
         if ($request->getMethod() == 'POST') {
@@ -46,14 +44,8 @@ class CompanyController extends BaseController {
         $companySelected = $this->companyService->setInstance(new Company(), $request->getQueryParams());
         return $this->renderHTML('/Entitys/company/companyForm.html.twig', [
                     'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
-                    'responseMessage' => $responseMessage,
-                    'inputs' => $this->inputs,
-                    'save' => $this->save,
-                    'list' => $this->list,
-                    'formName' => $this->formName,
-                    'tab' => $this->tab,
-                    'title' => $this->title,
-                    'value' => $companySelected
+                    'responseMessage' => $responseMessage,                    
+                    'companySelected' => $companySelected
         ]);
     }
 

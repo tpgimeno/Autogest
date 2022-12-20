@@ -67,7 +67,7 @@
             <!-- Admin LTE -->
             <link rel="stylesheet" href="Intranet/panel/dist/css/adminlte.css" type="text/css">
             <!-- Autgest Styles -->    
-            <link rel="stylesheet" href="Intranet/assets/css/autogest.css" type="text/css">
+            <link rel="stylesheet" href="Intranet/assets/css/autogest.css?v={{ random(1, 10000) }}" type="text/css">
         {% endblock %}
         {% block scripts %}
             <!-- Optional JavaScript -->    
@@ -143,7 +143,8 @@
             <script src="Intranet/panel/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
             <!-- AdminLTE App -->
             <script src="Intranet/panel/dist/js/adminlte.js"></script>
-
+            <!-- AutoGest Scripts -->
+            <script src="Intranet/assets/js/autogest.js?v={{ random(1, 10000) }}" type="text/javascript"></script>
         {% endblock %}
     </head>
     <body>
