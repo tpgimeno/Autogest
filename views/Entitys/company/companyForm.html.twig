@@ -1,32 +1,81 @@
 {% extends "layout.html.twig" %}
 {% block content %}
-<div class="content-wrapper pb-2" style="min-height: 960px">
+<div class="content-wrapper pb-5" style="min-height: 960px">
     <section class="content-header"><h2>Empresa</h2></section>
-    <section class="content">
+    <section class="content ">
+        <div class="volver-link">
+            <span class="alert float-left">{{ responseMessage }}</span>
+            <a class="btn btn-outline-primary float-right" href="Intranet/company/list">Lista</a>
+        </div>
         <div class="container-fluid">
-            <form class="form-horizontal " id="formCompany" action="Intranet/company/save">
+            <form class="form-horizontal " id="formCompany" action="Intranet/company/save" method="post">
                 <div class="form-group col">
-                    <div class="input-group">
-                        <label class="label" for="name">Nombre</label>
-                        <input type="text" id="name" name="name" class="form-control">
+                    <div class="row">
+                        <div class="input-group col-8">
+                            <label class="control-label" for="name">Nombre</label>
+                            <input type="text" id="name" name="name" class="form-control" value="{{ companySelected.name }}">
+                        </div>
+                        <div class="input-group col-4">
+                            <label class="control-label pl-4" for="fiscalId">CIF</label>
+                            <input type="text" id="fiscalId" name="fiscalId" class="form-control" value="{{ companySelected.fiscalId }}">
+                        </div>
                     </div>
-                    <div class="input-group">
-                        <label class="label" for="name">CIF</label>
-                        <input type="text" id="fiscalId" name="fiscalId" class="form-control">
+                    <div class="row">
+                        <div class="input-group col-8">
+                            <label class="control-label" for="fiscalName">Nombre Fiscal</label>
+                            <input type="text" id="fiscalName" name="fiscalName" class="form-control" value="{{ companySelected.fiscalName }}">
+                        </div>
                     </div>
-                    <div class="input-group">
-                        <label class="label" for="name">Nombre Fiscal</label>
-                        <input type="text" id="fiscalName" name="fiscalName" class="form-control">
+                    <div class="row">
+                        <div class="input-group col-8">
+                            <label class="control-label" for="address">Direccion</label>
+                            <input type="text" id="address" name="address" class="form-control" value="{{ companySelected.address }}">
+                        </div>
+                        <div class="input-group col-4">
+                            <label class="control-label pl-4" for="postalCode">Codigo Postal</label>
+                            <input type="text" id="postalCode" name="postalCode" class="form-control" value="{{ companySelected.postalCode }}">
+                        </div>
                     </div>
-                    <div class="input-group">
-                        <label class="label" for="name">Direccion</label>
-                        <input type="text" id="address" name="address" class="form-control">
+                    <div class="row">
+                        <div class="input-group col-6">
+                            <label class="control-label" for="city">Ciudad</label>
+                            <input type="text" id="city" name="city" class="form-control" value="{{ companySelected.city }}">
+                        </div>
+                        <div class="input-group col-6">
+                            <label class="control-label" for="state">Provincia</label>
+                            <input type="text" id="state" name="state" class="form-control" value="{{ companySelected.state }}">
+                        </div>                        
                     </div>
-                    <div class="input-group">
-                        <label class="label" for="name">Codigo Postal</label>
-                        <input type="text" id="postalCode" name="postalCode" class="form-control">
+                    <div class="row">
+                        <div class="input-group col-6">
+                            <label class="control-label" for="country">Pais</label>
+                            <input type="text" id="country" name="country" class="form-control" value="{{ companySelected.country }}">
+                        </div>
+                        <div class="input-group col-6">
+                            <label class="control-label" for="phone">Teléfono</label>
+                            <input type="text" id="phone" name="phone" class="form-control" value="{{ companySelected.phone }}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group col-6">
+                            <label class="control-label" for="email">Email</label>
+                            <input type="text" id="email" name="email" class="form-control" value="{{ companySelected.email }}">
+                        </div>
+                        <div class="input-group col-6">
+                            <label class="control-label" for="site">Página Web</label>
+                            <input type="text" id="site" name="site" class="form-control" value="{{ companySelected.site }}">
+                        </div>
                     </div>
                 </div>
+                    {% if companySelected %}
+                        <div class="button-wrapper float-left">
+                            <a class="btn btn-primary" href="Intranet/company/delete?id={{ companySelected.id }}">Eliminar</a>                            
+                        </div> 
+                    {% endif %}
+                <div class="button-wrapper float-right">
+                    <button type="submit" form="formCompany" class="btn btn-primary" id="submit">Guardar</button>
+                    <button type="button" form="formCompany" class="btn btn-primary" id="reset">Restablecer</button>
+                </div>                
             </form>
         </div>
     </section>

@@ -28,6 +28,7 @@ class CompanyController extends BaseController {
 
     public function getCompanyDataAction($request) {
         $responseMessage = null;
+        $companySelected = null;
         if ($request->getMethod() == 'POST') {
             $postData = $request->getParsedBody();
             $companyValidator = v::key('name', v::stringType()->notEmpty())
@@ -35,13 +36,17 @@ class CompanyController extends BaseController {
                     ->key('phone', v::notEmpty())
                     ->key('email', v::stringType()->notEmpty());
             try {
-                $companyValidator->assert($postData); // true 
-                $responseMessage = $this->companyService->saveRegister(new Company(), $postData);
+                $companyValidator->assert($postData); // true                 
+                $response = $this->companyService->saveRegister(new Company(), $postData);
+                
+                $companySelected = $this->companyService->findCompany(array('id' => $response[0]));
+                $responseMessage = $response[1];
             } catch (Exception $e) {
                 $responseMessage = $e->getMessage();
             }
+        }else{        
+            $companySelected = $this->companyService->setInstance(new Company(), $request->getQueryParams()); 
         }
-        $companySelected = $this->companyService->setInstance(new Company(), $request->getQueryParams());
         return $this->renderHTML('/Entitys/company/companyForm.html.twig', [
                     'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
                     'responseMessage' => $responseMessage,                    
@@ -49,7 +54,7 @@ class CompanyController extends BaseController {
         ]);
     }
 
-    public function deleteAction(ServerRequest $request) {
+    public function deleteAction(ServerRequest $request) {        
         $this->companyService->deleteRegister(new Company(), $request->getQueryParams('id'));
         return new RedirectResponse('/Intranet/company/list');
     }

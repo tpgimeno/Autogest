@@ -2,7 +2,7 @@ Options +FollowSymLinks
 RewriteEngine On
 
 # Ignore anything in js/css folders
-RewriteRule ^(js|css|map|jpg|png)/|\.(css|js|map|jpg|png)$ - [L,NC]
+RewriteRule ^(js|css|map|jpg|png|woff|woff2|ttf)/|\.(css|js|map|jpg|png|woff|woff2|ttf)$ - [L,NC]
 
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f

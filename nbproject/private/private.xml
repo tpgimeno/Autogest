@@ -14,8 +14,6 @@
         <group>
             <file>file:/C:/xampp/htdocs/Intranet/views/Entitys/company/companyForm.html.twig</file>
             <file>file:/C:/xampp/htdocs/Intranet/App/Services/Entitys/CompanyService.php</file>
-            <file>file:/C:/xampp/htdocs/Intranet/assets/css/autogest.css</file>
-            <file>file:/C:/xampp/htdocs/Intranet/views/Entitys/company/companyList.html.twig</file>
             <file>file:/C:/xampp/htdocs/Intranet/App/Controllers/Entitys/CompanyController.php</file>
         </group>
     </open-files>

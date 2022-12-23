@@ -44,8 +44,20 @@ table.dataTable>thead .sorting_asc_disabled:before, table.dataTable>thead .sorti
 *   Forms
 * ================
 */
+.volver-link{
+    min-height: 4em;
+    margin-right: 2em;
+}
+.volver-link .alert{
+    color: #0000ff;
+    margin: 0;
+}
+
+.form-horizontal .form-group .input-group{
+    margin-bottom: 1em;
+}
 
 .form-horizontal .form-group .input-group label{
-    margin-right: 1em;
+    min-width: 8em;
     margin-top: auto;
 }

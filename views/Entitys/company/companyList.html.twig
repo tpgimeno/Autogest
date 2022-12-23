@@ -19,8 +19,25 @@
                                         <th>Nombre</th>
                                         <th>Ciudad</th>
                                         <th>Teléfono</th>
-                                        <th>Email</th>
+                                        <th>Email</th>                                        
+                                        <th>Acciones</th>
                                     </tr>
+                                </thead>
+                                <tbody>                                    
+                                {% for company in companies %}
+                                    <tr>
+                                        <td>{{ company.id }}</td>
+                                        <td>{{ company.name }}</td>
+                                        <td>{{ company.city }}</td>
+                                        <td>{{ company.phone }}</td>
+                                        <td>{{ company.email }}</td>
+                                        <td>
+                                            <a href="Intranet/company/form?id={{ company.id }}"><i class="fa fa-edit"></i></a>
+                                            <a href="Intranet/company/delete?id={{ company.id }}"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
                                 <tfoot>
                                     <tr>
                                         <th>Id</th>
@@ -28,17 +45,9 @@
                                         <th>Ciudad</th>
                                         <th>Teléfono</th>
                                         <th>Email</th>
+                                        <th>Acciones</th>                                        
                                     </tr>
-                                </tfoot>
-                                <tbody>
-                                {% for company in companies %}
-                                    <td>{{ company.id }}</td>
-                                    <td>{{ company.name }}</td>
-                                    <td>{{ company.city }}</td>
-                                    <td>{{ company.phone }}</td>
-                                    <td>{{ company.email }}</td>
-                                {% endfor %}
-                                </tbody>
+                                </tfoot>                                
                             </table>
                         </div>
                     </div>

@@ -34,6 +34,7 @@ class CompanyService extends BaseService {
         }
         return $company;
     }
+    
     public function saveCompanyData($array) {
         $company = $this->saveOrUpdate($array);                            
         $company->name = $array['name'];
@@ -54,7 +55,8 @@ class CompanyService extends BaseService {
             $company->save();     
             $responseMessage = 'Saved'; 
         } 
-        return $responseMessage;
+        $response = ['id' => $company->id, 'responseMessage' => $responseMessage];
+        return $response;
     }
     public function deleteCompany($id) {        
         $company = Company::find($id)->first();

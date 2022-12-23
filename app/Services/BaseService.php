@@ -37,17 +37,19 @@ class BaseService {
    }
    public function saveRegister($model, $array){  
        $properties = $model->getProperties();
-       $content = array_values($array);       
+       $content = array_values($array);
+//       var_dump($properties);
+//       var_dump($content);die();
        if($this->findRegister($model, $array) == true){
            $model = $model::find(intval($array['id']));
        }  
-      
+       
        for ($i = 0; $i<sizeof($properties); $i++){
            if($properties[$i] == 'password'){
-               $model->{$properties[$i]} = password_hash($content[$i+1], PASSWORD_DEFAULT);
+               $model->{$properties[$i]} = password_hash($content[$i], PASSWORD_DEFAULT);
            }
            
-           $model->{$properties[$i]} = $content[$i+1];
+           $model->{$properties[$i]} = $content[$i];
        }       
        try{
             if($this->findRegister($model, $array) == true){                
@@ -60,7 +62,7 @@ class BaseService {
        }catch(Exception $e){
            $responseMessage = $e->getMessage();
        }
-       return $responseMessage;      
+       return array($model->id, $responseMessage);      
    }
    public function deleteRegister($model, $id){         
        $model::find(intval($id['id']))->delete();       
