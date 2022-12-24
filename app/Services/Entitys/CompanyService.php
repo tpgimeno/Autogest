@@ -58,6 +58,7 @@ class CompanyService extends BaseService {
         $response = ['id' => $company->id, 'responseMessage' => $responseMessage];
         return $response;
     }
+    
     public function deleteCompany($id) {        
         $company = Company::find($id)->first();
         $company->delete();

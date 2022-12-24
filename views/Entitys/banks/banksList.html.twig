@@ -1,45 +1,59 @@
-{% extends "menu.html.twig" %}
-{% import 'macros.html.twig' as fields %}
+{% extends "layout.html.twig" %}
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-10">
-                <h2> {{ title }} </h2>
-            </div>   
-            <div class="col-md-2 d-flex justify-content-end align-items-end">
-                <a class="link " href="/Intranet/admin?selected_tab={{ tab }}">Volver</a> 
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <table class="table">
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Población</th>
-                        <th>Teléfono</th>
-                        <th>Email</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                    </tr>
-                    {% for bank in banks %}
-                        <tr>
-                            <td>{{ bank.name }}</td>
-                            <td>{{ bank.city }}</td>
-                            <td>{{ bank.phone }}</td>
-                            <td>{{ bank.email }}</td>
-                            <td><a href="/Intranet/banks/form?id={{bank.id}}">Edit</a></td>
-                            <td><a href="/Intranet/banks/delete?id={{bank.id}}">Delete</a></td>
-                        </tr>
-                    {% endfor %}                
-                </table>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col d-flex justify-content-end">
-                <form id="addBank" action="/Intranet/banks/form" method="get">
-                    {{ fields.buttonsList(tab) }}
-                </form>
-            </div>
-        </div>
+    <div class="content-wrapper pb-2" style="min-height: 960px">
+        <section class="content-header"><h2>Bancos</h2></section>
+        <section class="content">
+            <div class="card-body">
+                <form action="Intranet/banks/form" method="get">
+                    <div class="form-group">
+                        <button class="btn btn-info" type="submit" id="newCompanyButton">Nueva</button>
+                    </div>
+                </form> 
+                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table id="dataTableBanks" class="table-light table-listados table-bordered table-striped dataTable dtr-inline">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Nombre</th>
+                                        <th>Ciudad</th>
+                                        <th>Teléfono</th>
+                                        <th>Email</th>                                        
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>                                    
+                                {% for bank in banks %}
+                                    <tr>
+                                        <td>{{ bank.id }}</td>
+                                        <td>{{ bank.name }}</td>
+                                        <td>{{ bank.city }}</td>
+                                        <td>{{ bank.phone }}</td>
+                                        <td>{{ bank.email }}</td>
+                                        <td>
+                                            <a href="Intranet/banks/form?id={{ bank.id }}"><i class="fa fa-edit"></i></a>
+                                            <a href="Intranet/banks/delete?id={{ bank.id }}"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Nombre</th>
+                                        <th>Ciudad</th>
+                                        <th>Teléfono</th>
+                                        <th>Email</th>
+                                        <th>Acciones</th>                                        
+                                    </tr>
+                                </tfoot>                                
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                                                   
+            </div>                         
+        </section>
     </div>
 {% endblock %}

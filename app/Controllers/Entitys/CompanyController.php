@@ -37,8 +37,7 @@ class CompanyController extends BaseController {
                     ->key('email', v::stringType()->notEmpty());
             try {
                 $companyValidator->assert($postData); // true                 
-                $response = $this->companyService->saveRegister(new Company(), $postData);
-                
+                $response = $this->companyService->saveRegister(new Company(), $postData);                
                 $companySelected = $this->companyService->findCompany(array('id' => $response[0]));
                 $responseMessage = $response[1];
             } catch (Exception $e) {

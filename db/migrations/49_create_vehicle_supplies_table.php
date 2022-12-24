@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class CreateComponentsTable extends AbstractMigration
+final class CreateVehicleSuppliesTable extends AbstractMigration
 {
     /**
      * Change Method.
@@ -18,19 +18,16 @@ final class CreateComponentsTable extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('components');
-        $table->addColumn('name', 'string')
-                ->addColumn('ref', 'string')
-                ->addColumn('serialNumber', 'string')
-                ->addColumn('mader', 'integer', ['null' => true])
-                ->addColumn('pvc', 'float', ['null' => true])
-                ->addColumn('pvp', 'float', ['null' => true])
-                ->addColumn('observations', 'string', ['null' => true])
-                ->addColumn('accesories', 'string', ['null' => true])
+        $table = $this->table('vehicleSupplies');
+        $table->addColumn('vehicleId', 'integer')  
+                ->addColumn('supplyId', 'integer')
+                ->addColumn('cantity' , 'integer')
+                ->addColumn('pvp' , 'float')
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime', ['null' => true])
                 ->addColumn('deleted_at', 'datetime', ['null' => true])
-                ->addIndex('serialNumber', ['unique' => true])
+                ->addForeignKey(['vehicleId'], 'vehicles', ['id'])
+                ->addForeignKey(['supplyId'], 'supplies', ['id'])
                 ->create();
     }
 }

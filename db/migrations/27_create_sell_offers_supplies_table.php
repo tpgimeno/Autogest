@@ -26,6 +26,8 @@ final class CreateSellOffersSuppliesTable extends AbstractMigration
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime', ['null' => true])
                 ->addColumn('deleted_at', 'datetime', ['null' => true])
+                ->addForeignKey(['sellofferId'], 'selloffers', ['id'])
+                ->addForeignKey(['supplyId'], 'supplies', ['id'])
                 ->create();
     }
 }

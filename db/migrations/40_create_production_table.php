@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class CreateBuyInvoicesTable extends AbstractMigration
+final class CreateProductionTable extends AbstractMigration
 {
     /**
      * Change Method.
@@ -18,20 +18,21 @@ final class CreateBuyInvoicesTable extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('buyInvoices');
-        $table->addColumn('invoiceNumber', 'string')
-                ->addColumn('date', 'date')
-                ->addColumn('providorId', 'integer')
-                ->addColumn('articles', 'string', ['null' => true])
-                ->addColumn('base', 'float', ['null' => true])
-                ->addColumn('tva', 'float', ['null' => true])
-                ->addColumn('total', 'float', ['null' => true])
+        $table = $this->table('productions');
+        $table->addColumn('vehicleId', 'integer')
+                ->addColumn('homologationId', 'integer')
+                ->addColumn('productionNumber', 'string')
+                ->addColumn('description', 'string')
+                ->addColumn('dateIn', 'date', ['null' => true])
+                ->addColumn('dateOut', 'date', ['null' => true])
+                ->addColumn('accesories', 'string', ['null' => true])
                 ->addColumn('observations', 'string', ['null' => true])
-                ->addColumn('text', 'string', ['null' => true])
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime', ['null' => true])
                 ->addColumn('deleted_at', 'datetime', ['null' => true])
-                ->addIndex('invoiceNumber', ['unique' => true])
+                ->addIndex('productionNumber', ['unique' => true])
+                ->addForeignKey(['vehicleId'], 'vehicles', ['id'])
+                ->addForeignKey(['homologationId'], 'homologations', ['id'])
                 ->create();
     }
 }

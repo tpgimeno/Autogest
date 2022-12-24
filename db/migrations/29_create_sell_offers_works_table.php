@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class CreateProductionTable extends AbstractMigration
+final class CreateSellOffersWorksTable extends AbstractMigration
 {
     /**
      * Change Method.
@@ -18,19 +18,16 @@ final class CreateProductionTable extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('productions');
-        $table->addColumn('vehicleId', 'integer')
-                ->addColumn('homologationId', 'integer')
-                ->addColumn('productionNumber', 'string')
-                ->addColumn('description', 'string')
-                ->addColumn('dateIn', 'date', ['null' => true])
-                ->addColumn('dateOut', 'date', ['null' => true])
-                ->addColumn('accesories', 'string', ['null' => true])
-                ->addColumn('observations', 'string', ['null' => true])
+        $table = $this->table('selloffersWorks');
+        $table->addColumn('sellofferId', 'integer')
+                ->addColumn('workId', 'integer')
+                ->addColumn('cantity', 'float')
+                ->addColumn('price', 'float')
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime', ['null' => true])
                 ->addColumn('deleted_at', 'datetime', ['null' => true])
-                ->addIndex('productionNumber', ['unique' => true])
+                ->addForeignKey(['sellofferId'], 'selloffers', ['id'])
+                ->addForeignKey(['workId'], 'works', ['id'])
                 ->create();
     }
 }

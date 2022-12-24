@@ -1,48 +1,91 @@
-{% extends "menu.html.twig" %}
-{% import 'macros.html.twig' as fields %}
+{% extends "layout.html.twig" %}
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-10">
-            <h2> {{ title }} </h2>
-        </div>   
-        {{ fields.return(list, tab) }}       
-    </div>
-    <div class="row">
-        {{ fields.alert(responseMessage) }}
-    </div>
-    <div class="row">
-        <div class="col">
-            <form id="{{formName}}" action="{{ save }}" method="post">
-                <div class="form-row">
-                    {{ fields.input2(inputs.id.id, inputs.id.name, inputs.id.title, value.id) }}
-                    {{ fields.input2offset8(inputs.bankCode.id, inputs.bankCode.name, inputs.bankCode.title, value.bankCode) }}
+<div class="content-wrapper pb-5" style="min-height: 960px">
+    <section class="content-header"><h2>Banco</h2></section>
+    <section class="content ">
+        <div class="volver-link">
+            <span class="alert float-left">{{ responseMessage }}</span>
+            <a class="btn btn-outline-primary float-right" href="Intranet/banks/list">Lista</a>
+        </div>
+        <div class="container-fluid">
+            <form class="form-horizontal " id="formBank" action="Intranet/banks/save" method="post">
+                <div class="form-group col">
+                    <div class="row">
+                        <input type="hidden" style="display:none;" id="id" name="id" value="{{ bankSelected.id }}">
+                        <div class="input-group col-8">
+                            <label class="control-label" for="name">Nombre</label>
+                            <input type="text" id="name" name="name" class="form-control" value="{{ bankSelected.name }}">
+                        </div>
+                        <div class="input-group col-4">
+                            <label class="control-label pl-4" for="name">Bank Code</label>
+                            <input type="text" id="bankCode" name="bankCode" class="form-control" value="{{ bankSelected.bankCode }}">
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="input-group col-8">
+                            <label class="control-label" for="fiscalName">Nombre Fiscal</label>
+                            <input type="text" id="fiscalName" name="fiscalName" class="form-control" value="{{ bankSelected.fiscalName }}">
+                        </div>
+                        <div class="input-group col-4">
+                            <label class="control-label pl-4" for="fiscalId">CIF</label>
+                            <input type="text" id="fiscalId" name="fiscalId" class="form-control" value="{{ bankSelected.fiscalId }}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group col-8">
+                            <label class="control-label" for="address">Direccion</label>
+                            <input type="text" id="address" name="address" class="form-control" value="{{ bankSelected.address }}">
+                        </div>
+                        <div class="input-group col-4">
+                            <label class="control-label pl-4" for="postalCode">Codigo Postal</label>
+                            <input type="text" id="postalCode" name="postalCode" class="form-control" value="{{ bankSelected.postalCode }}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group col-6">
+                            <label class="control-label" for="city">Ciudad</label>
+                            <input type="text" id="city" name="city" class="form-control" value="{{ bankSelected.city }}">
+                        </div>
+                        <div class="input-group col-6">
+                            <label class="control-label" for="state">Provincia</label>
+                            <input type="text" id="state" name="state" class="form-control" value="{{ bankSelected.state }}">
+                        </div>                        
+                    </div>
+                    <div class="row">
+                        <div class="input-group col-6">
+                            <label class="control-label" for="country">Pais</label>
+                            <input type="text" id="country" name="country" class="form-control" value="{{ bankSelected.country }}">
+                        </div>
+                        <div class="input-group col-6">
+                            <label class="control-label" for="phone">Teléfono</label>
+                            <input type="text" id="phone" name="phone" class="form-control" value="{{ bankSelected.phone }}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group col-6">
+                            <label class="control-label" for="email">Email</label>
+                            <input type="text" id="email" name="email" class="form-control" value="{{ bankSelected.email }}">
+                        </div>
+                        <div class="input-group col-6">
+                            <label class="control-label" for="site">Página Web</label>
+                            <input type="text" id="site" name="site" class="form-control" value="{{ bankSelected.site }}">
+                        </div>
+                    </div>
                 </div>
-                <div class="form-row">
-                    {{ fields.input4(inputs.name.id, inputs.name.name, inputs.name.title, value.name) }}
-                    {{ fields.input3(inputs.fiscalId.id, inputs.fiscalId.name, inputs.fiscalId.title, value.fiscalId) }}
-                    {{ fields.input5(inputs.fiscalName.id, inputs.fiscalName.name, inputs.fiscalName.title, value.fiscalName) }}
-                </div>                                                         
-                <div class="form-row">  
-                    {{ fields.input6(inputs.address.id, inputs.address.name, inputs.address.title, value.address) }}
-                    {{ fields.input4(inputs.city.id, inputs.city.name, inputs.city.title, value.city) }}   
-                    {{ fields.input2(inputs.postalCode.id, inputs.postalCode.name, inputs.postalCode.title, value.postalCode) }}
-                                                                                
-                </div>
-                <div class="form-row"> 
-                    {{ fields.input5(inputs.state.id, inputs.state.name, inputs.state.title, value.state) }}
-                    {{ fields.input4(inputs.country.id, inputs.country.name, inputs.country.title, value.country) }}                          
-                    {{ fields.input3(inputs.phone.id, inputs.phone.name, inputs.phone.title, value.phone) }}
-                </div>
-                <div class="form-row">                         
-                    {{ fields.input6(inputs.email.id, inputs.email.name, inputs.email.title, value.email) }}                       
-                    {{ fields.input6(inputs.site.id, inputs.site.name, inputs.site.title, value.site) }}                      
-                </div>
-                <div class="form-row">
-                    {{ fields.buttonsForm(tab) }}
-                </div>
+                    {% if bankSelected %}
+                        <div class="button-wrapper float-left">
+                            <a class="btn btn-primary" href="Intranet/banks/delete?id={{ bankSelected.id }}">Eliminar</a>                            
+                        </div> 
+                    {% endif %}
+                <div class="button-wrapper float-right">
+                    <button type="submit" form="formBank" class="btn btn-primary" id="submit">Guardar</button>
+                    <button type="button" form="formBank" class="btn btn-primary" id="reset">Restablecer</button>
+                </div>                
             </form>
         </div>
-    </div>
-</div>    
+    </section>
+</div>
+            
+            
 {% endblock %}

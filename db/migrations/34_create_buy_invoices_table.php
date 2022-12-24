@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class CreateGarageOrderTable extends AbstractMigration
+final class CreateBuyInvoicesTable extends AbstractMigration
 {
     /**
      * Change Method.
@@ -18,24 +18,21 @@ final class CreateGarageOrderTable extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('garage_orders');
-        $table->addColumn('orderNumber', 'string')
-                ->addColumn('dateIn', 'date', ['null' => true])
-                ->addColumn('dateOut', 'date', ['null' => true])
-                ->addColumn('vehicleId', 'integer', ['null' => true])
-                ->addColumn('customerId', 'integer', ['null' => true])
-                ->addColumn('kmIn', 'integer', ['null' => true])
-                ->addColumn('kmOut', 'integer', ['null' => true])
-                ->addColumn('works', 'string', ['null' => true])
+        $table = $this->table('buyInvoices');
+        $table->addColumn('invoiceNumber', 'string')
+                ->addColumn('date', 'date')
+                ->addColumn('providorId', 'integer')
                 ->addColumn('articles', 'string', ['null' => true])
-                ->addColumn('priceWorks', 'string', ['null' => true])
-                ->addColumn('priceArticles', 'string', ['null' => true])
+                ->addColumn('base', 'float', ['null' => true])
+                ->addColumn('tva', 'float', ['null' => true])
+                ->addColumn('total', 'float', ['null' => true])
                 ->addColumn('observations', 'string', ['null' => true])
                 ->addColumn('text', 'string', ['null' => true])
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime', ['null' => true])
                 ->addColumn('deleted_at', 'datetime', ['null' => true])
-                ->addIndex('orderNumber', ['unique' => true])
+                ->addIndex('invoiceNumber', ['unique' => true])
+                ->addForeignKey(['providorId'], 'providers', ['id'])
                 ->create();
     }
 }

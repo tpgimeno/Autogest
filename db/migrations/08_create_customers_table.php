@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class CreateFinanceTable extends AbstractMigration
+final class CreateCustomersTable extends AbstractMigration
 {
     /**
      * Change Method.
@@ -18,10 +18,9 @@ final class CreateFinanceTable extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('finance');
+        $table = $this->table('customers');
         $table->addColumn('name', 'string')
-                ->addColumn('fiscalId', 'string')
-                ->addColumn('fiscalName', 'string')
+                ->addColumn('fiscalId', 'string')                
                 ->addColumn('address', 'string', ['null' => true])
                 ->addColumn('city', 'string', ['null' => true])
                 ->addColumn('postalCode', 'integer', ['null' => true])
@@ -29,11 +28,13 @@ final class CreateFinanceTable extends AbstractMigration
                 ->addColumn('country', 'string', ['null' => true])
                 ->addColumn('phone', 'string', ['null' => true])
                 ->addColumn('email', 'string', ['null' => true])
-                ->addColumn('site', 'string', ['null' => true])
+                ->addColumn('birthDate', 'date', ['null' => true])
+                ->addColumn('customerType', 'integer', ['null' => true])
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime', ['null' => true])
                 ->addColumn('deleted_at', 'datetime', ['null' => true])
                 ->addIndex('fiscalId' , ['unique' => true])
+                ->addForeignKey(['customerType'], 'customerTypes', ['id'])
                 ->create();
     }
 }

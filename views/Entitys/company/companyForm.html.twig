@@ -11,6 +11,7 @@
             <form class="form-horizontal " id="formCompany" action="Intranet/company/save" method="post">
                 <div class="form-group col">
                     <div class="row">
+                        <input type="hidden" style="display:none;" id="id" name="id" value="{{ companySelected.id }}">
                         <div class="input-group col-8">
                             <label class="control-label" for="name">Nombre</label>
                             <input type="text" id="name" name="name" class="form-control" value="{{ companySelected.name }}">

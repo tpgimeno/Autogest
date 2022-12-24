@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class CreateLocationTable extends AbstractMigration
+final class CreateComponentsTable extends AbstractMigration
 {
     /**
      * Change Method.
@@ -18,12 +18,20 @@ final class CreateLocationTable extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('locations');
-        $table->addColumn('storeId', 'integer')  
-                ->addColumn('name', 'string')
+        $table = $this->table('components');
+        $table->addColumn('name', 'string')
+                ->addColumn('ref', 'string')
+                ->addColumn('serialNumber', 'string')
+                ->addColumn('maderId', 'integer', ['null' => true])
+                ->addColumn('pvc', 'float', ['null' => true])
+                ->addColumn('pvp', 'float', ['null' => true])
+                ->addColumn('observations', 'string', ['null' => true])
+                ->addColumn('accesories', 'string', ['null' => true])
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime', ['null' => true])
                 ->addColumn('deleted_at', 'datetime', ['null' => true])
+                ->addIndex('serialNumber', ['unique' => true])
+                ->addForeignKey(['maderId'], 'maders', ['id'])
                 ->create();
     }
 }

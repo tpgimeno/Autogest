@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class CreateSuppliesTable extends AbstractMigration
+final class CreateModelTable extends AbstractMigration
 {
     /**
      * Change Method.
@@ -18,19 +18,14 @@ final class CreateSuppliesTable extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('supplies');
+        $table = $this->table('models');
         $table->addColumn('name', 'string')
-                ->addColumn('ref', 'string')
-                ->addColumn('mader', 'integer')
-                ->addColumn('maderCode', 'string', ['null' => true])
-                ->addColumn('pvc', 'float', ['null' => true])
-                ->addColumn('pvp', 'float', ['null' => true])
-                ->addColumn('observations', 'string', ['null' => true])
-                 ->addColumn('stock', 'integer', ['null' => true])
+                ->addColumn('brandId', 'integer')
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime', ['null' => true])
                 ->addColumn('deleted_at', 'datetime', ['null' => true])
-                ->addIndex('ref' , ['unique' => true])
-                ->create();
+                ->addIndex('name', ['unique' => true])
+                ->addForeignKey(['brandId'], 'brands', ['id'])
+                ->create(); 
     }
 }

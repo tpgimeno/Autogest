@@ -32,6 +32,7 @@ final class CreateBuyDeliveryTable extends AbstractMigration
                 ->addColumn('updated_at', 'datetime', ['null' => true])
                 ->addColumn('deleted_at', 'datetime', ['null' => true])
                 ->addIndex('deliveryNumber', ['unique' => true])
+                ->addForeignKey(['providorId'], 'providers', ['id'])
                 ->create();
     }
 }

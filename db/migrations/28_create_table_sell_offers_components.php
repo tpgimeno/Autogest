@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class CreateVehicleComponentsTable extends AbstractMigration
+final class CreateTableSellOffersComponents extends AbstractMigration
 {
     /**
      * Change Method.
@@ -18,13 +18,16 @@ final class CreateVehicleComponentsTable extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('vehicleComponents');
-        $table->addColumn('vehicleId', 'integer')  
+        $table = $this->table('selloffersComponents');
+        $table->addColumn('sellofferId', 'integer')
                 ->addColumn('componentId', 'integer')
-                ->addColumn('cantity' , 'integer')
-                ->addColumn('pvp' , 'float')
+                ->addColumn('cantity', 'integer')
+                ->addColumn('price', 'float')
                 ->addColumn('created_at', 'datetime')
-                ->addColumn('updated_at', 'datetime', ['null' => true])                
+                ->addColumn('updated_at', 'datetime', ['null' => true])
+                ->addColumn('deleted_at', 'datetime', ['null' => true])
+                ->addForeignKey(['sellofferId'], 'selloffers', ['id'])
+                ->addForeignKey(['componentId'], 'components', ['id'])
                 ->create();
     }
 }
