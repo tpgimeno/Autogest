@@ -1,5 +1,11 @@
 /* Jquery */
-$(document).ready(function(){    
+$(document).ready(function(){ 
+    
+    /*
+     *   Init DataTables
+     */
+    
+    
     $('.dataTable').DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
@@ -14,12 +20,35 @@ $(document).ready(function(){
       "responsive": true
     });  
     
+    /* Function to reset all the inputs */
+    
     $('#reset').on('click', function(){
         $('input[type=text]').each(function(){
            $(this).val(""); 
         });
         
     });
+    
+    /*
+     * 
+     *   Function to keep opened the menu-collapse selected and activate current screen.
+     * 
+     */
+    $('.nav-item').each(function(){
+        $(this).removeClass('menu-open');
+        $(this).addClass('menu-close');
+    });
+    $('.nav-item li').each(function(){
+        $(this).removeClass('active');
+    });
+    
+    var menuSelected = $('#menu').val();    
+    $("#" + menuSelected).removeClass('menu-close');
+    $("#" + menuSelected).addClass('menu-open');
+    
+    var menuItemSelected = $('#menuItem').val();
+    $("#" + menuItemSelected).addClass('active');
+    
 });
 
 

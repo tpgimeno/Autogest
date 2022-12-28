@@ -27,6 +27,7 @@
         {% endblock scripts %}
     </head>
     <body class="hold-transition login-page">
+        {% set AutoGest = cookies['AutoGest'] %}
         <div class="login-box">
             <div class="login-logo">
                 <a href="/Intranet/"><img id="logo-login" src="/Intranet/assets/images/image63.png"></a>
@@ -40,7 +41,11 @@
                     {% endif %}
                     <form name="loginForm" id="loginForm" action="/Intranet/login" method="post">
                         <div class="input-group mb-3">
-                            <input type="email" name="email" id="email" class="form-control" placeholder="Email">
+                            {% if AutoGest %}
+                                <input type="email" name="email" id="email" class="form-control" placeholder="Email" value="{{ AutoGest }}">
+                            {% else %}
+                                <input type="email" name="email" id="email" class="form-control" placeholder="Email">
+                            {% endif %}
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-envelope"></span>

@@ -19,16 +19,23 @@ class CompanyController extends BaseController {
         $this->companyService = $companyService;
     }
 
-    public function getIndexAction() {
+    public function getIndexAction($request) {
+        $params = $request->getQueryParams();
+        $menuState = $params['menu'];  
+        $menuItem = $params['item'];
         $companies = $this->companyService->getAllRegisters(new Company());
         return $this->renderHTML('/Entitys/company/companyList.html.twig', [
-                    'companies' => $companies
+                    'companies' => $companies,
+                    'menuState' => $menuState,
+                    'menuItem' => $menuItem
         ]);
     }
 
     public function getCompanyDataAction($request) {
         $responseMessage = null;
         $companySelected = null;
+        $menuState = null;
+        $menuItem = null;
         if ($request->getMethod() == 'POST') {
             $postData = $request->getParsedBody();
             $companyValidator = v::key('name', v::stringType()->notEmpty())
@@ -38,24 +45,32 @@ class CompanyController extends BaseController {
             try {
                 $companyValidator->assert($postData); // true                 
                 $response = $this->companyService->saveRegister(new Company(), $postData);                
-                $companySelected = $this->companyService->findCompany(array('id' => $response[0]));
+                $companySelected = $this->companyService->findCompany(array('id' => $response[0]));                
+                $menuState = $postData['menu'];
+                $menuItem = $postData['menuItem'];
                 $responseMessage = $response[1];
             } catch (Exception $e) {
-                $responseMessage = $e->getMessage();
+                $responseMessage = $this->errorService->getError($e);
             }
         }else{        
-            $companySelected = $this->companyService->setInstance(new Company(), $request->getQueryParams()); 
+            $params = $request->getQueryParams();            
+            $companySelected = $this->companyService->setInstance(new Company(), $params);
+            $menuState = $params['menu'];
+            $menuItem = $params['item'];
         }
         return $this->renderHTML('/Entitys/company/companyForm.html.twig', [
                     'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
                     'responseMessage' => $responseMessage,                    
-                    'companySelected' => $companySelected
+                    'companySelected' => $companySelected,
+                    'menuState' => $menuState,
+                    'menuItem' => $menuItem
         ]);
     }
 
-    public function deleteAction(ServerRequest $request) {        
-        $this->companyService->deleteRegister(new Company(), $request->getQueryParams('id'));
-        return new RedirectResponse('/Intranet/company/list');
+    public function deleteAction(ServerRequest $request) { 
+        $params = $request->getQueryParams();
+        $this->companyService->deleteRegister(new Company(), $params['id']);
+        return new RedirectResponse('/Intranet/company/list?menu=' . $params['menu'] . '&item=' . $params['item']);
     }
 
 }

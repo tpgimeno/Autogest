@@ -5,11 +5,14 @@
     <section class="content ">
         <div class="volver-link">
             <span class="alert float-left">{{ responseMessage }}</span>
-            <a class="btn btn-outline-primary float-right" href="Intranet/banks/list">Lista</a>
+            
+            <a class="btn btn-outline-primary float-right" href="Intranet/banks/list?menu=mantenimiento&item=companies">Lista</a>
         </div>
         <div class="container-fluid">
             <form class="form-horizontal " id="formBank" action="Intranet/banks/save" method="post">
                 <div class="form-group col">
+                    <input type="hidden" style="display:none;" id="menu" name="menu" value="{{ menu }}">
+                    <input type="hidden" style="display:none;" id="menuItem" name="menuItem" value="{{ menuItem }}">
                     <div class="row">
                         <input type="hidden" style="display:none;" id="id" name="id" value="{{ bankSelected.id }}">
                         <div class="input-group col-8">
@@ -75,7 +78,7 @@
                 </div>
                     {% if bankSelected %}
                         <div class="button-wrapper float-left">
-                            <a class="btn btn-primary" href="Intranet/banks/delete?id={{ bankSelected.id }}">Eliminar</a>                            
+                            <a class="btn btn-primary" href="Intranet/banks/delete?id={{ bankSelected.id }}&menu=mantenimiento&item=companies">Eliminar</a>                            
                         </div> 
                     {% endif %}
                 <div class="button-wrapper float-right">

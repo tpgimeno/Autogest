@@ -11,53 +11,61 @@ use Laminas\Diactoros\ServerRequest;
 use Respect\Validation\Validator as v;
 
 class UsersController extends BaseController {
+
     protected $userService;
-    protected $list = '/Intranet/users/list';
-    protected $tab = 'home';
-    protected $title = 'Usuarios';
-    protected $save = "/Intranet/users/form";
-    protected $formName = "userForm";    
-    protected $inputs = ['id' => ['id' => 'inputID', 'name' => 'id', 'title' => 'ID'],       
-        'email' => ['id' => 'inputEmail', 'name' => 'email', 'title' => 'Email'],
-        'password' => ['id' => 'inputPassword', 'name' => 'password', 'title' => 'Password']];
+
     public function __construct(UserService $userService) {
         parent::__construct();
         $this->userService = $userService;
     }
-    public function getIndexUsers() {
+
+    public function getIndexUsers($request) {
         $users = $this->userService->getAllRegisters(new User());
+        $params = $request->getQueryParams();
+        $menuState = $params['menu'];
+        $menuItem = $params['item'];
         return $this->renderHTML('/Entitys/users/usersList.html.twig', [
-            'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
-            'tab' => $this->tab,
-            'users' => $users
+                    'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
+                    'menuState' => $menuState,
+                    'menuItem' => $menuItem,
+                    'users' => $users
         ]);
     }
-    public function getAddUserAction($request){
+
+    public function getAddUserAction($request) {
         $responseMessage = null;
-        if($request->getMethod() == 'POST') {
+        $menuState = null;
+        $menuItem = null;
+        if ($request->getMethod() == 'POST') {
             $postData = $request->getParsedBody();
-            $userValidator = v::key('email', v::stringType()->notEmpty()) 
-            ->key('password', v::stringType()->notEmpty());            
+            $userValidator = v::key('email', v::stringType()->notEmpty())
+                    ->key('password', v::stringType()->notEmpty());
             try {
+                var_dump($postData);die();
                 $userValidator->assert($postData); // true 
-                $responseMessage = $this->userService->saveRegister(new User(), $postData);              
-            }catch(Exception $e){                
+                $responseMessage = $this->userService->saveRegister(new User(), $postData);
+                $menuState = $postData['menu'];
+                $menuItem = $postData['menuItem'];
+            } catch (Exception $e) {
                 $responseMessage = $this->errorService->getError($e);
-            }              
+            }
+        }else{
+            $params = $request->getQueryParams();
+            $userSelected = $this->userService->setInstance(new User(), $params);            
+            $menuState = $params['menu'];
+            $menuItem = $params['item'];            
         }        
-        $selected_user = $this->userService->setInstance(new User(), $request->getQueryParams('id'));        
         return $this->renderHTML('/Entitys/users/userForm.html.twig', [
-            'responseMessage' => $responseMessage,
-            'list' => $this->list,
-            'save' => $this->save,
-            'tab' => $this->tab,
-            'title' => $this->title,
-            'inputs' => $this->inputs,
-            'value' => $selected_user
-        ]);         
-    }    
-    public function deleteAction(ServerRequest $request) {        
+                    'responseMessage' => $responseMessage,
+                    'menuState' => $menuState,
+                    'menuItem' => $menuItem,
+                    'userSelected' => $userSelected
+        ]);
+    }
+
+    public function deleteAction(ServerRequest $request) {
         $this->userService->deleteRegister(new User(), $request->getQueryParams('id'));
         return new RedirectResponse($this->list);
     }
+
 }

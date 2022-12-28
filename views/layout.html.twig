@@ -165,7 +165,7 @@
             <!-- Main Sidebar Container -->
             <aside class="main-sidebar sidebar-dark-primary elevation-4">
                 <!-- Brand Logo -->
-                <a href="index3.html" class="brand-link">
+                <a href="Intranet/admin" class="brand-link">
                     <img src="Intranet/assets/images/logo_horizontal_blanco.png" alt="AutoGest Logo" class="brand-image" style="opacity: .8">
                     <span class="brand-text font-weight-light">.</span>
                 </a>
@@ -190,7 +190,7 @@
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                             <!-- Add icons to the links using the .nav-icon class
                                  with font-awesome or any other icon font library -->
-                            <li class="nav-item menu-close">
+                            <li id="mantenimiento" class="nav-item menu-close">
                                 <a href="#" class="nav-link active">
                                     <i class="nav-icon fas fa-industry"></i>
                                     <p>
@@ -199,57 +199,57 @@
                                     </p>
                                 </a>
                                 <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="/Intranet/settings" class="nav-link">
+                                    <li id="settings" class="nav-item">
+                                        <a href="/Intranet/settings?menu=mantenimiento&item=settings" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Parámetros</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/Intranet/users/list" class="nav-link">
+                                    <li id="users" class="nav-item">
+                                        <a href="/Intranet/users/list?menu=mantenimiento&item=users" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Usuarios</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/Intranet/company/list" class="nav-link">
+                                    <li id="companies" class="nav-item">
+                                        <a href="/Intranet/company/list?menu=mantenimiento&item=companies" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Empresas</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/Intranet/taxes/list" class="nav-link">
+                                    <li id="taxes" class="nav-item">
+                                        <a href="/Intranet/taxes/list?menu=mantenimiento&item=taxes" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Tipos de Iva</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/Intranet/banks/list" class="nav-link">
+                                    <li id="banks" class="nav-item">
+                                        <a href="/Intranet/banks/list?menu=mantenimiento&item=banks" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Bancos</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/Intranet/finance/list" class="nav-link">
+                                    <li id="finance" class="nav-item">
+                                        <a href="/Intranet/finance/list?menu=mantenimiento&item=finance" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Financieras</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/Intranet/" class="nav-link">
+                                    <li id="assurances" class="nav-item">
+                                        <a href="/Intranet/assurances/list?menu=mantenimiento?item=assurances" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Seguros</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/Intranet/accounts/list" class="nav-link">
+                                    <li id="accounts" class="nav-item">
+                                        <a href="/Intranet/accounts/list?menu=mantenimiento&item=accounts" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Cuentas Bancarias</p>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-item menu-close">
+                            <li id="ventas" class="nav-item menu-close">
                                 <a href="#" class="nav-link active">
                                     <i class="nav-icon fas fa-shopping-cart"></i>
                                     <p>
@@ -258,39 +258,39 @@
                                     </p>
                                 </a>
                                 <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="/Intranet/sellers/list" class="nav-link">
+                                    <li id="sellers" class="nav-item">
+                                        <a href="/Intranet/sellers/list?menu=ventas&item=sellers" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Comerciales</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/Intranet/sells/offers/list" class="nav-link">
+                                    <li id="offers" class="nav-item">
+                                        <a href="/Intranet/sells/offers/list?menu=ventas&item=offers" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Oferas</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/Intranet/customers/list" class="nav-link">
+                                    <li id="customers" class="nav-item">
+                                        <a href="/Intranet/customers/list?menu=ventas&item=customers" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Clientes</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/Intranet/customers/type/list" class="nav-link">
+                                    <li id="customerTypes"class="nav-item">
+                                        <a href="/Intranet/customers/type/list?menu=ventas&item=customerTypes" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Tipos de Clientes</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/Intranet/" class="nav-link">
+                                    <li id="sellPaymentWays" class="nav-item">
+                                        <a href="/Intranet/paymentWays/list?menu=ventas&item=sellPaymentWays" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Formas de cobro</p>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-item menu-close">
+                            <li id="compras" class="nav-item menu-close">
                                 <a href="#" class="nav-link active">
                                     <i class="nav-icon fas fa-shopping-basket"></i>
                                     <p>
@@ -299,27 +299,27 @@
                                     </p>
                                 </a>
                                 <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="/Intranet/buys/providers/list" class="nav-link">
+                                    <li id="providers" class="nav-item">
+                                        <a href="/Intranet/buys/providers/list?menu=compras&item=providers" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Proveedores</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/Intranet/garages/list" class="nav-link">
+                                    <li id="garages" class="nav-item">
+                                        <a href="/Intranet/garages/list?menu=compras&item=garages" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Talleres</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/Intranet/paymentWays/list" class="nav-link">
+                                    <li id="buyPaymentWays" class="nav-item">
+                                        <a href="/Intranet/paymentWays/list?menu=compras&item=buyPaymentWays" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Formas de Pago</p>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-item menu-close">
+                            <li id="stock" class="nav-item menu-close">
                                 <a href="#" class="nav-link active">
                                     <i class="nav-icon fas fa-store"></i>
                                     <p>
@@ -328,69 +328,69 @@
                                     </p>
                                 </a>
                                 <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="/Intranet/vehicles/list" class="nav-link">
+                                    <li id="vehicles" class="nav-item">
+                                        <a href="/Intranet/vehicles/list?menu=stock&item=vehicles" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Vehiculos</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/Intranet/vehicles/brands/list" class="nav-link">
+                                    <li id="brands" class="nav-item">
+                                        <a href="/Intranet/vehicles/brands/list?menu=stock&item=brands" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Marcas</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/Intranet/vehicles/models/list" class="nav-link">
+                                    <li id="models" class="nav-item">
+                                        <a href="/Intranet/vehicles/models/list?menu=stock&item=models" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Modelos</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/Intranet/vehicles/accesories/list" class="nav-link">
+                                    <li id="accesories" class="nav-item">
+                                        <a href="/Intranet/vehicles/accesories/list?menu=stock&item=accesories" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Accesorios</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/Intranet/vehicles/vehicleTypes/list" class="nav-link">
+                                    <li id="vehicleTypes" class="nav-item">
+                                        <a href="/Intranet/vehicles/vehicleTypes/list?menu=stock&item=vehicleTypes" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Tipos de Vehiculos</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/Intranet/vehicles/supplies/list" class="nav-link">
+                                    <li id="supplies" class="nav-item">
+                                        <a href="/Intranet/vehicles/supplies/list?menu=stock&item=supplies" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Recambios</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/Intranet/vehicles/components/list" class="nav-link">
+                                    <li id="components" class="nav-item">
+                                        <a href="/Intranet/vehicles/components/list?menu=stock&item=components" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Componentes</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/Intranet/stores/list" class="nav-link">
+                                    <li id="stores" class="nav-item">
+                                        <a href="/Intranet/stores/list?menu=stock&item=stores" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Almacenes</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/Intranet/locations/list" class="nav-link">
+                                    <li id="locations" class="nav-item">
+                                        <a href="/Intranet/locations/list?menu=stock&item=locations" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Ubicaciones</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/Intranet/maders/list" class="nav-link">
+                                    <li id="maders" class="nav-item">
+                                        <a href="/Intranet/maders/list?menu=stock&item=maders" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Fabricantes</p>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-item menu-close">
+                            <li id="taller" class="nav-item menu-close">
                                 <a href="#" class="nav-link active">
                                     <i class="nav-icon fa fa-car"></i>
                                     <p>
@@ -399,39 +399,39 @@
                                     </p>
                                 </a>
                                 <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="./index.html" class="nav-link">
+                                    <li id="repairOrders" class="nav-item">
+                                        <a href="Intranet/garageOrders/list?menu=taller&item=repairOrders" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Ordenes Reparacion</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="./index2.html" class="nav-link">
+                                    <li id="workSheets" class="nav-item">
+                                        <a href="Intranet/workSheets/list?menu=taller&item=workSheets" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Hojas de taller</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="/Intranet/vehicles/works/list" class="nav-link">
+                                    <li id="works" class="nav-item">
+                                        <a href="/Intranet/vehicles/works/list?menu=taller&item=works" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Trabajos</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="./index3.html" class="nav-link">
+                                    <li id="expertOpinions" class="nav-item">
+                                        <a href="Intranet/expertOpinions/list?menu=taller&item=expertOpinions" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Peritaciones</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="./index3.html" class="nav-link">
+                                    <li id="planning" class="nav-item">
+                                        <a href="Intranet/garage/planning/list?menu=taller&item=planning" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Planning</p>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-item menu-close">
+                            <li id="rents" class="nav-item menu-close">
                                 <a href="#" class="nav-link active">
                                     <i class="nav-icon fas fa-calendar"></i>
                                     <p>
@@ -440,33 +440,33 @@
                                     </p>
                                 </a>
                                 <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="./index.html" class="nav-link">
+                                    <li id="appoints" class="nav-item">
+                                        <a href="Intranet/rents/list?menu=rents&item=appoints" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Reservas</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="./index2.html" class="nav-link">
+                                    <li id="current" class="nav-item">
+                                        <a href="Intranet/rents/currents/list?menu=rents&item=current" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Actuales</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="./index3.html" class="nav-link">
+                                    <li id="documents" class="nav-item">
+                                        <a href="Intranet/rents/documents/list?menu=rents&item=documents" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Documentos</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="./index3.html" class="nav-link">
+                                    <li id="history" class="nav-item">
+                                        <a href="Intranet/rents/history/list?menu=rents&item=history" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Historial</p>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-item menu-close">
+                            <li id="accounting" class="nav-item menu-close">
                                 <a href="#" class="nav-link active">
                                     <i class="nav-icon fas fa-folder"></i>
                                     <p>
@@ -475,32 +475,32 @@
                                     </p>
                                 </a>
                                 <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="./index.html" class="nav-link">
+                                    <li id="accountingAccounts" class="nav-item">
+                                        <a href="Intranet/accounting/list?menu=accounting&item=accountingAccounts" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Cuentas</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="./index2.html" class="nav-link">
+                                    <li id="accountingAccounts" class="nav-item">
+                                        <a href="Intranet/accounting/movements/list?menu=accounting&item=accountingAccounts" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Movimientos</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="./index3.html" class="nav-link">
+                                    <li id="book" class="nav-item">
+                                        <a href="Intranet/accounting/book/list?menu=accounting&item=book" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Libro Mayor</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="./index3.html" class="nav-link">
+                                    <li id="pyg"vclass="nav-item">
+                                        <a href="Intranet/accounting/reports?menu=accounting&item=pyg" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Informe PyG</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="./index3.html" class="nav-link">
+                                    <li id="accountingState" class="nav-item">
+                                        <a href="Intranet/accounting/state/list?menu?accounting&item=accountingState" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Estado</p>
                                         </a>

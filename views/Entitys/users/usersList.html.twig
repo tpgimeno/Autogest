@@ -1,41 +1,60 @@
-{% extends "menu.html.twig" %}
-{% import 'macros.html.twig' as fields %}
+{% extends "layout.html.twig" %}
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-10">
-                <h2> Users </h2>
-            </div>   
-            <div class="col-md-2 d-flex justify-content-end align-items-end">
-                <a class="link " href="/Intranet/admin?selected_tab={{ tab }}">Volver</a> 
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <table class="table">
-                    <tr>
-                        <th class="col-1">ID</th>
-                        <th class="col-9">email</th>  
-                        <th class="col-3">Edit</th>                      
-                        <th class="col-3">Delete</th>
-                    </tr>
-                    {% for user in users %}
-                        <tr>
-                            <td>{{ user.id }}</td>
-                            <td>{{ user.email }}</td>                            
-                            <td><a href="/Intranet/users/form?id={{user.id}}">Edit</a></td>
-                            <td><a href="/Intranet/users/delete?id={{user.id}}">Delete</a></td>
-                        </tr>
-                    {% endfor %}                
-                </table>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col d-flex justify-content-end">
-                <form id="addUser" action="/Intranet/users/form" method="get">
-                    {{ fields.buttonsList(tab) }}
-                </form>
-            </div>
-        </div>
+    <div class="content-wrapper pb-2" style="min-height: 960px">
+        <section class="content-header"><h2>Usuarios</h2></section>
+        <section class="content">
+            <div class="card-body">
+                <form action="Intranet/users/form" method="get">
+                    <div class="form-group">
+                        <input type="hidden" style="display:none;" id="menu" name="menu" value="{{ menu }}">
+                        <input type="hidden" style="display:none;" id="menuItem" name="menuItem" value="{{ menuItem }}">
+                        <button class="btn btn-info" type="submit" id="newCompanyButton">Nuevo</button>
+                    </div>
+                </form> 
+                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table id="dataTableUsers" class="table-light table-listados table-bordered table-striped dataTable dtr-inline">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Nombre</th>
+                                        <th>Email</th>
+                                        <th>Nivel Acceso</th>
+                                        <th>Telefono</th>                                        
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>                                    
+                                {% for user in users %}
+                                    <tr>
+                                        <td>{{ user.id }}</td>
+                                        <td>{{ user.name }}</td>
+                                        <td>{{ user.email }}</td>
+                                        <td>{{ user.access }}</td>
+                                        <td>{{ user.phone }}</td>
+                                        <td>
+                                            <a href="Intranet/users/form?id={{ user.id }}&menu=mantenimiento&item=users"><i class="fa fa-edit"></i></a>
+                                            <a href="Intranet/users/delete?id={{ user.id }}&menu=mantenimiento&item=users"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Nombre</th>
+                                        <th>Email</th>
+                                        <th>Nivel Acceso</th>
+                                        <th>Telefono</th>                                        
+                                        <th>Acciones</th>                                        
+                                    </tr>
+                                </tfoot>                                
+                            </table>
+                        </div>
+                    </div>
+                </div>                                                   
+            </div>                         
+        </section>
     </div>
 {% endblock %}

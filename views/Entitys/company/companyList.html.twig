@@ -4,8 +4,10 @@
         <section class="content-header"><h2>Empresas</h2></section>
         <section class="content">
             <div class="card-body">
-                <form action="Intranet/company/form" method="post">
+                <form action="Intranet/company/form" method="get">
                     <div class="form-group">
+                        <input type="hidden" style="display:none;" id="menu" name="menu" value="{{ menuState }}">
+                        <input type="hidden" style="display:none;" id="menuItem" name="item" value="{{ menuItem }}">
                         <button class="btn btn-info" type="submit" id="newCompanyButton">Nueva</button>
                     </div>
                 </form> 
@@ -32,8 +34,8 @@
                                         <td>{{ company.phone }}</td>
                                         <td>{{ company.email }}</td>
                                         <td>
-                                            <a href="Intranet/company/form?id={{ company.id }}"><i class="fa fa-edit"></i></a>
-                                            <a href="Intranet/company/delete?id={{ company.id }}"><i class="fa fa-trash"></i></a>
+                                            <a href="Intranet/company/form?id={{ company.id }}&menu=mantenimiento&item=companies"><i class="fa fa-edit"></i></a>
+                                            <a href="Intranet/company/delete?id={{ company.id }}&menu=mantenimiento&item=companies"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 {% endfor %}

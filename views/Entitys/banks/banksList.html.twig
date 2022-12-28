@@ -6,6 +6,8 @@
             <div class="card-body">
                 <form action="Intranet/banks/form" method="get">
                     <div class="form-group">
+                        <input type="hidden" style="display:none;" id="menu" name="menu" value="{{ menu }}">
+                        <input type="hidden" style="display:none;" id="menuItem" name="menuItem" value="{{ menuItem }}">
                         <button class="btn btn-info" type="submit" id="newCompanyButton">Nueva</button>
                     </div>
                 </form> 
@@ -32,8 +34,8 @@
                                         <td>{{ bank.phone }}</td>
                                         <td>{{ bank.email }}</td>
                                         <td>
-                                            <a href="Intranet/banks/form?id={{ bank.id }}"><i class="fa fa-edit"></i></a>
-                                            <a href="Intranet/banks/delete?id={{ bank.id }}"><i class="fa fa-trash"></i></a>
+                                            <a href="Intranet/banks/form?id={{ bank.id }}&menu=mantenimiento&item=banks"><i class="fa fa-edit"></i></a>
+                                            <a href="Intranet/banks/delete?id={{ bank.id }}&menu=mantenimiento&item=banks"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 {% endfor %}

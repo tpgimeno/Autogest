@@ -9,46 +9,70 @@ use App\Services\Entitys\BankService;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\Response\RedirectResponse;
 
-class BanksController extends BaseController {       
-    protected $bankService;    
+class BanksController extends BaseController {
+
+    protected $bankService;
+
     public function __construct(BankService $bankService) {
         parent::__construct();
         $this->bankService = $bankService;
-    }    
-    public function getIndexAction() {
+    }
+
+    public function getIndexAction($request) {
+        $params = $request->getQueryParams();
+        $menuState = $params['menu'];
+        $menuItem = $params['item'];
         $banks = $this->bankService->getAllRegisters(new Bank());
         return $this->renderHTML('/Entitys/banks/banksList.html.twig', [
-            'banks' => $banks
+                    'banks' => $banks,
+                    'menu' => $menuState,
+                    'menuItem' => $menuItem
         ]);
-    }  
-    public function getBankDataAction($request) {                
+    }
+
+    public function getBankDataAction($request) {
+
         $responseMessage = null;
         $bankSelected = null;
-        if($request->getMethod() == 'POST') {
-            $postData = $request->getParsedBody();            
-            $bankValidator = v::key('name', v::stringType()->notEmpty()) 
-            ->key('fiscalId', v::notEmpty())
-            ->key('phone', v::notEmpty())
-            ->key('email', v::notEmpty());            
-            try {
+        $menuState = null;
+        $menuItem = null;
+        if ($request->getMethod() == 'POST') {
+            $postData = $request->getParsedBody();
+            $bankValidator = v::key('name', v::stringType()->notEmpty())
+                    ->key('fiscalId', v::notEmpty())
+                    ->key('phone', v::notEmpty())
+                    ->key('email', v::notEmpty());
+            try {                
                 $bankValidator->assert($postData); // true 
-                $response = $this->bankService->saveRegister(new Bank(), $postData);                
-                $bankSelected = $this->bankService->setInstance(new Bank(), array('id' => $response[0]));                
-                $responseMessage = $response[1];                   
-            }catch(\Exception $e) {                
-                $responseMessage = $e->getMessage();
-            }              
-        }else{      
-            $bankSelected = $this->bankService->setInstance(new Bank(), $request->getQueryParams('id'));  
+                $response = $this->bankService->saveRegister(new Bank(), $postData);
+                $menuState = $postData['menu'];
+                $menuItem = $postData['menuItem'];
+                $bankSelected = $this->bankService->setInstance(new Bank(), array('id' => $response[0]));
+                $responseMessage = $response[1];
+            } catch (\Exception $e) {
+                $responseMessage = $this->errorService->getError($e);
+            }
+        } else {
+            $params = $request->getQueryParams();
+            $menuState = $params['menu'];
+            $menuItem = $params['item'];
+            $bankSelected = $this->bankService->setInstance(new Bank(), $params);
         }
         return $this->renderHTML('/Entitys/banks/banksForm.html.twig', [
-            'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
-            'responseMessage' => $responseMessage,            
-            'bankSelected' => $bankSelected
+                    'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
+                    'responseMessage' => $responseMessage,
+                    'bankSelected' => $bankSelected,
+                    'menu' => $menuState,
+                    'menuItem' => $menuItem
         ]);
     }
-    public function deleteAction(ServerRequest $request) {         
-        $this->bankService->deleteRegister(new Bank(), $request->getQueryParams('id'));               
-        return new RedirectResponse('Intranet/banks/list');
+
+    public function deleteAction(ServerRequest $request) {
+        $params = $request->getQueryParams();
+        $menuState = $params['menu'];
+        $menuItem = $params['menuItem'];
+        $this->bankService->deleteRegister(new Bank(), $params['id']);
+        return new RedirectResponse('Intranet/banks/list?menu=' . $menuState . '&item=' . $menuItem);
     }
+
 }

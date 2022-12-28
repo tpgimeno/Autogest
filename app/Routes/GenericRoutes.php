@@ -42,11 +42,11 @@ class GenericRoutes {
 
        //COMPANY
 
-       $map->post('companyFormGet', '/Intranet/company/form', [
+       $map->get('companyFormGet', '/Intranet/company/form', [
            'App\Controllers\Entitys\CompanyController',
            'getCompanyDataAction'
        ]);
-       $map->get('companyFormPost', '/Intranet/company/form', [
+       $map->post('companyFormPost', '/Intranet/company/form', [
            'App\Controllers\Entitys\CompanyController',
            'getCompanyDataAction'
        ]);
@@ -68,12 +68,15 @@ class GenericRoutes {
        ]);
 
        //USERS
-
-       $map->get('userList', '/Intranet/users/form', [
+       $map->post('userFormPost', '/Intranet/users/save', [
            'App\Controllers\Entitys\UsersController',
            'getAddUserAction'
        ]);
-       $map->get('userForm', '/Intranet/users/list', [
+       $map->get('userFormGet', '/Intranet/users/form', [
+           'App\Controllers\Entitys\UsersController',
+           'getAddUserAction'
+       ]);
+       $map->get('userList', '/Intranet/users/list', [
            'App\Controllers\Entitys\UsersController',
            'getIndexUsers'
        ]);
@@ -88,11 +91,15 @@ class GenericRoutes {
 
        //BANKS
 
-       $map->get('banksList', '/Intranet/banks/form', [
+       $map->post('banksFormPost', '/Intranet/banks/save', [
            'App\Controllers\Entitys\BanksController',
            'getBankDataAction'
        ]);
-       $map->get('bankForm', '/Intranet/banks/list', [
+       $map->get('banksFormGet', '/Intranet/banks/form', [
+           'App\Controllers\Entitys\BanksController',
+           'getBankDataAction'
+       ]);
+       $map->get('bankList', '/Intranet/banks/list', [
            'App\Controllers\Entitys\BanksController',
            'getIndexAction'    
        ]);

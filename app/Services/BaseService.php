@@ -22,7 +22,7 @@ class BaseService {
    }
    public function setInstance($model, $array){        
         if(isset($array['id'])) {
-            $instanceSelected = $model::find(intval($array['id']));
+            $instanceSelected = $model::find(intval($array['id']));            
         }else{
             $instanceSelected = $model;
         }
@@ -40,16 +40,18 @@ class BaseService {
        $content = array_values($array);
 //       var_dump($properties);
 //       var_dump($content);die();
+       unset($content[0], $content[1]);       
        if($this->findRegister($model, $array) == true){
            $model = $model::find(intval($array['id']));
        }  
        
+       // At this point we receive the form inputs with 3 item more than object properties. So we do $i + 3 to correct it.
+       
        for ($i = 0; $i<sizeof($properties); $i++){
            if($properties[$i] == 'password'){
-               $model->{$properties[$i]} = password_hash($content[$i], PASSWORD_DEFAULT);
-           }
-           
-           $model->{$properties[$i]} = $content[$i];
+               $model->{$properties[$i]} = password_hash($content[$i+3], PASSWORD_DEFAULT);
+           }           
+           $model->{$properties[$i]} = $content[$i+3];
        }       
        try{
             if($this->findRegister($model, $array) == true){                
