@@ -1,0 +1,40 @@
+{% extends "layout.html.twig" %}
+{% block content %}
+<div class="content-wrapper pb-5" style="min-height: 960px">
+    <section class="content-header"><h2>{{ title }}</h2></section>
+    <section class="content ">
+        <div class="volver-link">
+            <span class="alert float-left">{{ responseMessage }}</span>
+            <a class="btn btn-outline-primary float-right" href="Intranet/{{ route }}/list?menu={{ menuState }}&item={{ menuItem }}">Lista</a>            
+        </div>
+        <div class="container-fluid">
+            <form class="form-horizontal " id="form{{ title }}" action="Intranet/{{ route }}/save" method="post">
+                <div class="form-group col">
+                    <input type="hidden" style="display:none;" id="menu" name="menu" value="{{ menuState }}">
+                    <input type="hidden" style="display:none;" id="menuItem" name="menuItem" value="{{ menuItem }}">  
+                    <input type="hidden" style="display:none;" id="id" name="id" value="{{ value.id }}">
+                        {% for property in properties %}  
+                            <div class="row">
+                                <div class="input-group col-10">
+                                    <label class="control-label" for="{{ property }}">{{ labels[property] }}</label>
+                                    <input type="text" id="{{ property }}" name="{{ property }}" class="form-control" value="{{ attribute(value, property) }}">
+                                </div>                            
+                            </div>
+                        {% endfor %}
+                </div>               
+                    {% if value.id != null %}
+                        <div class="button-wrapper float-left">
+                            <a class="btn btn-primary" href="Intranet/{{ route }}/delete?id={{ value.id }}&menu={{ menuState }}&item={{ menuItem }}">Eliminar</a>                            
+                        </div> 
+                    {% endif %}
+                <div class="button-wrapper float-right">
+                    <button type="submit" form="formCompany" class="btn btn-primary" id="submit">Guardar</button>
+                    <button type="button" form="formCompany" class="btn btn-primary" id="reset">Restablecer</button>
+                </div>                
+            </form>
+        </div>
+    </section>
+</div>
+            
+            
+{% endblock %}

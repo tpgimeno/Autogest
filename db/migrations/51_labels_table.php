@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class UserLevelTable extends AbstractMigration
+final class LabelsTable extends AbstractMigration
 {
     /**
      * Change Method.
@@ -18,10 +18,11 @@ final class UserLevelTable extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('userlevels');
-        $table->addColumn('name', 'string')
-                ->addColumn('created_at', 'timestamp')
-                ->addColumn('updated_at', 'timestamp')
+        $table = $this->table('labels');
+        $table->addColumn('property', 'string')
+                ->addColumn('label', 'string')
+                ->addColumn('created_at', 'datetime')
+                ->addColumn('updated_at', 'datetime', ['null' => true])                
                 ->create();
     }
 }

@@ -42,11 +42,11 @@ class GenericRoutes {
 
        //COMPANY
 
-       $map->get('companyFormGet', '/Intranet/company/form', [
+       $map->get('companyForm', '/Intranet/company/form', [
            'App\Controllers\Entitys\CompanyController',
            'getCompanyDataAction'
        ]);
-       $map->post('companyFormPost', '/Intranet/company/form', [
+       $map->post('companySave', '/Intranet/company/save', [
            'App\Controllers\Entitys\CompanyController',
            'getCompanyDataAction'
        ]);
@@ -65,6 +65,28 @@ class GenericRoutes {
        $map->get('deleteCompany', '/Intranet/company/delete', [        
            'App\Controllers\Entitys\CompanyController',
            'deleteAction'  
+       ]);
+       
+       //USERLEVELS
+       $map->post('userLevelFormPost', '/Intranet/userLevels/save', [
+           'App\Controllers\Entitys\UserLevelsController',
+           'getAddUserLevelsAction'
+       ]);
+       $map->get('userLevelFormGet', '/Intranet/userLevels/form', [
+           'App\Controllers\Entitys\UserLevelsController',
+           'getAddUserLevelsAction'
+       ]);
+       $map->get('userLevelList', '/Intranet/userLevels/list', [
+           'App\Controllers\Entitys\UserLevelsController',
+           'getIndexUserLevels'
+       ]);
+       $map->post('saveUserLevel', '/Intranet/userLevels/form', [
+           'App\Controllers\Entitys\UserLevelsController',
+           'getAddUserLevelsAction'
+       ]);
+       $map->get('userLevelDelete', '/Intranet/userLevels/delete', [
+           'App\Controllers\Entitys\UserLevelsController',
+           'deleteAction'
        ]);
 
        //USERS

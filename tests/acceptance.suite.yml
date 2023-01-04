@@ -12,11 +12,15 @@ modules:
             browser: chrome
             window_size: 2000x1000
             port: 9515
-            capabilities:
-             chromeOptions:
-                 args: ["--headless", "--disable-gpu"] # Run Chrome in headless mode
-                 prefs:
-                     download.default_directory: "..."
+            clear_cookies: false
+            capabilities:            
+                chromeOptions:
+                    args: ["--headless", "--disable-gpu"] # Run Chrome in headless mode
+                    prefs:
+                        download.default_directory: "..."
+            
+            
+             
         
         - Db:
             dsn: 'mysql:host=localhost;dbname=automotive'

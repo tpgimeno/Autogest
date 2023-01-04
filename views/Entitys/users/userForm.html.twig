@@ -5,10 +5,10 @@
     <section class="content ">
         <div class="volver-link">
             <span class="alert float-left">{{ responseMessage }}</span>            
-            <a class="btn btn-outline-primary float-right" href="Intranet/users/list?menu=mantenimiento&item=companies">Lista</a>
+            <a class="btn btn-outline-primary float-right" href="Intranet/users/list?menu=mantenimiento&item=users">Lista</a>
         </div>
         <div class="container-fluid">
-            <form class="form-horizontal " id="formBank" action="Intranet/users/save" method="post">
+            <form class="form-horizontal " id="formUser" action="Intranet/users/save" method="post">
                 <div class="form-group col">
                     <input type="hidden" style="display:none;" id="menu" name="menu" value="{{ menu }}">
                     <input type="hidden" style="display:none;" id="menuItem" name="menuItem" value="{{ menuItem }}">
@@ -62,13 +62,17 @@
                     <div class="row">
                         <div class="input-group col-6">
                             <label class="control-label" for="email">Nivel Acceso</label>
-                            <input type="text" id="access" name="access" class="form-control" value="{{ userSelected.access }}">
+                            <select id="access" name="access" class="form-control selectLevel">
+                                {% for level in levels %}
+                                    <option value="{{ level.id }}">{{ level.name }}</option>
+                                {% endfor %}
+                            </select>
                         </div>                        
                     </div>
                 </div>
                     {% if userSelected %}
                         <div class="button-wrapper float-left">
-                            <a class="btn btn-primary" href="Intranet/banks/delete?id={{ userSelected.id }}&menu=mantenimiento&item=companies">Eliminar</a>                            
+                            <a class="btn btn-primary" href="Intranet/banks/delete?id={{ userSelected.id }}&menu=mantenimiento&item=users">Eliminar</a>                            
                         </div> 
                     {% endif %}
                 <div class="button-wrapper float-right">

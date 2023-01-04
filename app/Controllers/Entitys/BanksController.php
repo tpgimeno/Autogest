@@ -25,7 +25,7 @@ class BanksController extends BaseController {
         $banks = $this->bankService->getAllRegisters(new Bank());
         return $this->renderHTML('/Entitys/banks/banksList.html.twig', [
                     'banks' => $banks,
-                    'menu' => $menuState,
+                    'menuState' => $menuState,
                     'menuItem' => $menuItem
         ]);
     }
@@ -62,7 +62,7 @@ class BanksController extends BaseController {
                     'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
                     'responseMessage' => $responseMessage,
                     'bankSelected' => $bankSelected,
-                    'menu' => $menuState,
+                    'menuState' => $menuState,
                     'menuItem' => $menuItem
         ]);
     }

@@ -24,6 +24,8 @@ class BaseController
     protected $templateEngine;
     protected $currentUser;
     protected $errorService;
+    protected $labels;
+    protected $itemsList, $labelsForm, $titleList, $titleForm, $properties, $route;     
     
     public function __construct()   
     {

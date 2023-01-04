@@ -1,0 +1,55 @@
+{% extends "layout.html.twig" %}
+{% block content %}
+    <div class="content-wrapper pb-2" style="min-height: 960px">
+        <section class="content-header"><h2>{{ title }}</h2></section>
+        <section class="content">
+            <div class="card-body">
+                <form action="Intranet/{{ route }}/form" method="get">
+                    <div class="form-group">
+                        <input type="hidden" style="display:none;" id="menu" name="menu" value="{{ menuState }}">
+                        <input type="hidden" style="display:none;" id="menuItem" name="item" value="{{ menuItem }}">
+                        <button class="btn btn-info" type="submit" id="newButton">Nueva</button>
+                    </div>
+                </form> 
+                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table id="dataTable" class="table-light table-listados table-bordered table-striped dataTable dtr-inline">
+                                <thead>
+                                    <tr>
+                                        {% for item in itemsList %}
+                                            <th>{{ labels[item] }}</th>
+                                        {% endfor %}
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>                                    
+                                {% for value in values %}
+                                    <tr>
+                                        {% for item in itemsList %}                                            
+                                            <td>{{ attribute(value, item) }}</td> 
+                                        {% endfor %}
+                                        <td>
+                                            <a id="editButton{{value.id}}" href="Intranet/{{ route }}/form?id={{ value.id }}&menu={{ menuState }}&item={{ menuItem }}"><i class="fa fa-edit"></i></a>
+                                            <a id="delButton{{value.id}}" href="Intranet/{{ route }}/delete?id={{ value.id }}&menu={{ menuState }}&item={{ menuItem }}"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        {% for item in itemsList %}
+                                            <th>{{ labels[item] }}</th>
+                                        {% endfor %}
+                                        <th>Acciones</th>                                        
+                                    </tr>
+                                </tfoot>                                
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                                                   
+            </div>                         
+        </section>
+    </div>
+{% endblock %}

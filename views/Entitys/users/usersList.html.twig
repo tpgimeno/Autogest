@@ -6,9 +6,9 @@
             <div class="card-body">
                 <form action="Intranet/users/form" method="get">
                     <div class="form-group">
-                        <input type="hidden" style="display:none;" id="menu" name="menu" value="{{ menu }}">
+                        <input type="hidden" style="display:none;" id="menu" name="menu" value="{{ menuState }}">
                         <input type="hidden" style="display:none;" id="menuItem" name="menuItem" value="{{ menuItem }}">
-                        <button class="btn btn-info" type="submit" id="newCompanyButton">Nuevo</button>
+                        <button class="btn btn-info" type="submit" id="newUserButton">Nuevo</button>
                     </div>
                 </form> 
                 <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
@@ -31,7 +31,12 @@
                                         <td>{{ user.id }}</td>
                                         <td>{{ user.name }}</td>
                                         <td>{{ user.email }}</td>
-                                        <td>{{ user.access }}</td>
+                                        <td>{% for level in levels %}
+                                                {% if user.access == level.id %}
+                                                    {{ level.name }}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </td>                                            
                                         <td>{{ user.phone }}</td>
                                         <td>
                                             <a href="Intranet/users/form?id={{ user.id }}&menu=mantenimiento&item=users"><i class="fa fa-edit"></i></a>

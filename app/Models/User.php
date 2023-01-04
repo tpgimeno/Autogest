@@ -10,8 +10,16 @@ class User extends Model
   use SoftDeletes;
 
   protected $table = 'users';
-  protected $properties = ['email', 
-      'password'];
+  protected $properties = ['name',
+      'email',
+      'password',
+      'address',
+      'postalCode',
+      'city',
+      'state',
+      'country',
+      'phone',
+      'access'];
   
   public function getProperties(){
       return $this->properties;

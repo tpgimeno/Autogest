@@ -12,7 +12,8 @@ class AdminController extends BaseController {
         $selected_tab = 'home';
         if($params && isset($params['selected_tab'])) {
            $selected_tab = $params['selected_tab'];
-        }        
+        } 
+        
         $user = User::find($request->getCookieParams()['userId']);         
         return $this->renderHTML('menu.html.twig', [
             'userEmail' => $user->getAttribute('email'),
