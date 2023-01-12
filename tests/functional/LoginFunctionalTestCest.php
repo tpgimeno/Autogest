@@ -1,5 +1,9 @@
 <?php
 
+namespace Tests\functional;
+
+use FunctionalTester;
+
 class LoginFunctionalTestCest
 {
     public function _before(FunctionalTester $I)
@@ -14,7 +18,7 @@ class LoginFunctionalTestCest
         $I->see('El usuario o el Password no es correcto');
     }
 
-    public function LoginPassTest(FunctionalTester $I) {
+    public static function LoginPassTest(FunctionalTester $I) {
         $I->amGoingTo("Comprobar que el login efectua correctamente");
         $I->amOnPage("/");
         $I->see("Iniciar sesión");

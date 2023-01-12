@@ -1,0 +1,5 @@
+I WANT TO ACCESS COMPANIES LIST
+
+I am on page ""/company/list?menu=mantenimiento&item=companies"" 
+I see 'Empresas'
+

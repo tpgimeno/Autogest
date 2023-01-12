@@ -1,0 +1,13 @@
+
+==========================================  CODECEPTION  =============================================
+
+
+Secuencia para iniciar el Webdriver "chromedirver" para el testeo de Aceptación de Codeception.
+
+Situarnos en la carpeta:
+
+"C:/Webdriver/bin"
+
+Y introducir el comando:
+
+chromedriver --url-base=/wd/hub --port=4123

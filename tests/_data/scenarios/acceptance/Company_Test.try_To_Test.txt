@@ -1,5 +1,0 @@
-I WANT TO TRY TO TEST
-
-I am on page '/Intranet/company/list' 
-I see 'Empresas'
-

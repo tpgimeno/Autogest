@@ -1,0 +1,9 @@
+I WANT TO LOGIN PASS TEST
+
+I am going to ""Comprobar que el login efectua correctamente"" 
+I am on page ""/"" 
+I see ""Iniciar sesión"" 
+I submit form '#loginForm'," ['email' => 'tonyllomouse@gmail.com'," 'password' => '12345']" 
+I am going to ""Valido la página en que me encuentro"" 
+I can see ""Mantenimiento""
+

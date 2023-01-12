@@ -1,0 +1,7 @@
+I WANT TO EDIT COMPANY TEST
+
+I am on page ""/company/list?menu=mantenimiento&item=companies"" 
+I click '#editButton' . $this->id" 
+I submit form '#formEmpresa'," $empresa" 
+I see 'Updated'
+

@@ -86,7 +86,8 @@ class CompanyController extends BaseController {
 
     public function deleteAction(ServerRequest $request) { 
         $params = $request->getQueryParams();
-        $this->companyService->deleteRegister(new Company(), $params['id']);
+        
+        $this->companyService->deleteRegister(new Company(), $params);
         return new RedirectResponse('/Intranet/company/list?menu=' . $params['menu'] . '&item=' . $params['item']);
     }
 

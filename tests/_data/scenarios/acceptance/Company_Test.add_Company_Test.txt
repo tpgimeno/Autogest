@@ -1,0 +1,8 @@
+I WANT TO ADD COMPANY TEST
+
+I am on page ""/company/list?menu=mantenimiento&item=companies"" 
+I click '#newButton' 
+I submit form '#formEmpresa'," $empresa" 
+I grab from database 'company'," 'id'," ['name' => 'LoremIpsum']" 
+I see 'Saved'
+
