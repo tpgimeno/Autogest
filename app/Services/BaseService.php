@@ -31,6 +31,11 @@ class BaseService {
         }
         return $arrayLabels;
     }
+    
+    public function getModelProperties($model){
+        $object = new $model;        
+        return $model->getProperties();
+    }
 
     public function setInstance($model, $array) {
         if (isset($array['id'])) {

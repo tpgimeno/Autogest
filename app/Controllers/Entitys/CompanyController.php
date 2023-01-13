@@ -4,7 +4,6 @@ namespace App\Controllers\Entitys;
 
 use App\Controllers\BaseController;
 use App\Models\Company;
-use App\Models\Label;
 use App\Services\Entitys\CompanyService;
 use Exception;
 use Laminas\Diactoros\Response\RedirectResponse;
@@ -34,7 +33,7 @@ class CompanyController extends BaseController {
         return $this->renderHTML('/templateListView.html.twig', [
                     'values' => $companies,
                     'route' => $this->route,
-                    'title' => $this->titleList,
+                    'titleList' => $this->titleList,
                     'itemsList' => $this->itemsList,
                     'labels' => $this->labels,                    
                     'menuState' => $menuState,
@@ -59,7 +58,7 @@ class CompanyController extends BaseController {
                 $companySelected = $this->companyService->findCompany(array('id' => $response[0]));                
                 $menuState = $postData['menu'];
                 $menuItem = $postData['menuItem'];
-                $this->properties = $this->companyService->getModelProperties();   
+                $this->properties = $this->companyService->getModelProperties(new Company());   
                 $responseMessage = $response[1];
             } catch (Exception $e) {
                 $responseMessage = $this->errorService->getError($e);
@@ -69,7 +68,7 @@ class CompanyController extends BaseController {
             $companySelected = $this->companyService->setInstance(new Company(), $params);            
             $menuState = $params['menu'];
             $menuItem = $params['item'];
-            $this->properties = $this->companyService->getModelProperties();  
+            $this->properties = $this->companyService->getModelProperties(new Company());  
         }        
         return $this->renderHTML('templateFormView.html.twig', [
                     'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
@@ -79,7 +78,7 @@ class CompanyController extends BaseController {
                     'menuState' => $menuState,
                     'menuItem' => $menuItem,
                     'properties' => $this->properties,
-                    'title' => $this->titleForm,
+                    'titleForm' => $this->titleForm,
                     'route' => $this->route                    
         ]);
     }

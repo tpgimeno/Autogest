@@ -1,0 +1,15 @@
+I WANT TO BANKS LIST
+
+I click 'Mantenimiento' 
+I click 'Bancos' 
+I see 'Bancos' 
+I click '#newButton' 
+I see 'Banco' 
+I click 'Lista' 
+I see current url equals ""/Intranet/banks/list?menu=mantenimiento&item=banks"" 
+I grab num records 'banks'," ['deleted_at' => null]" 
+I grab from database 'banks'," 'fiscalId'," ['id' => $lastRecord]" 
+I click '#editButton' . $lastRecord" 
+I fill field '#fiscalId'," 'LoremIpsumTest' 
+I click 'submit'
+

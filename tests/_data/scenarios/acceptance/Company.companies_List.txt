@@ -1,0 +1,10 @@
+I WANT TO COMPANIES LIST
+
+I click 'Mantenimiento' 
+I click 'Empresas' 
+I see 'Empresas' 
+I click '#newButton' 
+I see 'Empresa' 
+I click 'Lista' 
+I see current url equals ""/Intranet/company/list?menu=mantenimiento&item=companies""
+

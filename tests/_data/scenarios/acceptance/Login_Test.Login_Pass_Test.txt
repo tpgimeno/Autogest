@@ -1,0 +1,6 @@
+I WANT TO LOGIN PASS TEST
+
+I am on page ""/"" 
+I submit form '#loginForm'," ['email' => 'tonyllomouse@gmail.com'," 'password' => '12345']" 
+I see 'Dashboard'
+

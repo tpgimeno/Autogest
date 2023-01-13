@@ -16,6 +16,13 @@ class BanksController extends BaseController {
     public function __construct(BankService $bankService) {
         parent::__construct();
         $this->bankService = $bankService;
+        $this->route = 'banks';
+        $this->titleList = 'Bancos';
+        $this->titleForm = 'Banco';
+        $this->labels = $this->bankService->getLabelsArray(); 
+        $this->itemsList = array('id', 'bankCode', 'name', 'email', 'phone');
+        $this->properties = $this->bankService->getModelProperties(new Bank());
+        
     }
 
     public function getIndexAction($request) {
@@ -23,8 +30,12 @@ class BanksController extends BaseController {
         $menuState = $params['menu'];
         $menuItem = $params['item'];
         $banks = $this->bankService->getAllRegisters(new Bank());
-        return $this->renderHTML('/Entitys/banks/banksList.html.twig', [
-                    'banks' => $banks,
+        return $this->renderHTML('/templateListView.html.twig', [
+                    'values' => $banks,
+                    'route' => $this->route,
+                    'titleList' => $this->titleList,                    
+                    'labels' => $this->labels,
+                    'itemsList' => $this->itemsList,
                     'menuState' => $menuState,
                     'menuItem' => $menuItem
         ]);
@@ -46,7 +57,7 @@ class BanksController extends BaseController {
                 $bankValidator->assert($postData); // true 
                 $response = $this->bankService->saveRegister(new Bank(), $postData);
                 $menuState = $postData['menu'];
-                $menuItem = $postData['menuItem'];
+                $menuItem = $postData['menuItem'];                
                 $bankSelected = $this->bankService->setInstance(new Bank(), array('id' => $response[0]));
                 $responseMessage = $response[1];
             } catch (\Exception $e) {
@@ -55,13 +66,17 @@ class BanksController extends BaseController {
         } else {
             $params = $request->getQueryParams();
             $menuState = $params['menu'];
-            $menuItem = $params['item'];
+            $menuItem = $params['item'];            
             $bankSelected = $this->bankService->setInstance(new Bank(), $params);
         }
-        return $this->renderHTML('/Entitys/banks/banksForm.html.twig', [
+        return $this->renderHTML('/templateFormView.html.twig', [
                     'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
                     'responseMessage' => $responseMessage,
-                    'bankSelected' => $bankSelected,
+                    'value' => $bankSelected,
+                    'route' => $this->route,
+                    'properties' => $this->properties,
+                    'labels' => $this->labels,
+                    'titleForm' => $this->titleForm,
                     'menuState' => $menuState,
                     'menuItem' => $menuItem
         ]);

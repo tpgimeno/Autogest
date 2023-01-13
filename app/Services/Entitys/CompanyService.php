@@ -59,11 +59,6 @@ class CompanyService extends BaseService {
         return $response;
     }
     
-    public function getModelProperties(){
-        $company = new Company();
-        
-        return $company->getProperties();
-    }
     
     public function deleteCompany($id) {        
         $company = Company::find($id)->first();

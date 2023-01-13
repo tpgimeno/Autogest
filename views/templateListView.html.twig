@@ -1,14 +1,14 @@
 {% extends "layout.html.twig" %}
 {% block content %}
     <div class="content-wrapper pb-2" style="min-height: 960px">
-        <section class="content-header"><h2>{{ title }}</h2></section>
+        <section class="content-header"><h2>{{ titleList }}</h2></section>
         <section class="content">
             <div class="card-body">
                 <form action="Intranet/{{ route }}/form" method="get">
                     <div class="form-group">
                         <input type="hidden" style="display:none;" id="menu" name="menu" value="{{ menuState }}">
                         <input type="hidden" style="display:none;" id="menuItem" name="item" value="{{ menuItem }}">
-                        <button class="btn btn-info" type="submit" id="newButton">Nueva</button>
+                        <button class="btn btn-info" type="submit" id="newButton">Nuevo</button>
                     </div>
                 </form> 
                 <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
