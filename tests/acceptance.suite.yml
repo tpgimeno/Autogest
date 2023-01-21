@@ -6,7 +6,7 @@
 
 actor: AcceptanceTester
 modules:
-    enabled:
+    enabled:       
         - WebDriver:
             url: 'http://localhost/Intranet'
             browser: chrome
@@ -16,17 +16,6 @@ modules:
                 chromeOptions:
                     args: ["--headless", "--disable-gpu"] # Run Chrome in headless mode
                     prefs:
-                        download.default_directory: "..."
-           
-            
-            
-             
-        
-        - Db:
-            dsn: 'mysql:host=localhost;dbname=automotive'
-            user: 'root'
-            password: ''
-            dump: 
-                - 'tests/_data/dump.sql'
+                        download.default_directory: "..."        
         - \Helper\Acceptance
 step_decorators: ~        

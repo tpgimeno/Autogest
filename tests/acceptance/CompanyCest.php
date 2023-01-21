@@ -12,8 +12,8 @@ class CompanyCest {
 
     // tests
     public function companiesList(AcceptanceTester $I) {
-        $I->click('Mantenimiento');
-        $I->click('Empresas');
+        $I->click('Mantenimiento');        
+        $I->click('#companies > a');
         $I->see('Empresas');
         $I->click('#newButton');
         $I->see('Empresa');

@@ -1,0 +1,8 @@
+I WANT TO DEL FROM COMPANY FORM TEST
+
+I am on page ""/company/list?menu=mantenimiento&item=companies"" 
+I grab num records('company', array 'deleted_at' => null)" 
+I click '#editButton' . $lastRegister" 
+I click 'Eliminar' 
+I don't see in database('company', array('id' => intval "$lastRegister)"," 'deleted_at' => null)"
+

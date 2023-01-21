@@ -86,8 +86,8 @@ class BaseService {
         return array($model->id, $responseMessage);
     }
 
-    public function deleteRegister($model, $id) {
-        $model::find(intval($id['id']))->delete();
+    public function deleteRegister($model, $array) {
+        $model::find(intval($array['id']))->delete();
     }
 
 }

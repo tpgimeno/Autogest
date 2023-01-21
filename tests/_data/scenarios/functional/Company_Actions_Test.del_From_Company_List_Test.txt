@@ -2,5 +2,5 @@ I WANT TO DEL FROM COMPANY LIST TEST
 
 I am on page ""/company/list?menu=mantenimiento&item=companies"" 
 I click '#delButton' . $this->id" 
-I see in database('company', array 'id' => $this->id"," 'deleted_at' => null)"
+I don't see in database('company', array('id' => intval "$this->id)"," 'deleted_at' => null)"
 

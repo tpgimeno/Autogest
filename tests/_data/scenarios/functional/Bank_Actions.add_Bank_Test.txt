@@ -1,0 +1,8 @@
+I WANT TO ADD BANK TEST
+
+I am on page ""/banks/list?menu=mantenimiento&item=banks"" 
+I click '#newButton' 
+I submit form '#formBanco'," $banco" 
+I grab from database 'banks'," 'id'," ['fiscalId' => $this->fiscalId]" 
+I see 'Saved'
+

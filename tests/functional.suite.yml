@@ -12,12 +12,8 @@ modules:
         - \Helper\Functional
         - PhpBrowser:
             url: http://localhost/Intranet
+            clear_cookies: false
             
             
-        - Db:
-            dsn: 'mysql:host=localhost;dbname=automotive'
-            user: 'root'
-            password: ''
-            dump: 
-                - 'tests/_data/dump.sql'
+        
     step_decorators: ~        

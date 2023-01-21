@@ -17,6 +17,7 @@ class CompanyController extends BaseController {
     public function __construct(CompanyService $companyService) {
         parent::__construct();
         $this->companyService = $companyService;
+        $this->model = new Company();
         $this->route = 'company';
         $this->titleList = 'Empresas';
         $this->titleForm = 'Empresa';
@@ -25,27 +26,11 @@ class CompanyController extends BaseController {
     }
 
     public function getIndexAction($request) {
-        $params = $request->getQueryParams();
-        
-        $menuState = $params['menu'];  
-        $menuItem = $params['item'];
-        $companies = $this->companyService->getAllRegisters(new Company());
-        return $this->renderHTML('/templateListView.html.twig', [
-                    'values' => $companies,
-                    'route' => $this->route,
-                    'titleList' => $this->titleList,
-                    'itemsList' => $this->itemsList,
-                    'labels' => $this->labels,                    
-                    'menuState' => $menuState,
-                    'menuItem' => $menuItem
-        ]);
+        return $this->getBaseIndexAction($request, $this->model);
     }
 
     public function getCompanyDataAction($request) {
-        $responseMessage = null;
-        $companySelected = null;
-        $menuState = null;
-        $menuItem = null;
+        $responseMessage = null;         
         if ($request->getMethod() == 'POST') {
             $postData = $request->getParsedBody();
             $companyValidator = v::key('name', v::stringType()->notEmpty())
@@ -53,40 +38,20 @@ class CompanyController extends BaseController {
                     ->key('phone', v::notEmpty())
                     ->key('email', v::stringType()->notEmpty());
             try {
-                $companyValidator->assert($postData); // true                 
-                $response = $this->companyService->saveRegister(new Company(), $postData);                
-                $companySelected = $this->companyService->findCompany(array('id' => $response[0]));                
-                $menuState = $postData['menu'];
-                $menuItem = $postData['menuItem'];
-                $this->properties = $this->companyService->getModelProperties(new Company());   
-                $responseMessage = $response[1];
+                $companyValidator->assert($postData); // true
             } catch (Exception $e) {
                 $responseMessage = $this->errorService->getError($e);
             }
+            return $this->getBasePostDataAction($request, $this->model, $responseMessage);
         }else{        
-            $params = $request->getQueryParams();            
-            $companySelected = $this->companyService->setInstance(new Company(), $params);            
-            $menuState = $params['menu'];
-            $menuItem = $params['item'];
-            $this->properties = $this->companyService->getModelProperties(new Company());  
+            return $this->getBaseGetDataAction($request, $this->model);
         }        
-        return $this->renderHTML('templateFormView.html.twig', [
-                    'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
-                    'responseMessage' => $responseMessage,                    
-                    'value' => $companySelected,
-                    'labels' => $this->labels,
-                    'menuState' => $menuState,
-                    'menuItem' => $menuItem,
-                    'properties' => $this->properties,
-                    'titleForm' => $this->titleForm,
-                    'route' => $this->route                    
-        ]);
+        
     }
 
     public function deleteAction(ServerRequest $request) { 
-        $params = $request->getQueryParams();
-        
-        $this->companyService->deleteRegister(new Company(), $params);
+        $params = $request->getQueryParams();        
+        $this->companyService->deleteRegister($this->model, $params);
         return new RedirectResponse('/Intranet/company/list?menu=' . $params['menu'] . '&item=' . $params['item']);
     }
 

@@ -1,0 +1,7 @@
+I WANT TO EDIT BANK TEST
+
+I am on page ""/banks/list?menu=mantenimiento&item=banks"" 
+I click '#editButton' . $this->id" 
+I submit form '#formBanco'," $banco" 
+I see 'Updated'
+

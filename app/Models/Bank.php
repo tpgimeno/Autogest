@@ -20,8 +20,8 @@ class Bank extends Model
 {
     use SoftDeletes;
     protected $table = 'banks';
-    protected $properties = ['name',
-        'bankCode', 
+    protected $properties = ['name', 
+        'bankCode',
         'fiscalName',         
         'fiscalId',         
         'address',

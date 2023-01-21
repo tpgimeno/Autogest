@@ -18,7 +18,8 @@ class Finance extends Model {
         'country', 
         'phone',
         'email',
-        'site'];
+        'site',
+        'bankId'];
     public function getProperties(){
         return $this->properties;
     }

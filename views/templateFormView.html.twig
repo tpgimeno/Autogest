@@ -1,7 +1,7 @@
 {% extends "layout.html.twig" %}
 {% block content %}
 <div class="content-wrapper pb-5" style="min-height: 960px">
-    <section class="content-header"><h2>{{ title }}</h2></section>
+    <section class="content-header"><h2>{{ titleForm }}</h2></section>
     <section class="content ">
         <div class="volver-link">
             <span class="alert float-left">{{ responseMessage }}</span>
@@ -13,13 +13,26 @@
                     <input type="hidden" style="display:none;" id="menu" name="menu" value="{{ menuState }}">
                     <input type="hidden" style="display:none;" id="menuItem" name="menuItem" value="{{ menuItem }}">  
                     <input type="hidden" style="display:none;" id="id" name="id" value="{{ value.id }}">
-                        {% for property in properties %}  
-                            <div class="row">
-                                <div class="input-group col-10">
-                                    <label class="control-label" for="{{ property }}">{{ labels[property] }}</label>
-                                    <input type="text" id="{{ property }}" name="{{ property }}" class="form-control" value="{{ attribute(value, property) }}">
-                                </div>                            
-                            </div>
+                        {% for property in properties %}
+                            {% if property == 'bankId' %}                                
+                                <div class="row">
+                                    <div class="input-group col-10">
+                                        <label class="control-label" for="{{ property }}">{{ labels[property] }}</label>
+                                        <select id="{{ property }}" name="{{ property }}" class="form-control" value="{{ attribute(value, property) }}">                                                
+                                        {% for option in optionsArray[property] %}
+                                            <option value="{{ option['id'] }}">{{ option['name'] }}</option>
+                                        {% endfor %}
+                                        </select>        
+                                    </div>                            
+                                </div>
+                            {% else %}
+                                <div class="row">
+                                    <div class="input-group col-10">
+                                        <label class="control-label" for="{{ property }}">{{ labels[property] }}</label>
+                                        <input type="text" id="{{ property }}" name="{{ property }}" class="form-control" value="{{ attribute(value, property) }}">
+                                    </div>                            
+                                </div>
+                            {% endif %}
                         {% endfor %}
                 </div>               
                     {% if value.id != null %}
@@ -28,8 +41,8 @@
                         </div> 
                     {% endif %}
                 <div class="button-wrapper float-right">
-                    <button type="submit" form="form{{ title }}" class="btn btn-primary" id="submit">Guardar</button>
-                    <button type="button" form="form{{ title }}" class="btn btn-primary" id="reset">Restablecer</button>
+                    <button type="submit" form="form{{ titleForm }}" class="btn btn-primary" id="submit">Guardar</button>
+                    <button type="button" form="form{{ titleForm }}" class="btn btn-primary" id="reset">Restablecer</button>
                 </div>                
             </form>
         </div>

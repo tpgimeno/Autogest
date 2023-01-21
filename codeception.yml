@@ -5,6 +5,14 @@ paths:
     support: tests/_support
     envs: tests/_envs
 actor_suffix: Tester
+modules:
+    enabled:
+        - Db:
+            dsn: 'mysql:host=localhost;dbname=automotive'
+            user: 'root'
+            password: ''
+            dump: 
+                - 'tests/_data/dump.sql'
 extensions:
     enabled:
         - Codeception\Extension\RunFailed

@@ -11,17 +11,15 @@ class BankCest {
     }
 
     // tests
-    public function banksList(AcceptanceTester $I) {
-        $I->click('Mantenimiento');
-        $I->click('Bancos');
+    public function banksList(AcceptanceTester $I) {        
+        $I->click('Mantenimiento');        
+        $I->click('#banks > a');
         $I->see('Bancos');
         $I->click('#newButton');
         $I->see('Banco');
         $I->click('Lista');
         $I->seeCurrentUrlEquals("/Intranet/banks/list?menu=mantenimiento&item=banks");
-        $lastRecord = $I->grabNumRecords('banks', ['deleted_at' => null]);        
-        $I->click('#editButton' . $lastRecord);
-        $I->fillField('#name', 'LoremIpsumTest');
-        $I->click('Guardar');
+       
     }
+
 }

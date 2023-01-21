@@ -1,0 +1,8 @@
+I WANT TO EDIT FINANCE TEST
+
+I am on page ""/finance/list?menu=mantenimiento&item=finance"" 
+I click '#editButton' . $this->id" 
+I grab num records 'finance'," ['deleted_at' => null]" 
+I submit form '#formFinanciera'," $financiera" 
+I see 'Updated'
+
