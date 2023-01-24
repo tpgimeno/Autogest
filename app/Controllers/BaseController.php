@@ -60,7 +60,7 @@ class BaseController {
         ]);
     }
     
-    public function getBasePostDataAction(ServerRequest $request, $model, $responseMessage) {              
+    public function getBasePostDataAction(ServerRequest $request, $model, $iterables, $responseMessage) {              
         $postData = $request->getParsedBody();                   
         $response = $this->baseService->saveRegister(new $model, $postData); 
         if($response){
@@ -75,6 +75,7 @@ class BaseController {
                     'responseMessage' => $responseMessage,                    
                     'value' => $valueSelected,
                     'labels' => $this->labels,
+                    'optionsArray' => $iterables,
                     'menuState' => $menuState,
                     'menuItem' => $menuItem,
                     'properties' => $this->properties,
@@ -83,7 +84,7 @@ class BaseController {
         ]);
     }
     
-    public function getBaseGetDataAction(ServerRequest $request, $model) {        
+    public function getBaseGetDataAction(ServerRequest $request, $model, $iterables) {        
         $params = $request->getQueryParams();            
         $valueSelected = $this->baseService->setInstance(new $model, $params);            
         $menuState = $params['menu'];
@@ -93,6 +94,7 @@ class BaseController {
                     'userEmail' => $this->currentUser->getCurrentUserEmailAction(),                                      
                     'value' => $valueSelected,
                     'labels' => $this->labels,
+                    'optionsArray' => $iterables,
                     'menuState' => $menuState,
                     'menuItem' => $menuItem,
                     'properties' => $this->properties,

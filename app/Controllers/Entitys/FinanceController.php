@@ -18,33 +18,23 @@ class FinanceController extends BaseController {
     public function __construct(FinanceService $financeService) {
         parent::__construct();
         $this->financeService = $financeService;
+        $this->model = new Finance();
         $this->route = 'finance';
         $this->titleList = 'Financieras';
         $this->titleForm = 'Financiera';
         $this->labels = $this->financeService->getLabelsArray();
         $this->itemsList = array('id', 'bank', 'name', 'email', 'phone');
-        $this->properties = $this->financeService->getModelProperties(new Finance());
+        $this->properties = $this->financeService->getModelProperties($this->model);
     }
 
     public function getIndexAction($request) {
-        $params = $request->getQueryParams();
-        $menuState = $params['menu'];
-        $menuItem = $params['item'];
-        $finances = $this->financeService->getAllRegisters(new Finance());
-        return $this->renderHTML('templateListView.html.twig', [
-                    'route' => $this->route,
-                    'titleList' => $this->titleList,
-                    'labels' => $this->labels,
-                    'itemsList' => $this->itemsList,
-                    'menuState' => $menuState,
-                    'menuItem' => $menuItem,
-                    'values' => $finances
-        ]);
+        return $this->getBaseIndexAction($request, $this->model);
     }
 
     public function getFinanceDataAction($request) {
         $responseMessage = null;
-        $financeSelected = null;
+        $banks = $this->financeService->getAllRegisters(new Bank());
+        $iterables = ['bankId' => $banks];
         if ($request->getMethod() == 'POST') {
             $postData = $request->getParsedBody();
             $financeValidator = v::key('name', v::stringType()->notEmpty())
@@ -52,39 +42,19 @@ class FinanceController extends BaseController {
                     ->key('phone', v::notEmpty())
                     ->key('email', v::notEmpty());
             try {
-                $financeValidator->assert($postData); // true 
-                $menuState = $postData['menu'];
-                $menuItem = $postData['menuItem'];
-                $responseMessage = $this->financeService->saveRegister(new Finance(), $postData);
-                $financeSelected = $this->financeService->setInstance(new Finance(), $postData);
+                $financeValidator->assert($postData); // true                 
             } catch (Exception $e) {
                 $responseMessage = $e->getMessage();
             }
-        } else {
-            $params = $request->getQueryParams();
-            $menuState = $params['menu'];
-            $menuItem = $params['item'];
-            $financeSelected = $this->financeService->setInstance(new Finance(), $params);
+            return $this->getBasePostDataAction($request, $this->model, $iterables, $responseMessage);
+        } else {           
+            return $this->getBaseGetDataAction($request, $this->model, $iterables);
         }
-        $banks = $this->financeService->getAllRegisters(new Bank());
-        $iterables = ['bankId' => $banks];
-        return $this->renderHTML('templateFormView.html.twig', [
-                    'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
-                    'responseMessage' => $responseMessage,
-                    'menuState' => $menuState,
-                    'menuItem' => $menuItem,
-                    'route' => $this->route,
-                    'properties' => $this->properties,
-                    'labels' => $this->labels,
-                    'titleForm' => $this->titleForm,
-                    'value' => $financeSelected,
-                    'optionsArray' => $iterables              
-        ]);
     }
 
     public function deleteAction(ServerRequest $request) {
         $params = $request->getQueryParams();
-        $this->financeService->deleteRegister(new Finance(), $params);
+        $this->financeService->deleteRegister($this->model, $params);
         return new RedirectResponse('/Intranet/finance/list?menu=mantenimiento&item=finance');
     }
 

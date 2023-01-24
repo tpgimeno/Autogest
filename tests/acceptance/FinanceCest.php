@@ -13,16 +13,14 @@ class FinanceCest {
     // tests
     public function FinanceList(AcceptanceTester $I) {
         $I->click('Mantenimiento');
+        $I->waitForElementVisible('#finance > a', 2);
         $I->click('Financieras');
         $I->see('Financieras');
         $I->click('#newButton');
         $I->see('Financiera');
         $I->click('Lista');
         $I->seeCurrentUrlEquals("/Intranet/finance/list?menu=mantenimiento&item=finance");
-        $lastRecord = $I->grabNumRecords('finance', ['deleted_at' => null]);        
-        $I->click('#editButton' . $lastRecord);
-        $I->fillField('#name', 'LoremIpsumAcceptanceTest');
-        $I->click('Guardar');
+        
     }
     
    

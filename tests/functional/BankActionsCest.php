@@ -15,7 +15,7 @@ class BankActionsCest {
     public function addBankTest(FunctionalTester $I) {
         $I->amOnPage("/banks/list?menu=mantenimiento&item=banks");
         $I->click('#newButton');
-        $this->permitted_chars = '0123456789ABCDEFGHIJKLMNÑOPQRSTUVWXYZ';
+        $this->permitted_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $this->fiscalId = substr(str_shuffle($this->permitted_chars), 0, 10);
         $bankCode = rand(1000, 9999);
         $postalCode = random_int(10000, 99999);
@@ -41,7 +41,11 @@ class BankActionsCest {
 
     public function delFromBankFormTest(FunctionalTester $I) {
         $I->amOnPage("/banks/list?menu=mantenimiento&item=banks");
-        $lastRegister = $I->grabNumRecords('banks', array('deleted_at' => null));        
+        $lastRegister = $I->grabNumRecords('banks', array('deleted_at' => null));  
+        if($lastRegister === 0){
+            $this->addBankTest($I);
+            $lastRegister = $I->grabNumRecords('banks', array('deleted_at' => null));  
+        }
         $registers = $I->grabColumnFromDatabase('banks', 'id', array('deleted_at' => null));
         $I->click('#editButton' . $registers[$lastRegister -1]);
         $I->click('Eliminar');

@@ -61,6 +61,6 @@ table.dataTable>thead .sorting_asc_disabled:before, table.dataTable>thead .sorti
 }
 
 .form-horizontal .form-group .input-group label{
-    min-width: 8em;
+    min-width: 10em;
     margin-top: auto;
 }

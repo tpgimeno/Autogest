@@ -44,9 +44,9 @@ class BanksController extends BaseController {
             } catch (Exception $e) {
                 $responseMessage = $this->errorService->getError($e);
             }
-            return $this->getBasePostDataAction($request, $this->model, $responseMessage);
+            return $this->getBasePostDataAction($request, $this->model, null, $responseMessage);
         } else {
-            return $this->getBaseGetDataAction($request, $this->model);
+            return $this->getBaseGetDataAction($request, $this->model, null);
         }
     }
 

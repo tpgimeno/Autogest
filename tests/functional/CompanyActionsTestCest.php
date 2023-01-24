@@ -19,7 +19,7 @@ class CompanyActionsTestCest {
     public function addCompanyTest(FunctionalTester $I) {
         $I->amOnPage("/company/list?menu=mantenimiento&item=companies");
         $I->click('#newButton');
-        $this->permitted_chars = '0123456789ABCDEFGHIJKLMNÑOPQRSTUVWXYZ';
+        $this->permitted_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $this->fiscalId = substr(str_shuffle($this->permitted_chars), 0, 10);
         $empresa = ['name' => 'LoremIpsum', 'fiscalId' => $this->fiscalId, 'fiscalName' => 'LoremIpsum SA', 'address' => 'C/ Lorem Ipsum, 123', 'postalCode' => random_int(10000, 99999), 'city' => 'Ipsum', 'state' => 'Lorem', 'country' => 'IpsumLorem', 'phone' => '962541144', 'email' => 'loremipsum@loremipsum.com', 'site' => 'www.loremipsum.com'];
         $I->submitForm('#formEmpresa', $empresa);
@@ -44,7 +44,11 @@ class CompanyActionsTestCest {
     
     public function delFromCompanyFormTest(FunctionalTester $I) {
         $I->amOnPage("/company/list?menu=mantenimiento&item=companies");
-        $lastRegister = $I->grabNumRecords('company', array('deleted_at' => null));  
+        $lastRegister = $I->grabNumRecords('company', array('deleted_at' => null)); 
+        if($lastRegister === 0){
+            $this->addCompanyTest($I);
+            $lastRegister = $I->grabNumRecords('company', array('deleted_at' => null));
+        }
         $registers = $I->grabColumnFromDatabase('company', 'id', array('deleted_at' => null));        
         $I->click('#editButton' . $registers[$lastRegister -1]);
         $I->click('Eliminar');
