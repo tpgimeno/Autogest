@@ -1,0 +1,6 @@
+I WANT TO DEL FROM STORE LIST TEST
+
+I am on page ""/stores/list?menu=stock&item=stores"" 
+I click '#delButton' . $this->id" 
+I don't see in database('stores', array('id' => intval "$this->id)"," 'deleted_at' => null)"
+

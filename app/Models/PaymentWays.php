@@ -10,7 +10,7 @@ class PaymentWays extends Model
     use SoftDeletes;
 
     protected $table = "paymentWays";
-    protected $properties = ['name', 'account', 'discount'];
+    protected $properties = ['name', 'accountAssociated', 'discount'];
     public function getProperties(){
         return $this->properties;
     }

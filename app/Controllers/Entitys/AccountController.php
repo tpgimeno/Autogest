@@ -57,8 +57,9 @@ class AccountController extends BaseController {
             return $this->getBaseGetDataAction($request, $this->model, $iterables);
         }
     }
-    public function deleteAction(ServerRequest $request) {         
-        $this->accountService->deleteRegister(new Accounts(), $request->getQueryParams('id'));               
-        return new RedirectResponse('/Intranet/accounts/list');
+    public function deleteAction(ServerRequest $request) { 
+        $params = $request->getQueryParams();        
+        $this->accountService->deleteRegister(new Accounts(), $params);               
+        return new RedirectResponse('/Intranet/accounts/list?menu=' . $params['menu'] . '&item=' . $params['item']);
     }
 }

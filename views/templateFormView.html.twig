@@ -8,19 +8,19 @@
             <a class="btn btn-outline-primary float-right" href="Intranet/{{ route }}/list?menu={{ menuState }}&item={{ menuItem }}">Lista</a>            
         </div>
         <div class="container-fluid">
-            <form class="form-horizontal " id="form{{ titleForm|replace({" ":""}) }}" action="Intranet/{{ route }}/save" method="post">
+            <form class="form-horizontal " id="form{{ titleForm|replace({" ":"", "á":"a","à":"a","é":"e","è":"e","í":"i","ì":"i","ó":"o","ò":"o","ú":"u","ù":"u"}) }}" action="Intranet/{{ route }}/save" method="post">
                 <div class="form-group col">
                     <input type="hidden" style="display:none;" id="menu" name="menu" value="{{ menuState }}">
                     <input type="hidden" style="display:none;" id="menuItem" name="menuItem" value="{{ menuItem }}">  
                     <input type="hidden" style="display:none;" id="id" name="id" value="{{ value.id }}">
                         {% for property in properties %}
-                            {% set selects = {'bankId':'bankId','bank':'bank'} %}
+                            {% set selects = {'bankId':'bankId','bank':'bank','accountAssociated':'accountAssociated'} %}
                             {% set textareas = {'observations':'observations'} %}
                             {% if property in selects %}                                
                                 <div class="row">
                                     <div class="input-group col-10">
                                         <label class="control-label" for="{{ property }}">{{ labels[property] }}</label>
-                                        <select id="{{ property }}" name="{{ property }}" class="form-control" value="{{ attribute(value, property) }}">                                                
+                                        <select id="{{ property }}" name="{{ property }}" class="form-control select2" value="{{ attribute(value, property) }}">                                                
                                         {% for option in optionsArray[property] %}
                                             <option value="{{ option['id'] }}">{{ option['name'] }}</option>
                                         {% endfor %}
@@ -52,8 +52,8 @@
                         </div> 
                     {% endif %}
                 <div class="button-wrapper float-right">
-                    <button type="submit" form="form{{ titleForm }}" class="btn btn-primary" id="submit">Guardar</button>
-                    <button type="button" form="form{{ titleForm }}" class="btn btn-primary" id="reset">Restablecer</button>
+                    <button type="submit" form="form{{ titleForm|replace({" ":"", "á":"a","à":"a","é":"e","è":"e","í":"i","ì":"i","ó":"o","ò":"o","ú":"u","ù":"u"}) }}" class="btn btn-primary" id="submit">Guardar</button>
+                    <button type="button" form="form{{ titleForm|replace({" ":"", "á":"a","à":"a","é":"e","è":"e","í":"i","ì":"i","ó":"o","ò":"o","ú":"u","ù":"u"}) }}" class="btn btn-primary" id="reset">Restablecer</button>
                 </div>                
             </form>
         </div>

@@ -29,10 +29,9 @@ class AccountActionsCest {
 
     public function editAccountTest(FunctionalTester $I) {
         $I->amOnPage("/accounts/list?menu=mantenimiento&item=accounts");
-        var_dump($this->accountNumber);die();
         $I->click('#editButton' . $this->id);
         $account = ['bank' => $this->bank, 'owner' => 'LoremIpsum', 'accountNumber' => $this->accountNumber, 'observations' => 'Lorem ipsum ...'];
-        $I->submitForm('#formBanco', $account);
+        $I->submitForm('#formCuentaBancaria', $account);
         $I->see('Updated');
     }
 
@@ -53,6 +52,10 @@ class AccountActionsCest {
         $I->click('#editButton' . $registers[$lastRegister -1]);
         $I->click('Eliminar');
         $I->dontSeeInDatabase('accounts', array('id' => intval($registers[$lastRegister-1]), 'deleted_at' => null));
+    }
+    
+    public function _after(FunctionalTester $I){
+        $this->addAccountTest($I);
     }
 
 }

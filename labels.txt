@@ -1,0 +1,98 @@
+-- phpMyAdmin SQL Dump
+-- version 5.0.2
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 24-01-2023 a las 20:16:10
+-- Versión del servidor: 10.4.11-MariaDB
+-- Versión de PHP: 7.4.7
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+--
+-- Base de datos: `automotive`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `labels`
+--
+
+CREATE TABLE `labels` (
+  `id` int(11) NOT NULL,
+  `property` varchar(255) NOT NULL,
+  `label` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `labels`
+--
+
+INSERT INTO `labels` (`id`, `property`, `label`, `created_at`, `updated_at`) VALUES
+(1, 'name', 'Nombre', '0000-00-00 00:00:00', NULL),
+(2, 'address', 'Dirección', '0000-00-00 00:00:00', NULL),
+(3, 'fiscalId', 'CIF', '0000-00-00 00:00:00', NULL),
+(4, 'fiscalName', 'Razón Social', '0000-00-00 00:00:00', NULL),
+(5, 'postalCode', 'Codigo Postal', '0000-00-00 00:00:00', NULL),
+(6, 'city', 'Ciudad', '0000-00-00 00:00:00', NULL),
+(7, 'state', 'Provincia', '0000-00-00 00:00:00', NULL),
+(8, 'country', 'Pais', '0000-00-00 00:00:00', NULL),
+(9, 'phone', 'Teléfono', '0000-00-00 00:00:00', NULL),
+(10, 'email', 'Email', '0000-00-00 00:00:00', NULL),
+(11, 'password', 'Password', '0000-00-00 00:00:00', NULL),
+(12, 'birthDate', 'Fecha Cumpleaños', '0000-00-00 00:00:00', NULL),
+(13, 'customerType', 'Tipo de Cliente', '0000-00-00 00:00:00', NULL),
+(14, 'customerTypes', 'Tipos de Cliente', '0000-00-00 00:00:00', NULL),
+(15, 'vehicle', 'Vehículo', '0000-00-00 00:00:00', NULL),
+(16, 'vehicles', 'Vehiculos', '0000-00-00 00:00:00', NULL),
+(17, 'supply', 'Recambio', '0000-00-00 00:00:00', NULL),
+(18, 'supplies', 'Recambios', '0000-00-00 00:00:00', NULL),
+(19, 'component', 'Componente', '0000-00-00 00:00:00', NULL),
+(20, 'components', 'Componentes', '0000-00-00 00:00:00', NULL),
+(21, 'work', 'Trabajo', '0000-00-00 00:00:00', NULL),
+(22, 'works', 'Trabajos', '0000-00-00 00:00:00', NULL),
+(23, 'garage', 'Taller', '0000-00-00 00:00:00', NULL),
+(24, 'garages', 'Talleres', '0000-00-00 00:00:00', NULL),
+(25, 'buyPaymentWays', 'Formas de Pago ', '0000-00-00 00:00:00', NULL),
+(26, 'sellPaymentWays', 'Formas de Cobro', '0000-00-00 00:00:00', NULL),
+(27, 'offer', 'Oferta', '0000-00-00 00:00:00', NULL),
+(28, 'offers', 'Ofertas', '0000-00-00 00:00:00', NULL),
+(29, 'rent', 'Alquiler', '0000-00-00 00:00:00', NULL),
+(30, 'Rents', 'Alquileres', '0000-00-00 00:00:00', NULL),
+(31, 'id', 'Id', '0000-00-00 00:00:00', NULL),
+(32, 'site', 'Página Web', '2023-01-03 20:10:49', NULL),
+(33, 'code', 'Códigos', '2023-01-12 19:56:22', NULL),
+(34, 'bankCode', 'Código Bancario', '2023-01-12 19:58:12', NULL),
+(35, 'bankId', 'Banco', '2023-01-17 19:11:49', NULL),
+(36, 'bank', 'Banco', '2023-01-22 07:56:04', NULL),
+(37, 'accountNumber', 'Número de Cuenta', '2023-01-22 07:56:04', NULL),
+(38, 'owner', 'Propietario', '2023-01-22 07:56:19', NULL),
+(39, 'observations', 'Observaciones', '2023-01-22 07:58:14', NULL),
+(40, 'storeId', 'Almacén', '2023-01-24 19:15:53', NULL),
+(41, 'store', 'Almacén', '2023-01-24 19:15:53', NULL);
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `labels`
+--
+ALTER TABLE `labels`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `labels`
+--
+ALTER TABLE `labels`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+COMMIT;

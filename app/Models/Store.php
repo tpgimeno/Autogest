@@ -10,7 +10,7 @@ class Store extends Model
     use SoftDeletes;
 
     protected $table = "stores";
-    protected $properties = ['name', 'address', 'city', 'postal_code', 'state', 'country', 'phone', 'email'];
+    protected $properties = ['name', 'address', 'postal_code', 'city', 'state', 'country', 'phone', 'email'];
     
     public function getProperties(){
         return $this->properties;

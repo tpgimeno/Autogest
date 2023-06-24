@@ -1,9 +1,5 @@
 <?php
 
-namespace Tests\functional;
-
-use FunctionalTester;
-
 class CompanyActionsTestCest {
 
     public $permitted_chars;
@@ -55,5 +51,8 @@ class CompanyActionsTestCest {
         $I->dontSeeInDatabase('company', array('id' => intval($lastRegister), 'deleted_at' => null));
     }
     
+    public function _after(FunctionalTester $I){
+        $this->addCompanyTest($I);
+    }
 
 }

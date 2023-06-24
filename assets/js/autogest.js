@@ -49,6 +49,16 @@ $(document).ready(function(){
     var menuItemSelected = $('#menuItem').val();
     $("#" + menuItemSelected).addClass('active');
     
+    
+    /*
+     * =============================================================================
+     * Initializing Select2
+     * =============================================================================
+     */
+    
+    $('.select2').select2();
+    
+    
 });
 
 

@@ -51,5 +51,9 @@ class BankActionsCest {
         $I->click('Eliminar');
         $I->dontSeeInDatabase('banks', array('id' => intval($registers[$lastRegister-1]), 'deleted_at' => null));
     }
+    
+    public function _after(FunctionalTester $I){
+        $this->addBankTest($I);
+    }
 
 }

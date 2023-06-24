@@ -1,0 +1,10 @@
+I WANT TO ADD ACCOUNT TEST
+
+I am on page ""/accounts/list?menu=mantenimiento&item=accounts"" 
+I click '#newButton' 
+I grab num records('banks', array 'deleted_at' => null)" 
+I grab column from database('banks', 'id', array 'deleted_at' => null)" 
+I submit form '#formCuentaBancaria'," $account" 
+I grab from database 'accounts'," 'id'," ['accountNumber' => $this->accountNumber]" 
+I see 'Saved'
+

@@ -1,0 +1,10 @@
+I WANT TO ADD LOCATION TEST
+
+I am on page ""/locations/list?menu=stock&item=locations"" 
+I click '#newButton' 
+I grab num records('stores', array 'deleted_at' => null)" 
+I grab column from database('stores', 'id', array 'deleted_at' => null)" 
+I submit form '#formUbicacion'," $location" 
+I grab from database 'locations'," 'id'," ['storeId' => $store"," 'name' => $name]" 
+I see 'Saved'
+

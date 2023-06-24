@@ -1,0 +1,10 @@
+I WANT TO DEL FROM ACCOUNT FORM TEST
+
+I am on page ""/accounts/list?menu=mantenimiento&item=accounts"" 
+I grab num records('accounts', array 'deleted_at' => null)" 
+I grab num records('accounts', array 'deleted_at' => null)" 
+I grab column from database('accounts', 'id', array 'deleted_at' => null)" 
+I click '#editButton' . $registers[$lastRegister -1]" 
+I click 'Eliminar' 
+I don't see in database('accounts', array('id' => intval "$registers[$lastRegister-1])"," 'deleted_at' => null)"
+

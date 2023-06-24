@@ -45,8 +45,7 @@ class CompanyController extends BaseController {
             return $this->getBasePostDataAction($request, $this->model, null, $responseMessage);
         }else{        
             return $this->getBaseGetDataAction($request, $this->model, null);
-        }        
-        
+        }          
     }
 
     public function deleteAction(ServerRequest $request) { 

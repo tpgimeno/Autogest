@@ -2,7 +2,10 @@ I WANT TO DEL FROM FINANCE FORM TEST
 
 I am on page ""/finance/list?menu=mantenimiento&item=finance"" 
 I grab num records('finance', array 'deleted_at' => null)" 
-I click '#editButton' . $lastRegister" 
+I click 'Lista' 
+I grab num records('finance', array 'deleted_at' => null)" 
+I grab column from database('finance', 'id', array 'deleted_at' => null)" 
+I click '#editButton' . $registers[$lastRegister - 1]" 
 I click 'Eliminar' 
-I don't see in database('finance', array('id' => intval "$lastRegister)"," 'deleted_at' => null)"
+I don't see in database('finance', array('id' => intval "$registers[$lastRegister - 1])"," 'deleted_at' => null)"
 

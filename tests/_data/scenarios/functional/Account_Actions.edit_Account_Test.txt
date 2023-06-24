@@ -1,0 +1,7 @@
+I WANT TO EDIT ACCOUNT TEST
+
+I am on page ""/accounts/list?menu=mantenimiento&item=accounts"" 
+I click '#editButton' . $this->id" 
+I submit form '#formCuentaBancaria'," $account" 
+I see 'Updated'
+

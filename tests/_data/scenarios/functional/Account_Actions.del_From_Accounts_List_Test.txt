@@ -1,0 +1,6 @@
+I WANT TO DEL FROM ACCOUNTS LIST TEST
+
+I am on page ""/accounts/list?menu=mantenimiento&item=accounts"" 
+I click '#delButton' . $this->id" 
+I don't see in database('accounts', array('id' => intval "$this->id)"," 'deleted_at' => null)"
+

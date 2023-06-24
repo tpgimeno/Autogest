@@ -14,29 +14,19 @@ use Respect\Validation\Validator as v;
  *
  * @author TpGimeno
  */
-class TaxesController extends BaseController {
-    protected $TaxesService;
-    protected $list = '/Intranet/taxes/list';
-    protected $tab = 'home';
-    protected $title = 'Tipos de Iva';
-    protected $save = "/Intranet/taxes/save";
-    protected $formName = "taxesForm";
-    protected $inputs = ['id' => ['id' => 'inputID', 'name' => 'id', 'title' => 'ID'],
-        'name' => ['id' => 'inputName', 'name' => 'name', 'title' => 'Nombre'],
-        'percentaje' => ['id' => 'inputPercentaje', 'name' => 'percentaje', 'title' => 'Porcentaje']];
+class TaxesController extends BaseController {    
     public function __construct(TaxesService $taxesService) {
         parent::__construct();
         $this->TaxesService = $taxesService;
+        $this->model = new Taxes();
+        $this->route = 'taxes';
+        $this->titleList = 'Tipos de Iva';
+        $this->titleForm = 'Tipo de Iva';
+        $this->labels = $this->TaxesService->getLabelsArray(); 
+        $this->itemsList = array('id', 'name', 'percentaje');
     }
-    public function getIndexAction() {
-        $taxes = $this->TaxesService->getAllRegisters(new Taxes()); 
-        return $this->renderHTML('/Entitys/taxes/taxesList.html.twig', [
-            'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
-            'list' => $this->list,
-            'title' => $this->title,
-            'tab' => $this->tab,
-            'taxes' => $taxes            
-        ]);
+    public function getIndexAction($request) {
+       return $this->getBaseIndexAction($request, $this->model);
     }    
     public function getTaxesDataAction($request) {        
         $responseMessage = null;
@@ -48,24 +38,14 @@ class TaxesController extends BaseController {
             }catch(Exception $e){                
                 $responseMessage = $e->getMessage();
             }
-            $responseMessage = $this->TaxesService->saveRegister(new Taxes(), $postData);
+            return $this->getBasePostDataAction($request, $this->model, null, $responseMessage);
         }      
-        $taxesSelected = $this->TaxesService->setInstance(new Taxes(), $request->getQueryParams());
-        return $this->renderHTML('/Entitys/taxes/taxesForm.html.twig', [
-        'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
-        'responseMessage' => $responseMessage,
-        'list' => $this->list,
-        'tab' => $this->tab,
-        'title' => $this->title,
-        'save' => $this->save,
-        'formName' => $this->formName,
-        'inputs' => $this->inputs,
-        'value' => $taxesSelected
-        ]);        
+        return $this->getBaseGetDataAction($request, $this->model, null);      
     }         
-    public function deleteAction(ServerRequest $request) {        
-        $this->TaxesService->deleteRegister(new Taxes(), $request->getQueryParams('id'));            
-        return new RedirectResponse($this->list);
+    public function deleteAction(ServerRequest $request) { 
+        $params = $request->getQueryParams();
+        $this->TaxesService->deleteRegister(new Taxes(), $params);            
+        return new RedirectResponse('/Intranet/taxes/list?menu=' . $params['menu'] . '&item=' . $params['item']);
     }
 }
 

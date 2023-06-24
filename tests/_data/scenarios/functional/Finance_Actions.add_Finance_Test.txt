@@ -2,8 +2,8 @@ I WANT TO ADD FINANCE TEST
 
 I am on page ""/finance/list?menu=mantenimiento&item=finance"" 
 I click '#newButton' 
-I grab num records 'finance'," ['deleted_at' => null]" 
-I submit form '#formBanco'," $financiera" 
+I grab num records 'banks'," ['deleted_at' => null]" 
+I submit form '#formFinanciera'," $financiera" 
 I grab from database 'finance'," 'id'," ['fiscalId' => $this->fiscalId]" 
 I see 'Saved'
 
