@@ -11,3 +11,10 @@ Situarnos en la carpeta:
 Y introducir el comando:
 
 chromedriver --url-base=/wd/hub --port=4123
+
+
+
+====================================== PHINX MIGRATIONS ===============================================
+
+"php vendor/bin/phinx create EmpresasTable"
+
