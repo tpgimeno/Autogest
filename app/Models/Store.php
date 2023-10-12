@@ -15,4 +15,7 @@ class Store extends Model
     public function getProperties(){
         return $this->properties;
     }
+    public function list(): BelongsToMany{
+        return $this->belongsToMany('App\Location');
+    }
 }

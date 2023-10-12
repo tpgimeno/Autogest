@@ -38,7 +38,7 @@ class PaymentWaysController extends BaseController {
     }
 
     public function getIndexAction($request) {
-        return $this->getBaseIndexAction($request, $this->model);
+        return $this->getBaseIndexAction($request, $this->model, null);
     }
 
     public function getPaymentWaysDataAction($request) {

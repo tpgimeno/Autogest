@@ -26,7 +26,7 @@ class TaxesController extends BaseController {
         $this->itemsList = array('id', 'name', 'percentaje');
     }
     public function getIndexAction($request) {
-       return $this->getBaseIndexAction($request, $this->model);
+       return $this->getBaseIndexAction($request, $this->model, null);
     }    
     public function getTaxesDataAction($request) {        
         $responseMessage = null;

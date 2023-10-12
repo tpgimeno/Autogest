@@ -36,7 +36,7 @@ class AccountController extends BaseController {
         $this->itemsList = array('id', 'bank', 'accountNumber', 'owner');
     }    
     public function getIndexAction($request) {
-        return $this->getBaseIndexAction($request, $this->model);
+        return $this->getBaseIndexAction($request, $this->model, null);
     }  
     public function getAccountDataAction($request) {                
         $responseMessage = null;

@@ -44,11 +44,13 @@ class BaseController {
         return new HtmlResponse($this->templateEngine->render($fileName, $data));
     }
     
-    public function getBaseIndexAction(ServerRequest $request, $model) {
+    public function getBaseIndexAction(ServerRequest $request, $model, $values) {
         $params = $request->getQueryParams();        
         $menuState = $params['menu'];  
         $menuItem = $params['item'];
-        $values = $this->baseService->getAllRegisters(new $model);
+        if(!$values){
+            $values = $this->baseService->getAllRegisters(new $model);
+        }
         return $this->renderHTML('/templateListView.html.twig', [
                     'values' => $values,
                     'route' => $this->route,

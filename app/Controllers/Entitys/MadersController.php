@@ -29,7 +29,7 @@ class MadersController extends BaseController {
         $this->itemsList = array('id', 'name', 'email', 'access', 'phone');
     }    
     public function getIndexAction($request) {
-        return $this->getBaseIndexAction($request, $this->model);
+        return $this->getBaseIndexAction($request, $this->model, null);
     }    
     public function getMaderDataAction($request) {                
         $responseMessage = null;

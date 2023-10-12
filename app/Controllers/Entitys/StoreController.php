@@ -23,7 +23,7 @@ class StoreController extends BaseController {
         $this->itemsList = array('id', 'name', 'address', 'city', 'phone');
     }        
     public function getIndexAction($request) {
-        return $this->getBaseIndexAction($request, $this->model);
+        return $this->getBaseIndexAction($request, $this->model, null);
     }  
     
     public function getStoreDataAction($request) {                

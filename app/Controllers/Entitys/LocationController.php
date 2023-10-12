@@ -32,10 +32,11 @@ class LocationController extends BaseController {
         $this->titleList = 'Ubicaciones';
         $this->titleForm = 'Ubicacion';
         $this->labels = $this->locationService->getLabelsArray(); 
-        $this->itemsList = array('id', 'storeId', 'name');
+        $this->itemsList = array('id', 'store', 'name');
     }
     public function getIndexAction($request) {
-        return $this->getBaseIndexAction($request, $this->model);
+        $values = $this->locationService->getLocationItemsList();        
+        return $this->getBaseIndexAction($request, $this->model, $values);
     }
      
     public function getLocationDataAction($request) {                
@@ -49,7 +50,7 @@ class LocationController extends BaseController {
                 $locationValidator->assert($postData); // true                 
             }catch(Exception $e){                
                 $responseMessage = $e->getMessage();
-            } 
+            }            
             return $this->getBasePostDataAction($request, $this->model, $iterables, $responseMessage);
         }else{
             return $this->getBaseGetDataAction($request, $this->model, $iterables);

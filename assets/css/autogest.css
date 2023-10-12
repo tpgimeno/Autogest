@@ -64,3 +64,7 @@ table.dataTable>thead .sorting_asc_disabled:before, table.dataTable>thead .sorti
     min-width: 10em;
     margin-top: auto;
 }
+
+.content-wrapper .content-header{
+    margin-left: 1em;
+}
