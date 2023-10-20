@@ -325,24 +325,21 @@ class BuyRoutes
 
        //PROVIDERS
 
-       $map->get('providersList', '/Intranet/buys/providers/form', [
-           'App\Controllers\Buys\ProvidersController',
-           'getProviderDataAction'
+       $map->get('providorsList', '/Intranet/buys/providors/form', [
+           'App\Controllers\Buys\ProvidorsController',
+           'getProvidorDataAction'
        ]);
-       $map->get('providersForm', '/Intranet/buys/providers/list', [
-           'App\Controllers\Buys\ProvidersController',
+       $map->get('providorsForm', '/Intranet/buys/providors/list', [
+           'App\Controllers\Buys\ProvidorsController',
            'getIndexAction'
        ]);
-       $map->post('searchProvider', '/Intranet/buys/providers/search', [
-           'App\Controllers\Buys\ProvidersController',
-           'searchProviderAction'
+       
+       $map->post('saveProvidor', '/Intranet/buys/providors/save', [
+           'App\Controllers\Buys\ProvidorsController',
+           'getProvidorDataAction'
        ]);
-       $map->post('saveProvider', '/Intranet/buys/providers/save', [
-           'App\Controllers\Buys\ProvidersController',
-           'getProviderDataAction'
-       ]);
-       $map->get('providersDelete', '/Intranet/buys/providers/delete', [
-           'App\Controllers\Buys\ProvidersController',
+       $map->get('providorsDelete', '/Intranet/buys/providors/delete', [
+           'App\Controllers\Buys\ProvidorsController',
            'deleteAction'
        ]);       
 
