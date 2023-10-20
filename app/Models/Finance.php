@@ -19,7 +19,7 @@ class Finance extends Model {
         'phone',
         'email',
         'site',
-        'bankId'];
+        'bank_id'];
     public function getProperties(){
         return $this->properties;
     }

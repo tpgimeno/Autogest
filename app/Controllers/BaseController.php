@@ -12,6 +12,7 @@ use App\Services\BaseService;
 use App\Services\CurrentUserService;
 use App\Services\ErrorService;
 use Laminas\Diactoros\Response\HtmlResponse;
+use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\ServerRequest;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
@@ -103,6 +104,12 @@ class BaseController {
                     'titleForm' => $this->titleForm,
                     'route' => $this->route                    
         ]);
+    }
+    
+    public function deleteItemAction(ServerRequest $request, $model){
+        $params = $request->getQueryParams();
+        $this->baseService->deleteRegister($model, $params);
+        return new RedirectResponse('/Intranet/' . $this->route . '/list?menu=' . $params['menu'] . '&item=' . $params['item']);
     }
 
     function tofloat($num) {

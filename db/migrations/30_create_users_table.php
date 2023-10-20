@@ -28,7 +28,7 @@ final class CreateUsersTable extends AbstractMigration
                 ->addColumn('state', 'string', ['null' => true])
                 ->addColumn('country', 'string', ['null' => true])
                 ->addColumn('phone', 'string', ['null' => true])                
-                ->addColumn('access', 'integer', ['null' => true])
+                ->addColumn('userlevels_id', 'integer', ['null' => true])
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime', ['null' => true])
                 ->addColumn('deleted_at', 'datetime', ['null' => true])

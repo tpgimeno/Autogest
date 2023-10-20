@@ -13,7 +13,6 @@ use App\Models\Accounts;
 use App\Models\Bank;
 use App\Services\Entitys\AccountService;
 use Exception;
-use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\ServerRequest;
 use Respect\Validation\Validator as v;
 
@@ -36,12 +35,13 @@ class AccountController extends BaseController {
         $this->itemsList = array('id', 'bank', 'accountNumber', 'owner');
     }    
     public function getIndexAction($request) {
-        return $this->getBaseIndexAction($request, $this->model, null);
+        $values = $this->accountService->getAccountItemsList();
+        return $this->getBaseIndexAction($request, $this->model, $values);
     }  
     public function getAccountDataAction($request) {                
         $responseMessage = null;
         $banks = $this->accountService->getAllRegisters(new Bank());
-        $iterables = ['bank' => $banks];
+        $iterables = ['bank_id' => $banks];
         if($request->getMethod() == 'POST') {
             $postData = $request->getParsedBody();            
             $accountValidator = v::key('bank', v::notEmpty()) 
@@ -58,8 +58,6 @@ class AccountController extends BaseController {
         }
     }
     public function deleteAction(ServerRequest $request) { 
-        $params = $request->getQueryParams();        
-        $this->accountService->deleteRegister(new Accounts(), $params);               
-        return new RedirectResponse('/Intranet/accounts/list?menu=' . $params['menu'] . '&item=' . $params['item']);
+        return $this->deleteItemAction($request, new Accounts());
     }
 }

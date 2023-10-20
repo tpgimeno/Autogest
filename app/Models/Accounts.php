@@ -9,6 +9,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -20,8 +21,11 @@ class Accounts extends Model {
     
     use SoftDeletes;
     protected $table = 'accounts';
-    protected $properties = ['bank', 'owner', 'accountNumber', 'observations'];
+    protected $properties = ['bank_id', 'owner', 'accountNumber', 'observations'];
     public function getProperties(){
         return $this->properties;
+    }
+    public function list(): BelongsTo{
+        return $this->belongsTo('App\Bank');
     }
 }

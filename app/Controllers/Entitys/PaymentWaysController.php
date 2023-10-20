@@ -34,17 +34,21 @@ class PaymentWaysController extends BaseController {
         $this->titleList = 'Formas de Pago';
         $this->titleForm = 'Forma de Pago';
         $this->labels = $this->paymentWayService->getLabelsArray();
-        $this->itemsList = array('id', 'name', 'accountAssociated');
+        $this->itemsList = array('id', 'name', 'accountNumber', 'bank');
     }
 
     public function getIndexAction($request) {
-        return $this->getBaseIndexAction($request, $this->model, null);
+        $values = $this->paymentWayService->getPaymentWaysItemsList();
+//        var_dump($values);die();
+        return $this->getBaseIndexAction($request, $this->model, $values);
     }
 
     public function getPaymentWaysDataAction($request) {
         $responseMessage = null;
         $accounts = $this->paymentWayService->getAllRegisters(new Accounts());
-        $iterables = ['accounts' => $accounts];
+        $iterables = ['account_id' => $accounts];
+        
+        
         if ($request->getMethod() == 'POST') {
             $postData = $request->getParsedBody();
             try {

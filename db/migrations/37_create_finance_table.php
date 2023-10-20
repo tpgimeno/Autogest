@@ -30,12 +30,12 @@ final class CreateFinanceTable extends AbstractMigration
                 ->addColumn('phone', 'string', ['null' => true])
                 ->addColumn('email', 'string', ['null' => true])
                 ->addColumn('site', 'string', ['null' => true])
-                ->addColumn('bankId', 'integer', ['null' => true])
+                ->addColumn('bank_id', 'integer', ['null' => true])
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime', ['null' => true])
                 ->addColumn('deleted_at', 'datetime', ['null' => true])
                 ->addIndex('fiscalId' , ['unique' => true])
-                ->addForeignKey(['bankId'], 'banks', ['id'])
+                ->addForeignKey(['bank_id'], 'banks', ['id'])
                 ->create();
     }
 }

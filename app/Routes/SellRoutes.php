@@ -24,11 +24,7 @@ class SellRoutes
         $map->get('customerList', '/Intranet/customers/list', [
             'App\Controllers\Sales\CustomerController',
             'getIndexAction'
-        ]);
-        $map->post('searchCustomer', '/Intranet/customers/search', [
-            'App\Controllers\Sales\CustomerController',
-            'searchCustomerAction'
-        ]);
+        ]);        
         $map->post('saveCustomer', '/Intranet/customers/save', [
             'App\Controllers\Sales\CustomerController',
             'getCustomerDataAction'
@@ -47,11 +43,7 @@ class SellRoutes
         $map->get('customerTypeList', '/Intranet/customers/type/list', [
             'App\Controllers\Sales\CustomerTypesController',
             'getIndexAction'
-        ]);
-        $map->post('searchCustomerType', '/Intranet/customers/type/search', [
-            'App\Controllers\Sales\CustomerTypesController',
-            'searchCustomerTypeAction'
-        ]);
+        ]);        
         $map->post('saveCustomerType', '/Intranet/customers/type/save', [
             'App\Controllers\Sales\CustomerTypesController',
             'getCustomerTypesDataAction'

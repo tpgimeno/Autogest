@@ -9,6 +9,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -34,5 +35,8 @@ class Bank extends Model
         'site'];
     public function getProperties(){
         return $this->properties;
+    }
+    public function list(): BelongsToMany{
+        return $this->belongsToMany('App\Accounts');
     }
 }

@@ -20,12 +20,12 @@ final class CreatePaymentWaysTable extends AbstractMigration
     {
         $table = $this->table('paymentWays');
         $table->addColumn('name', 'string')  
-                ->addColumn('accountAssociated', 'integer')
+                ->addColumn('account_id', 'integer')
                 ->addColumn('discount', 'integer')
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime', ['null' => true])
                 ->addColumn('deleted_at', 'datetime', ['null' => true])
-                ->addForeignKey(['account'], 'accounts', array('id'))
+                ->addForeignKey(['account_id'], 'accounts', array('id'))
                 ->create();
     }
 }

@@ -42,7 +42,7 @@ class LocationController extends BaseController {
     public function getLocationDataAction($request) {                
         $responseMessage = null;
         $stores = $this->locationService->getAllRegisters(new Store());
-        $iterables = ['storeId' => $stores];
+        $iterables = ['store_id' => $stores];
         if($request->getMethod() == 'POST') {
             $postData = $request->getParsedBody();            
             $locationValidator = v::key('name', v::stringType()->notEmpty());        
@@ -57,9 +57,7 @@ class LocationController extends BaseController {
         }
     }
     public function deleteAction(ServerRequest $request) {     
-        $params = $request->getQueryParams();
-        $this->locationService->deleteRegister(new Location(), $params);              
-        return new RedirectResponse('/Intranet/locations/list?menu=' . $params['menu'] . '&item=' . $params['item']);
+        return $this->deleteItemAction($request, new Location());
     }
 }
 

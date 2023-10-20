@@ -34,7 +34,7 @@ class FinanceController extends BaseController {
     public function getFinanceDataAction($request) {
         $responseMessage = null;
         $banks = $this->financeService->getAllRegisters(new Bank());
-        $iterables = ['bankId' => $banks];
+        $iterables = ['bank_id' => $banks];
         if ($request->getMethod() == 'POST') {
             $postData = $request->getParsedBody();
             $financeValidator = v::key('name', v::stringType()->notEmpty())

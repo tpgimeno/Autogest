@@ -18,60 +18,36 @@ class UsersController extends BaseController {
     public function __construct(UserService $userService) {
         parent::__construct();
         $this->userService = $userService;
+        $this->model = new User();
+        $this->route = 'users';
+        $this->titleList = 'Usuarios';
+        $this->titleForm = 'Usuario';
+        $this->labels = $this->userService->getLabelsArray(); 
+        $this->itemsList = array('id', 'name', 'email', 'access','phone');
     }
 
     public function getIndexUsers($request) {
-        $users = $this->userService->getAllRegisters(new User());
-        $params = $request->getQueryParams();
-        
-        $menuState = $params['menu'];
-        $menuItem = $params['item'];
-        $levels = $this->userService->getAllRegisters(new UserLevel());        
-        return $this->renderHTML('/Entitys/users/usersList.html.twig', [
-                    'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
-                    'menuState' => $menuState,
-                    'menuItem' => $menuItem,
-                    'levels' => $levels,
-                    'users' => $users
-        ]);
+        $values = $this->userService->getUserItemsList();       
+        return $this->getBaseIndexAction($request, $this->model, $values);  
     }
 
     public function getAddUserAction($request) {
-        $responseMessage = null;
-        $menuState = null;
-        $menuItem = null;
-        $levels = null;
+        $responseMessage = null;       
+        $levels = $this->userService->getAllRegisters(new UserLevel());
+        $iterables = ['access' => $levels];
         if ($request->getMethod() == 'POST') {
             $postData = $request->getParsedBody();
             $userValidator = v::key('email', v::stringType()->notEmpty())
-                    ->key('password', v::stringType()->notEmpty());
-            try {
-                
+                    ->key('password', v::stringType()->notEmpty());            
+            try {                
                 $userValidator->assert($postData); // true 
-                $response = $this->userService->saveRegister(new User(), $postData);
-                $responseMessage = $response[1];
-                $userSelected = $this->userService->setInstance(new User(), array('id' => $response[0]));
-                $menuState = $postData['menu'];
-                $menuItem = $postData['menuItem'];
-                $levels = $this->userService->getAllRegisters(new UserLevel());
-                
             } catch (Exception $e) {
                 $responseMessage = $this->errorService->getError($e);
             }
+            return $this->getBasePostDataAction($request, $this->model, $iterables, $responseMessage);
         } else {
-            $params = $request->getQueryParams();
-            $levels = $this->userService->getAllRegisters(new UserLevel());
-            $userSelected = $this->userService->setInstance(new User(), $params);
-            $menuState = $params['menu'];
-            $menuItem = $params['menuItem'];
-        }
-        return $this->renderHTML('/Entitys/users/userForm.html.twig', [
-                    'responseMessage' => $responseMessage,
-                    'menuState' => $menuState,
-                    'menuItem' => $menuItem,
-                    'levels' => $levels,
-                    'userSelected' => $userSelected
-        ]);
+            return $this->getBaseGetDataAction($request, $this->model, $iterables);
+        }        
     }
 
     public function deleteAction(ServerRequest $request) {

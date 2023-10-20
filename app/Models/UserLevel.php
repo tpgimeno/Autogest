@@ -12,5 +12,7 @@ class UserLevel extends Model {
     public function getProperties() {
         return $this->properties;
     }
-
+    public function list(): BelongToMany{
+        return $this->belongsToMany('App\User');
+  }
 }

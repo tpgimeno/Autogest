@@ -20,14 +20,14 @@ final class CreateAccountsTable extends AbstractMigration
     {
         $table = $this->table('accounts');
         $table->addColumn('accountNumber', 'string')
-                ->addColumn('bank', 'integer')    
+                ->addColumn('bank_id', 'integer')    
                 ->addColumn('owner', 'string')
                 ->addColumn('observations', 'string', ['null' => true])                
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime', ['null' => true])
                 ->addColumn('deleted_at', 'datetime', ['null' => true])
                 ->addIndex('accountNumber' , ['unique' => true])
-                ->addForeignKey(['bank'], 'banks', ['id'])
+                ->addForeignKey(['bank_id'], 'banks', ['id'])
                 ->create();
     }
 }

@@ -12,34 +12,20 @@ use Respect\Validation\Validator as v;
 
 class SellersController extends BaseController {    
     protected $sellersService;
-    protected $list = '/Intranet/sellers/list';
-    protected $tab = 'sales';
-    protected $title = 'Comerciales';
-    protected $save = "/Intranet/sellers/save";
-    protected $formName = "sellersForm";
-    protected $inputs = ['id' => ['id' => 'inputID', 'name' => 'id', 'title' => 'ID'],  
-        'name' => ['id' => 'inputName', 'name' => 'name', 'title' => 'Nombre'],
-        'fiscalId' => ['id' => 'inputFiscalId', 'name' => 'fiscalId', 'title' => 'NIF/CIF'],        
-        'address' => ['id' => 'inputAdress', 'name' => 'address', 'title' => 'Dirección'],
-        'city' => ['id' => 'inputCity', 'name' => 'city', 'title' => 'Población'],
-        'postalCode' => ['id' => 'inputZip', 'name' => 'postalCode', 'title' => 'Código Postal'],        
-        'state' => ['id' => 'inputState', 'name' => 'state', 'title' => 'Provincia'],
-        'country' => ['id' => 'inputCountry', 'name' => 'country', 'title' => 'Pais'],
-        'phone' => ['id' => 'inputPhone', 'name' => 'phone', 'title' => 'Telefono'],
-        'email' => ['id' => 'inputEmail', 'name' => 'email', 'title' => 'Email'],
-        'birthDate' => ['id' => 'inputBirthDate', 'name' => 'birthDate', 'title' => 'Fecha Nacimiento']];
+    
     public function __construct(SellersService $sellersService) {
         parent::__construct();
         $this->sellersService = $sellersService;
+        $this->model = new Sellers();
+        $this->route = 'sellers';
+        $this->titleList = 'Comerciales';
+        $this->titleForm = 'Comercial';
+        $this->labels = $this->sellersService->getLabelsArray(); 
+        $this->itemsList = array('id', 'name', 'email', 'phone');
+        $this->properties = $this->sellersService->getModelProperties($this->model);
     }   
-    public function getIndexAction() {
-        $sellers = $this->sellersService->getAllRegisters(new Sellers());
-        return $this->renderHTML('/sales/sellers/sellersList.html.twig', [
-            'list' => $this->list,
-            'tab' => $this->tab,
-            'title' => $this->title,
-            'sellers' => $sellers
-        ]);
+    public function getIndexAction($request) {
+        return $this->getBaseIndexAction($request, $this->model, null);
     }    
     public function getSellersDataAction($request) {                
         $responseMessage = null;
@@ -50,27 +36,18 @@ class SellersController extends BaseController {
             ->key('phone', v::notEmpty())
             ->key('email', v::stringType()->notEmpty());            
             try{
-                $sellersValidator->assert($postData); // true 
-                $responseMessage = $this->sellersService->saveRegister(new Sellers(), $postData);
+                $sellersValidator->assert($postData); // true                 
             }catch(Exception $e){                
                 $responseMessage = $e->getMessage();
-            }              
+            }
+            return $this->getBasePostDataAction($request, $this->model, null, $responseMessage);
+        }else{
+            return $this->getBaseGetDataAction($request, $this->model, null);
         }
-        $sellersSelected = $this->sellersService->setInstance(new Sellers(), $request->getQueryParams('id'));
-        return $this->renderHTML('/sales/sellers/sellersForm.html.twig', [
-            'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
-            'responseMessage' => $responseMessage,
-            'inputs' => $this->inputs,
-            'save' => $this->save,
-            'list' => $this->list,
-            'formName' => $this->formName,
-            'tab' => $this->tab,
-            'title' => $this->title,
-            'value' => $sellersSelected
-        ]);
+        
+       
     }
     public function deleteAction(ServerRequest $request) {         
-        $this->sellersService->deleteRegister(new Sellers(), $request->getQueryParams('id'));             
-        return new RedirectResponse($this->list);
+        return $this->deleteItemAction($request, $this->model);
     }
 }

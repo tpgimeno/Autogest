@@ -14,7 +14,7 @@
                     <input type="hidden" style="display:none;" id="menuItem" name="menuItem" value="{{ menuItem }}">  
                     <input type="hidden" style="display:none;" id="id" name="id" value="{{ value.id }}">
                         {% for property in properties %}
-                            {% set selects = {'bankId':'bankId','bank':'bank','accountAssociated':'accountAssociated','storeId':'storeId'} %}
+                            {% set selects = {'bank_id':'bank_id','bank':'bank','account_id':'account_id','store_id':'store_id','access':'access'} %}
                             {% set textareas = {'observations':'observations'} %}
                             {% if property in selects %}                                
                                 <div class="row">
@@ -22,7 +22,11 @@
                                         <label class="control-label" for="{{ property }}">{{ labels[property] }}</label>
                                         <select id="{{ property }}" name="{{ property }}" class="form-control select2" value="{{ attribute(value, property) }}">                                                
                                         {% for option in optionsArray[property] %}
-                                            <option value="{{ option['id'] }}">{{ option['name'] }}</option>
+                                            {% if property == 'account_id' %}
+                                                <option value="{{ option['id'] }}">{{ option['accountNumber'] }}</option>
+                                            {% else %}
+                                                <option value="{{ option['id'] }}">{{ option['name'] }}</option>
+                                            {% endif %}
                                         {% endfor %}
                                         </select>        
                                     </div>                            
@@ -31,9 +35,7 @@
                                 <div class="row">
                                     <div class="input-group col-10">
                                         <label class="control-label" for="{{ property }}">{{ labels[property] }}</label>
-                                        <textarea type="text" id="{{ property }}" name="{{ property }}" class="form-control">
-                                            {{ attribute(value, property) }}
-                                        </textarea>
+                                        <textarea type="text" id="{{ property }}" name="{{ property }}" class="form-control">{{ attribute(value, property) }}</textarea>
                                     </div>                            
                                 </div>
                             {% else %}

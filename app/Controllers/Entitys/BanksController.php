@@ -51,9 +51,7 @@ class BanksController extends BaseController {
     }
 
     public function deleteAction(ServerRequest $request) {
-        $params = $request->getQueryParams();            
-        $this->bankService->deleteRegister(new Bank(), $params);
-        return new RedirectResponse('/Intranet/banks/list?menu=' . $params['menu'] . '&item=' . $params['item']);
+        return $this->deleteItemAction($request, $this->model);
     }
 
 }

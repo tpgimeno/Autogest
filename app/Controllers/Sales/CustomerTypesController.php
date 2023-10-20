@@ -16,27 +16,21 @@ use Respect\Validation\Validator as v;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
 class CustomerTypesController extends BaseController {
-    protected $CustomerTypesService;
-    protected $list = '/Intranet/customers/type/list';
-    protected $tab = 'sales';
-    protected $title = 'Tipos de Cliente';
-    protected $save = "/Intranet/customers/type/save";
-    protected $formName = "customerTypesForm";
-    protected $inputs = ['id' => ['id' => 'inputID', 'name' => 'id', 'title' => 'ID'],  
-        'name' => ['id' => 'inputName', 'name' => 'name', 'title' => 'Nombre']];
+    protected $customerTypesService;
+    
     public function __construct(CustomerTypesService $customerTypesService) {
         parent::__construct();
-        $this->CustomerTypesService = $customerTypesService;
+        $this->customerTypesService = $customerTypesService;
+        $this->model = new CustomerTypes();
+        $this->route = 'customers/type';
+        $this->titleList = 'Tipos de Clientes';
+        $this->titleForm = 'Tipo de Cliente';
+        $this->labels = $this->customerTypesService->getLabelsArray(); 
+        $this->itemsList = array('id', 'name');
+        $this->properties = $this->customerTypesService->getModelProperties($this->model);
     }    
-    public function getIndexAction() {
-        $customerTypes = $this->CustomerTypesService->getAllRegisters(new CustomerTypes());
-        return $this->renderHTML('/sales/customers/customerTypesList.html.twig', [
-            'currentUser' => $this->currentUser->getCurrentUserEmailAction(),
-            'list' => $this->list,
-            'tab' => $this->tab,
-            'title' => $this->title,
-            'customer_types' => $customerTypes
-        ]);
+    public function getIndexAction($request) {
+        return $this->getBaseIndexAction($request, $this->model, null);
     }    
     public function getCustomerTypesDataAction($request) {
         $responseMessage = null;
@@ -44,27 +38,16 @@ class CustomerTypesController extends BaseController {
             $postData = $request->getParsedBody();                       
             $customerTypeValidator = v::key('name', v::stringType()->notEmpty());           
             try{
-                $customerTypeValidator->assert($postData); // true    
-                $responseMessage = $this->CustomerTypesService->saveRegister(new CustomerTypes(), $postData);
+                $customerTypeValidator->assert($postData); // true 
             }catch(Exception $e) {
                 $responseMessage = $e->getMessage();
-            }            
+            } 
+            return $this->getBasePostDataAction($request, $this->model, null, $responseMessage);
+        }else{
+            return $this->getBaseGetDataAction($request, $this->model, null);
         }
-        $selectedCustomerType = $this->CustomerTypesService->setInstance(new CustomerTypes(), $request->getQueryParams('id'));
-        return $this->renderHTML('/sales/customers/customerTypesForm.html.twig', [
-            'currentUser' => $this->currentUser->getCurrentUserEmailAction(),
-            'inputs' => $this->inputs,
-            'save' => $this->save,
-            'list' => $this->list,
-            'formName' => $this->formName,
-            'tab' => $this->tab,
-            'title' => $this->title,
-            'value' => $selectedCustomerType,
-            'responseMessage' => $responseMessage
-        ]);
     }
     public function deleteAction($request){
-        $this->CustomerTypesService->deleteRegister(new CustomerTypes(), $request->getQueryParams('id'));
-        return new RedirectResponse($this->list);
+        return $this->deleteItemAction($request, $this->model);
     }
 }

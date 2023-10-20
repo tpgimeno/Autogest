@@ -19,12 +19,12 @@ final class CreateLocationTable extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('locations');
-        $table->addColumn('storeId', 'integer')  
+        $table->addColumn('store_id', 'integer')  
                 ->addColumn('name', 'string')
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime', ['null' => true])
                 ->addColumn('deleted_at', 'datetime', ['null' => true])
-                ->addForeignKey(['storeId'], 'stores', ['id'])
+                ->addForeignKey(['store_id'], 'stores', ['id'])
                 ->create();
     }
 }

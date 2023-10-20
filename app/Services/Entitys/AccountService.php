@@ -8,6 +8,7 @@
 
 namespace App\Services\Entitys;
 
+use App\Models\Accounts;
 use App\Services\BaseService;
 
 /**
@@ -16,5 +17,9 @@ use App\Services\BaseService;
  * @author tonyl
  */
 class AccountService extends BaseService {
-    
+    public function getAccountItemsList(){
+        $values = Accounts::join('banks', 'accounts.bank_id', '=', 'banks.id')
+                ->get(['accounts.id', 'accounts.accountNumber', 'banks.name as bank', 'accounts.owner'])->toArray();
+        return $values;
+    }
 }
