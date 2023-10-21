@@ -14,7 +14,7 @@
                     <input type="hidden" style="display:none;" id="menuItem" name="menuItem" value="{{ menuItem }}">  
                     <input type="hidden" style="display:none;" id="id" name="id" value="{{ value.id }}">
                         {% for property in properties %}
-                            {% set selects = {'bank_id':'bank_id','bank':'bank','account_id':'account_id','store_id':'store_id','access':'access','brand_id':'brand_id'} %}
+                            {% set selects = {'bank_id':'bank_id','bank':'bank','account_id':'account_id','store_id':'store_id','access':'access','brand_id':'brand_id','mader_id':'mader_id'} %}
                             {% set textareas = {'observations':'observations'} %}
                             {% if property in selects %}                                
                                 <div class="row">

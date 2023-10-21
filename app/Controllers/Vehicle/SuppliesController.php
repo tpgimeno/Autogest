@@ -25,53 +25,26 @@ use Respect\Validation\Validator as v;
  */
 class SuppliesController extends BaseController {
     protected $suppliesService; 
-    protected $list = "/Intranet/vehicles/supplies/list";
-    protected $script = 'js/supplies.js';
-    protected $tab = "buys";
-    protected $title = "Recambios";
-    protected $save = "/Intranet/vehicles/supplies/save";
-    protected $formName = 'suppliesForm';  
-    protected $search = '/Intranet/vehicles/supplies/search';    
-    protected $inputs = ['id' => ['id' => 'inputId', 'name' => 'id', 'title' => 'ID'],
-        'name' => ['id' => 'inputName', 'name' => 'name', 'title' => 'Nombre'],
-        'ref' => ['id' => 'inputRef', 'name' => 'ref', 'title' => 'Referencia'],
-        'selectMader' => ['id' => 'inputMader', 'name' => 'mader', 'title' => 'Fabricante'],
-        'maderCode' => ['id' => 'inputMaderCode', 'name' => 'maderCode', 'title' => 'Referencia Fabricante'],       
-        'observations' => ['id' => 'observations', 'name' => 'observations', 'title' => 'Observaciones'],
-        'stock' => ['id' => 'inputStock', 'name' => 'stock', 'title' => 'Stock'],
-        'pvc' => ['id' => 'inputPvc', 'name' => 'pvc', 'title' => 'Precio Compra'],
-        'pvp' => ['id' => 'inputPvp', 'name' => 'pvp', 'title' => 'Precio Venta'],
-        'tvaBuy' => ['id' => 'inputTvaBuy', 'name' => 'tvaBuy', 'title' => 'Iva Compra'],
-        'tvaSell' => ['id' => 'inputTvaSell', 'name' => 'tvaSell', 'title' => 'Iva Venta'],
-        'totalBuy' => ['id' => 'inputTotalBuy', 'name' => 'totalBuy', 'title' => 'Total Compra'],
-        'totalSell' => ['id' => 'inputTotalSell', 'name' => 'totalSell', 'title' => 'Total Venta']];
+    
     public function __construct(SuppliesService $suppliesService) {
         parent::__construct();
         $this->suppliesService = $suppliesService;
+        $this->model = new Supplies();
+        $this->route = 'vehicles/supplies';
+        $this->titleList = 'Recambios';
+        $this->titleForm = 'Recambio';
+        $this->labels = $this->suppliesService->getLabelsArray(); 
+        $this->itemsList = array('id', 'ref', 'name', 'pvp');
+        $this->properties = $this->suppliesService->getModelProperties($this->model);
     }
-    public function getIndexAction() {
-        $supplies = $this->suppliesService->getSupplies();       
-        return $this->renderHTML('/vehicles/supplies/suppliesList.html.twig', [
-            'title' => $this->title,
-            'list' => $this->list,
-            'tab' => $this->tab,
-            'search' => $this->search,
-            'supplies' => $supplies
-        ]);
+    public function getIndexAction($request) {
+        return $this->getBaseIndexAction($request, $this->model, null);
     }  
-    public function searchSupplyAction($request) {
-        $searchData = $request->getParsedBody();      
-        $supplies = $this->suppliesService->searchSupplies($searchData['searchFilter']);
-        return $this->renderHTML('/vehicles/supplies/suppliesList.html.twig', [
-            'title' => $this->title,
-            'list' => $this->list,
-            'tab' => $this->tab,
-            'search' => $this->search,
-            'supplies' => $supplies
-        ]);
-    }    
+    
     public function getSuppliesDataAction($request) {
-        $responseMessage = null;        
+        $responseMessage = null; 
+        $maders = $this->suppliesService->getAllRegisters(new Mader());
+        $iterables = ['mader_id' => $maders];
         if($request->getMethod() == 'POST') {
             $postData = $request->getParsedBody();
             $suppliesValidator = v::key('ref', v::stringType()->notEmpty())
@@ -79,26 +52,13 @@ class SuppliesController extends BaseController {
                     ->key('name', v::stringType()->notEmpty());
             try{
                 $suppliesValidator->assert($postData); 
-                $postData['mader'] = $this->suppliesService->getMaderByName($postData);               
-                $responseMessage = $this->suppliesService->saveRegister(new Supplies(), $postData);
             } catch (Exception $ex) {
                 $responseMessage = $ex->getMessage();
             }
-        }        
-        $maders = $this->suppliesService->getMaders();
-        $selected_supply = $this->suppliesService->setSupplyInstance($request->getQueryParams('id'));    
-        return $this->renderHTML('/vehicles/supplies/suppliesForm.html.twig', [
-            'value' => $selected_supply,
-            'maders' => $maders,
-            'title' => $this->title,
-            'list' => $this->list,
-            'tab' => $this->tab,
-            'save' => $this->save,
-            'formName' => $this->formName,
-            'inputs' => $this->inputs,
-            'script' => $this->script,
-            'responseMessage' => $responseMessage
-        ]);
+            return $this->getBasePostDataAction($request, $this->model, $iterables, $responseMessage);
+        }else{
+            return $this->getBaseGetDataAction($request, $this->model, $iterables);
+        }
     }    
     public function deleteAction(ServerRequest $request) {         
         $this->suppliesService->deleteRegister(new Supplies(), $request->getQueryParams('id'));           

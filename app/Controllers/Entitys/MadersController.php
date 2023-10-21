@@ -26,7 +26,7 @@ class MadersController extends BaseController {
         $this->titleList = 'Fabricantes';
         $this->titleForm = 'Fabricante';
         $this->labels = $this->maderService->getLabelsArray(); 
-        $this->itemsList = array('id', 'name', 'email', 'access', 'phone');
+        $this->itemsList = array('id', 'name', 'email', 'phone');
     }    
     public function getIndexAction($request) {
         return $this->getBaseIndexAction($request, $this->model, null);
@@ -47,8 +47,6 @@ class MadersController extends BaseController {
         } 
     }   
     public function deleteAction(ServerRequest $request) {
-        $params = $request->getQueryParams();
-        $this->maderService->deleteRegister($this->model, $params);             
-        return new RedirectResponse('/Intranet/buys/maders/list?menu=' . $params['menu'] . '&item=' . $params['item']);
+        return $this->deleteItemAction($request, $this->model);
     }    
 }

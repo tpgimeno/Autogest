@@ -21,7 +21,7 @@ final class CreateSuppliesTable extends AbstractMigration
         $table = $this->table('supplies');
         $table->addColumn('name', 'string')
                 ->addColumn('ref', 'string')
-                ->addColumn('maderId', 'integer')
+                ->addColumn('mader_id', 'integer')
                 ->addColumn('maderCode', 'string', ['null' => true])
                 ->addColumn('pvc', 'float', ['null' => true])
                 ->addColumn('pvp', 'float', ['null' => true])
@@ -31,7 +31,7 @@ final class CreateSuppliesTable extends AbstractMigration
                 ->addColumn('updated_at', 'datetime', ['null' => true])
                 ->addColumn('deleted_at', 'datetime', ['null' => true])
                 ->addIndex('ref' , ['unique' => true])
-                ->addForeignKey(['maderId'], 'maders', ['id'])
+                ->addForeignKey(['mader_id'], 'maders', ['id'])
                 ->create();
     }
 }
