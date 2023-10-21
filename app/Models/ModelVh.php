@@ -9,7 +9,7 @@ class ModelVh extends Model
 {
     use SoftDeletes;
     protected $table = "models";
-     protected $properties = ['brandId', 'name'];
+    protected $properties = ['brand_id', 'name'];
     public function getProperties(){
         return $this->properties;
     }

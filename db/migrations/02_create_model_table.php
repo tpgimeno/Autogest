@@ -20,12 +20,12 @@ final class CreateModelTable extends AbstractMigration
     {
         $table = $this->table('models');
         $table->addColumn('name', 'string')
-                ->addColumn('brandId', 'integer')
+                ->addColumn('brand_id', 'integer')
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime', ['null' => true])
                 ->addColumn('deleted_at', 'datetime', ['null' => true])
                 ->addIndex('name', ['unique' => true])
-                ->addForeignKey(['brandId'], 'brands', ['id'])
+                ->addForeignKey(['brand_id'], 'brands', ['id'])
                 ->create(); 
     }
 }
