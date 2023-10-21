@@ -25,26 +25,21 @@ use ZipStream\Exception;
 class AccesoriesController extends BaseController
 {
     protected $accesoriesService;
-    protected $list = '/Intranet/vehicles/accesories/list';
-    protected $tab = 'buys';
-    protected $title = 'Accesorios';
-    protected $save = "/Intranet/vehicles/accesories/save";
-    protected $formName = "accesoriesForm";
-    protected $inputs = ['id' => ['id' => 'inputID', 'name' => 'id', 'title' => 'ID'],  
-        'name' => ['id' => 'inputName', 'name' => 'name', 'title' => 'Nombre']];    
+    
     public function __construct(AccesoriesService $accesoriesService, ErrorService $errorService) {
         parent::__construct();
         $this->accesoriesService = $accesoriesService;
         $this->errorService = $errorService;
+        $this->model = new Accesories();
+        $this->route = 'vehicles/accesories';
+        $this->titleList = 'Accesorios';
+        $this->titleForm = 'Accesorio';
+        $this->labels = $this->accesoriesService->getLabelsArray(); 
+        $this->itemsList = array('id', 'name');
+        $this->properties = $this->accesoriesService->getModelProperties($this->model);
     }
-    public function getIndexAction() {
-        $accesories = $this->accesoriesService->getAccesories();       
-        return $this->renderHTML('/vehicles/accesories/accesoriesList.html.twig', [
-            'list' => $this->list,
-            'tab' => $this->tab,
-            'title' => $this->title,
-            'accesories' => $accesories
-        ]);
+    public function getIndexAction($request) {
+        return $this->getBaseIndexAction($request, $this->model, null);
     }    
     public function getAccesoryDataAction($request) {   
         $responseMessage = null;        
@@ -52,28 +47,16 @@ class AccesoriesController extends BaseController
             $postData = $request->getParsedBody();
             $accesoriesValidator = v::key('name', v::stringType()->notEmpty());
             try{
-                $accesoriesValidator->assert($postData);
-                $keyString = $this->accesoriesService->normalizeKeyString($postData['name']);
-                array_push($postData, $keyString);
-                $responseMessage = $this->accesoriesService->saveRegister(new Accesories(), $postData);
+                $accesoriesValidator->assert($postData);                
             } catch (Exception $ex) {
                 $responseMessage = $ex->getMessage();
-            } 
+            }
+            return $this->getBasePostDataAction($request, $this->model, null, $responseMessage);
+        }else{
+            return $this->getBaseGetDataAction($request, $this->model, null);
         }                            
-        $selected_accesory = $this->accesoriesService->setInstance(new Accesories(), $request->getQueryParams('id'));
-        return $this->renderHTML('/vehicles/accesories/accesoriesForm.html.twig', [
-            'value' => $selected_accesory,
-            'inputs' => $this->inputs,
-            'save' => $this->save,
-            'list' => $this->list,
-            'formName' => $this->formName,
-            'tab' => $this->tab,
-            'title' => $this->title,
-            'responseMessage' => $responseMessage
-        ]);
     }    
     public function deleteAction(ServerRequest $request) {         
-        $this->accesoriesService->deleteRegister(new Accesories(), $request->getQueryParams('id'));               
-        return new RedirectResponse($this->list);
+        return $this->deleteItemAction($request, $this->model);
     }  
 }

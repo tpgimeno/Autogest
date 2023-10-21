@@ -33,14 +33,12 @@ class ModelController extends BaseController  {
     }
     public function getIndexAction($request) {       
         $values = $this->modelService->getModelItemsList();  
-//        var_dump($values);die();
         return $this->getBaseIndexAction($request, $this->model, $values);
     }
    
     public function getModelDataAction($request) {                
         $responseMessage = null;
         $brands = $this->modelService->getAllRegisters(new Brand());
-//        var_dump($brands);die();
         $iterables = ['brand_id' => $brands];
         if($request->getMethod() == 'POST') {
             $postData = $request->getParsedBody();
