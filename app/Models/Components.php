@@ -10,7 +10,7 @@ class Components extends Model
     use SoftDeletes;
 
     protected $table = "components";
-    protected $properties = ['ref', 'mader', 'serialNumber', 'name', 'observations', 'pvc', 'pvp'];
+    protected $properties = ['ref', 'mader_id', 'serialNumber', 'name', 'observations', 'pvc', 'pvp'];
     public function getProperties(){
         return $this->properties;
     }

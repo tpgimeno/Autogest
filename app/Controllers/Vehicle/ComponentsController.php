@@ -8,11 +8,12 @@ namespace App\Controllers\Vehicle;
 
 use App\Controllers\BaseController;
 use App\Models\Components;
+use App\Models\Mader;
 use App\Reports\Vehicles\ComponentsReport;
 use App\Services\Vehicle\ComponentsService;
+use Exception;
 use Laminas\Diactoros\ServerRequest;
 use Respect\Validation\Validator as v;
-use Laminas\Diactoros\Response\RedirectResponse;
 
 /**
  * Description of ComponentsController
@@ -21,87 +22,44 @@ use Laminas\Diactoros\Response\RedirectResponse;
  */
 class ComponentsController extends BaseController {
     protected $componentsService;    
-    protected $list = "/Intranet/vehicles/components/list";
-    protected $tab = "buys";
-    protected $title = "Componentes";
-    protected $save = "/Intranet/vehicles/components/save";
-    protected $formName = 'componentsForm';  
-    protected $search = '/Intranet/vehicles/components/search';    
-    protected $inputs = ['id' => ['id' => 'inputId', 'name' => 'id', 'title' => 'ID'], 
-        'ref' => ['id' => 'inputRef', 'name' => 'ref', 'title' => 'Referencia'],
-        'selectMader' => ['id' => 'inputMader', 'name' => 'mader', 'title' => 'Fabricante'],
-        'serialNumber' => ['id' => 'inputSerialNumber', 'name' => 'serialNumber', 'title' => 'Numero de Serie'],
-        'name' => ['id' => 'inputName', 'name' => 'name', 'title' => 'Nombre'],
-        'observations' => ['id' => 'observations', 'name' => 'observations', 'title' => 'Observaciones'],
-        'pvc' => ['id' => 'inputPvc', 'name' => 'pvc', 'title' => 'Precio Compra'],
-        'pvp' => ['id' => 'inputPvp', 'name' => 'pvp', 'title' => 'Precio Venta'],
-        'tvaBuy' => ['id' => 'inputTvaBuy', 'name' => 'tvaBuy', 'title' => 'Iva Compra'],
-        'tvaSell' => ['id' => 'inputTvaSell', 'name' => 'tvaSell', 'title' => 'Iva Venta'],
-        'totalBuy' => ['id' => 'inputTotalBuy', 'name' => 'totalBuy', 'title' => 'Total Compra'],
-        'totalSell' => ['id' => 'inputTotalSell', 'name' => 'totalSell', 'title' => 'Total Venta']];
-    protected $script = 'js/components.js';
+    
     public function __construct(ComponentsService $componentsService) {
         parent::__construct();
         $this->componentsService = $componentsService;
+        $this->model = new Components();
+        $this->route = 'vehicles/components';
+        $this->titleList = 'Componentes';
+        $this->titleForm = 'Componente';
+        $this->labels = $this->componentsService->getLabelsArray(); 
+        $this->itemsList = array('id', 'ref', 'name', 'pvp');
+        $this->properties = $this->componentsService->getModelProperties($this->model);
     }
-    public function getIndexAction() {
-        $components = $this->componentsService->getComponents();
-        $maders = $this->componentsService->getMaders();       
-        return $this->renderHTML('/vehicles/components/componentsList.html.twig', [
-            'components' => $components,
-            'title' => $this->title,
-            'list' => $this->list,
-            'tab' => $this->tab,
-            'search' => $this->search,
-            'maders' => $maders            
-        ]);
+    public function getIndexAction($request) {
+        return $this->getBaseIndexAction($request, $this->model, null);
     }  
-    public function searchComponentAction($request) {
-        $searchData = $request->getParsedBody();      
-        $components = $this->componentsService->searchSupplies($searchData['searchFilter']);
-        return $this->renderHTML('/vehicles/components/componentsList.html.twig', [
-            'title' => $this->title,
-            'list' => $this->list,
-            'tab' => $this->tab,
-            'search' => $this->search,
-            'components' => $components
-        ]);
-    }    
+    
     public function getComponentsDataAction($request) {       
-        $responseMessage = null;        
+        $responseMessage = null;   
+        $maders = $this->componentsService->getAllRegisters(new Mader());
+        $iterables = ['mader_id' => $maders];
         if($request->getMethod() == 'POST') {
             $postData = $request->getParsedBody();            
             $componentsValidator = v::key('ref', v::stringType()->notEmpty())
                     ->key('serialNumber', v::stringType()->notEmpty())
-                    ->key('name', v::stringType()->notEmpty());
-            $postData['mader'] = $this->componentsService->getMaderByName($postData['mader']);
-            $responseMessage = $this->componentsService->saveRegister(new Components(), $postData);
+                    ->key('name', v::stringType()->notEmpty());            
             try{
                 $componentsValidator->assert($postData);  
                 
             } catch (Exception $ex) {
                 $responseMessage = $ex->getMessage();
-            }            
+            }
+            return $this->getBasePostDataAction($request, $this->model, $iterables, $responseMessage);
+        }else{
+            return $this->getBaseGetDataAction($request, $this->model, $iterables);
         }
-        $selected_component = $this->componentsService->setComponentInstance($request->getQueryParams('id'));
-        $maders = $this->componentsService->getMaders(); 
-//        var_dump($selected_component);die();
-        return $this->renderHTML('/vehicles/components/componentsForm.html.twig', [
-            'value' => $selected_component,
-            'maders' => $maders,
-            'title' => $this->title,
-            'list' => $this->list,
-            'tab' => $this->tab,
-            'save' => $this->save,
-            'formName' => $this->formName,
-            'inputs' => $this->inputs,
-            'script' => $this->script,
-            'responseMessage' => $responseMessage
-        ]);
     }    
     public function deleteAction(ServerRequest $request) {         
-        $this->componentsService->deleteRegister(new Components(), $request->getQueryParams('id'));               
-        return new RedirectResponse($this->list);
+        return $this->deleteItemAction($request, $this->model);
     } 
     public function getComponentsReportAction(){
         $components = DB::table('components')  

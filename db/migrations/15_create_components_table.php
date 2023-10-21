@@ -22,7 +22,7 @@ final class CreateComponentsTable extends AbstractMigration
         $table->addColumn('name', 'string')
                 ->addColumn('ref', 'string')
                 ->addColumn('serialNumber', 'string')
-                ->addColumn('maderId', 'integer', ['null' => true])
+                ->addColumn('mader_id', 'integer', ['null' => true])
                 ->addColumn('pvc', 'float', ['null' => true])
                 ->addColumn('pvp', 'float', ['null' => true])
                 ->addColumn('observations', 'string', ['null' => true])
@@ -31,7 +31,7 @@ final class CreateComponentsTable extends AbstractMigration
                 ->addColumn('updated_at', 'datetime', ['null' => true])
                 ->addColumn('deleted_at', 'datetime', ['null' => true])
                 ->addIndex('serialNumber', ['unique' => true])
-                ->addForeignKey(['maderId'], 'maders', ['id'])
+                ->addForeignKey(['mader_id'], 'maders', ['id'])
                 ->create();
     }
 }
