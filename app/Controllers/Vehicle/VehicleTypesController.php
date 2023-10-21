@@ -11,7 +11,6 @@ namespace App\Controllers\Vehicle;
 use App\Controllers\BaseController;
 use App\Models\VehicleTypes;
 use App\Services\Vehicle\VehicleTypeService;
-use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\ServerRequest;
 use Respect\Validation\Validator as v;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -24,26 +23,20 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 class VehicleTypesController extends BaseController
 {
     protected $vehicleTypeService;
-    protected $list = '/Intranet/vehicles/vehicleTypes/list';
-    protected $tab = 'buys';
-    protected $title = 'Tipos de Vehiculo';
-    protected $save = "/Intranet/vehicles/vehicleTypes/save";
-    protected $formName = "vehicleTypesForm";
-    protected $inputs = ['id' => ['id' => 'inputID', 'name' => 'id', 'title' => 'ID'],  
-        'name' => ['id' => 'inputName', 'name' => 'name', 'title' => 'Nombre']];
+    
     public function __construct(VehicleTypeService $vehicleTypeService) {
         parent::__construct();
         $this->vehicleTypeService = $vehicleTypeService;
+        $this->model = new VehicleTypes();
+        $this->route = 'vehicles/vehicleTypes';
+        $this->titleList = 'Tipos de Vehículos';
+        $this->titleForm = 'Tipo de Vehículo';
+        $this->labels = $this->vehicleTypeService->getLabelsArray(); 
+        $this->itemsList = array('id', 'name');
+        $this->properties = $this->vehicleTypeService->getModelProperties($this->model);
     }   
-    public function getIndexAction()  {
-        $types = $this->vehicleTypeService->getAllRegisters(new VehicleTypes());
-        return $this->renderHTML('/vehicles/vehiclesTypes/vehiclesTypesList.html.twig', [
-            'currentUser' => $this->currentUser->getCurrentUserEmailAction(),
-            'list' => $this->list,
-            'tab' => $this->tab,
-            'title' => $this->title,
-            'types' => $types
-        ]);
+    public function getIndexAction($request)  {
+        return $this->getBaseIndexAction($request, $this->model, null);
     }   
     public function getVehicleTypesDataAction($request) {                
         $responseMessage = null;
@@ -51,27 +44,16 @@ class VehicleTypesController extends BaseController
             $postData = $request->getParsedBody();            
             $typeValidator = v::key('name', v::stringType()->notEmpty());           
             try{
-                $typeValidator->assert($postData); // true  
-                $responseMessage = $this->vehicleTypeService->saveRegister(new VehicleTypes(), $postData);
+                $typeValidator->assert($postData); // true
             }catch(Exception $e){                
                 $responseMessage = $this->errorService->getError($e);
-            }           
-        }        
-        $typeSelected = $this->vehicleTypeService->setInstance(new VehicleTypes(), $request->getQueryParams('id'));                
-        return $this->renderHTML('/vehicles/vehiclesTypes/vehiclesTypesForm.html.twig', [
-            'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
-            'responseMessage' => $responseMessage,
-            'inputs' => $this->inputs,
-            'save' => $this->save,
-            'list' => $this->list,
-            'formName' => $this->formName,
-            'tab' => $this->tab,
-            'title' => $this->title,
-            'value' => $typeSelected
-        ]);
+            }   
+            return $this->getBasePostDataAction($request, $this->model, null, $responseMessage);
+        }else{
+            return $this->getBaseGetDataAction($request, $this->model, null);
+        }       
     }   
     public function deleteAction(ServerRequest $request)  {         
-        $this->vehicleTypeService->deleteRegister(new VehicleTypes(), $request->getQueryParams('id'));              
-        return new RedirectResponse($this->list);
+        return $this->deleteItemAction($request, $this->model);
     }
 }
