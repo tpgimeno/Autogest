@@ -27,57 +27,39 @@ class BrandController extends BaseController
 {
     protected $brandService;
     protected $errorService;
-    protected $list = '/Intranet/vehicles/brands/list';
-    protected $tab = 'buys';
-    protected $title = 'Marcas';
-    protected $save = "/Intranet/vehicles/brands/save";
-    protected $formName = "brandsForm";
-    protected $inputs = ['id' => ['id' => 'inputID', 'name' => 'id', 'title' => 'ID'],
-        'name' => ['id' => 'inputName', 'name' => 'name', 'title' => 'Nombre']];
+   
     public function __construct(BrandService $brandService, ErrorService $errorService) {
         parent::__construct();
         $this->brandService = $brandService;
         $this->errorService = $errorService;
+        $this->model = new Brand();
+        $this->route = 'vehicles/brands';
+        $this->titleList = 'Marcas';
+        $this->titleForm = 'Marca';
+        $this->labels = $this->brandService->getLabelsArray(); 
+        $this->itemsList = array('id', 'name');
+        $this->properties = $this->brandService->getModelProperties($this->model);
     }
-    public function getIndexAction(){
-        $brands = $this->brandService->getAllRegisters(new Brand());
-        return $this->renderHTML('/vehicles/brands/brandsList.html.twig', [
-            'currentUser' => $this->currentUser->getCurrentUserEmailAction(),
-            'list' => $this->list,
-            'title' => $this->title,
-            'tab' => $this->tab,
-            'brands' => $brands
-        ]);
+    public function getIndexAction($request){
+        return $this->getBaseIndexAction($request, $this->model, null);
     }    
     public function getBrandDataAction($request) {                
         $responseMessage = null;
-        if($request->getMethod() === 'POST')
-        {
+        if($request->getMethod() === 'POST') {
             $postData = $request->getParsedBody();            
             $brandValidator = v::key('name', v::stringType()->notEmpty());                       
             try{
-                $brandValidator->assert($postData); // true 
-                $responseMessage = $this->brandService->saveRegister(new Brand(), $postData);
+                $brandValidator->assert($postData); // true                 
             }catch(Exception $e){                
                 $responseMessage = $e->getMessage();
-            }            
+            }
+            return $this->getBasePostDataAction($request, $this->model, null, $responseMessage);
+        }else{
+            return $this->getBaseGetDataAction($request, $this->model, null);
         }
-        $brandSelected = $this->brandService->setInstance(new Brand(), $request->getQueryParams('id'));     
-        return $this->renderHTML('/vehicles/brands/brandsForm.html.twig', [
-            'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
-            'responseMessage' => $responseMessage,
-            'list' => $this->list,
-            'tab' => $this->tab,
-            'title' => $this->title,
-            'save' => $this->save,
-            'formName' => $this->formName,
-            'inputs' => $this->inputs,
-            'value' => $brandSelected
-        ]);
     }    
     public function deleteAction(ServerRequest $request) {         
-        $this->brandService->deleteRegister(new Brand(), $request->getQueryParams('id'));            
-        return new RedirectResponse('/Intranet/vehicles/brands/list');
+        return $this->deleteItemAction($request, $this->model);
     }
 
 }
