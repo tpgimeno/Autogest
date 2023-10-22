@@ -18,7 +18,7 @@ class PaymentWaysActionsCest {
         $I->click('#newButton');
         $this->permitted_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $this->name = substr(str_shuffle($this->permitted_chars), 0, 20);        
-        $paymentWay = ['name' => $this->name, 'accountAssociated' => '1', 'discount' => '20'];
+        $paymentWay = ['name' => $this->name, 'account_id' => '1', 'discount' => '20'];
         $I->submitForm('#formFormadePago', $paymentWay);        
         $this->id = $I->grabFromDatabase('paymentWays', 'id', ['name' => 'Transferencia Bancaria']);        
         $I->see('Saved');
@@ -27,7 +27,7 @@ class PaymentWaysActionsCest {
     public function editPaymentWaysTest(FunctionalTester $I) {
         $I->amOnPage("/paymentWays/list?menu=compras&item=buypaymentWays");
         $I->click('#editButton' . $this->id);
-        $paymentWay = ['name' => $this->name, 'accountAssociated' => '1', 'discount' => '20'];
+        $paymentWay = ['name' => $this->name, 'account_id' => '1', 'discount' => '20'];
         $I->submitForm('#formFormadePago', $paymentWay);
         $I->see('Updated');
     }

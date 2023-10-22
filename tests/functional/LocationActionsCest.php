@@ -15,15 +15,20 @@ class LocationActionsCest {
     // tests
     public function addLocationTest(FunctionalTester $I) {
         $I->amOnPage("/locations/list?menu=stock&item=locations");
-        $I->click('#newButton');        
-        $lastStore = $I->grabNumRecords('stores', array('deleted_at' => null));        
-        $stores = $I->grabColumnFromDatabase('stores', 'id', array('deleted_at' => null));
-        $store = $stores[$lastStore -1];
+        $I->click('#newButton'); 
+        $numStores = $I->grabNumRecords('stores');
+        $stores = $I->grabColumnFromDatabase('stores', 'id');
+        $lastStore = 0;
+        for($i = 1; $i < $numStores; $i++){
+            if($lastStore < $stores[$i]){
+                $lastStore = $stores[$i];
+            }
+        }               
         $this->permitted_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $this->name = substr(str_shuffle($this->permitted_chars), 0, 2);
-        $location = [ 'storeId' => $store, 'name' => $this->name];
+        $location = [ 'store_id' => $lastStore, 'name' => $this->name];
         $I->submitForm('#formUbicacion', $location);
-        $this->id = $I->grabFromDatabase('locations', 'id', ['storeId' => $store, 'name' => $$this->name]);
+        $this->id = $I->grabFromDatabase('locations', 'id', ['store_id' => $lastStore, 'name' => $this->name]);
         $I->see('Saved');
     }
 
@@ -32,7 +37,7 @@ class LocationActionsCest {
         $I->click('#editButton' . $this->id);
         $name = substr(str_shuffle($this->permitted_chars), 0, 2);
         $location = ['name' => $name];
-        $I->submitForm('#formFinanciera', $location);
+        $I->submitForm('#formUbicacion', $location);
         $I->see('Updated');
     }
 

@@ -13,9 +13,25 @@
                     <input type="hidden" style="display:none;" id="menu" name="menu" value="{{ menuState }}">
                     <input type="hidden" style="display:none;" id="menuItem" name="menuItem" value="{{ menuItem }}">  
                     <input type="hidden" style="display:none;" id="id" name="id" value="{{ value.id }}">
+                        {% if properties[0] is iterable %}                            
+                            <ul class="nav nav-tabs">
+                                {% for property in properties %}
+                                    {% if properties[0] == property %}
+                                        <li class="nav-item">
+                                            <a class="nav-link active" aria-current="page" href="{{ property }}">{{ labels[property] }}</a>
+                                        </li>
+                                    {% else %}
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ property }}">{{ labels[property] }}</a>
+                                        </li>
+                                    {% endif %}  
+                                {% endfor %}
+                            </ul>
+                        {% endif %} 
                         {% for property in properties %}
                             {% set selects = {'bank_id':'bank_id','bank':'bank','account_id':'account_id','store_id':'store_id','access':'access','brand_id':'brand_id','mader_id':'mader_id'} %}
                             {% set textareas = {'observations':'observations'} %}
+                               
                             {% if property in selects %}                                
                                 <div class="row">
                                     <div class="input-group col-10">
@@ -23,7 +39,7 @@
                                         <select id="{{ property }}" name="{{ property }}" class="form-control select2" value="{{ attribute(value, property) }}">                                                
                                         {% for option in optionsArray[property] %}
                                             {% if property == 'account_id' %}
-                                                <option value="{{ option['id'] }}">{{ option['accountNumber'] }}</option>
+                                                <option value="{{ option['id'] }}">{{ option['accountNumber'] }}</option>                                            
                                             {% else %}
                                                 <option value="{{ option['id'] }}">{{ option['name'] }}</option>
                                             {% endif %}
@@ -46,6 +62,7 @@
                                     </div>                            
                                 </div>
                             {% endif %}
+                            
                         {% endfor %}
                 </div>               
                     {% if value.id != null %}

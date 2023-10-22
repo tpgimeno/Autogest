@@ -41,7 +41,7 @@ class LocationController extends BaseController {
      
     public function getLocationDataAction($request) {                
         $responseMessage = null;
-        $stores = $this->locationService->getAllRegisters(new Store());
+        $stores = $this->locationService->getAllRegisters(new Store());        
         $iterables = ['store_id' => $stores];
         if($request->getMethod() == 'POST') {
             $postData = $request->getParsedBody();            
