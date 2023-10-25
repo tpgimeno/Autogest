@@ -64,7 +64,7 @@ class BaseController {
     }
     
     public function getBasePostDataAction(ServerRequest $request, $model, $iterables, $responseMessage) {              
-        $postData = $request->getParsedBody();                   
+        $postData = $request->getParsedBody();        
         $response = $this->baseService->saveRegister(new $model, $postData); 
         if($response){
             $responseMessage = $response[1];

@@ -12,7 +12,11 @@ use App\Controllers\BaseController;
 use App\Models\Accesories;
 use App\Models\Brand;
 use App\Models\Components;
+use App\Models\Customer;
+use App\Models\Location;
 use App\Models\ModelVh;
+use App\Models\Providor;
+use App\Models\Sellers;
 use App\Models\Store;
 use App\Models\Supplies;
 use App\Models\Vehicle;
@@ -57,20 +61,20 @@ class VehicleController extends BaseController {
         
     public function getVehicleDataAction($request) {                
         $responseMessage = null; 
-        $params = null;
         $brands = $this->vehicleService->getAllRegisters(new Brand());
         $models = $this->vehicleService->getAllRegisters(new ModelVh());
         $sellers = $this->vehicleService->getAllRegisters(new Sellers());
         $stores = $this->vehicleService->getAllRegisters(new Store());
         $locations = $this->vehicleService->getAllRegisters(new Location());
         $types = $this->vehicleService->getAllRegisters(new VehicleTypes());
-        $providors = $this->vehicleService->getAllRegisters(new \App\Models\Providor());
+        $providors = $this->vehicleService->getAllRegisters(new Providor());
         $customers = $this->vehicleService->getAllRegisters(new Customer());
         $components = $this->vehicleService->getAllRegisters(new Components());
         $supplies = $this->vehicleService->getAllRegisters(new Supplies());
         $works = $this->vehicleService->getAllRegisters(new Works());
         $accesories = $this->vehicleService->getAllRegisters(new Accesories());
-        $iterables = ['brand_id' => $brands,
+        
+        $iterables = array('brand_id' => $brands,
             'model_id' => $models,
             'seller_id' => $sellers,
             'store_id' => $stores,
@@ -81,7 +85,7 @@ class VehicleController extends BaseController {
             'accesories' => $accesories,
             'components' => $components,
             'supplies' => $supplies,
-            'works' => $works];
+            'works' => $works);
         if($request->getMethod() == 'POST') {
             $postData = $request->getParsedBody();            
             $vehicleValidator = v::key('plate', v::stringType()->notEmpty());                       
@@ -90,34 +94,11 @@ class VehicleController extends BaseController {
             }catch(Exception $e) {                
                 $responseMessage = $e->getMessage();
             } 
+            var_dump("Prueba");die();
             return $this->getBasePostDataAction($request, $this->model, $iterables, $responseMessage);
         }else{
             return $this->getBaseGetDataAction($request, $this->model, $iterables);
-        }
-        if(!$params){
-            $params = $request->getQueryParams();
         }       
-        $brands = $this->vehicleService->getBrands();
-        $models = $this->vehicleService->getModels();
-        $stores = $this->vehicleService->getStores();
-        $locations = $this->vehicleService->getLocations();
-        
-        $types = $this->vehicleService->getTypes();
-        $providors = $this->vehicleService->getProvidors();
-        $sellers = $this->vehicleService->getSellers();
-        $customers = $this->vehicleService->getCustomers();
-        $selectedTab = $this->vehicleService->getSelectedTab($params);
-        $vehicleSelected = $this->vehicleService->setVehicle($params); 
-        $selectedAccesories = $this->vehicleService->getVehicleAccesories($vehicleSelected);
-        $vehicleComponents = $this->vehicleService->getVehicleComponents($vehicleSelected);
-        $vehicleSupplies = $this->vehicleService->getVehicleSupplies($vehicleSelected);
-        $selectedComponent = $this->vehicleService->getSelectedComponent($params);
-        $selectedSupply = $this->vehicleService->getSelectedSupply($params);
-        $editPriceComponent = $this->vehicleService->getComponentPrice($params, $selectedComponent);
-        $editCantityComponent = $this->vehicleService->getComponentCantity($params);
-        $editPriceSupply = $this->vehicleService->getSupplyPrice($params, $selectedSupply);
-        $editCantitySupply = $this->vehicleService->getSupplyCantity($params);
-        
     }      
     public function addAccesoryAction($request) {
         $postData = $request->getParsedBody();         

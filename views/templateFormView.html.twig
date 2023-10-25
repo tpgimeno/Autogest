@@ -13,25 +13,69 @@
                     <input type="hidden" style="display:none;" id="menu" name="menu" value="{{ menuState }}">
                     <input type="hidden" style="display:none;" id="menuItem" name="menuItem" value="{{ menuItem }}">  
                     <input type="hidden" style="display:none;" id="id" name="id" value="{{ value.id }}">
-                        {% if properties[0] is iterable %}                            
-                            <ul class="nav nav-tabs">
-                                {% for property in properties %}
-                                    {% if properties[0] == property %}
-                                        <li class="nav-item">
-                                            <a class="nav-link active" aria-current="page" href="{{ property }}">{{ labels[property] }}</a>
-                                        </li>
-                                    {% else %}
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{ property }}">{{ labels[property] }}</a>
-                                        </li>
-                                    {% endif %}  
-                                {% endfor %}
-                            </ul>
-                        {% endif %} 
-                        {% for property in properties %}
-                            {% set selects = {'bank_id':'bank_id','bank':'bank','account_id':'account_id','store_id':'store_id','access':'access','brand_id':'brand_id','mader_id':'mader_id'} %}
-                            {% set textareas = {'observations':'observations'} %}
-                               
+                    {% set selects = {'bank_id':'bank_id','bank':'bank','account_id':'account_id','store_id':'store_id','access':'access','brand_id':'brand_id'} %}
+                    {% set textareas = {'observations':'observations'} %}
+                    {% if 'data' in properties|keys %}
+                        {% set tabs = properties|keys %}
+                        <ul class="nav nav-tabs" id="myTab" role="tablist"> 
+                            {% for tab in tabs %}
+                                {% if loop.index0 == 0 %}
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="{{ tab }}-tab" data-bs-toggle="tab" data-bs-target="#{{ tab }}" type="button" role="tab" aria-controls="home" aria-selected="true">{{ labels[tab] }}</button>
+                                    </li>
+                                {% else %}
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="{{ tab ~ '-tab'}}" data-bs-toggle="tab" data-bs-target="#{{ tab }}" type="button" role="tab" aria-controls="home" aria-selected="false">{{ labels[tab] }}</button>
+                                    </li>
+                                {% endif %} 
+                            {% endfor %}
+                        </ul>
+                        {% set keys = tabs|keys %}
+                        {% for tab in tabs %}
+                            {% if tab == tabs[0] %}                                
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="{{ tab }}" role="tabpanel" aria-labelledby="{{ tab ~ '-tab'}}" tabindex="{{ loop.index0 }}">
+                            {% else %}
+                                <div class="tab-content">
+                                    <div class="tab-pane" id="{{ tab }}" role="tabpanel" aria-labelledby="{{ tab ~ '-tab'}}" tabindex="{{ loop.index0 }}">
+                            {% endif %}
+                            {% for item in properties[tab] %}
+                                {% if item in selects %}                                
+                                    <div class="row">
+                                        <div class="input-group col-10">
+                                            <label class="control-label" for="{{ item }}">{{ labels[item] }}</label>
+                                            <select id="{{ item }}" name="{{ item }}" class="form-control select2" value="{{ attribute(value, item) }}">                                                
+                                            {% for option in optionsArray[item] %}
+                                                {% if item == 'account_id' %}
+                                                    <option value="{{ option['id'] }}">{{ option['accountNumber'] }}</option>
+                                                {% else %}
+                                                    <option value="{{ option['id'] }}">{{ option['name'] }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                            </select>        
+                                        </div>                            
+                                    </div>
+                                {% elseif item in textareas %}
+                                    <div class="row">
+                                        <div class="input-group col-10">
+                                            <label class="control-label" for="{{ item }}">{{ labels[item] }}</label>
+                                            <textarea type="text" id="{{ item }}" name="{{ item }}" class="form-control">{{ attribute(value, item) }}</textarea>
+                                        </div>                            
+                                    </div>
+                                {% else %}
+                                    <div class="row">
+                                        <div class="input-group col-10">
+                                            <label class="control-label" for="{{ item }}">{{ labels[item] }}</label>
+                                            <input type="text" id="{{ item }}" name="{{ item }}" class="form-control" value="{{ attribute(value, item) }}">
+                                        </div>                            
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% for property in properties %}                            
                             {% if property in selects %}                                
                                 <div class="row">
                                     <div class="input-group col-10">
@@ -39,7 +83,7 @@
                                         <select id="{{ property }}" name="{{ property }}" class="form-control select2" value="{{ attribute(value, property) }}">                                                
                                         {% for option in optionsArray[property] %}
                                             {% if property == 'account_id' %}
-                                                <option value="{{ option['id'] }}">{{ option['accountNumber'] }}</option>                                            
+                                                <option value="{{ option['id'] }}">{{ option['accountNumber'] }}</option>
                                             {% else %}
                                                 <option value="{{ option['id'] }}">{{ option['name'] }}</option>
                                             {% endif %}
@@ -62,8 +106,8 @@
                                     </div>                            
                                 </div>
                             {% endif %}
-                            
                         {% endfor %}
+                    {% endif %} 
                 </div>               
                     {% if value.id != null %}
                         <div class="button-wrapper float-left">

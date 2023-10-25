@@ -22,7 +22,7 @@ class Vehicle extends Model {
       'doors',
       'power',
       'km'],
-      'information' => ['providor_id',
+      'detail' => ['providor_id',
       'cost',
       'pvp',
       'transference',
