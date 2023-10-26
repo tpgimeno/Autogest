@@ -17,15 +17,15 @@
                     {% set textareas = {'observations':'observations'} %}
                     {% if 'data' in properties|keys %}
                         {% set tabs = properties|keys %}
-                        <ul class="nav nav-tabs" id="myTab" role="tablist"> 
+                        <ul class="nav nav-tabs"> 
                             {% for tab in tabs %}
                                 {% if loop.index0 == 0 %}
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link active" id="{{ tab }}-tab" data-bs-toggle="tab" data-bs-target="#{{ tab }}" type="button" role="tab" aria-controls="home" aria-selected="true">{{ labels[tab] }}</button>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#{{ tab }}">{{ labels[tab] }}</a>
                                     </li>
                                 {% else %}
                                     <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="{{ tab ~ '-tab'}}" data-bs-toggle="tab" data-bs-target="#{{ tab }}" type="button" role="tab" aria-controls="home" aria-selected="false">{{ labels[tab] }}</button>
+                                        <a class="nav-link" href="#{{tab}}">{{ labels[tab] }}</a>
                                     </li>
                                 {% endif %} 
                             {% endfor %}
@@ -34,10 +34,10 @@
                         {% for tab in tabs %}
                             {% if tab == tabs[0] %}                                
                                 <div class="tab-content">
-                                    <div class="tab-pane active" id="{{ tab }}" role="tabpanel" aria-labelledby="{{ tab ~ '-tab'}}" tabindex="{{ loop.index0 }}">
+                                    <div class="tab-pane fade show active" id="{{ tab }}">
                             {% else %}
                                 <div class="tab-content">
-                                    <div class="tab-pane" id="{{ tab }}" role="tabpanel" aria-labelledby="{{ tab ~ '-tab'}}" tabindex="{{ loop.index0 }}">
+                                    <div class="tab-pane fade show" id="{{ tab }}">
                             {% endif %}
                             {% for item in properties[tab] %}
                                 {% if item in selects %}                                
