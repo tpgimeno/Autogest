@@ -8,8 +8,11 @@
 
 namespace App\Services;
 
+use App\Models\Accesories;
 use App\Models\Label;
+use App\Models\VehicleAccesories;
 use Exception;
+use function str_ends_with;
 
 /**
  * Description of BaseService
@@ -32,8 +35,7 @@ class BaseService {
         return $arrayLabels;
     }
     
-    public function getModelProperties($model){
-        $object = new $model;        
+    public function getModelProperties($model){                
         return $model->getProperties();
     }
 
@@ -57,20 +59,41 @@ class BaseService {
     public function saveRegister($model, $array) {
         $properties = $model->getProperties();
         $content = array_values($array);
-//       var_dump($properties);
-//       var_dump($content);die();
-        unset($content[0], $content[1]);
+        $diference = 3;
+        $keys = [];
+        $assetsNumber = 0;
+        if($properties['data'] && is_array($properties['data'])){
+            $keys = array_keys($properties);
+            $total_properties = [];
+            for($j = 0; $j < count($keys);$j++){            
+               foreach($properties[$keys[$j]] as $item){
+                   array_push($total_properties, $item);
+               }                  
+            }
+            $properties = $total_properties;
+        }
+        unset($content[0], $content[1],$content[2]);
+        if(count($content) > count($properties)){
+            $assetsNumber = count($content) - count($properties); 
+            $assets = array_slice($content, count($content) - $assetsNumber);
+            $content = array_slice($content, 0, count($content) - $assetsNumber);
+            $diference = 0;
+        }
         if ($this->findRegister($model, $array) == true) {
             $model = $model::find(intval($array['id']));
         }
-
         // At this point we receive the form inputs with 3 item more than object properties. So we do $i + 3 to correct it.
-
-        for ($i = 0; $i < sizeof($properties); $i++) {
+        
+        for ($i = 0; $i < (sizeof($properties)-1); $i++) {
             if ($properties[$i] == 'password') {
-                $model->{$properties[$i]} = password_hash($content[$i + 3], PASSWORD_DEFAULT);
+                $model->{$properties[$i]} = password_hash($content[$i+$diference], PASSWORD_DEFAULT);
+            }elseif (str_ends_with($properties[$i], 'Date')){
+                $model->{$properties[$i]} = date('Y/m/d', strtotime($content[$i+$diference]));
+            }elseif(in_array("€", str_split($properties[$i]))){                
+                $model->{$properties[$i]} = floatval($content[$i+$diference]);
+            }else{            
+                $model->{$properties[$i]} = $content[$i+$diference];
             }
-            $model->{$properties[$i]} = $content[$i + 3];
         }
         try {
             if ($this->findRegister($model, $array) == true) {
@@ -83,7 +106,50 @@ class BaseService {
         } catch (Exception $e) {
             $responseMessage = $e->getMessage();
         }
+        if($assetsNumber > 0){  
+            $this->saveAssets($assets, $model);
+        }
         return array($model->id, $responseMessage);
+    }
+    
+    public function saveAssets($assets, $model){        
+        $accesory = new VehicleAccesories();        
+        $accesories = $this->getAllRegisters(new Accesories())->toArray(); 
+        $array_keystrings = [];
+        for($i=0;$i<count($assets);$i++){    
+            for($j=0;$j<count($accesories);$j++){                
+                if($assets[$i] === $accesories[$j]['keyString']){
+                    $accesory->vehicle_id = $model->id;                    
+                    $accesory->accesory_id = $accesories[$j]['id']; 
+                    $vehicle_accesory = VehicleAccesories::where('vehicle_id', '=', $model->id)
+                            ->where('accesory_id', '=', $accesories[$j]['id'])
+                            ->get()->first();                   
+                    if($vehicle_accesory){
+                        $vehicle_accesory->update();
+                    }else{
+                        $accesory->save();
+//                        var_dump($accesory);
+                    }                    
+                }                
+            }          
+        }        
+        if(count($accesories) > count($assets)){
+            for($j=0;$j<count($accesories);$j++){   
+                array_push($array_keystrings, $accesories[$j]['keyString']);                
+            }
+            
+            $unselected_accesories = array_diff($array_keystrings, $assets);
+            for($i = 0;$i < count($unselected_accesories);$i++){
+                $accesory_temp = Accesories::where('keyString', '=', $unselected_accesories[$i])->get()->first();
+                $vehicle_accesory_unchecked = VehicleAccesories::where('vehicle_id', '=', $model->id)
+                        ->where('accesory_id', '=', $accesory_temp->id);
+                if($vehicle_accesory_unchecked){
+                    $vehicle_accesory_unchecked->delete();
+                }
+            }
+        }
+        
+        
     }
 
     public function deleteRegister($model, $array) {

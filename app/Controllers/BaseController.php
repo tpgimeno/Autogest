@@ -26,7 +26,7 @@ class BaseController {
     protected $baseService;
     protected $errorService;
     protected $labels;
-    protected $itemsList, $labelsForm, $titleList, $titleForm, $properties, $route, $model;
+    protected $itemsList, $labelsForm, $titleList, $titleForm, $properties, $route, $model, $assetsFunction, $assetsNames;
 
     public function __construct() {
         $loader = new FilesystemLoader('../views');
@@ -49,8 +49,10 @@ class BaseController {
         $params = $request->getQueryParams();        
         $menuState = $params['menu'];  
         $menuItem = $params['item'];
+//        var_dump($values);die();
         if(!$values){
             $values = $this->baseService->getAllRegisters(new $model);
+            
         }
         return $this->renderHTML('/templateListView.html.twig', [
                     'values' => $values,
@@ -63,16 +65,20 @@ class BaseController {
         ]);
     }
     
-    public function getBasePostDataAction(ServerRequest $request, $model, $iterables, $responseMessage) {              
-        $postData = $request->getParsedBody();        
-        $response = $this->baseService->saveRegister(new $model, $postData); 
+    public function getBasePostDataAction($request, $model, $iterables, $responseMessage) {        
+        if(is_object($request)){
+            $postData = $request->getParsedBody(); 
+        }else{
+            $postData = $request;
+        }
+        $response = $this->baseService->saveRegister(new $model, $postData);        
         if($response){
             $responseMessage = $response[1];
         }
         $valueSelected = $this->baseService->setInstance(new $model, array('id' => $response[0]));                
         $menuState = $postData['menu'];
         $menuItem = $postData['menuItem'];
-        $this->properties = $this->baseService->getModelProperties(new $model);         
+        $this->properties = $this->baseService->getModelProperties(new $model);        
         return $this->renderHTML('templateFormView.html.twig', [
                     'userEmail' => $this->currentUser->getCurrentUserEmailAction(),
                     'responseMessage' => $responseMessage,                    

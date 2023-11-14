@@ -15,7 +15,7 @@ class Providor extends Model
         'fiscalName', 
         'address',        
         'city',
-        'postalCode',
+        'postal_code',
         'state', 
         'country', 
         'phone',

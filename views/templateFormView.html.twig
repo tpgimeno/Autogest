@@ -1,5 +1,6 @@
 {% extends "layout.html.twig" %}
 {% block content %}
+    
 <div class="content-wrapper pb-5" style="min-height: 960px">
     <section class="content-header"><h2>{{ titleForm }}</h2></section>
     <section class="content ">
@@ -11,47 +12,106 @@
             <form class="form-horizontal " id="form{{ titleForm|replace({" ":"", "á":"a","à":"a","é":"e","è":"e","í":"i","ì":"i","ó":"o","ò":"o","ú":"u","ù":"u"}) }}" action="Intranet/{{ route }}/save" method="post">
                 <div class="form-group col">
                     <input type="hidden" style="display:none;" id="menu" name="menu" value="{{ menuState }}">
-                    <input type="hidden" style="display:none;" id="menuItem" name="menuItem" value="{{ menuItem }}">  
-                    <input type="hidden" style="display:none;" id="id" name="id" value="{{ value.id }}">
-                    {% set selects = {'bank_id':'bank_id','bank':'bank','account_id':'account_id','store_id':'store_id','access':'access','brand_id':'brand_id'} %}
+                    <input type="hidden" style="display:none;" id="menuItem" name="menuItem" value="{{ menuItem }}">   
+                    <input type="hidden" style="display:none;" id="vehicle_accesories" value="{{ optionsArray['vehicle_accesories']|json_encode() }}">
+                    {% set selects = {'bank_id':'bank_id','bank':'bank',
+                        'account_id':'account_id','store_id':'store_id',
+                        'access':'access','brand_id':'brand_id','type_id':'type_id',
+                        'customer_id':'customer_id', 'seller_id':'seller_id',
+                        'model_id':'model_id','providor_id':'providor_id'} %}
                     {% set textareas = {'observations':'observations'} %}
+                    {% set dates = {'registryDate':'registryDate','sellDate':'sellDate','buyDate':'buyDate', 'arrival':'arrival','appointDate':'appointDate'} %}
+                    {% set currencies = {'pvd':'pvd','pvp':'pvp','cost':'cost'} %}
+                    {% set checks = {'rebu':'rebu','secondKey':'secondKey'} %}
+                    {% set assets = {'accesories':'accesories', 'components':'components','supplies':'supplies','works':'works'} %}
+                    <div class="input-group">
+                        <input type="text" style="display:none;" id="id" name="id" value="{{ value.id }}">  
+                    </div>                    
                     {% if 'data' in properties|keys %}
-                        {% set tabs = properties|keys %}
-                        <ul class="nav nav-tabs"> 
+                        {% set tabs = properties|keys %}                        
+                        <ul id="myTab" class="nav nav-tabs"> 
                             {% for tab in tabs %}
-                                {% if loop.index0 == 0 %}
-                                    <li class="nav-item">
-                                        <a class="nav-link active" href="#{{ tab }}">{{ labels[tab] }}</a>
-                                    </li>
-                                {% else %}
-                                    <li class="nav-item" role="presentation">
-                                        <a class="nav-link" href="#{{tab}}">{{ labels[tab] }}</a>
-                                    </li>
-                                {% endif %} 
+                                <li class="nav-item" role="presentation">                                        
+                                    <button class="nav-link {% if loop.index0 == 0 %}{{ 'active' }}{% endif %}" id="{{ tab }}-tab" data-toggle="tab" data-target="#{{ tab }}-pane" type="button" role="tab" aria-controls="{{ tab }}-pane" aria-selected="true">{{ labels[tab] }}</button>
+                                </li>
                             {% endfor %}
-                        </ul>
-                        {% set keys = tabs|keys %}
-                        {% for tab in tabs %}
-                            {% if tab == tabs[0] %}                                
-                                <div class="tab-content">
-                                    <div class="tab-pane fade show active" id="{{ tab }}">
-                            {% else %}
-                                <div class="tab-content">
-                                    <div class="tab-pane fade show" id="{{ tab }}">
+                        </ul>                        
+                        <div class="tab-content pt-4" id="nav-tabContent">                        
+                        {% for tab in tabs %}                            
+                            <div class="tab-pane fade {% if tab == tabs[0] %}{{ 'show active' }}{% endif %}" id="{{tab}}-pane" role="tabpanel" aria-labelledby="{{tab}}-tab">
+                            {% if tab == 'accesories' %}
+                                <div class="row">
+                                    <div class="col">
+                                    {% for accesories_item in optionsArray[tab] %} 
+                                        <div class="input-group">
+                                            <label class="control-label" for="{{ accesories_item.id }}">{{ accesories_item.name }}</label>
+                                            <input type="checkbox" id="{{ accesories_item.id }}" name="{{ accesories_item.id }}" class="form-control icheck-primary accesory_check" value="{{ accesories_item.keyString }}">                                        
+                                        </div>
+                                    {% endfor %}
+                                    </div> 
+                                </div>
+                            
                             {% endif %}
-                            {% for item in properties[tab] %}
-                                {% if item in selects %}                                
+                            {% if tab == 'components' %}                                
+                                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table id="dataTableComponents" class="table-light table-listados table-bordered table-striped dataTable dtr-inline">
+                                                <thead>
+                                                    <tr>
+                                                        {% for item in optionsArray['vehicle_components']|keys %}
+                                                            <th>{{ labels[item] }}</th>
+                                                        {% endfor %}
+                                                        <th>Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>                                    
+                                                {% for value in optionsArray['vehicle_components'] %}
+                                                    <tr>
+                                                        {% for item in optionsArray['vehicle_components']|keys %}
+
+                                                            <td>{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
+                                                        {% endfor %}
+                                                        <td>
+                                                            <a id="editButton{{value.id}}" href="Intranet/{{ route }}/form?id={{ value.id }}&menu={{ menuState }}&item={{ menuItem }}"><i class="fa fa-edit"></i></a>
+                                                            <a id="delButton{{value.id}}" href="Intranet/{{ route }}/delete?id={{ value.id }}&menu={{ menuState }}&item={{ menuItem }}"><i class="fa fa-trash"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        {% for item in optionsArray['vehicle_components']|keys %}
+                                                            <th>{{ labels[item] }}</th>
+                                                        {% endfor %}
+                                                        <th>Acciones</th>                                        
+                                                    </tr>
+                                                </tfoot>                                
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>                                
+                                <div class="button-wrapper float-left">
+                                    <button type="button" data-toggle="modal" data-target="#components_modal" class="btn btn-primary" id="addComponent">Añadir</button>                                   
+                                </div>
+                            {% endif %}
+                                {% for item in properties[tab] %}
+                                {% if item in selects %}                                     
                                     <div class="row">
                                         <div class="input-group col-10">
                                             <label class="control-label" for="{{ item }}">{{ labels[item] }}</label>
                                             <select id="{{ item }}" name="{{ item }}" class="form-control select2" value="{{ attribute(value, item) }}">                                                
-                                            {% for option in optionsArray[item] %}
-                                                {% if item == 'account_id' %}
-                                                    <option value="{{ option['id'] }}">{{ option['accountNumber'] }}</option>
-                                                {% else %}
-                                                    <option value="{{ option['id'] }}">{{ option['name'] }}</option>
+                                                {% if optionsArray[item] is not empty %}                                                    
+                                                    {% for option in optionsArray[item] %}
+                                                        {% if item == 'account_id' %}
+                                                            <option value="{{ option['id'] }}">{{ option['accountNumber'] }}</option>
+                                                        {% else %}
+                                                            <option value="{{ option['id'] }}">{{ option['name'] }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% else %}                                                    
+                                                    <option value="1">Sin datos</option>
                                                 {% endif %}
-                                            {% endfor %}
                                             </select>        
                                         </div>                            
                                     </div>
@@ -62,32 +122,52 @@
                                             <textarea type="text" id="{{ item }}" name="{{ item }}" class="form-control">{{ attribute(value, item) }}</textarea>
                                         </div>                            
                                     </div>
+                                {% elseif item in dates %}
+                                    
+                                    <div class="row">
+                                        <div class="input-group col-10">                                            
+                                            <label class="control-label" for="{{ item }}">{{ labels[item] }}</label>
+                                            <input type="date" id="{{ item }}" name="{{ item }}" class="form-control" value="{{ attribute(value, item) }}">
+                                        </div>                            
+                                    </div>
+                                {% elseif item in checks %}                                    
+                                    <div class="row">
+                                        <div class="input-group col-10">                                            
+                                            <label class="control-label" for="{{ item }}">{{ labels[item] }}</label>
+                                            <input type="checkbox" id="{{ item }}" name="{{ item }}" class=" form-control icheck-primary" {% if attribute(value,item) == 1 %} checked {% endif %} value="{{ attribute(value, item) }}">
+                                        </div>                            
+                                    </div>                                                              
                                 {% else %}
                                     <div class="row">
-                                        <div class="input-group col-10">
-                                            <label class="control-label" for="{{ item }}">{{ labels[item] }}</label>
-                                            <input type="text" id="{{ item }}" name="{{ item }}" class="form-control" value="{{ attribute(value, item) }}">
+                                        <div class="input-group col-10">                                            
+                                            <label class="control-label" for="{{ item }}">{{ labels[item] }}</label>                                            
+                                            <input type="text" id="{{ item }}" name="{{ item }}" class="form-control" value="{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR') }}{% else %}{{ attribute(value, item)}}{% endif %}">
                                         </div>                            
                                     </div>
                                 {% endif %}
-                            {% endfor %}
-                                </div>
+                            {% endfor %} 
+                            
                             </div>
-                        {% endfor %}
+                        {% endfor %} 
+                        </div>
                     {% else %}
-                        {% for property in properties %}                            
+                        {% for property in properties %}
                             {% if property in selects %}                                
                                 <div class="row">
                                     <div class="input-group col-10">
                                         <label class="control-label" for="{{ property }}">{{ labels[property] }}</label>
-                                        <select id="{{ property }}" name="{{ property }}" class="form-control select2" value="{{ attribute(value, property) }}">                                                
-                                        {% for option in optionsArray[property] %}
-                                            {% if property == 'account_id' %}
-                                                <option value="{{ option['id'] }}">{{ option['accountNumber'] }}</option>
-                                            {% else %}
-                                                <option value="{{ option['id'] }}">{{ option['name'] }}</option>
-                                            {% endif %}
-                                        {% endfor %}
+                                        <select id="{{ property }}" name="{{ property }}" class="form-control select2" value="{{ attribute(value, property) }}">                                        
+                                        {% if optionsArray[property] %}                                            
+                                            {% for option in optionsArray[property] %}
+                                                {% if property == 'account_id' %}
+                                                    <option value="{{ option['id'] }}">{{ option['accountNumber'] }}</option>
+                                                {% else %}
+                                                    <option value="{{ option['id'] }}">{{ option['name'] }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% else %}                                            
+                                            <option value="1">Sin datos</option>
+                                        {% endif %}                                        
                                         </select>        
                                     </div>                            
                                 </div>
@@ -98,30 +178,93 @@
                                         <textarea type="text" id="{{ property }}" name="{{ property }}" class="form-control">{{ attribute(value, property) }}</textarea>
                                     </div>                            
                                 </div>
+                            {% elseif property in dates %}
+                                <div class="row">
+                                    <div class="input-group col-10">                                            
+                                        <label class="control-label" for="{{ property }}">{{ labels[property] }}</label>
+                                        <input type="date" id="{{ property }}" name="{{ property }}" class="form-control" value="{{ attribute(value, property) }}">
+                                    </div>                            
+                                </div>
                             {% else %}
                                 <div class="row">
                                     <div class="input-group col-10">
                                         <label class="control-label" for="{{ property }}">{{ labels[property] }}</label>
-                                        <input type="text" id="{{ property }}" name="{{ property }}" class="form-control" value="{{ attribute(value, property) }}">
+                                        <input type="text" id="{{ property }}" name="{{ property }}" class="form-control" value="{% if property in currencies %} {{ attribute(value, property)|format_currency('EUR') }}{% else %}{{ attribute(value, property)|e }}{% endif %}">
                                     </div>                            
                                 </div>
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %} 
-                </div>               
+                            {% endif %}                                                    
+                        {% endfor %}                    
+                    {% endif %}        
                     {% if value.id != null %}
                         <div class="button-wrapper float-left">
                             <a class="btn btn-primary" href="Intranet/{{ route }}/delete?id={{ value.id }}&menu={{ menuState }}&item={{ menuItem }}">Eliminar</a>                            
                         </div> 
                     {% endif %}
-                <div class="button-wrapper float-right">
-                    <button type="submit" form="form{{ titleForm|replace({" ":"", "á":"a","à":"a","é":"e","è":"e","í":"i","ì":"i","ó":"o","ò":"o","ú":"u","ù":"u"}) }}" class="btn btn-primary" id="submit">Guardar</button>
-                    <button type="button" form="form{{ titleForm|replace({" ":"", "á":"a","à":"a","é":"e","è":"e","í":"i","ì":"i","ó":"o","ò":"o","ú":"u","ù":"u"}) }}" class="btn btn-primary" id="reset">Restablecer</button>
+                    <div class="button-wrapper float-right">
+                        <button type="submit" form="form{{ titleForm|replace({" ":"", "á":"a","à":"a","é":"e","è":"e","í":"i","ì":"i","ó":"o","ò":"o","ú":"u","ù":"u"}) }}" class="btn btn-primary" id="submit">Guardar</button>
+                        <button type="button" form="form{{ titleForm|replace({" ":"", "á":"a","à":"a","é":"e","è":"e","í":"i","ì":"i","ó":"o","ò":"o","ú":"u","ù":"u"}) }}" class="btn btn-primary" id="reset">Restablecer</button>
+                    </div>
                 </div>                
             </form>
         </div>
     </section>
 </div>
-            
+<div class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Componentes</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+            <div class="row">
+                <div class="col-sm-12">
+                    <table id="dataTableComponents" class="table-light table-listados table-bordered table-striped dataTable dtr-inline">
+                        <thead>
+                            <tr>
+                                {% for item in optionsArray['components']|keys %}
+                                    <th>{{ labels[item] }}</th>
+                                {% endfor %}
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>                                    
+                        {% for value in optionsArray['components'] %}
+                            <tr>
+                                {% for item in optionsArray['components']|keys %}
+
+                                    <td>{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
+                                {% endfor %}
+                                <td>
+                                    <a id="editButton{{value.id}}" href="Intranet/{{ route }}/form?id={{ value.id }}&menu={{ menuState }}&item={{ menuItem }}"><i class="fa fa-edit"></i></a>
+                                    <a id="delButton{{value.id}}" href="Intranet/{{ route }}/delete?id={{ value.id }}&menu={{ menuState }}&item={{ menuItem }}"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                {% for item in optionsArray['vehicle_components']|keys %}
+                                    <th>{{ labels[item] }}</th>
+                                {% endfor %}
+                                <th>Acciones</th>                                        
+                            </tr>
+                        </tfoot>                                
+                    </table>
+                </div>
+            </div>
+        </div> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>            
             
 {% endblock %}
+

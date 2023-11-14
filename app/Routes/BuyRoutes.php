@@ -82,6 +82,10 @@ class BuyRoutes
            'App\Controllers\Vehicle\AccesoriesController',
            'deleteAction'   
        ]);
+       $map->post('getVehicleAccesory', '/Intranet/vehicles/accesories/get', [        
+           'App\Controllers\Vehicle\VehicleController',
+           'getAccesoryAction'   
+       ]);
        $map->post('addVehicleAccesory', '/Intranet/vehicles/accesories/add', [        
            'App\Controllers\Vehicle\VehicleController',
            'addAccesoryAction'   
@@ -278,18 +282,14 @@ class BuyRoutes
 
        //VEHICLE COMPONENTS
 
-       $map->get('vehicleComponentsSelect', '/Intranet/vehicles/vehicleComponents/select', [
+       $map->get('vehicleComponentsSelect', '/Intranet/vehicles/vehicleComponents/set', [
            'App\Controllers\Vehicle\VehicleController',
-           'getVehicleDataAction'
+           'getVehicleComponentsAjax'
        ]);
        $map->post('vehicleComponentsAdd', '/Intranet/vehicles/vehicleComponents/add', [
            'App\Controllers\Vehicle\VehicleController',
            'addComponentAction'
-       ]);
-       $map->post('vehicleComponentsSearch', '/Intranet/vehicles/vehicleComponents/search', [
-           'App\Controllers\Vehicle\VehicleController',
-           'searchComponentsAction'
-       ]);
+       ]);      
        $map->get('vehicleComponentsEdit', '/Intranet/vehicles/vehicleComponents/edit', [
            'App\Controllers\Vehicle\VehicleController',
            'editComponentAction'

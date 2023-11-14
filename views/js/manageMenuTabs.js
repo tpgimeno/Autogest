@@ -12,7 +12,7 @@ window.addEventListener('load', function()
     var sales_tab = document.getElementById("sales-tab");
     var sales = document.getElementById("sales");
     var reports_tab = document.getElementById("reports-tab");
-    var reports = document.getElementById("reports")
+    var reports = document.getElementById("reports");
     
     var selected_tab = "{{selected_tab}}";
     switch(selected_tab)

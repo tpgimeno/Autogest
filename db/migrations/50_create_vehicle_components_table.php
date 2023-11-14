@@ -19,14 +19,12 @@ final class CreateVehicleComponentsTable extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('vehicleComponents');
-        $table->addColumn('vehicleId', 'integer')  
-                ->addColumn('componentId', 'integer')
+        $table->addColumn('vehicle_id', 'integer')  
+                ->addColumn('component_id', 'integer')
                 ->addColumn('cantity' , 'integer')
                 ->addColumn('pvp' , 'float')
                 ->addColumn('created_at', 'datetime')
-                ->addColumn('updated_at', 'datetime', ['null' => true])
-                ->addForeignKey(['vehicleId'], 'vehicles', ['id'])
-                ->addForeignKey(['componentId'], 'components', ['id'])                
+                ->addColumn('updated_at', 'datetime', ['null' => true])                              
                 ->create();
     }
 }

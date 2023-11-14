@@ -20,6 +20,7 @@ use App\Models\Sellers;
 use App\Models\Store;
 use App\Models\Supplies;
 use App\Models\Vehicle;
+use App\Models\VehicleAccesories;
 use App\Models\VehicleTypes;
 use App\Models\Works;
 use App\Reports\Vehicles\VehiclesReport;
@@ -32,7 +33,6 @@ use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\ServerRequest;
 use PhpOffice\PhpSpreadsheet\Reader\Xls;
 use Respect\Validation\Validator as v;
-use function GuzzleHttp\json_decode;
 
 /**
  * Description of VehiclesController
@@ -40,11 +40,12 @@ use function GuzzleHttp\json_decode;
  * @author tonyl
  */
 class VehicleController extends BaseController {
+    
     protected $vehicleService;   
     protected $importVehicleService;
     
     public function __construct(VehicleService $vehicleService, ImportVehiclesService $importVehiclesService) {
-        parent::__construct();
+        parent::__construct();        
         $this->vehicleService = $vehicleService;
         $this->importVehicleService = $importVehiclesService;
         $this->model = new Vehicle();
@@ -52,15 +53,17 @@ class VehicleController extends BaseController {
         $this->titleList = 'Vehículos';
         $this->titleForm = 'Vehículo';
         $this->labels = $this->vehicleService->getLabelsArray(); 
-        $this->itemsList = array('id', 'brand', 'model', 'km', 'pvp');
-        $this->properties = $this->vehicleService->getModelProperties($this->model);
+        $this->itemsList = array('id', 'brand_id', 'model_id', 'km', 'pvp');
+        $this->properties = $this->vehicleService->getModelProperties($this->model);        
+        $this->assetsNames = ['vehicle_accesories'];
     }    
     public function getIndexAction($request) {
-        return $this->getBaseIndexAction($request, $this->model, null);
+        $values = $this->vehicleService->list();
+        return $this->getBaseIndexAction($request, $this->model, $values);
     }    
         
     public function getVehicleDataAction($request) {                
-        $responseMessage = null; 
+        $responseMessage = null;         
         $brands = $this->vehicleService->getAllRegisters(new Brand());
         $models = $this->vehicleService->getAllRegisters(new ModelVh());
         $sellers = $this->vehicleService->getAllRegisters(new Sellers());
@@ -72,7 +75,9 @@ class VehicleController extends BaseController {
         $components = $this->vehicleService->getAllRegisters(new Components());
         $supplies = $this->vehicleService->getAllRegisters(new Supplies());
         $works = $this->vehicleService->getAllRegisters(new Works());
-        $accesories = $this->vehicleService->getAllRegisters(new Accesories());
+        $accesories = $this->vehicleService->getAllRegisters(new Accesories()); 
+        $vehicle_accesories = $this->vehicleService->getVehicleAccesories($request);
+        $vehicle_components = $this->vehicleService->getVehicleComponents($request);
         
         $iterables = array('brand_id' => $brands,
             'model_id' => $models,
@@ -85,89 +90,75 @@ class VehicleController extends BaseController {
             'accesories' => $accesories,
             'components' => $components,
             'supplies' => $supplies,
-            'works' => $works);
+            'works' => $works,
+            'vehicle_accesories' => $vehicle_accesories,
+            'vehicle_components' => $vehicle_components);
         if($request->getMethod() == 'POST') {
-            $postData = $request->getParsedBody();            
+            $postData = $request->getParsedBody();
+            $postData = $this->getCheckboxes($postData);                     
             $vehicleValidator = v::key('plate', v::stringType()->notEmpty());                       
             try{
                 $vehicleValidator->assert($postData); // true                  
             }catch(Exception $e) {                
                 $responseMessage = $e->getMessage();
-            } 
-            var_dump("Prueba");die();
-            return $this->getBasePostDataAction($request, $this->model, $iterables, $responseMessage);
+            }            
+            return $this->getBasePostDataAction($postData, $this->model, $iterables, $responseMessage);
         }else{
             return $this->getBaseGetDataAction($request, $this->model, $iterables);
         }       
-    }      
-    public function addAccesoryAction($request) {
-        $postData = $request->getParsedBody();         
-        $getAccesory = json_decode($postData['vhaccesory']);           
-        $responseMessage = $this->vehicleService->addVehicleAccesory($getAccesory);
-        $response = new JsonResponse($responseMessage);
+    }
+    public function getCheckboxes($postData){
+        $added_data = [];
+        $position = 0;
+        if(!isset($postData['secondKey'])){                
+            $added_data['secondKey'] = 0;
+            $position = 1;
+        }
+        if(!isset($postData['rebu'])){
+            $added_data['rebu'] = 0;
+            if(count($added_data) > 0){
+                $position = 2;
+            }
+        }
+        $postData = $this->joinArrayPostData($postData, $added_data, $position);
+        return $postData;
+    }
+    
+    public function joinArrayPostData($postData, $added_data, $position){
+        $array_head = array_slice($postData, 0,array_search('service', array_keys($postData))+$position,true);
+        $array_cue = array_slice($postData, array_search('service', array_keys($postData))+$position,null,true);        
+        $array_head = array_merge($array_head, $added_data);
+        $postData = array_merge($array_head, $array_cue);          
+        return $postData;
+    }
+    public function getAccesoryAction($request){
+        $postData = $request->getParsedBody();
+        $accesories = $this->vehicleService->getVehicleAccesoriesAjax($postData['id']);        
+        $response = new JsonResponse($accesories);
         return $response;
     }
+    public function addAccesoryAction($request){         
+        $postData = $request->getParsedBody();
+        $responseMessage = $this->vehicleService->addVehicleAccesoryAjax($postData);
+        $response = new JsonResponse($responseMessage);
+        return $response;        
+    }
+    
     public function deleteAccesoryAction($request){        
         $postData = $request->getParsedBody();
-        $responseMessage = $this->vehicleService->deleteVehicleAccesory($postData);   
+        $responseMessage = $this->vehicleService->delVehicleAccesoryAjax($postData);
         $response = new JsonResponse($responseMessage);
+        return $response;  
+    }
+    
+    public function getVehicleComponentsAjax($request){
+        
+        $postData = $request->getParsedBody();
+        $components = $this->vehicleService->getVehicleComponents($postData['vehicle_id']);
+        $response = new JsonResponse($components);
         return $response;
     }
-    public function searchComponentAction($request){
-        $searchString = null;
-        $postData = $request->getParsedBody();
-        if(isset($postData['searchFilter'])){
-            $searchString = $postData['searchFilter'];
-        }        
-        $components = $this->vehicleService->searchComponent($searchString);
-        $response = new JsonResponse($components);        
-        return $response;       
-    }    
-    public function addComponentAction($request){       
-        $postData = $request->getParsedBody();
-        $responseMessage = $this->vehicleService->addVehicleComponent($postData);
-        $response = new JsonResponse($responseMessage);
-        return $response;        
-    }
-    public function editComponentAction($request){
-        $this->vehicleService->deleteVehicleComponent($request->getQueryParams());       
-        return $this->getVehicleDataAction($request);        
-    }
-    public function delComponentAction($request){        
-        $this->vehicleService->deleteVehicleComponent($request->getQueryParams());             
-        return $this->getVehicleDataAction($request);       
-    }    
-    public function searchSupplyAction($request){
-        $searchString = null;
-        $postData = $request->getParsedBody();
-        if(isset($postData['searchFilter'])){
-            $searchString = $postData['searchFilter'];
-        }
-        $supplies = $this->vehicleService->searchSupply($searchString);    
-        $response = new JsonResponse($supplies);        
-        return $response;       
-    }    
-    public function addSupplyAction($request){        
-        $postData = $request->getParsedBody();
-        $responseMessage = $this->vehicleService->addVehicleSupply($postData);
-        $response = new JsonResponse($responseMessage);
-        return $response;        
-    }    
-    public function delSupplyAction($request){               
-        $this->vehicleService->deleteVehicleSupply($request->getQueryParams());
-        return $this->getVehicleDataAction($request);        
-    }
-    public function editSupplyAction($request) {
-        $this->vehicleService->deleteVehicleSupply($request->getQueryParams());
-        return $this->getVehicleDataAction($request);        
-    }
-    public function getSelectedSupply($params){
-        $selected_supply = null;
-        if(isset($params['supplyId'])&& $params['supplyId']){
-            $selected_supply = Supplies::find($params['supplyId'])->first();                        
-        }
-        return $selected_supply;
-    }
+    
     public function reloadModelsAction($request){
         $models = $this->vehicleService->reloadModels($request->getParsedBody());        
         $response = new JsonResponse($models);

@@ -58,13 +58,25 @@ table.dataTable>thead .sorting_asc_disabled:before, table.dataTable>thead .sorti
 
 .form-horizontal .form-group .input-group{
     margin-bottom: 1em;
+    width: 100%;
 }
 
 .form-horizontal .form-group .input-group label{
-    min-width: 10em;
+    width: 14em;
+    margin-right: 2em;
     margin-top: auto;
 }
 
 .content-wrapper .content-header{
     margin-left: 1em;
+}
+
+/*
+* ======================================================================================================
+*                                               Tabs
+* ======================================================================================================
+*/
+
+.form-horizontal .form-group .input-group input[type=checkbox]{
+    flex: .1 1 content;
 }

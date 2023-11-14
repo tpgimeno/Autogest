@@ -47,8 +47,8 @@ class CreateVehiclesTable extends AbstractMigration
                 ->addColumn('power', 'string', ['null' => true, 'default' => null])
                 ->addColumn('km', 'string', ['null' => true, 'default' => null])
                 ->addColumn('providor_id', 'integer')
-                ->addColumn('cost', 'string', ['null' => true, 'default' => null])
-                ->addColumn('pvp', 'string', ['null' => true, 'default' => null])               
+                ->addColumn('cost', 'float', ['null' => true, 'default' => null])
+                ->addColumn('pvp', 'float', ['null' => true, 'default' => null])               
                 ->addColumn('transference', 'string', ['null' => true, 'default' => null])
                 ->addColumn('service', 'string', ['null' => true, 'default' => null])
                 ->addColumn('secondKey', 'boolean', ['default' => false])
@@ -89,12 +89,7 @@ class CreateVehiclesTable extends AbstractMigration
                 ->addIndex('vin', ['unique' => true])
                 ->addIndex('plate', ['unique' => true])
                 ->addForeignKey(['brand_id'], 'brands', ['id'],['delete' => 'SET_NULL', 'update' => 'NO_ACTION'])
-                ->addForeignKey(['model_id'], 'models', ['id'],['delete' => 'SET_NULL', 'update' => 'NO_ACTION'])
-                ->addForeignKey(['store_id'], 'stores', ['id'],['delete' => 'SET_NULL', 'update' => 'NO_ACTION'])
-                ->addForeignKey(['type_id'], 'vehicleTypes', ['id'],['delete' => 'SET_NULL', 'update' => 'NO_ACTION'])
-                ->addForeignKey(['providor_id'], 'providers', ['id'],['delete' => 'SET_NULL', 'update' => 'NO_ACTION'])
-                ->addForeignKey(['customer_id'], 'customers', ['id'],['delete' => 'SET_NULL', 'update' => 'NO_ACTION'])
-                ->addForeignKey(['seller_id'], 'sellers', ['id'],['delete' => 'SET_NULL', 'update' => 'NO_ACTION'])                
+                ->addForeignKey(['model_id'], 'models', ['id'],['delete' => 'SET_NULL', 'update' => 'NO_ACTION'])                
                 ->create();                
     }
 }
