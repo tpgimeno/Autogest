@@ -282,21 +282,22 @@ class BuyRoutes
 
        //VEHICLE COMPONENTS
 
-       $map->get('vehicleComponentsSelect', '/Intranet/vehicles/vehicleComponents/set', [
+       
+       $map->post('vehicleComponentsPostSelect', '/Intranet/vehicles/vehicleComponents/set', [
            'App\Controllers\Vehicle\VehicleController',
-           'getVehicleComponentsAjax'
+           'getVehicleComponentsAction'
        ]);
-       $map->post('vehicleComponentsAdd', '/Intranet/vehicles/vehicleComponents/add', [
+       $map->get('vehicleComponentsGetSelect', '/Intranet/vehicles/vehicleComponents/set', [
            'App\Controllers\Vehicle\VehicleController',
-           'addComponentAction'
-       ]);      
-       $map->get('vehicleComponentsEdit', '/Intranet/vehicles/vehicleComponents/edit', [
-           'App\Controllers\Vehicle\VehicleController',
-           'editComponentAction'
+           'getVehicleComponentsAction'
        ]);
-       $map->get('vehicleComponentsDel', '/Intranet/vehicles/vehicleComponents/del', [        
+       $map->post('vehicleComponentsAdd', '/Intranet/vehicles/vehicleComponents/save', [
            'App\Controllers\Vehicle\VehicleController',
-           'delComponentAction'  
+           'addVehicleComponentAction'
+       ]);
+       $map->post('vehicleComponentsDel', '/Intranet/vehicles/vehicleComponents/del', [        
+           'App\Controllers\Vehicle\VehicleController',
+           'delVehicleComponentAction'  
        ]);
 
 

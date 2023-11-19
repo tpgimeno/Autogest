@@ -62,7 +62,7 @@ class BaseService {
         $diference = 3;
         $keys = [];
         $assetsNumber = 0;
-        if($properties['data'] && is_array($properties['data'])){
+        if(isset($properties['data']) && is_array($properties['data'])){
             $keys = array_keys($properties);
             $total_properties = [];
             for($j = 0; $j < count($keys);$j++){            
@@ -84,7 +84,7 @@ class BaseService {
         }
         // At this point we receive the form inputs with 3 item more than object properties. So we do $i + 3 to correct it.
         
-        for ($i = 0; $i < (sizeof($properties)-1); $i++) {
+        for ($i = 0; $i < (sizeof($properties)); $i++) {
             if ($properties[$i] == 'password') {
                 $model->{$properties[$i]} = password_hash($content[$i+$diference], PASSWORD_DEFAULT);
             }elseif (str_ends_with($properties[$i], 'Date')){
@@ -94,7 +94,7 @@ class BaseService {
             }else{            
                 $model->{$properties[$i]} = $content[$i+$diference];
             }
-        }
+        }        
         try {
             if ($this->findRegister($model, $array) == true) {
                 $model->update();

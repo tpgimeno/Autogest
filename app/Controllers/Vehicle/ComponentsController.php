@@ -41,6 +41,7 @@ class ComponentsController extends BaseController {
     public function getComponentsDataAction($request) {       
         $responseMessage = null;   
         $maders = $this->componentsService->getAllRegisters(new Mader());
+        
         $iterables = ['mader_id' => $maders];
         if($request->getMethod() == 'POST') {
             $postData = $request->getParsedBody();            

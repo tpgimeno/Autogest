@@ -80,3 +80,19 @@ table.dataTable>thead .sorting_asc_disabled:before, table.dataTable>thead .sorti
 .form-horizontal .form-group .input-group input[type=checkbox]{
     flex: .1 1 content;
 }
+
+
+
+/*
+* ======================================================================================================
+*                                               Modals
+* ======================================================================================================
+*/
+
+#components_form_modal .modal-body .row .input-group .control-label{
+    width: 30%;
+}
+
+.modal-body input-group input{
+    width: 70%;
+}

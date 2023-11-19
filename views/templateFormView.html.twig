@@ -18,10 +18,11 @@
                         'account_id':'account_id','store_id':'store_id',
                         'access':'access','brand_id':'brand_id','type_id':'type_id',
                         'customer_id':'customer_id', 'seller_id':'seller_id',
-                        'model_id':'model_id','providor_id':'providor_id'} %}
+                        'model_id':'model_id','providor_id':'providor_id',
+                        'mader_id':'mader_id'} %}
                     {% set textareas = {'observations':'observations'} %}
                     {% set dates = {'registryDate':'registryDate','sellDate':'sellDate','buyDate':'buyDate', 'arrival':'arrival','appointDate':'appointDate'} %}
-                    {% set currencies = {'pvd':'pvd','pvp':'pvp','cost':'cost'} %}
+                    {% set currencies = {'pvd':'pvd','pvp':'pvp','cost':'cost','pvc':'pvc'} %}
                     {% set checks = {'rebu':'rebu','secondKey':'secondKey'} %}
                     {% set assets = {'accesories':'accesories', 'components':'components','supplies':'supplies','works':'works'} %}
                     <div class="input-group">
@@ -32,13 +33,14 @@
                         <ul id="myTab" class="nav nav-tabs"> 
                             {% for tab in tabs %}
                                 <li class="nav-item" role="presentation">                                        
-                                    <button class="nav-link {% if loop.index0 == 0 %}{{ 'active' }}{% endif %}" id="{{ tab }}-tab" data-toggle="tab" data-target="#{{ tab }}-pane" type="button" role="tab" aria-controls="{{ tab }}-pane" aria-selected="true">{{ labels[tab] }}</button>
+                                    <button class="nav-link {% if (tab == selected_tab) %}{{ 'active' }}{% endif %}" id="{{ tab }}-tab" data-toggle="tab" data-target="#{{ tab }}-pane" type="button" role="tab" aria-controls="{{ tab }}-pane" aria-selected="{% if (tab == selected_tab) %}{{ 'true' }}{% else %}{{ 'false' }}{% endif %}">{{ labels[tab] }}</button>
                                 </li>
                             {% endfor %}
                         </ul>                        
                         <div class="tab-content pt-4" id="nav-tabContent">                        
-                        {% for tab in tabs %}                            
-                            <div class="tab-pane fade {% if tab == tabs[0] %}{{ 'show active' }}{% endif %}" id="{{tab}}-pane" role="tabpanel" aria-labelledby="{{tab}}-tab">
+                        {% for tab in tabs %}                           
+                            
+                            <div class="tab-pane fade {% if (tab == selected_tab)%}{{ 'show active' }}{% endif %}" id="{{tab}}-pane" role="tabpanel" aria-labelledby="{{tab}}-tab">
                             {% if tab == 'accesories' %}
                                 <div class="row">
                                     <div class="col">
@@ -52,14 +54,15 @@
                                 </div>
                             
                             {% endif %}
-                            {% if tab == 'components' %}                                
-                                <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                            {% if tab == 'components' %} 
+                                {% set vehicle_components_labels = {'id':'id','mader':'mader','ref':'ref','name':'name','cantity':'cantity','pvp':'pvp'} %}
+                                <div id="dataTableVehicleComponents_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <table id="dataTableComponents" class="table-light table-listados table-bordered table-striped dataTable dtr-inline">
+                                            <table id="dataTableVehicleComponents" class="table-light table-listados table-bordered table-striped dataTable dtr-inline">
                                                 <thead>
                                                     <tr>
-                                                        {% for item in optionsArray['vehicle_components']|keys %}
+                                                        {% for item in vehicle_components_labels %}
                                                             <th>{{ labels[item] }}</th>
                                                         {% endfor %}
                                                         <th>Acciones</th>
@@ -68,20 +71,19 @@
                                                 <tbody>                                    
                                                 {% for value in optionsArray['vehicle_components'] %}
                                                     <tr>
-                                                        {% for item in optionsArray['vehicle_components']|keys %}
-
+                                                        {% for item in vehicle_components_labels %}
                                                             <td>{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
                                                         {% endfor %}
                                                         <td>
-                                                            <a id="editButton{{value.id}}" href="Intranet/{{ route }}/form?id={{ value.id }}&menu={{ menuState }}&item={{ menuItem }}"><i class="fa fa-edit"></i></a>
-                                                            <a id="delButton{{value.id}}" href="Intranet/{{ route }}/delete?id={{ value.id }}&menu={{ menuState }}&item={{ menuItem }}"><i class="fa fa-trash"></i></a>
+                                                            <a id="addButton{{value.id}}" href="javascript:setVehicleComponent({{ value|json_encode() }});"><i class="fa fa-edit"></i></a>
+                                                            <a id="delButton{{value.id}}" href="javascript:delVehicleComponent({{ value|json_encode() }});"><i class="fa fa-trash"></i></a>
                                                         </td>
                                                     </tr>
                                                 {% endfor %}
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        {% for item in optionsArray['vehicle_components']|keys %}
+                                                        {% for item in vehicle_components_labels %}
                                                             <th>{{ labels[item] }}</th>
                                                         {% endfor %}
                                                         <th>Acciones</th>                                        
@@ -197,7 +199,7 @@
                     {% endif %}        
                     {% if value.id != null %}
                         <div class="button-wrapper float-left">
-                            <a class="btn btn-primary" href="Intranet/{{ route }}/delete?id={{ value.id }}&menu={{ menuState }}&item={{ menuItem }}">Eliminar</a>                            
+                            <a class="btn btn-primary" id="delete_button" href="Intranet/{{ route }}/delete?id={{ value.id }}&menu={{ menuState }}&item={{ menuItem }}">Eliminar</a>                            
                         </div> 
                     {% endif %}
                     <div class="button-wrapper float-right">
@@ -209,7 +211,8 @@
         </div>
     </section>
 </div>
-<div class="modal" tabindex="-1" role="dialog">
+<div class="modal" id="components_modal" tabindex="-1" role="dialog">
+{% set components_labels = {'id':'id','ref':'ref','name':'name','pvp':'pvp'} %}        
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -218,6 +221,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+        
       <div class="modal-body">
         <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
             <div class="row">
@@ -225,17 +229,77 @@
                     <table id="dataTableComponents" class="table-light table-listados table-bordered table-striped dataTable dtr-inline">
                         <thead>
                             <tr>
-                                {% for item in optionsArray['components']|keys %}
+                                {% for item in components_labels %}
+                                    <th>{{ labels[item] }}</th>
+                                {% endfor %}
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>  
+                        
+                        {% for value in optionsArray['components'] %}
+                            {% set modalComponent = [] %}
+                            <tr> 
+                                {% for item in components_labels %}
+                                    <td>{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
+                                    {% if (item == 'id' or (item == 'ref') or (item == 'name') or (item == 'pvp'))%}
+                                        {% set modalComponent = modalComponent|merge([attribute(value, item)]) %}
+                                    {% endif %}
+                                {% endfor %}
+                                <td>
+                                    <a id="editButton{{value.id}}" href="javascript:setVehicleComponent({{ modalComponent|json_encode() }});"><i class="fa fa-edit"></i></a>
+                                    <a id="delButton{{value.id}}" href="Intranet/{{ route }}/delete?id={{ value.id }}&menu={{ menuState }}&item={{ menuItem }}"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                {% for item in components_labels %}
+                                    <th>{{ labels[item] }}</th>
+                                {% endfor %}
+                                <th>Acciones</th>                                        
+                            </tr>
+                        </tfoot>                                
+                    </table>
+                </div>
+            </div>
+        </div> 
+      </div>
+      <div class="modal-footer">        
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div> 
+<div class="modal" id="supplies_modal" tabindex="-1" role="dialog">
+{% set supplies_labels = {'id':'id','ref':'ref','name':'name','pvp':'pvp'} %}        
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Recambios</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        
+      <div class="modal-body">
+        <div id="dataTableSupplies_wrapper" class="dataTables_wrapper dt-bootstrap4">
+            <div class="row">
+                <div class="col-sm-12">
+                    <table id="dataTableSupplies" class="table-light table-listados table-bordered table-striped dataTable dtr-inline">
+                        <thead>
+                            <tr>
+                                {% for item in supplies_labels %}
                                     <th>{{ labels[item] }}</th>
                                 {% endfor %}
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>                                    
-                        {% for value in optionsArray['components'] %}
-                            <tr>
-                                {% for item in optionsArray['components']|keys %}
-
+                        {% for value in optionsArray['supplies'] %}
+                            <tr> 
+                                {% for item in supplies_labels %}
                                     <td>{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
                                 {% endfor %}
                                 <td>
@@ -247,7 +311,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                {% for item in optionsArray['vehicle_components']|keys %}
+                                {% for item in supplies_labels %}
                                     <th>{{ labels[item] }}</th>
                                 {% endfor %}
                                 <th>Acciones</th>                                        
@@ -258,13 +322,48 @@
             </div>
         </div> 
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
+      <div class="modal-footer">        
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
-</div>            
+</div> 
+<div class="modal" id="components_form_modal" tabindex="-1" role="dialog">
+{% set component_form_labels = {'id':'id','ref':'ref','name':'name','pvp':'pvp'} %}        
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Componente</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form id="vehicle_component_form" action="javascript:saveVehicleComponent();" method="post">
+              <input type="hidden" id="vehicle_id" name="vehicle_id" class="form-control" value="">    
+          {% for item in component_form_labels %}
+            <div class="row">
+                <div class="input-group col-12">                                            
+                    <label class="control-label" for="{{ item }}">{{ labels[item] }}</label>                                            
+                    <input type="text" id="{{ item }}" name="{{ item }}" class="form-control" value="">
+                </div>                            
+            </div>
+        {% endfor %}
+            <div class="row">
+                <div class="input-group col-12">                                            
+                    <label class="control-label" for="cantity">Cantidad</label>                                            
+                    <input type="text" id="cantity" name="cantity" class="form-control" value="">
+                </div>                            
+            </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-secondary" form="vehicle_component_form">Guardar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div> 
             
 {% endblock %}
 

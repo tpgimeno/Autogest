@@ -20,7 +20,6 @@ use App\Models\Sellers;
 use App\Models\Store;
 use App\Models\Supplies;
 use App\Models\Vehicle;
-use App\Models\VehicleAccesories;
 use App\Models\VehicleTypes;
 use App\Models\Works;
 use App\Reports\Vehicles\VehiclesReport;
@@ -77,8 +76,7 @@ class VehicleController extends BaseController {
         $works = $this->vehicleService->getAllRegisters(new Works());
         $accesories = $this->vehicleService->getAllRegisters(new Accesories()); 
         $vehicle_accesories = $this->vehicleService->getVehicleAccesories($request);
-        $vehicle_components = $this->vehicleService->getVehicleComponents($request);
-        
+        $vehicle_components = $this->vehicleService->getVehicleComponents($request);        
         $iterables = array('brand_id' => $brands,
             'model_id' => $models,
             'seller_id' => $sellers,
@@ -151,11 +149,23 @@ class VehicleController extends BaseController {
         return $response;  
     }
     
-    public function getVehicleComponentsAjax($request){
-        
-        $postData = $request->getParsedBody();
-        $components = $this->vehicleService->getVehicleComponents($postData['vehicle_id']);
+    public function getVehicleComponentsAction($request){        
+        $components = $this->vehicleService->getVehicleComponents($request);
         $response = new JsonResponse($components);
+        return $response;
+    }
+    
+    public function addVehicleComponentAction($request){
+        $postData = $request->getParsedBody();       
+        $responseMessage = $this->vehicleService->addVehicleComponentAjax($postData);
+        $response = new JsonResponse($responseMessage);
+        return $response;
+    }
+    
+    public function delVehicleComponentAction($request){
+        $postData = $request->getParsedBody();        
+        $responseMessage = $this->vehicleService->delVehicleComponentAjax($postData);
+        $response = new JsonResponse($responseMessage);
         return $response;
     }
     

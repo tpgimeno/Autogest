@@ -75,7 +75,13 @@ class BaseController {
         if($response){
             $responseMessage = $response[1];
         }
-        $valueSelected = $this->baseService->setInstance(new $model, array('id' => $response[0]));                
+        $valueSelected = $this->baseService->setInstance(new $model, array('id' => $response[0]));   
+        $selectedTab = null;
+        if(isset($postData['selected_tab'])){
+            $selectedTab = $postData['selected_tab'];
+        }else{
+            $selectedTab = 'data';
+        }
         $menuState = $postData['menu'];
         $menuItem = $postData['menuItem'];
         $this->properties = $this->baseService->getModelProperties(new $model);        
@@ -89,7 +95,8 @@ class BaseController {
                     'menuItem' => $menuItem,
                     'properties' => $this->properties,
                     'titleForm' => $this->titleForm,
-                    'route' => $this->route                    
+                    'route' => $this->route,
+                    'selected_tab' => $selectedTab
         ]);
     }
     
@@ -98,6 +105,12 @@ class BaseController {
         $valueSelected = $this->baseService->setInstance(new $model, $params);            
         $menuState = $params['menu'];
         $menuItem = $params['item'];
+        $selectedTab = null;
+        if(isset($params['selected_tab'])){
+            $selectedTab = $params['selected_tab'];
+        }else{
+            $selectedTab = 'data';
+        }
         $this->properties = $this->baseService->getModelProperties(new $model);             
         return $this->renderHTML('templateFormView.html.twig', [
                     'userEmail' => $this->currentUser->getCurrentUserEmailAction(),                                      
@@ -108,6 +121,7 @@ class BaseController {
                     'menuItem' => $menuItem,
                     'properties' => $this->properties,
                     'titleForm' => $this->titleForm,
+                    'selected_tab' => $selectedTab,
                     'route' => $this->route                    
         ]);
     }
