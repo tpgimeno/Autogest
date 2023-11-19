@@ -89,7 +89,7 @@ table.dataTable>thead .sorting_asc_disabled:before, table.dataTable>thead .sorti
 * ======================================================================================================
 */
 
-#components_form_modal .modal-body .row .input-group .control-label{
+.modal-body .row .input-group .control-label{
     width: 30%;
 }
 

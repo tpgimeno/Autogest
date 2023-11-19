@@ -303,25 +303,42 @@ class BuyRoutes
 
        //VEHICLE SUPPLIES
 
-       $map->get('vehicleSuppliesSelect', '/Intranet/vehicles/vehicleSupplies/select', [
+       $map->get('vehicleSuppliesGetSelect', '/Intranet/vehicles/vehicleSupplies/set', [
            'App\Controllers\Vehicle\VehicleController',
-           'getVehicleDataAction'
+           'getVehicleSuppliesAction'
+       ]);
+       $map->post('vehicleSuppliesPostSelect', '/Intranet/vehicles/vehicleSupplies/set', [
+           'App\Controllers\Vehicle\VehicleController',
+           'getVehicleSuppliesAction'
        ]);
        $map->post('vehicleSuppliesAdd', '/Intranet/vehicles/vehicleSupplies/add', [
            'App\Controllers\Vehicle\VehicleController',
-           'addSupplyAction'
+           'addVehicleSupplyAction'
        ]);
-       $map->post('vehiclesSupliesSearch', '/Intranet/vehicles/vehicleSupplies/search', [
+       
+       $map->post('vehicleSuppliesDel', '/Intranet/vehicles/vehicleSupplies/del', [        
            'App\Controllers\Vehicle\VehicleController',
-           'searchSupplyAction'
+           'delVehicleSupplyAction'  
        ]);
-       $map->get('vehicleSuppliesEdit', '/Intranet/vehicles/vehicleSupplies/edit', [
+       
+       //VEHICLE WORKS
+
+       $map->get('vehicleWorksGetSelect', '/Intranet/vehicles/vehicleWorks/set', [
            'App\Controllers\Vehicle\VehicleController',
-           'editSupplyAction'
+           'getVehicleWorksAction'
        ]);
-       $map->get('vehicleSuppliesDel', '/Intranet/vehicles/vehicleSupplies/del', [        
+       $map->post('vehicleWorksPostSelect', '/Intranet/vehicles/vehicleWorks/set', [
            'App\Controllers\Vehicle\VehicleController',
-           'delSupplyAction'  
+           'getVehicleWorksAction'
+       ]);
+       $map->post('vehicleWorksAdd', '/Intranet/vehicles/vehicleWorks/add', [
+           'App\Controllers\Vehicle\VehicleController',
+           'addVehicleWorkAction'
+       ]);
+       
+       $map->post('vehicleWorksDel', '/Intranet/vehicles/vehicleWorks/del', [        
+           'App\Controllers\Vehicle\VehicleController',
+           'delVehicleWorkAction'  
        ]);
 
        //PROVIDERS

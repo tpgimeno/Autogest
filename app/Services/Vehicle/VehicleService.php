@@ -126,123 +126,132 @@ class VehicleService extends BaseService {
         $component->pvp = $postData['pvp'];        
         if ($component_exist === true) {
             $component->update();
-            $responseMessage = "Vehicle Component Updated";
+            $responseMessage = "Componente Actualizado";
         } else {
             $component->save();
-            $responseMessage = "Vehicle Component Saved";
+            $responseMessage = "Componente Añadido";
         }
         return $responseMessage;
     }
     
     public function delVehicleComponentAjax($postData){
-        
         $component = VehicleComponents::where('id', '=', $postData['id'])                
                 ->get()->first();
         $component->delete();
-        $responseMessage = "Vehicle Component Deleted";
+        $responseMessage = "Componente Eliminado";
         return $responseMessage;
     }
 
-    public function getVehicleSupplies($vehicle) {
-        $selectedSupplies = null;
-        if ($vehicle) {
-            $selectedSupplies = DB::table('vehicleSupplies')
-                    ->join('supplies', 'vehicleSupplies.supplyId', '=', 'supplies.id')
-                    ->select('vehicleSupplies.supplyId', 'supplies.name', 'supplies.ref', 'supplies.mader', 'supplies.pvp')
-                    ->where('vehicleSupplies.vehicleId', '=', $vehicle->id)
+    public function getVehicleSupplies($request) {
+        if ($request->getMethod() === 'POST') {
+            $postData = $request->getParsedBody();
+            $supplies = DB::table('vehiclesupplies')
+                    ->join('vehicles', 'vehiclesupplies.vehicle_id', '=', 'vehicles.id')
+                    ->join('supplies', 'vehiclesupplies.supply_id', '=', 'supplies.id')
+                    ->join('maders', 'supplies.mader_id', '=', 'maders.id')
+                    ->select('vehiclesupplies.id', 'maders.name as mader', 'supplies.ref as ref', 'supplies.name as name', 'supplies.pvp as pvp', 'vehiclesupplies.cantity as cantity')
+                    ->where('vehiclesupplies.vehicle_id', '=', $postData['vehicle_id'])
                     ->get();
-        }
-        return $selectedSupplies;
-    }
-
-    public function findSupply($data) {
-        $supply = VehicleSupplies::where('supplyId', '=', intval($data->supplyId))
-                ->where('vehicleId', '=', intval($data->id))
-                ->first();
-        return $supply;
-    }
-
-    public function searchSupply($searchString) {
-        if ($searchString == null) {
-            $supplies = Supplies::All();
         } else {
-            $supplies = DB::table('supplies')
-                    ->select('supplies.id', 'supplies.ref', 'supplies.serialNumber', 'supplies.pvp')
-                    ->where('supplies.id', 'like', "%" . $searchString . "$")
-                    ->orWhere('supplies.ref', 'like', "$" . $searchString . "$")
-                    ->orWhere('maders.name', 'like', "$" . $searchString . "$")
-                    ->orWhere('supplies.serialNumber', 'like', "$" . $searchString . "$")
-                    ->whereNull('deleted_at')
+            $params = $request->getQueryParams();
+            $supplies = DB::table('vehiclesupplies')
+                    ->join('vehicles', 'vehiclesupplies.vehicle_id', '=', 'vehicles.id')
+                    ->join('supplies', 'vehiclesupplies.supply_id', '=', 'supplies.id')
+                    ->join('maders', 'supplies.mader_id', '=', 'maders.id')
+                    ->select('vehiclesupplies.id', 'maders.name as mader', 'supplies.ref as ref', 'supplies.name as name', 'supplies.pvp as pvp', 'vehiclesupplies.cantity as cantity')
+                    ->where('vehiclesupplies.vehicle_id', '=', $params['id'])
                     ->get();
         }
         return $supplies;
     }
-
-    public function addVehicleSupply($array) {
-        $data = json_decode($array['supply']);
-        $vehicleSupply = new VehicleSupplies();
-        $vehicleSupply->supplyId = $data->supplyId;
-        $vehicleSupply->vehicleId = $data->id;
-        $vehicleSupply->cantity = $data->cantity;
-        $vehicleSupply->price = $data->price;
-        if ($this->findSupply($data)) {
-            $vehicleSupply->id = $this->findSupply($data)->id;
-            $vehicleSupply->update();
-            $responseMessage = 'Supply Updated';
+    
+    public function addVehicleSupplyAjax($postData) {
+        
+        $supply_exist = true;
+        $responseMessage = null;
+        $supply = VehicleSupplies::where('vehicle_id', '=', $postData['vehicle_id'])
+                        ->where('supply_id', '=', $postData['supply_id'])
+                        ->get()->first();
+        if (!$supply) {
+            $supply = new VehicleSupplies();
+            $supply_exist = false;
+        }
+       
+        $supply->supply_id = $postData['supply_id'];
+        $supply->vehicle_id = $postData['vehicle_id'];
+        $supply->cantity = $postData['cantity'];
+        $supply->pvp = $postData['pvp'];        
+        if ($supply_exist === true) {
+            $supply->update();
+            $responseMessage = "Recambio Actualizado";
         } else {
-            $vehicleSupply->save();
-            $responseMessage = 'Supply Saved';
+            $supply->save();
+            $responseMessage = "Recambio Añadido";
         }
         return $responseMessage;
     }
-
-    public function getSelectedSupply($array) {
-        $selectedSupply = null;
-        if (isset($array['supplyId'])) {
-            $selectedSupply = DB::table('supplies')
-                            ->select('supplies.id', 'supplies.name', 'supplies.ref', 'supplies.pvp')
-                            ->where('supplies.id', '=', intval($array['supplyId']))
-                            ->whereNull('supplies.deleted_at')
-                            ->get()->first();
-        }
-        return $selectedSupply;
+    
+    public function delVehicleSupplyAjax($postData){
+        $supply = VehicleSupplies::where('id', '=', $postData['id'])                
+                ->get()->first();
+        $supply->delete();
+        $responseMessage = "Recambio Eliminado";
+        return $responseMessage;
     }
-
-    public function deleteVehicleSupply($array) {
-        $supply = VehicleSupplies::where('supplyId', '=', $array['supplyId'])
-                ->where('vehicleId', '=', $array['id'])
-                ->first();
-        if ($supply) {
-            $supply->delete();
-        }
-    }
-
-    public function getSupplyPrice($array, $supply) {
-        $supplyPrice = null;
-        if (isset($array['supplyId']) && isset($array['price'])) {
-            $supplyPrice = floatval($array['price']);
-        } else if ($supply) {
-            $supplyPrice = $supply->pvp;
-        }
-        return $supplyPrice;
-    }
-
-    public function getSupplyCantity($array) {
-        $supplyCantity = null;
-        if (isset($array['supplyId']) && isset($array['cantity'])) {
-            $supplyCantity = intval($array['cantity']);
+    
+    public function getVehicleWorks($request) {
+        if ($request->getMethod() === 'POST') {
+            $postData = $request->getParsedBody();
+            $works = DB::table('vehicleworks')
+                    ->join('vehicles', 'vehicleworks.vehicle_id', '=', 'vehicles.id')
+                    ->join('works', 'vehicleworks.work_id', '=', 'works.id')
+                    ->select('vehicleworks.id', 'works.reference as reference', 'works.description as name', 'works.pvp as pvp', 'vehicleworks.cantity as cantity')
+                    ->where('vehicleworks.vehicle_id', '=', $postData['vehicle_id'])
+                    ->get();
         } else {
-            $supplyCantity = 0;
+            $params = $request->getQueryParams();
+            $works = DB::table('vehicleworks')
+                    ->join('vehicles', 'vehicleworks.vehicle_id', '=', 'vehicles.id')
+                    ->join('works', 'vehicleworks.work_id', '=', 'works.id')
+                    ->select('vehicleworks.id', 'works.reference as reference', 'works.description as name', 'works.pvp as pvp', 'vehicleworks.cantity as cantity')
+                    ->where('vehicleworks.vehicle_id', '=', $params['id'])
+                    ->get();
         }
-        return $supplyCantity;
+        return $works;
     }
-
-    public function setVehicle($array) {
-        $vehicle = null;
-        if (isset($array['id'])) {
-            $vehicle = Vehicle::find(intval($array['id']));
+    
+    public function addVehicleWorkAjax($postData) {
+        
+        $work_exist = true;
+        $responseMessage = null;
+        $work = VehicleSupplies::where('vehicle_id', '=', $postData['vehicle_id'])
+                        ->where('work_id', '=', $postData['work_id'])
+                        ->get()->first();
+        if (!$work) {
+            $work = new VehicleSupplies();
+            $work_exist = false;
         }
-        return $vehicle;
+       
+        $work->work_id = $postData['work_id'];
+        $work->vehicle_id = $postData['vehicle_id'];
+        $work->cantity = $postData['cantity'];
+        $work->pvp = $postData['pvp'];        
+        if ($work_exist === true) {
+            $work->update();
+            $responseMessage = "Trabajo Actualizado";
+        } else {
+            $work->save();
+            $responseMessage = "Trabajo Añadido";
+        }
+        return $responseMessage;
+    }
+    
+    public function delVehicleWorkAjax($postData){
+        $work = VehicleSupplies::where('id', '=', $postData['id'])                
+                ->get()->first();
+        $work->delete();
+        $responseMessage = "Trabajo Eliminado";
+        return $responseMessage;
     }
 
     public function tofloat($num) {

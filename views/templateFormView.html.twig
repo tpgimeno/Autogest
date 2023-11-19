@@ -24,7 +24,7 @@
                     {% set dates = {'registryDate':'registryDate','sellDate':'sellDate','buyDate':'buyDate', 'arrival':'arrival','appointDate':'appointDate'} %}
                     {% set currencies = {'pvd':'pvd','pvp':'pvp','cost':'cost','pvc':'pvc'} %}
                     {% set checks = {'rebu':'rebu','secondKey':'secondKey'} %}
-                    {% set assets = {'accesories':'accesories', 'components':'components','supplies':'supplies','works':'works'} %}
+                    {% set assets = {'accesories':'accesories'} %}
                     <div class="input-group">
                         <input type="text" style="display:none;" id="id" name="id" value="{{ value.id }}">  
                     </div>                    
@@ -55,7 +55,7 @@
                             
                             {% endif %}
                             {% if tab == 'components' %} 
-                                {% set vehicle_components_labels = {'id':'id','mader':'mader','ref':'ref','name':'name','cantity':'cantity','pvp':'pvp'} %}
+                                {% set vehicle_components_labels = {'id':'id','mader':'mader','ref':'ref','name':'name','cantity':'cantity','pvp':'pvp','total':'total'} %}
                                 <div id="dataTableVehicleComponents_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                     <div class="row">
                                         <div class="col-sm-12">
@@ -70,9 +70,15 @@
                                                 </thead>
                                                 <tbody>                                    
                                                 {% for value in optionsArray['vehicle_components'] %}
+                                                    
                                                     <tr>
                                                         {% for item in vehicle_components_labels %}
-                                                            <td>{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
+                                                            {% if item == 'total' %}
+                                                                {% set total = value.cantity * value.pvp %}
+                                                                    <td>{{ total|format_currency('EUR', locale='es') }}</td> 
+                                                            {% else %}
+                                                                <td>{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
+                                                            {% endif %}
                                                         {% endfor %}
                                                         <td>
                                                             <a id="addButton{{value.id}}" href="javascript:setVehicleComponent({{ value|json_encode() }});"><i class="fa fa-edit"></i></a>
@@ -95,6 +101,102 @@
                                 </div>                                
                                 <div class="button-wrapper float-left">
                                     <button type="button" data-toggle="modal" data-target="#components_modal" class="btn btn-primary" id="addComponent">Añadir</button>                                   
+                                </div>
+                            {% endif %}
+                            {% if tab == 'supplies' %} 
+                                {% set vehicle_supplies_labels = {'id':'id','mader':'mader','ref':'ref','name':'name','cantity':'cantity','pvp':'pvp','total':'total'} %}
+                                <div id="dataTableVehicleSupplies_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table id="dataTableVehicleSupplies" class="table-light table-listados table-bordered table-striped dataTable dtr-inline">
+                                                <thead>
+                                                    <tr>
+                                                        {% for item in vehicle_supplies_labels %}
+                                                            <th>{{ labels[item] }}</th>
+                                                        {% endfor %}
+                                                        <th>Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>                                    
+                                                {% for value in optionsArray['vehicle_supplies'] %}
+                                                    <tr>
+                                                        {% for item in vehicle_supplies_labels %}
+                                                            {% if item == 'total' %}
+                                                                {% set total = value.cantity * value.pvp %}
+                                                                <td>{{ total|format_currency('EUR', locale='es') }}</td> 
+                                                            {% else %}
+                                                                <td>{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        <td>
+                                                            <a id="addButton{{value.id}}" href="javascript:setVehicleSupply({{ value|json_encode() }});"><i class="fa fa-edit"></i></a>
+                                                            <a id="delButton{{value.id}}" href="javascript:delVehicleSupply({{ value|json_encode() }});"><i class="fa fa-trash"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        {% for item in vehicle_supplies_labels %}
+                                                            <th>{{ labels[item] }}</th>
+                                                        {% endfor %}
+                                                        <th>Acciones</th>                                        
+                                                    </tr>
+                                                </tfoot>                                
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>                                
+                                <div class="button-wrapper float-left">
+                                    <button type="button" data-toggle="modal" data-target="#supplies_modal" class="btn btn-primary" id="addSupply">Añadir</button>                                   
+                                </div>
+                            {% endif %}
+                            {% if tab == 'works' %} 
+                                {% set vehicle_works_labels = {'id':'id','ref':'ref','name':'name','cantity':'cantity','pvp':'pvp','total':'total'} %}
+                                <div id="dataTableVehicleWorks_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <table id="dataTableVehicleWorks" class="table-light table-listados table-bordered table-striped dataTable dtr-inline">
+                                                <thead>
+                                                    <tr>
+                                                        {% for item in vehicle_works_labels %}
+                                                            <th>{{ labels[item] }}</th>
+                                                        {% endfor %}
+                                                        <th>Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>                                    
+                                                {% for value in optionsArray['vehicle_works'] %}
+                                                    <tr>
+                                                        {% for item in vehicle_works_labels %}
+                                                            {% if item == 'total' %}
+                                                                {% set total = value.cantity * value.pvp %}
+                                                                <td>{{ total|format_currency('EUR', locale='es') }}</td> 
+                                                            {% else %}
+                                                                <td>{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        <td>
+                                                            <a id="addButton{{value.id}}" href="javascript:setVehicleSupply({{ value|json_encode() }});"><i class="fa fa-edit"></i></a>
+                                                            <a id="delButton{{value.id}}" href="javascript:delVehicleSupply({{ value|json_encode() }});"><i class="fa fa-trash"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        {% for item in vehicle_works_labels %}
+                                                            <th>{{ labels[item] }}</th>
+                                                        {% endfor %}
+                                                        <th>Acciones</th>                                        
+                                                    </tr>
+                                                </tfoot>                                
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>                                
+                                <div class="button-wrapper float-left">
+                                    <button type="button" data-toggle="modal" data-target="#works_modal" class="btn btn-primary" id="addSupply">Añadir</button>                                   
                                 </div>
                             {% endif %}
                                 {% for item in properties[tab] %}
@@ -247,8 +349,7 @@
                                     {% endif %}
                                 {% endfor %}
                                 <td>
-                                    <a id="editButton{{value.id}}" href="javascript:setVehicleComponent({{ modalComponent|json_encode() }});"><i class="fa fa-edit"></i></a>
-                                    <a id="delButton{{value.id}}" href="Intranet/{{ route }}/delete?id={{ value.id }}&menu={{ menuState }}&item={{ menuItem }}"><i class="fa fa-trash"></i></a>
+                                    <a id="editButton{{value.id}}" href="javascript:setVehicleComponent({{ modalComponent|json_encode() }});"><i class="fa fa-edit"></i></a>                                    
                                 </td>
                             </tr>
                         {% endfor %}
@@ -284,7 +385,7 @@
       </div>
         
       <div class="modal-body">
-        <div id="dataTableSupplies_wrapper" class="dataTables_wrapper dt-bootstrap4">
+        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
             <div class="row">
                 <div class="col-sm-12">
                     <table id="dataTableSupplies" class="table-light table-listados table-bordered table-striped dataTable dtr-inline">
@@ -296,15 +397,20 @@
                                 <th>Acciones</th>
                             </tr>
                         </thead>
-                        <tbody>                                    
+                        <tbody>  
+                        
                         {% for value in optionsArray['supplies'] %}
+                            {% set modalSupply = [] %}
                             <tr> 
                                 {% for item in supplies_labels %}
                                     <td>{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
+                                    {% if (item == 'id' or (item == 'ref') or (item == 'name') or (item == 'pvp'))%}
+                                        {% set modalSupply = modalSupply|merge([attribute(value, item)]) %}
+                                    {% endif %}
                                 {% endfor %}
                                 <td>
-                                    <a id="editButton{{value.id}}" href="Intranet/{{ route }}/form?id={{ value.id }}&menu={{ menuState }}&item={{ menuItem }}"><i class="fa fa-edit"></i></a>
-                                    <a id="delButton{{value.id}}" href="Intranet/{{ route }}/delete?id={{ value.id }}&menu={{ menuState }}&item={{ menuItem }}"><i class="fa fa-trash"></i></a>
+                                    <a id="editButton{{value.id}}" href="javascript:setVehicleSupply({{ modalSupply|json_encode() }});"><i class="fa fa-edit"></i></a>
+                                    
                                 </td>
                             </tr>
                         {% endfor %}
@@ -312,6 +418,65 @@
                         <tfoot>
                             <tr>
                                 {% for item in supplies_labels %}
+                                    <th>{{ labels[item] }}</th>
+                                {% endfor %}
+                                <th>Acciones</th>                                        
+                            </tr>
+                        </tfoot>                                
+                    </table>
+                </div>
+            </div>
+        </div> 
+      </div>
+      <div class="modal-footer">        
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div> 
+<div class="modal" id="works_modal" tabindex="-1" role="dialog">
+{% set works_labels = {'id':'id','reference':'reference','name':'name','pvp':'pvp'} %}        
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Trabajos</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>        
+      <div class="modal-body">
+        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+            <div class="row">
+                <div class="col-sm-12">
+                    <table id="dataTableWorks" class="table-light table-listados table-bordered table-striped dataTable dtr-inline">
+                        <thead>
+                            <tr>
+                                {% for item in works_labels %}
+                                    <th>{{ labels[item] }}</th>
+                                {% endfor %}
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>                        
+                        {% for value in optionsArray['works'] %}
+                            {% set modalWork = [] %}
+                            <tr> 
+                                {% for item in works_labels %}
+                                    <td>{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
+                                    {% if (item == 'id' or (item == 'ref') or (item == 'name') or (item == 'pvp'))%}
+                                        {% set modalWork = modalWork|merge([attribute(value, item)]) %}
+                                    {% endif %}
+                                {% endfor %}
+                                <td>
+                                    <a id="editButton{{value.id}}" href="javascript:setVehicleWork({{ modalWork|json_encode() }});"><i class="fa fa-edit"></i></a>
+                                    
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                {% for item in works_labels %}
                                     <th>{{ labels[item] }}</th>
                                 {% endfor %}
                                 <th>Acciones</th>                                        
@@ -339,7 +504,7 @@
         </button>
       </div>
       <div class="modal-body">
-          <form id="vehicle_component_form" action="javascript:saveVehicleComponent();" method="post">
+          <form class="modal-form" id="vehicle_component_form" action="javascript:saveVehicleComponent();" method="post">
               <input type="hidden" id="vehicle_id" name="vehicle_id" class="form-control" value="">    
           {% for item in component_form_labels %}
             <div class="row">
@@ -355,6 +520,12 @@
                     <input type="text" id="cantity" name="cantity" class="form-control" value="">
                 </div>                            
             </div>
+            <div class="row">
+                <div class="input-group col-12">                                            
+                    <label class="control-label" for="total">Importe</label>                                            
+                    <input type="text" id="total" name="total" class="form-control" value="">
+                </div>                            
+            </div>
           </form>
       </div>
       <div class="modal-footer">
@@ -364,6 +535,90 @@
     </div>
   </div>
 </div> 
+<div class="modal" id="supplies_form_modal" tabindex="-1" role="dialog">
+{% set supply_form_labels = {'id':'id','ref':'ref','name':'name','pvp':'pvp'} %}        
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Recambio</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form class="modal-form" id="vehicle_supply_form" action="javascript:saveVehicleSupply();" method="post">
+              <input type="hidden" id="vehicle_id" name="vehicle_id" class="form-control" value="">    
+          {% for item in supply_form_labels %}
+            <div class="row">
+                <div class="input-group col-12">                                            
+                    <label class="control-label" for="{{ item }}">{{ labels[item] }}</label>                                            
+                    <input type="text" id="{{ item }}" name="{{ item }}" class="form-control" value="">
+                </div>                            
+            </div>
+        {% endfor %}
+            <div class="row">
+                <div class="input-group col-12">                                            
+                    <label class="control-label" for="cantity">Cantidad</label>                                            
+                    <input type="text" id="cantity" name="cantity" class="form-control" value="">
+                </div>                            
+            </div>
+            <div class="row">
+                <div class="input-group col-12">                                            
+                    <label class="control-label" for="total">Importe</label>                                            
+                    <input type="text" id="total" name="total" class="form-control" value="">
+                </div>                            
+            </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-secondary" form="vehicle_supply_form">Guardar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div> 
+<div class="modal" id="works_form_modal" tabindex="-1" role="dialog">
+{% set work_form_labels = {'id':'id','reference':'reference','name':'name','pvp':'pvp'} %}        
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Trabajo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form class="modal-form" id="vehicle_work_form" action="javascript:saveVehicleWork();" method="post">
+              <input type="hidden" id="vehicle_id" name="vehicle_id" class="form-control" value="">    
+          {% for item in work_form_labels %}
+            <div class="row">
+                <div class="input-group col-12">                                            
+                    <label class="control-label" for="{{ item }}">{{ labels[item] }}</label>                                            
+                    <input type="text" id="{{ item }}" name="{{ item }}" class="form-control" value="">
+                </div>                            
+            </div>
+        {% endfor %}
+            <div class="row">
+                <div class="input-group col-12">                                            
+                    <label class="control-label" for="cantity">Cantidad</label>                                            
+                    <input type="text" id="cantity" name="cantity" class="form-control" value="">
+                </div>                            
+            </div>
+            <div class="row">
+                <div class="input-group col-12">                                            
+                    <label class="control-label" for="total">Importe</label>                                            
+                    <input type="text" id="total" name="total" class="form-control" value="">
+                </div>                            
+            </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-secondary" form="vehicle_supply_form">Guardar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
             
 {% endblock %}
 

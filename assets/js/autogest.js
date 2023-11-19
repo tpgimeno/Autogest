@@ -90,7 +90,19 @@ $(document).ready(function(){
     
     set_accesories();
     
-    
+    $('.modal-form').each(function(){
+        $(this).each(function(){
+           var modal = $(this).attr('id');
+           $('#'+modal+' #cantity').change(function(){
+              var cant = $(this).val();
+              var price = $('#'+modal+' #pvp').val();
+              var total = numeral(parseFloat(cant) * parseFloat(price));
+              $('#'+modal+' #total').val(total.format('(0,0.00$)'));
+           });
+        });
+    });
+            
+   
     
     
 });
@@ -143,8 +155,14 @@ function set_components(){
         url: "Intranet/vehicles/vehicleComponents/set",
         data: {'vehicle_id' : $('#id').val()},
         dataType: "json",
-        success: function(data){           
-            location.href = location.href + "&selected_tab=components";            
+        success: function(data){
+            var url = location.href; 
+            var pos = url.indexOf('&selected_tab=');
+            if(pos != -1){
+                url = url.substr(0, pos);
+            }
+            url = url + "&selected_tab=components";
+            location.href = url;           
         }
     });
 }
@@ -196,6 +214,154 @@ function delVehicleComponent(data){
         success: function(result){          
             $('.alert').html(result);
             set_components();
+          
+        }
+    });
+}
+
+function set_supplies(){
+    $.ajax({
+        method: "POST",
+        url: "Intranet/vehicles/vehicleSupplies/set",
+        data: {'vehicle_id' : $('#id').val()},
+        dataType: "json",
+        success: function(data){  
+            var url = location.href; 
+            console.log(url);
+            var pos = url.indexOf('&selected_tab=');
+            console.log(pos);
+            if(pos != -1){
+                url = url.substr(0, pos);
+            }
+            url = url + '&selected_tab=supplies';
+                console.log(url);
+            location.href = url;
+        }
+    });
+}
+
+function setVehicleSupply(data){ 
+    var array = [];
+    for (var value in data){   
+        if(value !== "mader"){
+            array.push(data[value]);
+        }
+    }    
+    $('#supplies_form_modal .modal-body .row .input-group #id').val(array[0]);
+    $('#supplies_form_modal .modal-body .row .input-group #ref').val(array[1]);
+    $('#supplies_form_modal .modal-body .row .input-group #name').val(array[2]);    
+    $('#supplies_form_modal .modal-body .row .input-group #pvp').val(numeral(parseFloat(array[3])).format('(0,0.00$)'));      
+    $('#supplies_form_modal .modal-body .row .input-group #cantity').val(array[4]);
+    $('#supplies_form_modal .modal-body .row .input-group #total').val(numeral(parseFloat(array[3]) * parseFloat(array[4])).format('(0,0.00$)'));
+    $('#supplies_form_modal').modal('show');
+}
+
+
+
+function saveVehicleSupply(){    
+    $.ajax({
+        method: "POST",
+        url: "Intranet/vehicles/vehicleSupplies/add",
+        data: {'vehicle_id' : $('#id').val(), 
+            'supply_id' : $('#vehicle_supply_form #id').val(),
+            'pvp' : $('#vehicle_supply_form #pvp').val(),
+            'cantity' : $('#vehicle_supply_form #cantity').val()},
+        dataType: "json",
+        success: function(result){ 
+            $('#supplies_form_modal').modal('hide');
+            $('#supplies_modal').modal('hide');
+            $('.alert').html(result);
+            set_supplies();
+            
+          
+        }
+    });
+}
+
+
+function delVehicleSupply(data){    
+    $.ajax({
+        method: "POST",
+        url: "Intranet/vehicles/vehicleSupplies/del",
+        data: {'id' : data.id},
+        dataType: "json",
+        success: function(result){            
+            $('.alert').html(result);
+            set_supplies();
+          
+        }
+    });
+}
+
+function set_works(){
+    $.ajax({
+        method: "POST",
+        url: "Intranet/vehicles/vehicleWorks/set",
+        data: {'vehicle_id' : $('#id').val()},
+        dataType: "json",
+        success: function(data){  
+            var url = location.href; 
+            console.log(url);
+            var pos = url.indexOf('&selected_tab=');
+            console.log(pos);
+            if(pos != -1){
+                url = url.substr(0, pos);
+            }
+            url = url + '&selected_tab=works';
+                console.log(url);
+            location.href = url;
+        }
+    });
+}
+
+function setVehicleWork(data){ 
+    var array = [];
+    for (var value in data){   
+        if(value !== "mader"){
+            array.push(data[value]);
+        }
+    }    
+    $('#works_form_modal .modal-body .row .input-group #id').val(array[0]);
+    $('#works_form_modal .modal-body .row .input-group #ref').val(array[1]);
+    $('#works_form_modal .modal-body .row .input-group #name').val(array[2]);    
+    $('#works_form_modal .modal-body .row .input-group #pvp').val(numeral(parseFloat(array[3])).format('(0,0.00$)'));      
+    $('#works_form_modal .modal-body .row .input-group #cantity').val(array[4]);
+    $('#works_form_modal .modal-body .row .input-group #total').val(numeral(parseFloat(array[3]) * parseFloat(array[4])).format('(0,0.00$)'));
+    $('#works_form_modal').modal('show');
+}
+
+
+
+function saveVehicleWork(){    
+    $.ajax({
+        method: "POST",
+        url: "Intranet/vehicles/vehicleWorks/add",
+        data: {'vehicle_id' : $('#id').val(), 
+            'work_id' : $('#vehicle_work_form #id').val(),
+            'pvp' : $('#vehicle_work_form #pvp').val(),
+            'cantity' : $('#vehicle_work_form #cantity').val()},
+        dataType: "json",
+        success: function(result){ 
+            $('#works_form_modal').modal('hide');
+            $('#works_modal').modal('hide');
+            $('.alert').html(result);
+            set_works();
+            
+          
+        }
+    });
+}
+
+
+function delVehicleSupply(data){    
+    $.ajax({
+        method: "POST",
+        url: "Intranet/vehicles/vehicleWorks/del",
+        data: {'id' : data.id},
+        dataType: "json",
+        success: function(result){            
+            $('.alert').html(result);
+            set_works();
           
         }
     });

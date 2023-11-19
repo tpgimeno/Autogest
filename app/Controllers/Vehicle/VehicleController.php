@@ -76,7 +76,9 @@ class VehicleController extends BaseController {
         $works = $this->vehicleService->getAllRegisters(new Works());
         $accesories = $this->vehicleService->getAllRegisters(new Accesories()); 
         $vehicle_accesories = $this->vehicleService->getVehicleAccesories($request);
-        $vehicle_components = $this->vehicleService->getVehicleComponents($request);        
+        $vehicle_components = $this->vehicleService->getVehicleComponents($request);   
+        $vehicle_supplies = $this->vehicleService->getVehicleSupplies($request);
+        $vehicle_works = $this->vehicleService->getVehicleWorks($request);
         $iterables = array('brand_id' => $brands,
             'model_id' => $models,
             'seller_id' => $sellers,
@@ -90,7 +92,9 @@ class VehicleController extends BaseController {
             'supplies' => $supplies,
             'works' => $works,
             'vehicle_accesories' => $vehicle_accesories,
-            'vehicle_components' => $vehicle_components);
+            'vehicle_components' => $vehicle_components,
+            'vehicle_supplies' => $vehicle_supplies,
+            'vehicle_works' => $vehicle_works);
         if($request->getMethod() == 'POST') {
             $postData = $request->getParsedBody();
             $postData = $this->getCheckboxes($postData);                     
@@ -169,16 +173,42 @@ class VehicleController extends BaseController {
         return $response;
     }
     
-    public function reloadModelsAction($request){
-        $models = $this->vehicleService->reloadModels($request->getParsedBody());        
-        $response = new JsonResponse($models);
+    public function getVehicleSuppliesAction($request){
+        $supplies = $this->vehicleService->getVehicleSupplies($request);
+        $response = new JsonResponse($supplies);
         return $response;
     }
-    public function reloadLocationsAction($request){
-        $locations = $this->vehicleService->reloadLocations($request->getParsedBody());
-        $response = new JsonResponse($locations);
+    public function addVehicleSupplyAction($request){
+        $postData = $request->getParsedBody();       
+        $responseMessage = $this->vehicleService->addVehicleSupplyAjax($postData);
+        $response = new JsonResponse($responseMessage);
         return $response;
     }
+    public function delVehicleSupplyAction($request){
+        $postData = $request->getParsedBody();        
+        $responseMessage = $this->vehicleService->delVehicleSupplyAjax($postData);
+        $response = new JsonResponse($responseMessage);
+        return $response;
+    }
+    
+    public function getVehicleWorksAction($request){
+        $works = $this->vehicleService->getVehicleWorks($request);
+        $response = new JsonResponse($works);
+        return $response;
+    }
+    public function addVehicleWorkAction($request){
+        $postData = $request->getParsedBody();       
+        $responseMessage = $this->vehicleService->addVehicleWorkAjax($postData);
+        $response = new JsonResponse($responseMessage);
+        return $response;
+    }
+    public function delVehicleWorkAction($request){
+        $postData = $request->getParsedBody();        
+        $responseMessage = $this->vehicleService->delVehicleWorkAjax($postData);
+        $response = new JsonResponse($responseMessage);
+        return $response;
+    }
+    
     public function importVehiclesExcel() {
         setlocale(LC_ALL, 'es_ES');
         $responseMessage = null;

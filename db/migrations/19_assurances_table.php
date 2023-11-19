@@ -30,17 +30,12 @@ final class AssurancesTable extends AbstractMigration
                 ->addColumn('duration', 'integer')
                 ->addColumn('owner', 'string')
                 ->addColumn('object', 'string')
-                ->addColumn('price', 'timestamp')
-                ->addColumn('description', 'timestamp')
-                ->addColumn('options', 'timestamp')
-                ->addColumn('created_at', 'timestamp')
-                ->addColumn('updated_at', 'timestamp')
-                ->addColumn('deleted_at', 'timestamp')
-                
-                
-                
-                ->addColumn('created_at', 'timestamp')
-                ->addColumn('updated_at', 'timestamp')
+                ->addColumn('price', 'float')
+                ->addColumn('description', 'text')
+                ->addColumn('options', 'text')
+                ->addColumn('created_at', 'datetime')
+                ->addColumn('updated_at', 'datetime',['null' => true])
+                ->addColumn('deleted_at', 'datetime',['null' => true])
                 ->create();
     }
 }
