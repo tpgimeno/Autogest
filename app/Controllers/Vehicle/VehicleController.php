@@ -185,7 +185,8 @@ class VehicleController extends BaseController {
         return $response;
     }
     public function delVehicleSupplyAction($request){
-        $postData = $request->getParsedBody();        
+        $postData = $request->getParsedBody(); 
+        
         $responseMessage = $this->vehicleService->delVehicleSupplyAjax($postData);
         $response = new JsonResponse($responseMessage);
         return $response;
@@ -197,6 +198,7 @@ class VehicleController extends BaseController {
         return $response;
     }
     public function addVehicleWorkAction($request){
+        
         $postData = $request->getParsedBody();       
         $responseMessage = $this->vehicleService->addVehicleWorkAjax($postData);
         $response = new JsonResponse($responseMessage);

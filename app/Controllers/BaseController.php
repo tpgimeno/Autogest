@@ -75,7 +75,7 @@ class BaseController {
         if($response){
             $responseMessage = $response[1];
         }
-        $valueSelected = $this->baseService->setInstance(new $model, array('id' => $response[0]));   
+        $valueSelected = $this->baseService->setInstance(new $model, array('id' => $response[0]));        
         $selectedTab = null;
         if(isset($postData['selected_tab'])){
             $selectedTab = $postData['selected_tab'];

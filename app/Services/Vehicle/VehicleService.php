@@ -8,14 +8,13 @@
 
 namespace App\Services\Vehicle;
 
-use App\Models\Supplies;
 use App\Models\Vehicle;
 use App\Models\VehicleAccesories;
 use App\Models\VehicleComponents;
 use App\Models\VehicleSupplies;
+use App\Models\VehicleWorks;
 use App\Services\BaseService;
 use Illuminate\Database\Capsule\Manager as DB;
-use function GuzzleHttp\json_decode;
 
 /**
  * Description of VehicleService
@@ -192,6 +191,7 @@ class VehicleService extends BaseService {
     }
     
     public function delVehicleSupplyAjax($postData){
+        
         $supply = VehicleSupplies::where('id', '=', $postData['id'])                
                 ->get()->first();
         $supply->delete();
@@ -205,7 +205,7 @@ class VehicleService extends BaseService {
             $works = DB::table('vehicleworks')
                     ->join('vehicles', 'vehicleworks.vehicle_id', '=', 'vehicles.id')
                     ->join('works', 'vehicleworks.work_id', '=', 'works.id')
-                    ->select('vehicleworks.id', 'works.reference as reference', 'works.description as name', 'works.pvp as pvp', 'vehicleworks.cantity as cantity')
+                    ->select('vehicleworks.id', 'works.reference as reference', 'works.description as description', 'works.pvp as pvp', 'vehicleworks.cantity as cantity')
                     ->where('vehicleworks.vehicle_id', '=', $postData['vehicle_id'])
                     ->get();
         } else {
@@ -213,25 +213,24 @@ class VehicleService extends BaseService {
             $works = DB::table('vehicleworks')
                     ->join('vehicles', 'vehicleworks.vehicle_id', '=', 'vehicles.id')
                     ->join('works', 'vehicleworks.work_id', '=', 'works.id')
-                    ->select('vehicleworks.id', 'works.reference as reference', 'works.description as name', 'works.pvp as pvp', 'vehicleworks.cantity as cantity')
+                    ->select('vehicleworks.id', 'works.reference as reference', 'works.description as description', 'works.pvp as pvp', 'vehicleworks.cantity as cantity')
                     ->where('vehicleworks.vehicle_id', '=', $params['id'])
                     ->get();
         }
         return $works;
     }
     
-    public function addVehicleWorkAjax($postData) {
-        
+    public function addVehicleWorkAjax($postData) {  
         $work_exist = true;
-        $responseMessage = null;
-        $work = VehicleSupplies::where('vehicle_id', '=', $postData['vehicle_id'])
-                        ->where('work_id', '=', $postData['work_id'])
-                        ->get()->first();
+        $responseMessage = null;        
+        $work = VehicleWorks::where('vehicle_id', '=', intval($postData['vehicle_id']))
+                ->where('work_id', '=', intval($postData['work_id']))
+                ->get()->first();
+        
         if (!$work) {
-            $work = new VehicleSupplies();
+            $work = new VehicleWorks();            
             $work_exist = false;
         }
-       
         $work->work_id = $postData['work_id'];
         $work->vehicle_id = $postData['vehicle_id'];
         $work->cantity = $postData['cantity'];
@@ -247,7 +246,7 @@ class VehicleService extends BaseService {
     }
     
     public function delVehicleWorkAjax($postData){
-        $work = VehicleSupplies::where('id', '=', $postData['id'])                
+        $work = VehicleWorks::where('id', '=', $postData['id'])                
                 ->get()->first();
         $work->delete();
         $responseMessage = "Trabajo Eliminado";

@@ -129,6 +129,7 @@
                                                             {% endif %}
                                                         {% endfor %}
                                                         <td>
+                                                            
                                                             <a id="addButton{{value.id}}" href="javascript:setVehicleSupply({{ value|json_encode() }});"><i class="fa fa-edit"></i></a>
                                                             <a id="delButton{{value.id}}" href="javascript:delVehicleSupply({{ value|json_encode() }});"><i class="fa fa-trash"></i></a>
                                                         </td>
@@ -152,7 +153,7 @@
                                 </div>
                             {% endif %}
                             {% if tab == 'works' %} 
-                                {% set vehicle_works_labels = {'id':'id','ref':'ref','name':'name','cantity':'cantity','pvp':'pvp','total':'total'} %}
+                                {% set vehicle_works_labels = {'id':'id','reference':'reference','description':'description','cantity':'cantity','pvp':'pvp','total':'total'} %}
                                 <div id="dataTableVehicleWorks_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                     <div class="row">
                                         <div class="col-sm-12">
@@ -177,8 +178,8 @@
                                                             {% endif %}
                                                         {% endfor %}
                                                         <td>
-                                                            <a id="addButton{{value.id}}" href="javascript:setVehicleSupply({{ value|json_encode() }});"><i class="fa fa-edit"></i></a>
-                                                            <a id="delButton{{value.id}}" href="javascript:delVehicleSupply({{ value|json_encode() }});"><i class="fa fa-trash"></i></a>
+                                                            <a id="addButton{{value.id}}" href="javascript:setVehicleWorks({{ value|json_encode() }});"><i class="fa fa-edit"></i></a>
+                                                            <a id="delButton{{value.id}}" href="javascript:delVehicleWorks({{ value|json_encode() }});"><i class="fa fa-trash"></i></a>
                                                         </td>
                                                     </tr>
                                                 {% endfor %}
@@ -435,7 +436,7 @@
   </div>
 </div> 
 <div class="modal" id="works_modal" tabindex="-1" role="dialog">
-{% set works_labels = {'id':'id','reference':'reference','name':'name','pvp':'pvp'} %}        
+{% set works_labels = {'id':'id','reference':'reference','description':'description','pvp':'pvp'} %}        
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -463,7 +464,7 @@
                             <tr> 
                                 {% for item in works_labels %}
                                     <td>{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
-                                    {% if (item == 'id' or (item == 'ref') or (item == 'name') or (item == 'pvp'))%}
+                                    {% if (item == 'id' or (item == 'reference') or (item == 'description') or (item == 'pvp'))%}
                                         {% set modalWork = modalWork|merge([attribute(value, item)]) %}
                                     {% endif %}
                                 {% endfor %}
@@ -578,7 +579,7 @@
   </div>
 </div> 
 <div class="modal" id="works_form_modal" tabindex="-1" role="dialog">
-{% set work_form_labels = {'id':'id','reference':'reference','name':'name','pvp':'pvp'} %}        
+{% set work_form_labels = {'id':'id','reference':'reference','description':'description','pvp':'pvp'} %}        
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -613,7 +614,7 @@
           </form>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-secondary" form="vehicle_supply_form">Guardar</button>
+        <button type="submit" class="btn btn-secondary" form="vehicle_work_form">Guardar</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
       </div>
     </div>

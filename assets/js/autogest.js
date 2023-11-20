@@ -155,10 +155,10 @@ function set_components(){
         url: "Intranet/vehicles/vehicleComponents/set",
         data: {'vehicle_id' : $('#id').val()},
         dataType: "json",
-        success: function(data){
+        success: function(){
             var url = location.href; 
             var pos = url.indexOf('&selected_tab=');
-            if(pos != -1){
+            if(pos !== -1){
                 url = url.substr(0, pos);
             }
             url = url + "&selected_tab=components";
@@ -225,16 +225,15 @@ function set_supplies(){
         url: "Intranet/vehicles/vehicleSupplies/set",
         data: {'vehicle_id' : $('#id').val()},
         dataType: "json",
-        success: function(data){  
+        success: function(){  
             var url = location.href; 
             console.log(url);
             var pos = url.indexOf('&selected_tab=');
             console.log(pos);
-            if(pos != -1){
+            if(pos !== -1){
                 url = url.substr(0, pos);
             }
             url = url + '&selected_tab=supplies';
-                console.log(url);
             location.href = url;
         }
     });
@@ -279,7 +278,7 @@ function saveVehicleSupply(){
 }
 
 
-function delVehicleSupply(data){    
+function delVehicleSupply(data){ 
     $.ajax({
         method: "POST",
         url: "Intranet/vehicles/vehicleSupplies/del",
@@ -288,8 +287,7 @@ function delVehicleSupply(data){
         success: function(result){            
             $('.alert').html(result);
             set_supplies();
-          
-        }
+            }
     });
 }
 
@@ -299,16 +297,13 @@ function set_works(){
         url: "Intranet/vehicles/vehicleWorks/set",
         data: {'vehicle_id' : $('#id').val()},
         dataType: "json",
-        success: function(data){  
-            var url = location.href; 
-            console.log(url);
-            var pos = url.indexOf('&selected_tab=');
-            console.log(pos);
-            if(pos != -1){
+        success: function(){  
+            var url = location.href;             
+            var pos = url.indexOf('&selected_tab=');            
+            if(pos !== -1){
                 url = url.substr(0, pos);
             }
-            url = url + '&selected_tab=works';
-                console.log(url);
+            url = url + '&selected_tab=works';                
             location.href = url;
         }
     });
@@ -320,10 +315,10 @@ function setVehicleWork(data){
         if(value !== "mader"){
             array.push(data[value]);
         }
-    }    
+    }     
     $('#works_form_modal .modal-body .row .input-group #id').val(array[0]);
-    $('#works_form_modal .modal-body .row .input-group #ref').val(array[1]);
-    $('#works_form_modal .modal-body .row .input-group #name').val(array[2]);    
+    $('#works_form_modal .modal-body .row .input-group #reference').val(array[1]);
+    $('#works_form_modal .modal-body .row .input-group #description').val(array[2]);    
     $('#works_form_modal .modal-body .row .input-group #pvp').val(numeral(parseFloat(array[3])).format('(0,0.00$)'));      
     $('#works_form_modal .modal-body .row .input-group #cantity').val(array[4]);
     $('#works_form_modal .modal-body .row .input-group #total').val(numeral(parseFloat(array[3]) * parseFloat(array[4])).format('(0,0.00$)'));
@@ -342,18 +337,17 @@ function saveVehicleWork(){
             'cantity' : $('#vehicle_work_form #cantity').val()},
         dataType: "json",
         success: function(result){ 
+            
             $('#works_form_modal').modal('hide');
             $('#works_modal').modal('hide');
             $('.alert').html(result);
             set_works();
-            
-          
         }
     });
 }
 
 
-function delVehicleSupply(data){    
+function delVehicleWork(data){    
     $.ajax({
         method: "POST",
         url: "Intranet/vehicles/vehicleWorks/del",

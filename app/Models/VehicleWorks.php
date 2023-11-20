@@ -7,6 +7,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
+
 /**
  * Description of VehicleWorks
  *
@@ -15,4 +17,8 @@ namespace App\Models;
 class VehicleWorks extends Model 
 {
     protected $table = "vehicleWorks";
+    protected $properties = ['vehicle_id', 'work_id', 'cantity', 'pvp'];
+    public function getProperties(){
+        return $this->properties;
+    }
 }

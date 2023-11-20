@@ -61,7 +61,7 @@ class SuppliesController extends BaseController {
         }
     }    
     public function deleteAction(ServerRequest $request) {         
-        $this->suppliesService->deleteRegister(new Supplies(), $request->getQueryParams('id'));           
+        $this->suppliesService->deleteRegister($this->model, $request->getQueryParams('id'));           
         return new RedirectResponse('/Intranet/vehicles/supplies/list');
     }    
     public function getSuppliesReportAction(){
