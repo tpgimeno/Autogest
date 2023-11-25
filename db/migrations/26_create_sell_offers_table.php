@@ -21,11 +21,12 @@ final class CreateSellOffersTable extends AbstractMigration
         $table = $this->table('selloffers');
         $table->addColumn('offerNumber', 'string')
                 ->addColumn('offerDate', 'date')
-                ->addColumn('taxesId', 'integer')
-                ->addColumn('paymentWayId', 'integer')
-                ->addColumn('customerId', 'integer')
-                ->addColumn('vehicleId', 'integer')
+                ->addColumn('taxes_id', 'integer')
+                ->addColumn('paymentWay_id', 'integer')
+                ->addColumn('customer_id', 'integer')
+                ->addColumn('vehicle_id', 'integer')
                 ->addColumn('vehiclePvp', 'float', ['null' => true])
+                ->addColumn('vehicleDiscount', 'float', ['null' => true])
                 ->addColumn('vehicleTva', 'float', ['null' => true])
                 ->addColumn('vehicleTotal', 'float', ['null' => true])                
                 ->addColumn('pvp', 'float', ['null' => true])
@@ -35,15 +36,10 @@ final class CreateSellOffersTable extends AbstractMigration
                 ->addColumn('observations', 'string', ['null' => true])
                 ->addColumn('texts', 'string', ['null' => true])  
                 ->addColumn('vehicleComments', 'string', ['null' => true]) 
-                ->addColumn('equipment', 'string', ['null' => true]) 
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime', ['null' => true])
                 ->addColumn('deleted_at', 'datetime', ['null' => true])
                 ->addIndex('offerNumber', ['unique' => true])
-                ->addForeignKey(['taxesId'], 'taxes', ['id'])
-                ->addForeignKey(['paymentWayId'], 'paymentWays', ['id'])
-                ->addForeignKey(['customerId'], 'customers', ['id'])
-                ->addForeignKey(['vehicleId'], 'vehicles', ['id'])
                 ->create();
     }
 }

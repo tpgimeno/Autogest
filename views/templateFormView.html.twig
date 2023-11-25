@@ -19,11 +19,14 @@
                         'access':'access','brand_id':'brand_id','type_id':'type_id',
                         'customer_id':'customer_id', 'seller_id':'seller_id',
                         'model_id':'model_id','providor_id':'providor_id',
-                        'mader_id':'mader_id'} %}
-                    {% set textareas = {'observations':'observations'} %}
+                        'mader_id':'mader_id', 'taxes_id':'taxes_id', 
+                        'paymentWay_id':'paymentWay_id', } %}
+                    {% set textareas = {'observations':'observations','vehicleComments':'vehicleComments','texts':'texts'} %}
                     {% set dates = {'registryDate':'registryDate','sellDate':'sellDate','buyDate':'buyDate', 'arrival':'arrival','appointDate':'appointDate'} %}
                     {% set currencies = {'pvd':'pvd','pvp':'pvp','cost':'cost','pvc':'pvc'} %}
                     {% set checks = {'rebu':'rebu','secondKey':'secondKey'} %}
+                    {% set hidden = {'vehicle_id':'vehicle_id'} %}
+                    {% set sellOffers = {'plate':'plate','brand':'brand', 'model':'model'} %}
                     {% set assets = {'accesories':'accesories'} %}
                     <div class="input-group">
                         <input type="text" style="display:none;" id="id" name="id" value="{{ value.id }}">  
@@ -38,8 +41,7 @@
                             {% endfor %}
                         </ul>                        
                         <div class="tab-content pt-4" id="nav-tabContent">                        
-                        {% for tab in tabs %}                           
-                            
+                        {% for tab in tabs %}
                             <div class="tab-pane fade {% if (tab == selected_tab)%}{{ 'show active' }}{% endif %}" id="{{tab}}-pane" role="tabpanel" aria-labelledby="{{tab}}-tab">
                             {% if tab == 'accesories' %}
                                 <div class="row">
@@ -200,18 +202,23 @@
                                     <button type="button" data-toggle="modal" data-target="#works_modal" class="btn btn-primary" id="addSupply">Añadir</button>                                   
                                 </div>
                             {% endif %}
+                                
                                 {% for item in properties[tab] %}
-                                {% if item in selects %}                                     
+                                                                        
+                                {% if item in selects %}                                       
                                     <div class="row">
+                                        
                                         <div class="input-group col-10">
                                             <label class="control-label" for="{{ item }}">{{ labels[item] }}</label>
                                             <select id="{{ item }}" name="{{ item }}" class="form-control select2" value="{{ attribute(value, item) }}">                                                
                                                 {% if optionsArray[item] is not empty %}                                                    
                                                     {% for option in optionsArray[item] %}
                                                         {% if item == 'account_id' %}
-                                                            <option value="{{ option['id'] }}">{{ option['accountNumber'] }}</option>
+                                                            <option value="{{ option['id'] }}" {% if option['id'] == attribute(value, item) %}{{ 'selected="true"' }}{% endif %}>{{ option['accountNumber'] }}</option>
+                                                        {% elseif item == 'vehicle_id' %}
+                                                            <option value="{{ option['id'] }}" {% if option['id'] == attribute(value, item) %}{{ 'selected="true"' }}{% endif %}>{{ option['plate'] }}</option>                                                        
                                                         {% else %}
-                                                            <option value="{{ option['id'] }}">{{ option['name'] }}</option>
+                                                            <option data-select2-id="{{ option['id'] }}" value="{{ option['id'] }}" {% if option['id'] == attribute(value, item) %}{{ 'selected="true"' }}{% endif %}>{{ option['name'] }}</option>
                                                         {% endif %}
                                                     {% endfor %}
                                                 {% else %}                                                    
@@ -220,6 +227,31 @@
                                             </select>        
                                         </div>                            
                                     </div>
+                                {% elseif item in sellOffers %}
+                                    
+                                    <div class="row">
+                                        <div class="input-group col-10">
+                                            <label class="control-label" for="{{ item }}">{{ labels[item] }}</label>
+                                            <select id="{{ item }}" name="{{ item }}" class="form-control select2" value="{{ attribute(value, item) }}">
+                                                {% for option in optionsArray['vehicles'] %}                                                     
+                                                    {% if item == 'plate' %}
+                                                        <option km="{{ option['km'] }}" vin="{{ option['vin'] }}"price="{{ option['pvp'] }}" value="{{ option['id'] }}" {% if option['id'] == attribute(value, item) %}{{ 'selected="true"' }}{% endif %}>{{ option['plate'] }}</option>                                                        
+                                                    {% elseif item == 'brand' %}
+                                                        {% for brand in optionsArray['brands'] %}
+                                                            {% if brand.id == option['brand_id'] %}
+                                                                <option value="{{ brand.id }}" {% if option['id'] == attribute(value, item) %}{{ 'selected="true"' }}{% endif %}>{{ brand.name }}</option> 
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    {% elseif item == 'model' %}
+                                                        <option km="{{ option['km'] }}" vin="{{ option['vin'] }}"price="{{ option['pvp'] }}" value="{{ option['id'] }}" {% if option['id'] == attribute(value, item) %}{{ 'selected="true"' }}{% endif %}>{{ option['model'] }}</option>  
+                                                    {% endif %}
+                                                {% endfor %}
+
+                                                <option value="1">Sin datos</option>
+                                            </select>        
+                                        </div>                            
+                                    </div>                                                        
+                                {% elseif item in hidden %}                                    
                                 {% elseif item in textareas %}
                                     <div class="row">
                                         <div class="input-group col-10">
@@ -257,7 +289,7 @@
                         </div>
                     {% else %}
                         {% for property in properties %}
-                            {% if property in selects %}                                
+                            {% if property in selects %}
                                 <div class="row">
                                     <div class="input-group col-10">
                                         <label class="control-label" for="{{ property }}">{{ labels[property] }}</label>
@@ -265,9 +297,9 @@
                                         {% if optionsArray[property] %}                                            
                                             {% for option in optionsArray[property] %}
                                                 {% if property == 'account_id' %}
-                                                    <option value="{{ option['id'] }}">{{ option['accountNumber'] }}</option>
+                                                    <option value="{{ option['id'] }}" {% if option['id'] == attribute(value, property) %}{{ 'selected="true"' }}{% endif %}>{{ option['accountNumber'] }}</option>
                                                 {% else %}
-                                                    <option value="{{ option['id'] }}">{{ option['name'] }}</option>
+                                                    <option value="{{ option['id'] }}" {% if option['id'] == attribute(value, property) %}{{ 'selected="true"' }}{% endif %}>{{ option['name'] }}</option>
                                                 {% endif %}
                                             {% endfor %}
                                         {% else %}                                            

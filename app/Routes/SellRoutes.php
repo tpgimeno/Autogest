@@ -62,11 +62,20 @@ class SellRoutes
         $map->get('sellOffersList', '/Intranet/sales/offers/list', [
             'App\Controllers\Sales\SellOffersController',
             'getIndexAction'
-        ]);
-        $map->post('searchSellOffers', '/Intranet/sales/offers/search', [
+        ]);      
+        $map->post('saveSellOffers', '/Intranet/sales/offers/save', [
             'App\Controllers\Sales\SellOffersController',
-            'searchSellOffersAction'
+            'getSellOffersDataAction'
         ]);
+        $map->post('deleteSellOffers', '/Intranet/sales/offers/delete', [        
+            'App\Controllers\Sales\SellOffersController',
+            'deleteAction'   
+        ]);
+        $map->post('getModelsByBrand', '/Intranet/sales/offers/brands', [
+            'App\Controllers\Sales\SellOffersController',
+            'getSellOffersModelsbyBrand'
+        ]);
+        
         $map->post('searchCustomerSellOffers', '/Intranet/sales/offers/customer/search', [
             'App\Controllers\Sales\SellOffersController',
             'searchCustomerSellOfferAction'
@@ -143,14 +152,9 @@ class SellRoutes
             'App\Controllers\Sales\SellOffersController',
             'delWorksSellOffersAction'
         ]);
-        $map->post('saveSellOffers', '/Intranet/sales/offers/save', [
-            'App\Controllers\Sales\SellOffersController',
-            'getSellOffersDataAction'
-        ]);
-        $map->get('deleteSellOffers', '/Intranet/sales/offers/delete', [        
-            'App\Controllers\Sales\SellOffersController',
-            'deleteAction'   
-        ]);
+        
+        
+        
 
         //SELL DELIVERIES
 

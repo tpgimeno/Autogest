@@ -19,7 +19,7 @@ use App\Services\BaseService;
 class ModelService extends BaseService {
     public function getModelItemsList(){
         $values = ModelVh::join('brands', 'models.brand_id', '=', 'brands.id')
-                ->get(['brands.name as brand', 'models.name'])->toArray();
+                ->get(['models.id', 'brands.name as brand', 'models.name'])->toArray();
         return $values;
     }
 }

@@ -49,7 +49,7 @@ class ModelController extends BaseController  {
             }catch(Exception $e) {                 
                 $responseMessage = $e->getMessage();                
             } 
-            return $this->getBasePostDataAction($request, $this->model, $iterables, $responseMessage);
+            return $this->getBasePostDataAction($postData, $this->model, $iterables, $responseMessage);
         }else{
             return $this->getBaseGetDataAction($request, $this->model, $iterables);
         }

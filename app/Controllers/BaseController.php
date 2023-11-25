@@ -71,6 +71,7 @@ class BaseController {
         }else{
             $postData = $request;
         }
+        
         $response = $this->baseService->saveRegister(new $model, $postData);        
         if($response){
             $responseMessage = $response[1];
@@ -100,9 +101,10 @@ class BaseController {
         ]);
     }
     
-    public function getBaseGetDataAction(ServerRequest $request, $model, $iterables) {        
-        $params = $request->getQueryParams();            
-        $valueSelected = $this->baseService->setInstance(new $model, $params);            
+    public function getBaseGetDataAction(ServerRequest $request, $model, $iterables) {           
+        $params = $request->getQueryParams();        
+        $valueSelected = $this->baseService->setInstance(new $model, $params);  
+        
         $menuState = $params['menu'];
         $menuItem = $params['item'];
         $selectedTab = null;
