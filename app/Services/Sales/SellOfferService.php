@@ -2,6 +2,7 @@
 
 namespace App\Services\Sales;
 
+use App\Models\ModelVh;
 use App\Models\SellOffer;
 use App\Models\SellOffersComponents;
 use App\Models\SellOffersSupplies;
@@ -94,8 +95,22 @@ class SellOfferService extends BaseService{
     public function getSellOfferVehicles(){       
         $vehicles = Vehicle::join('brands', 'vehicles.brand_id', '=', 'brands.id')
                 ->join('models', 'vehicles.model_id', '=', 'models.id')
-                ->select('vehicles.id', 'vehicles.plate', 'vehicles.vin', 'vehicles.km' , 'brands.name as brand', 'models.name as model')
+                ->select('vehicles.id', 'vehicles.plate', 'vehicles.vin', 'vehicles.km' , 'vehicles.brand_id', 'brands.name as brand', 'vehicles.model_id', 'models.name as model', 'vehicles.pvp')
                 ->get();
+        return $vehicles;
+    }
+    
+    public function getModelsByBrandAjax($brand){
+        $models = ModelVh::where('models.brand_id', '=', intval($brand))
+                ->get()->toArray();       
+        return $models;
+    }
+    
+    public function getVehiclesByModelAjax($brand, $model){
+        $vehicles = Vehicle::where('vehicles.brand_id', '=', intval($brand))
+                ->where('vehicles.model_id', '=', intval($model))
+                ->get();
+        
         return $vehicles;
     }
     

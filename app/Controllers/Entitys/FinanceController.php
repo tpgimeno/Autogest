@@ -23,12 +23,13 @@ class FinanceController extends BaseController {
         $this->titleList = 'Financieras';
         $this->titleForm = 'Financiera';
         $this->labels = $this->financeService->getLabelsArray();
-        $this->itemsList = array('id', 'bank', 'name', 'email', 'phone');
+        $this->itemsList = array('id', 'bank_id', 'name', 'email', 'phone');
         $this->properties = $this->financeService->getModelProperties($this->model);
     }
 
     public function getIndexAction($request) {
-        return $this->getBaseIndexAction($request, $this->model, null);
+        $values = $this->financeService->list();
+        return $this->getBaseIndexAction($request, $this->model, $values);
     }
 
     public function getFinanceDataAction($request) {

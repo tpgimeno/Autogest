@@ -71,9 +71,13 @@ class SellRoutes
             'App\Controllers\Sales\SellOffersController',
             'deleteAction'   
         ]);
-        $map->post('getModelsByBrand', '/Intranet/sales/offers/brands', [
+        $map->post('getModelsByBrand', '/Intranet/sales/offers/brands/get', [
             'App\Controllers\Sales\SellOffersController',
             'getSellOffersModelsbyBrand'
+        ]);
+        $map->post('getVehiclesByModel', '/Intranet/sales/offers/vehicles/get', [
+            'App\Controllers\Sales\SellOffersController',
+            'getSellOffersVehiclesByModel'
         ]);
         
         $map->post('searchCustomerSellOffers', '/Intranet/sales/offers/customer/search', [

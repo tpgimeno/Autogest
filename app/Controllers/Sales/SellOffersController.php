@@ -14,6 +14,7 @@ use App\Models\Supplies;
 use App\Models\Taxes;
 use App\Models\Works;
 use App\Services\Sales\SellOfferService;
+use Laminas\Diactoros\Response\JsonResponse;
 use Respect\Validation\Validator as v;
 use ZipStream\Exception;
 /**
@@ -73,9 +74,17 @@ class SellOffersController extends BaseController {
         }
     }
     
-    public function getSellOfferModelsbyBrand($brand){
-        $models = ModelVh::where('brand_id', '=', intval($brand));
-        $response = new JsonReponse($models);
+    public function getSellOffersModelsbyBrand($request){
+        $postData = $request->getParsedBody();
+        $models = $this->sellOfferService->getModelsByBrandAjax($postData['brand']);        
+        $response = new JsonResponse($models);
+        return $response;
+    }
+    
+    public function getSellOffersVehiclesByModel($request){
+        $postData = $request->getParsedBody();        
+        $vehicles = $this->sellOfferService->getVehiclesByModelAjax($postData['brand'], $postData['model']);        
+        $response = new JsonResponse($vehicles);
         return $response;
     }
     

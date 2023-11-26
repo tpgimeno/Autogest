@@ -42,7 +42,6 @@ $(document).ready(function(){
     
     $('.nav-link').each(function(){
         $(this).on('shown.bs.tab', function(){
-            console.log('tab');
             $('.select2').select2();
             if($(this).attr('id') === 'accesories-tab'){
                 set_accesories();
@@ -59,7 +58,10 @@ $(document).ready(function(){
      * Initializing Select2
      * =============================================================================
      */
-    $('.select2').select2();
+    $('.select2').select2({
+        tags : true,        
+    });
+    
     
     
     // Function to validate checked on checboxes
@@ -118,6 +120,23 @@ $(document).ready(function(){
      * =============================================================================
      */
     
+    numeral.register('locale', 'es', {
+        delimiters: {
+            thousands: ',',
+            decimal: '.'
+        },
+        abbreviations: {
+            thousand: 'k',
+            million: 'mm',
+            billion: 'b',
+            trillion: 't'
+        },
+
+        currency: {
+            symbol: '€'
+        }
+    });
+    numeral.locale('es');
    
     var titleForm = $('.form-horizontal').attr('id');
     if(titleForm === 'formOfertadeVenta'){   
@@ -125,11 +144,24 @@ $(document).ready(function(){
         $('#formOfertadeVenta #plate').change(function(){            
             set_selloffer_vehicle_prices();        
         });
-            
-         
-        $('#formOfertadeVenta #discount').change(function(){
+        $('#formOfertadeVenta #vehicleDiscount').change(function(){
+            console.log('Prueb');
             set_selloffer_vehicle_prices();
         });
+        $('#formOfertadeVenta #brand').change(function(){ 
+           set_models_by_brand($('#formOfertadeVenta #brand option:selected').val());               
+           $('#formOfertadeVenta #plate').val('0');
+           $('#formOfertadeVenta #plate').trigger('change');
+           let brand = $('#formOfertadeVenta #brand option:selected').val();
+           let model = $('#formOfertadeVenta #model option:selected').val();
+           set_vehicles_by_model(brand,model); 
+           $('#formOfertadeVenta #plate').trigger('change');
+           
+        });
+        $('#formOfertadeVenta #model').change(function(){
+            set_vehicles_by_model($('#formOfertadeVenta #brand option:selected').val(), $('#formOfertadeVenta #model option:selected').val());
+        });
+       
     }
     
     
@@ -139,25 +171,58 @@ $(document).ready(function(){
 
 
 function set_selloffer_vehicle_prices(){
-    $('#formOfertadeVenta #vin').val($('#formOfertadeVenta #plate option:selected').attr('vin'))
-    $('#formOfertadeVenta #km').val($('#formOfertadeVenta #plate option:selected').attr('km'))
+    
     let pvp = numeral(parseFloat($('#formOfertadeVenta #plate option:selected').attr('price')));
     $('#formOfertadeVenta #vehiclePvp').val(pvp.format('(0,0.00$)'));
     let tva = numeral(pvp.value() * 0.21);
     $('#formOfertadeVenta #vehicleTva').val(tva.format('(0,0.00$)'));
     let discount = numeral(parseFloat($('#formOfertadeVenta #vehicleDiscount').val()));
     let total = numeral(pvp.value() - discount.value() + tva.value());
+    $('#formOfertadeVenta #vehicleDiscount').val(discount.format('(0,0.00$)'));
     $('#formOfertadeVenta #vehicleTotal').val(total.format('(0,0.00$)')); 
+    $('#formOfertadeVenta #vin').val($('#formOfertadeVenta #plate option:selected').attr('vin'));
+    $('#formOfertadeVenta #km').val($('#formOfertadeVenta #plate option:selected').attr('km'));
+    
 }
 
-function get_models_brand(id){
+function set_models_by_brand(brand){    
     $.ajax({
         method: "POST",
         url: "Intranet/sales/offers/brands/get",
-        data: {'id' : id},
+        data: {'brand' : brand},
+        async: false,
         dataType: "json",
-        success: function(data){            
-            console.log(data);
+        success: function(data){
+            var newArray = [];
+            $('#formOfertadeVenta #model').empty();
+            for(let i = 0;i < data.length; i++){
+                let tempArray = {'id' : data[i].id ,'text' : data[i].name };
+                newArray.push(tempArray);
+            }
+            newArray.push({'id' : '0', 'text' : 'Sin datos'});
+            $('#formOfertadeVenta #model').select2({
+                data : newArray
+            });
+        }
+    });
+}
+
+function set_vehicles_by_model(brand, model){
+    $.ajax({
+        method: "POST",
+        url: "Intranet/sales/offers/vehicles/get",
+        data: {'brand' : brand, 'model' : model},
+        async: false,
+        dataType: "json",
+        success: function(data){
+            $('#formOfertadeVenta #plate').empty();
+            for(let i = 0;i < data.length; i++){
+                let tempOption = '<option km="' + data[i].km + '" vin="' + data[i].vin + '" price="' + data[i].pvp + '" vehicle_brand="' + data[i].brand_id + '" vehicle_model="' + data[i].model_id + '" value="' + data[i].id + '" >'+ data[i].plate + '</option>'; 
+                $('#formOfertadeVenta #plate').append(tempOption);
+            }
+            $('#formOfertadeVenta #plate').append('<option value="0">Sin datos</option>');             
+            $('#formOfertadeVenta #plate').select2();
+            
         }
     });
 }
@@ -404,32 +469,4 @@ function delVehicleWork(data){
     });
 }
 
-
-/* Javascript */
-
-window.addEventListener('load', function(){
-    
-    //Configuración de la libreria Numeral de JS para el formato de numeros en Moneda
-    
-    numeral.register('locale', 'es', {
-        delimiters: {
-            thousands: ',',
-            decimal: '.'
-        },
-        abbreviations: {
-            thousand: 'k',
-            million: 'mm',
-            billion: 'b',
-            trillion: 't'
-        },
-
-        currency: {
-            symbol: '€'
-        }
-    });
-    numeral.locale('es');
-    
-    // Recorrido de todos los elementos con la clase "precio" para su formato de moneda 
-    
-});
 
