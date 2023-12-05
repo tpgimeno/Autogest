@@ -26,7 +26,7 @@ class VehicleService extends BaseService {
     public function list() {
         $values = Vehicle::join('brands', 'vehicles.brand_id', '=', 'brands.id')
                         ->join('models', 'vehicles.model_id', '=', 'models.id')
-                        ->get(['vehicles.id', 'brands.name as brand_id', 'models.name as model_id', 'vehicles.km', 'vehicles.pvp'])->toArray();
+                        ->get(['vehicles.id', 'brands.name as brand_id', 'models.name as model_id', 'vehicles.km', 'vehicles.vehiclePvp'])->toArray();
         return $values;
     }
 

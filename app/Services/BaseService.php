@@ -57,6 +57,8 @@ class BaseService {
     }
 
     public function saveRegister($model, $array) {
+        var_dump($model);
+        var_dump($array);die();
         $properties = $model->getProperties();
         $content = array_values($array);
         $diference = 3;
@@ -71,7 +73,10 @@ class BaseService {
                }                  
             }
             $properties = $total_properties;
-        }
+            $properties_array = array_slice($properties, 0, array_search('vehicle_id', $properties)+1);        
+            $end_array = array_slice($properties, array_search('vehicle_id', $properties)+6, count($properties));
+            $properties = array_merge($properties_array, $end_array);
+        }        
         unset($content[0], $content[1],$content[2]);
         if(count($content) > count($properties)){
             $assetsNumber = count($content) - count($properties); 
@@ -83,7 +88,8 @@ class BaseService {
             $model = $model::find(intval($array['id']));
         }
         // At this point we receive the form inputs with 3 item more than object properties. So we do $i + 3 to correct it.
-        
+//            var_dump($properties);
+//            var_dump($array);
         for ($i = 0; $i < (sizeof($properties)); $i++) {
             if ($properties[$i] == 'password') {
                 $model->{$properties[$i]} = password_hash($content[$i+$diference], PASSWORD_DEFAULT);
@@ -94,7 +100,8 @@ class BaseService {
             }else{            
                 $model->{$properties[$i]} = $content[$i+$diference];
             }
-        }        
+        } 
+        
         try {
             if ($this->findRegister($model, $array) == true) {
                 $model->update();

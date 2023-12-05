@@ -1,237 +1,108 @@
-{% macro return(list, back) %}
-     <div class="col-md-2 d-flex justify-content-end align-items-end">  
-        <a class="link pr-4" href={{ list }}>Lista</a> 
-        <a class="link " href="/Intranet/admin?selected_tab={{ back }}">Volver</a>
-    </div> 
-{% endmacro return %}
-{% macro alert(message) %}
-    <div class="col">
-        <div id="alert" class="alert alert-dark" role="alert">
-            {{ message }}
-        </div>
-    </div>
-{% endmacro alert %}
-{% macro inputRow(id, name, title, value, type = 'text') %}
-    <div class="form-group col">
-        <label for="{{ id }}">{{ title }}</label>
-        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
-    </div>
-{% endmacro inputRow %}
-{% macro input1(id, name, title, value, type = 'text') %}
-    <div class="form-group col-md-1">
-        <label for="{{ id }}">{{ title }}</label>                        
-        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
-    </div>
-{% endmacro input1 %}
-{% macro input2(id, name, title, value, type = 'text') %}
-    <div class="form-group col-md-2">
-        <label for="{{ id }}">{{ title }}</label>                        
-        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
-    </div>
-{% endmacro input2 %}
-{% macro inputDate2(id, name, title, value, type = 'date') %}
-    <div class="form-group col-md-2">
-        <label for="{{ id }}">{{ title }}</label>                        
-        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
-    </div>
-{% endmacro inputDate2 %}
-{% macro inputDate2offset2(id, name, title, value, type = 'date') %}
-    <div class="form-group col-md-2 offset-md-2">
-        <label for="{{ id }}">{{ title }}</label>                        
-        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
-    </div>
-{% endmacro inputDate2offset2 %}
-{% macro input2offset2(id, name, title, value, type = 'text') %}
-    <div class="form-group col-md-2 offset-md-2">
-        <label for="{{ id }}">{{ title }}</label>                        
-        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
-    </div>
-{% endmacro input2offset2 %}
-{% macro input2offset6(id, name, title, value, type = 'text') %}
-    <div class="form-group col-md-2 offset-md-6">
-        <label for="{{ id }}">{{ title }}</label>                        
-        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
-    </div>
-{% endmacro input2offset6 %}
-{% macro input2offset8(id, name, title, value, type = 'text') %}
-    <div class="form-group col-md-2 offset-md-8">
-        <label for="{{ id }}">{{ title }}</label>                        
-        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
-    </div>
-{% endmacro input2offset8 %}
-{% macro inputDate2offset8(id, name, title, value, type = 'date') %}
-    <div class="form-group col-md-2 offset-md-8">
-        <label for="{{ id }}">{{ title }}</label>                        
-        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
-    </div>
-{% endmacro inputDate2offset8 %}
-{% macro input3(id, name, title, value, type = 'text') %}
-    <div class="form-group col-md-3">
-        <label for="{{ id }}">{{ title }}</label>
-        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
-    </div>
-{% endmacro input3 %}
-{% macro input3offset3(id, name, title, value, type = 'text') %}
-    <div class="form-group col-md-3 offset-md-3">
-        <label for="{{ id }}">{{ title }}</label>
-        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
-    </div>
-{% endmacro input3offset3 %}
-{% macro input3offset6(id, name, title, value, type = 'text') %}
-    <div class="form-group col-md-3 offset-md-6">
-        <label for="{{ id }}">{{ title }}</label>
-        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
-    </div>
-{% endmacro input3offset6%}
-    {% macro input3offset6Date(id, name, title, value, type = 'date') %}
-    <div class="form-group col-md-3 offset-md-6">
-        <label for="{{ id }}">{{ title }}</label>
-        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
-    </div>
-{% endmacro input3offset6Date%}
-{% macro input3disabled(id, name, title, value, type = 'text') %}
-    <div class="form-group col-md-3">
-        <label for="{{ id }}">{{ title }}</label>
-        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}" disabled>
-    </div>
-{% endmacro %}
-{% macro input3offset6disabled(id, name, title, value, type = 'text') %}
-    <div class="form-group col-md-3 offset-md-6">
-        <label for="{{ id }}">{{ title }}</label>
-        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}" disabled>
-    </div>
-{% endmacro input3offset6disabled %}
-{% macro input4(id, name, title, value, type = 'text') %}
-    <div class="form-group col-md-4">
-        <label for="{{ id }}">{{ title }}</label>                        
-        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
-    </div>
-{% endmacro input4 %}
-{% macro input4offset2(id, name, title, value, type = 'text') %}
-    <div class="form-group col-md-4 offset-md-2">
-        <label for="{{ id }}">{{ title }}</label>                        
-        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
-    </div>
-{% endmacro input4offset2 %}
-{% macro input5password(id, name, title, value, type = 'password') %}
-    <div class="form-group col-md-5">
-        <label for="{{ id }}">{{ title }}</label>                        
-        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
-    </div>
-{% endmacro input5password %}
-{% macro input5(id, name, title, value, type = 'text') %}
-    <div class="form-group col-md-5">
-        <label for="{{ id }}">{{ title }}</label>                        
-        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
-    </div>
-{% endmacro input5 %}
-{% macro input6(id, name, title, value, type = 'text') %}
-    <div class="form-group col-md-6">
-        <label for="{{ id }}">{{ title }}</label>                        
-        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
-    </div>
-{% endmacro input6 %}
-{% macro input6offset4(id, name, title, value, type = 'text') %}
-    <div class="form-group col-md-6 offset-md-4">
-        <label for="{{ id }}">{{ title }}</label>                        
-        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
-    </div>
-{% endmacro input6offset4 %}
-{% macro input8(id, name, title, value, type = 'text') %}
-    <div class="form-group col-md-8">
-        <label for="{{ id }}">{{ title }}</label>                        
-        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
-    </div>
-{% endmacro input8 %}
-{% macro input9(id, name, title, value, type = 'text') %}
-    <div class="form-group col-md-9">
-        <label for="{{ id }}">{{ title }}</label>                        
-        <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
-    </div>
-{% endmacro input9 %}
-{% macro select(id, name, title, value, iterable, type = 'text') %}
-    <div class="form-group col-md-4">                        
-        <label for="{{ id }}">{{ title }}</label>
-        <select type="{{ type }}" name="{{ name }}" class="form-control" id="{{ id }}">            
-            {% for iter in iterable %} 
-                {% if iter.id == value %}
-                    <option selected="selected">{{ iter.iter }}</option>
-                {% else %}
-                    <option>{{ iter.iter }}</option>
-                {% endif %}
-            {% endfor %}
-        </select>
-    </div>
-{% endmacro select %}
-{% macro select3(id, name, title, value, iterable, function, type = 'text') %}
-    <div class="form-group col-md-3">                        
-        <label for="{{ id }}">{{ title }}</label>
-        <select type="{{ type }}" name="{{ name }}" class="form-control" id="{{ id }}" onchange="{{ function }}">
-            {% for iter in iterable %}                
-                {% if iter.id == value %}
-                    <option selected="selected">{{ iter.iter }}</option>
-                {% else %}
-                    <option>{{ iter.iter }}</option>
-                {% endif %}
-            {% endfor %}
-        </select>
-    </div>
-{% endmacro select3 %}
-{% macro select6(id, name, title, value, iterable, type = 'text') %}
-    <div class="form-group col-md-6">       
-        <label for="{{ id }}">{{ title }}</label>
-        <select type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}">
-            {% for iter in iterable %}                
-                {% if iter.id == value %}
-                    <option selected="selected">{{ iter.iter }}</option>                    
-                {% else %}
-                    <option>{{ iter.iter }}</option>
-                {% endif %}
-            {% endfor %}
-        </select>
-    </div>
-{% endmacro select6 %}
-{% macro textarea(id, name, title, value, type = 'text') %}
-     <div class="form-group col">
-        <label for="{{ id }}">{{ title }}</label>
-        <textarea class="form-control" name="{{ name }}" id="{{id}}" rows="6">{{ value }}</textarea>
-    </div>   
-{% endmacro textarea %}
-{% macro checkbox(id, name, title, value, type = 'checkbox')%}
-    <div class="form-group col-md-1 text-center">
-        <label for="{{ id }}">{{ title }}</label>        
-        {% if value is same as 0 %}
-            <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}">
-        {% elseif value is same as 1 %}
-            <input type="{{ type }}" name="{{ name }}" class="form-control" id="{{id}}" value="{{ value }}" checked>
-        {% endif %}
-    </div> 
-{% endmacro checkbox %}
-{% macro buttonsForm(back) %}
-    <div class="col text-right">
-        <button id="submit" type="submit" class="btn btn-primary">Guardar</button>
-        <a href="/Intranet/admin?selected_tab={{ back }}" class="btn btn-primary">Cancelar</a>
-    </div>
-{% endmacro buttonsForm %}
-{% macro buttonsList(back) %}
-    <div class="col text-right">
-        <button id="submit" type="submit" class="btn btn-primary">Añadir</button>
-        <a href="/Intranet/admin?selected_tab={{ back }}" class="btn btn-primary">Cancelar</a>
-    </div>
-{% endmacro buttonsList %}
-{% macro searchList(action) %}
-    <div class="col">
-        <form id="searchForm" action="{{ action }}" method="post" class="form">
-            <div class="container">
-                <div id="formRow" class="form-row text-right">
-                    <div class="col-11">                                                                                
-                        <input id="searchField" type="text" name="searchFilter" class="form-control mb-2 mr-sm-2" id="inlineFormSearchFilter">
-                    </div>
-                    <div class="col-1">
-                        <button type="submit" class="btn btn-primary mb-2">Buscar</button>
-                    </div>
+{% macro items_list_modal(modal_id, labels, main_labels, currencies, title, table_id, function, values) %}
+<div class="modal" id="{{ modal_id }}" tabindex="-1" role="dialog">
+       
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ title }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        
+      <div class="modal-body">
+        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+            <div class="row">
+                <div class="col-sm-12">
+                    <table id="{{table_id}}" class="table-light table-listados table-bordered table-striped dataTable dtr-inline">
+                        <thead>
+                            <tr>
+                                {% for item in labels %}
+                                    <th>{{ main_labels[item] }}</th>
+                                {% endfor %}
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>                        
+                        {% for value in values %}                            
+                            {% set modalTemp = [] %}
+                            <tr> 
+                                {% for item in labels %}
+                                    <td>{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
+                                    {% if (item == 'id' or (item == 'ref') or (item == 'reference') or (item == 'description') or (item == 'name') or (item == 'pvp'))%}
+                                        {% set modalTemp = modalTemp|merge({(item) : attribute(value, item)}) %}
+                                    {% endif %}
+                                {% endfor %} 
+                                
+                                <td>
+                                    <a id="editButton{{value.id}}" href="javascript:{{ function }}({{ modalTemp|json_encode() }});"><i class="fa fa-edit"Component|></i></a>                                    
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                {% for item in labels %}
+                                    <th>{{ main_labels[item] }}</th>
+                                {% endfor %}
+                                <th>Acciones</th>                                        
+                            </tr>
+                        </tfoot>                                
+                    </table>
                 </div>
             </div>
-        </form>
+        </div> 
+      </div>
+      <div class="modal-footer">        
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
     </div>
-{% endmacro searchList %}
+  </div>
+</div> 
+{% endmacro items_list_modal %}
+{% macro input_form_modal(parent_id, object_id, modal_id, title, labels, main_labels, currencies, form_id, function ) %}
+<div class="modal" id="{{ modal_id }}" tabindex="-1" role="dialog">
+      
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ title }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form class="modal-form" id="{{form_id}}" action="javascript:{{ function }};" method="post">
+              <input type="hidden" id="{{object_id}}" name="{{object_id}}" class="form-control" value="">    
+               <input type="hidden" id="{{parent_id}}" name="{{parent_id}}" class="form-control" value=""> 
+          {% for item in labels %}
+            <div class="row">
+                <div class="input-group col-12">                                            
+                    <label class="control-label" for="{{ item }}">{{ main_labels[item] }}</label>                                            
+                    <input type="text" id="{{ item }}" name="{{ item }}" class="form-control" value="">
+                </div>                            
+            </div>
+        {% endfor %}
+            <div class="row">
+                <div class="input-group col-12">                                            
+                    <label class="control-label" for="cantity">Cantidad</label>                                            
+                    <input type="text" id="cantity" name="cantity" class="form-control" value="">
+                </div>                            
+            </div>
+            <div class="row">
+                <div class="input-group col-12">                                            
+                    <label class="control-label" for="total">Importe</label>                                            
+                    <input type="text" id="total" name="total" class="form-control" value="">
+                </div>                            
+            </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-secondary" form="{{ form_id }}">Guardar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div> 
+{% endmacro input_form_modal %}
+

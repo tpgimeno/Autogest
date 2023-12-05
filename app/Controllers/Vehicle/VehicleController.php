@@ -52,7 +52,7 @@ class VehicleController extends BaseController {
         $this->titleList = 'Vehículos';
         $this->titleForm = 'Vehículo';
         $this->labels = $this->vehicleService->getLabelsArray(); 
-        $this->itemsList = array('id', 'brand_id', 'model_id', 'km', 'pvp');
+        $this->itemsList = array('id', 'brand_id', 'model_id', 'km', 'vehiclePvp');
         $this->properties = $this->vehicleService->getModelProperties($this->model);        
         $this->assetsNames = ['vehicle_accesories'];
     }    

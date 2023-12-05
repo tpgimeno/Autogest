@@ -20,10 +20,10 @@
                         'customer_id':'customer_id', 'seller_id':'seller_id',
                         'model_id':'model_id','providor_id':'providor_id',
                         'mader_id':'mader_id', 'taxes_id':'taxes_id', 
-                        'paymentWay_id':'paymentWay_id', } %}
+                        'paymentWay_id':'paymentWay_id', 'customerType':'customerType'} %}
                     {% set textareas = {'observations':'observations','vehicleComments':'vehicleComments','texts':'texts'} %}
-                    {% set dates = {'registryDate':'registryDate','sellDate':'sellDate','buyDate':'buyDate', 'arrival':'arrival','appointDate':'appointDate'} %}
-                    {% set currencies = {'pvd':'pvd','pvp':'pvp','cost':'cost','pvc':'pvc','vehiclePvp':'vehiclePvp'} %}
+                    {% set dates = {'birthDate':'birthDate','registryDate':'registryDate','sellDate':'sellDate','buyDate':'buyDate', 'arrival':'arrival','appointDate':'appointDate','offerDate':'offerDate'} %}
+                    {% set currencies = {'pvd':'pvd','pvp':'pvp','cost':'cost','pvc':'pvc','vehiclePvp':'vehiclePvp', 'discount':'discount', 'vehicleDiscount':'vehicleDiscount','tva':'tva','total':'total','costTva':'costTva','costTotal':'costTotal','vehicleTva':'vehicleTva','vehicleTotal':'vehicleTotal'} %}
                     {% set checks = {'rebu':'rebu','secondKey':'secondKey'} %}
                     {% set hidden = {'vehicle_id':'vehicle_id'} %}
                     {% set sellOffers = {'plate':'plate','brand':'brand', 'model':'model'} %}
@@ -57,7 +57,14 @@
                             
                             {% endif %}
                             {% if tab == 'components' %} 
-                                {% set vehicle_components_labels = {'id':'id','mader':'mader','ref':'ref','name':'name','cantity':'cantity','pvp':'pvp','total':'total'} %}
+                                
+                                {% if titleForm == 'Vehículo' %}
+                                    {% set vehicle_components_labels = {'id':'id','mader':'mader','ref':'ref','name':'name','cantity':'cantity','pvp':'pvp','total':'total'} %}
+                                    {% set component_functions = {'delete':'delVehicleComponent'} %}
+                                {% else %}
+                                    {% set vehicle_components_labels = {'selloffercomponent_id':'selloffercomponent_id','mader':'mader','ref':'ref','name':'name','cantity':'cantity','pvp':'pvp','total':'total'} %}
+                                    {% set component_functions = {'delete':'delSellOfferComponent'} %}
+                                {% endif %}
                                 <div id="dataTableVehicleComponents_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                     <div class="row">
                                         <div class="col-sm-12">
@@ -71,20 +78,19 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>                                    
-                                                {% for value in optionsArray['vehicle_components'] %}
-                                                    
+                                                {% for value in optionsArray['vehicle_components'] %}                                                    
                                                     <tr>
                                                         {% for item in vehicle_components_labels %}
                                                             {% if item == 'total' %}
                                                                 {% set total = value.cantity * value.pvp %}
-                                                                    <td>{{ total|format_currency('EUR', locale='es') }}</td> 
+                                                                    <td item="{{ item }}" item_value="{{ attribute(value, item) }}">{{ total|format_currency('EUR', locale='es') }}</td> 
                                                             {% else %}
-                                                                <td>{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
+                                                                <td item="{{ item }}" item_value="{{ attribute(value, item) }}">{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
                                                             {% endif %}
                                                         {% endfor %}
                                                         <td>
                                                             <a id="addButton{{value.id}}" href="javascript:setVehicleComponent({{ value|json_encode() }});"><i class="fa fa-edit"></i></a>
-                                                            <a id="delButton{{value.id}}" href="javascript:delVehicleComponent({{ value|json_encode() }});"><i class="fa fa-trash"></i></a>
+                                                            <a id="delButton{{value.id}}" href="javascript:{{ component_functions['delete'] }}({{ value|json_encode() }});"><i class="fa fa-trash"></i></a>
                                                         </td>
                                                     </tr>
                                                 {% endfor %}
@@ -100,14 +106,38 @@
                                             </table>
                                         </div>
                                     </div>
-                                </div>                                
+                                    
+                                </div> 
+                                <div class="totals-wrapper offset-7 col mt-2 mb-2">
+                                    <div class="row">
+                                        <div class="input-group">                                          
+                                            <label class="control-label" for="baseComponents">Base Imponible</label>                                            
+                                            <input type="text" disabled="true" id="baseComponents" name="baseComponents" class="assets_prices text-center"  value="">
+                                        </div>
+                                        <div class="input-group">  
+                                            <label class="control-label" for="tvaComponents">Iva</label>                                            
+                                            <input type="text" disabled="true" id="tvaComponents" name="tvaComponents" class="assets_prices text-center" value="">
+                                        </div>
+                                        <div class="input-group">  
+                                            <label class="control-label" for="totalComponents">Total Componentes</label>                                            
+                                            <input type="text" disabled="true" id="totalComponents" name="totalComponents" class="assets_prices text-center" value="">
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="button-wrapper float-left">
                                     <button type="button" data-toggle="modal" data-target="#components_modal" class="btn btn-primary" id="addComponent">Añadir</button>                                   
                                 </div>
+                                
                             {% endif %}
                             {% if tab == 'supplies' %} 
-                                {% set vehicle_supplies_labels = {'id':'id','mader':'mader','ref':'ref','name':'name','cantity':'cantity','pvp':'pvp','total':'total'} %}
-                                <div id="dataTableVehicleSupplies_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                {% if titleForm == 'Vehículo' %}
+                                    {% set vehicle_supplies_labels = {'id':'id','mader':'mader','ref':'ref','name':'name','cantity':'cantity','pvp':'pvp','total':'total'} %}
+                                    {% set supply_functions = {'delete':'delVehicleSupply'} %}
+                                {% else %}
+                                    {% set vehicle_supplies_labels = {'selloffersupply_id':'selloffersupply_id','mader':'mader','ref':'ref','name':'name','cantity':'cantity','pvp':'pvp','total':'total'} %}
+                                    {% set supply_functions = {'delete':'delSellOfferSupply'} %}
+                                {% endif %}
+                                    <div id="dataTableVehicleSupplies_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <table id="dataTableVehicleSupplies" class="table-light table-listados table-bordered table-striped dataTable dtr-inline">
@@ -125,15 +155,15 @@
                                                         {% for item in vehicle_supplies_labels %}
                                                             {% if item == 'total' %}
                                                                 {% set total = value.cantity * value.pvp %}
-                                                                <td>{{ total|format_currency('EUR', locale='es') }}</td> 
+                                                                <td item="{{ item }}" item_value="{{ attribute(value, item) }}">{{ total|format_currency('EUR', locale='es') }}</td> 
                                                             {% else %}
-                                                                <td>{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
+                                                                <td item="{{ item }}" item_value="{{ attribute(value, item) }}">{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
                                                             {% endif %}
                                                         {% endfor %}
                                                         <td>
                                                             
                                                             <a id="addButton{{value.id}}" href="javascript:setVehicleSupply({{ value|json_encode() }});"><i class="fa fa-edit"></i></a>
-                                                            <a id="delButton{{value.id}}" href="javascript:delVehicleSupply({{ value|json_encode() }});"><i class="fa fa-trash"></i></a>
+                                                            <a id="delButton{{value.id}}" href="javascript:{{ supply_functions['delete'] }}({{ value|json_encode() }});"><i class="fa fa-trash"></i></a>
                                                         </td>
                                                     </tr>
                                                 {% endfor %}
@@ -149,13 +179,35 @@
                                             </table>
                                         </div>
                                     </div>
+                                    <div class="totals-wrapper offset-7 col mt-2 mb-2">
+                                    <div class="row">
+                                        <div class="input-group">                                          
+                                            <label class="control-label" for="baseSupplies">Base Imponible</label>                                            
+                                            <input type="text" disabled="true" id="baseSupplies" name="baseSupplies" class="assets_prices text-center"  value="">
+                                        </div>
+                                        <div class="input-group">  
+                                            <label class="control-label" for="tvaSupplies">Iva</label>                                            
+                                            <input type="text" disabled="true" id="tvaSupplies" name="tvaSupplies" class="assets_prices text-center" value="">
+                                        </div>
+                                        <div class="input-group">  
+                                            <label class="control-label" for="totalSupplies">Total Recambios</label>                                            
+                                            <input type="text" disabled="true" id="totalSupplies" name="totalSupplies" class="assets_prices text-center" value="">
+                                        </div>
+                                    </div>
+                                </div>
                                 </div>                                
                                 <div class="button-wrapper float-left">
                                     <button type="button" data-toggle="modal" data-target="#supplies_modal" class="btn btn-primary" id="addSupply">Añadir</button>                                   
                                 </div>
                             {% endif %}
                             {% if tab == 'works' %} 
-                                {% set vehicle_works_labels = {'id':'id','reference':'reference','description':'description','cantity':'cantity','pvp':'pvp','total':'total'} %}
+                                {% if titleForm == 'Vehículo' %}
+                                    {% set vehicle_works_labels = {'id':'id','reference':'reference','description':'description','cantity':'cantity','pvp':'pvp','total':'total'} %}
+                                    {% set work_functions = {'delete':'delVehicleWork'} %}
+                                {% else %}
+                                    {% set vehicle_works_labels = {'sellofferwork_id':'sellofferwork_id','reference':'reference','description':'description','cantity':'cantity','pvp':'pvp','total':'total'} %}
+                                    {% set work_functions = {'delete':'delVehicleWork'} %}
+                                {% endif %}
                                 <div id="dataTableVehicleWorks_wrapper" class="dataTables_wrapper dt-bootstrap4">
                                     <div class="row">
                                         <div class="col-sm-12">
@@ -174,14 +226,14 @@
                                                         {% for item in vehicle_works_labels %}
                                                             {% if item == 'total' %}
                                                                 {% set total = value.cantity * value.pvp %}
-                                                                <td>{{ total|format_currency('EUR', locale='es') }}</td> 
+                                                                <td item="{{ item }}" item_value="{{ attribute(value, item) }}">{{ total|format_currency('EUR', locale='es') }}</td> 
                                                             {% else %}
-                                                                <td>{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
+                                                                <td item="{{ item }}" item_value="{{ attribute(value, item) }}">{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
                                                             {% endif %}
                                                         {% endfor %}
                                                         <td>
                                                             <a id="addButton{{value.id}}" href="javascript:setVehicleWorks({{ value|json_encode() }});"><i class="fa fa-edit"></i></a>
-                                                            <a id="delButton{{value.id}}" href="javascript:delVehicleWorks({{ value|json_encode() }});"><i class="fa fa-trash"></i></a>
+                                                            <a id="delButton{{value.id}}" href="javascript:delVehicleWork({{ value|json_encode() }});"><i class="fa fa-trash"></i></a>
                                                         </td>
                                                     </tr>
                                                 {% endfor %}
@@ -197,6 +249,22 @@
                                             </table>
                                         </div>
                                     </div>
+                                    <div class="totals-wrapper offset-7 col mt-2 mb-2">
+                                    <div class="row">
+                                        <div class="input-group">                                          
+                                            <label class="control-label" for="baseWorks">Base Imponible</label>                                            
+                                            <input type="text" disabled="true" id="baseWorks" name="baseWorks" class="assets_prices text-center"  value="">
+                                        </div>
+                                        <div class="input-group">  
+                                            <label class="control-label" for="tvaWorks">Iva</label>                                            
+                                            <input type="text" disabled="true" id="tvaWorks" name="tvaWorks" class="assets_prices text-center" value="">
+                                        </div>
+                                        <div class="input-group">  
+                                            <label class="control-label" for="totalWorks">Total Componentes</label>                                            
+                                            <input type="text" disabled="true" id="totalWorks" name="totalWorks" class="assets_prices text-center" value="">
+                                        </div>
+                                    </div>
+                                </div>
                                 </div>                                
                                 <div class="button-wrapper float-left">
                                     <button type="button" data-toggle="modal" data-target="#works_modal" class="btn btn-primary" id="addSupply">Añadir</button>                                   
@@ -231,7 +299,7 @@
                                             <select id="{{ item }}" name="{{ item }}" class="form-control select2" value="">
                                                 {% for option in optionsArray['vehicles'] %}
                                                     {% if item == 'plate' %}
-                                                        <option km="{{ option['km'] }}" vin="{{ option['vin'] }}" price="{{ option['pvp'] }}" vehicle_brand="{{ option['brand_id'] }}" vehicle_model="{{ option['model_id'] }}" value="{{ option['id'] }}" >{{ option['plate'] }}</option>                                                        
+                                                        <option km="{{ option['km'] }}" vin="{{ option['vin'] }}" price="{{ option['vehiclePvp'] }}" vehicle_brand="{{ option['brand_id'] }}" vehicle_model="{{ option['model_id'] }}" value="{{ option['id'] }}" >{{ option['plate'] }}</option>                                                        
                                                     {% elseif item == 'brand' %}
                                                         {% for brand_item in optionsArray['brands'] %}
                                                             <option value="{{ brand_item.id }}" {% if brand_item.id == option['brand_id'] %}{{ 'selected="true"' }}{%  endif %}>{{ brand_item.name }}</option>
@@ -282,7 +350,7 @@
                         </div>
                     {% else %}
                         {% for property in properties %}
-                            {% if property in selects %}
+                            {% if property in selects %}                                
                                 <div class="row">
                                     <div class="input-group col-10">
                                         <label class="control-label" for="{{ property }}">{{ labels[property] }}</label>
@@ -326,7 +394,7 @@
                                 </div>
                             {% endif %}                                                    
                         {% endfor %}                    
-                    {% endif %}        
+                    {% endif %}                     
                     {% if value.id != null %}
                         <div class="button-wrapper float-left">
                             <a class="btn btn-primary" id="delete_button" href="Intranet/{{ route }}/delete?id={{ value.id }}&menu={{ menuState }}&item={{ menuItem }}">Eliminar</a>                            
@@ -341,312 +409,31 @@
         </div>
     </section>
 </div>
-<div class="modal" id="components_modal" tabindex="-1" role="dialog">
-{% set components_labels = {'id':'id','ref':'ref','name':'name','pvp':'pvp'} %}        
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Componentes</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-        
-      <div class="modal-body">
-        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-            <div class="row">
-                <div class="col-sm-12">
-                    <table id="dataTableComponents" class="table-light table-listados table-bordered table-striped dataTable dtr-inline">
-                        <thead>
-                            <tr>
-                                {% for item in components_labels %}
-                                    <th>{{ labels[item] }}</th>
-                                {% endfor %}
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>  
-                        
-                        {% for value in optionsArray['components'] %}
-                            {% set modalComponent = [] %}
-                            <tr> 
-                                {% for item in components_labels %}
-                                    <td>{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
-                                    {% if (item == 'id' or (item == 'ref') or (item == 'name') or (item == 'pvp'))%}
-                                        {% set modalComponent = modalComponent|merge([attribute(value, item)]) %}
-                                    {% endif %}
-                                {% endfor %}
-                                <td>
-                                    <a id="editButton{{value.id}}" href="javascript:setVehicleComponent({{ modalComponent|json_encode() }});"><i class="fa fa-edit"></i></a>                                    
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                {% for item in components_labels %}
-                                    <th>{{ labels[item] }}</th>
-                                {% endfor %}
-                                <th>Acciones</th>                                        
-                            </tr>
-                        </tfoot>                                
-                    </table>
-                </div>
-            </div>
-        </div> 
-      </div>
-      <div class="modal-footer">        
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div> 
-<div class="modal" id="supplies_modal" tabindex="-1" role="dialog">
-{% set supplies_labels = {'id':'id','ref':'ref','name':'name','pvp':'pvp'} %}        
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Recambios</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-        
-      <div class="modal-body">
-        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-            <div class="row">
-                <div class="col-sm-12">
-                    <table id="dataTableSupplies" class="table-light table-listados table-bordered table-striped dataTable dtr-inline">
-                        <thead>
-                            <tr>
-                                {% for item in supplies_labels %}
-                                    <th>{{ labels[item] }}</th>
-                                {% endfor %}
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>  
-                        
-                        {% for value in optionsArray['supplies'] %}
-                            {% set modalSupply = [] %}
-                            <tr> 
-                                {% for item in supplies_labels %}
-                                    <td>{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
-                                    {% if (item == 'id' or (item == 'ref') or (item == 'name') or (item == 'pvp'))%}
-                                        {% set modalSupply = modalSupply|merge([attribute(value, item)]) %}
-                                    {% endif %}
-                                {% endfor %}
-                                <td>
-                                    <a id="editButton{{value.id}}" href="javascript:setVehicleSupply({{ modalSupply|json_encode() }});"><i class="fa fa-edit"></i></a>
-                                    
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                {% for item in supplies_labels %}
-                                    <th>{{ labels[item] }}</th>
-                                {% endfor %}
-                                <th>Acciones</th>                                        
-                            </tr>
-                        </tfoot>                                
-                    </table>
-                </div>
-            </div>
-        </div> 
-      </div>
-      <div class="modal-footer">        
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div> 
-<div class="modal" id="works_modal" tabindex="-1" role="dialog">
-{% set works_labels = {'id':'id','reference':'reference','description':'description','pvp':'pvp'} %}        
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Trabajos</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>        
-      <div class="modal-body">
-        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-            <div class="row">
-                <div class="col-sm-12">
-                    <table id="dataTableWorks" class="table-light table-listados table-bordered table-striped dataTable dtr-inline">
-                        <thead>
-                            <tr>
-                                {% for item in works_labels %}
-                                    <th>{{ labels[item] }}</th>
-                                {% endfor %}
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>                        
-                        {% for value in optionsArray['works'] %}
-                            {% set modalWork = [] %}
-                            <tr> 
-                                {% for item in works_labels %}
-                                    <td>{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
-                                    {% if (item == 'id' or (item == 'reference') or (item == 'description') or (item == 'pvp'))%}
-                                        {% set modalWork = modalWork|merge([attribute(value, item)]) %}
-                                    {% endif %}
-                                {% endfor %}
-                                <td>
-                                    <a id="editButton{{value.id}}" href="javascript:setVehicleWork({{ modalWork|json_encode() }});"><i class="fa fa-edit"></i></a>
-                                    
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                {% for item in works_labels %}
-                                    <th>{{ labels[item] }}</th>
-                                {% endfor %}
-                                <th>Acciones</th>                                        
-                            </tr>
-                        </tfoot>                                
-                    </table>
-                </div>
-            </div>
-        </div> 
-      </div>
-      <div class="modal-footer">        
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div> 
-<div class="modal" id="components_form_modal" tabindex="-1" role="dialog">
-{% set component_form_labels = {'id':'id','ref':'ref','name':'name','pvp':'pvp'} %}        
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Componente</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          <form class="modal-form" id="vehicle_component_form" action="javascript:saveVehicleComponent();" method="post">
-              <input type="hidden" id="vehicle_id" name="vehicle_id" class="form-control" value="">    
-          {% for item in component_form_labels %}
-            <div class="row">
-                <div class="input-group col-12">                                            
-                    <label class="control-label" for="{{ item }}">{{ labels[item] }}</label>                                            
-                    <input type="text" id="{{ item }}" name="{{ item }}" class="form-control" value="">
-                </div>                            
-            </div>
-        {% endfor %}
-            <div class="row">
-                <div class="input-group col-12">                                            
-                    <label class="control-label" for="cantity">Cantidad</label>                                            
-                    <input type="text" id="cantity" name="cantity" class="form-control" value="">
-                </div>                            
-            </div>
-            <div class="row">
-                <div class="input-group col-12">                                            
-                    <label class="control-label" for="total">Importe</label>                                            
-                    <input type="text" id="total" name="total" class="form-control" value="">
-                </div>                            
-            </div>
-          </form>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-secondary" form="vehicle_component_form">Guardar</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div> 
-<div class="modal" id="supplies_form_modal" tabindex="-1" role="dialog">
-{% set supply_form_labels = {'id':'id','ref':'ref','name':'name','pvp':'pvp'} %}        
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Recambio</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          <form class="modal-form" id="vehicle_supply_form" action="javascript:saveVehicleSupply();" method="post">
-              <input type="hidden" id="vehicle_id" name="vehicle_id" class="form-control" value="">    
-          {% for item in supply_form_labels %}
-            <div class="row">
-                <div class="input-group col-12">                                            
-                    <label class="control-label" for="{{ item }}">{{ labels[item] }}</label>                                            
-                    <input type="text" id="{{ item }}" name="{{ item }}" class="form-control" value="">
-                </div>                            
-            </div>
-        {% endfor %}
-            <div class="row">
-                <div class="input-group col-12">                                            
-                    <label class="control-label" for="cantity">Cantidad</label>                                            
-                    <input type="text" id="cantity" name="cantity" class="form-control" value="">
-                </div>                            
-            </div>
-            <div class="row">
-                <div class="input-group col-12">                                            
-                    <label class="control-label" for="total">Importe</label>                                            
-                    <input type="text" id="total" name="total" class="form-control" value="">
-                </div>                            
-            </div>
-          </form>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-secondary" form="vehicle_supply_form">Guardar</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div> 
-<div class="modal" id="works_form_modal" tabindex="-1" role="dialog">
-{% set work_form_labels = {'id':'id','reference':'reference','description':'description','pvp':'pvp'} %}        
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Trabajo</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          <form class="modal-form" id="vehicle_work_form" action="javascript:saveVehicleWork();" method="post">
-              <input type="hidden" id="vehicle_id" name="vehicle_id" class="form-control" value="">    
-          {% for item in work_form_labels %}
-            <div class="row">
-                <div class="input-group col-12">                                            
-                    <label class="control-label" for="{{ item }}">{{ labels[item] }}</label>                                            
-                    <input type="text" id="{{ item }}" name="{{ item }}" class="form-control" value="">
-                </div>                            
-            </div>
-        {% endfor %}
-            <div class="row">
-                <div class="input-group col-12">                                            
-                    <label class="control-label" for="cantity">Cantidad</label>                                            
-                    <input type="text" id="cantity" name="cantity" class="form-control" value="">
-                </div>                            
-            </div>
-            <div class="row">
-                <div class="input-group col-12">                                            
-                    <label class="control-label" for="total">Importe</label>                                            
-                    <input type="text" id="total" name="total" class="form-control" value="">
-                </div>                            
-            </div>
-          </form>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-secondary" form="vehicle_work_form">Guardar</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
-            
+{% import 'macros.html.twig' as macros %}
+{% if titleForm == 'Vehículo' %} 
+    {% set components_labels = {'id':'id','ref':'ref','name':'name','pvp':'pvp'} %} 
+    {% set supplies_labels = {'id':'id','ref':'ref','name':'name','pvp':'pvp'} %} 
+    {% set works_labels = {'id':'id','reference':'reference','description':'description','pvp':'pvp'} %}
+    {% set parent_id = 'vehicle_id' %}
+    {% set object_id = {'1':'component_id', '2':'supply_id', '3':'work_id'} %}
+    {% set functions = {'1':'setVehicleComponent','2':'saveVehicleComponent()','3':'setVehicleSupply','4':'saveVehicleSupply()', '5':'setVehicleWork','6':'saveVehicleWork()'} %}
+    {% set titles = {'1':'vehicle_component_form','2':'vehicle_supply_form','3':'vehicle_works_form'} %}
+{% else %}
+    {% set components_labels = {'id':'id', 'ref':'ref','name':'name','pvp':'pvp'} %}
+    {% set supplies_labels = {'id':'id','ref':'ref','name':'name','pvp':'pvp'} %} 
+    {% set works_labels = {'id':'id','reference':'reference','description':'description','pvp':'pvp'} %}
+    {% set parent_id = 'selloffer_id' %}
+    {% set object_id = {'1':'component_id','2':'supply_id','3':'work_id'} %}
+    {% set functions = {'1':'setVehicleComponent','2':'saveSellOfferComponent()', '3':'setVehicleSupply', '4':'saveSellOfferSupply()','5':'setVehicleWork','6':'saveSellOfferWork()'} %}
+    {% set titles = {'1':'selloffer_component_form','2':'selloffer_supply_form','3':'selloffer_work_form'} %}
+{% endif %}
+
+{{ macros.items_list_modal('components_modal', components_labels, labels, currencies, 'Componentes', 'dataTableComponents',functions['1'], optionsArray['components']) }}
+{{ macros.input_form_modal(parent_id, object_id['1'], 'component_form_modal', 'Componente', components_labels, labels, currencies, titles['1'], functions['2']) }}
+{{ macros.items_list_modal('supplies_modal', supplies_labels, labels, currencies, 'Recambios', 'dataTableSupplies',functions['3'], optionsArray['supplies']) }}
+{{ macros.input_form_modal(parent_id, object_id['2'], 'supply_form_modal', 'Recambio', supplies_labels, labels, currencies, titles['2'], functions['4']) }}    
+{{ macros.items_list_modal('works_modal', works_labels, labels, currencies, 'Trabajos', 'dataTableWorks',functions['5'], optionsArray['works']) }}
+{{ macros.input_form_modal(parent_id, object_id['3'], 'work_form_modal', 'Work', works_labels, labels, currencies, titles['3'], functions['6']) }}
+
 {% endblock %}
 

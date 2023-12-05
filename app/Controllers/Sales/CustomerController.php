@@ -4,6 +4,7 @@ namespace App\Controllers\Sales;
 
 use App\Controllers\BaseController;
 use App\Models\Customer;
+use App\Models\CustomerTypes;
 use App\Services\Sales\CustomerService;
 use Exception;
 use Laminas\Diactoros\ServerRequest;
@@ -29,6 +30,7 @@ class CustomerController extends BaseController {
     
     public function getCustomerDataAction($request) {                
         $responseMessage = null;
+        $iterables = ['customerType' => $this->customerService->getAllRegisters(new CustomerTypes())];
         if($request->getMethod() == 'POST') {
             $postData = $request->getParsedBody();
             $customerValidator = v::key('name', v::stringType()->notEmpty()) 
@@ -40,9 +42,9 @@ class CustomerController extends BaseController {
             } catch(Exception $e) {                
                 $responseMessage = $e->getMessage();
             }  
-            return $this->getBasePostDataAction($request, $this->model, null, $responseMessage);
+            return $this->getBasePostDataAction($request, $this->model, $iterables, $responseMessage);
         }else{
-            return $this->getBaseGetDataAction($request, $this->model, null);    
+            return $this->getBaseGetDataAction($request, $this->model, $iterables);    
         }       
         
     }   

@@ -71,6 +71,14 @@ class BaseController {
         }else{
             $postData = $request;
         }
+        if(isset($postData['plate']) and $postData['menuItem'] === 'offers'){
+            unset($postData['brand'], $postData['model'], $postData['vin'], $postData['km']);
+            $postDataInitial = array_slice($postData, 0, (array_search('texts',array_keys($postData)))+1);
+            $temp = array_slice($postData, (array_search('texts',array_keys($postData)))+1, count($postData));
+            $postDataInitial = array_merge($postDataInitial, ['vehicle_id' => $postData['plate']]);     
+            unset($temp['plate']);
+            $postData = array_merge($postDataInitial, $temp);
+        }
         
         $response = $this->baseService->saveRegister(new $model, $postData);        
         if($response){

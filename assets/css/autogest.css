@@ -42,6 +42,7 @@ table.dataTable>thead .sorting_asc_disabled:before, table.dataTable>thead .sorti
 }
 
 
+
 /*
 * ================
 *   Forms
@@ -66,6 +67,7 @@ table.dataTable>thead .sorting_asc_disabled:before, table.dataTable>thead .sorti
     margin-right: 2em;
     margin-top: auto;
 }
+
 
 .content-wrapper .content-header{
     margin-left: 1em;

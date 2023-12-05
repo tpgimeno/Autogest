@@ -22,7 +22,7 @@ final class CreateTableSellOffersComponents extends AbstractMigration
         $table->addColumn('selloffer_id', 'integer')
                 ->addColumn('component_id', 'integer')
                 ->addColumn('cantity', 'integer')
-                ->addColumn('price', 'float')
+                ->addColumn('pvp', 'float')
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime', ['null' => true])
                 ->addColumn('deleted_at', 'datetime', ['null' => true])
