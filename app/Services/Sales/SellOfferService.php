@@ -58,7 +58,7 @@ class SellOfferService extends BaseService{
                 $supplies = SellOffersSupplies::join('supplies', 'sellofferssupplies.supply_id', '=', 'supplies.id')
                         ->join('maders', 'supplies.mader_id', '=', 'maders.id')
                         ->where('sellofferssupplies.selloffer_id', '=', intval($postData['id']))
-                        ->select('sellofferssupplies.id as supply_id', 'sellofferssupplies.id as selloffersupply_id', 'maders.name as mader', 'supplies.ref as ref', 'supplies.name as name', 'sellofferssupplies.pvp', 'sellofferssupplies.cantity')
+                        ->select('supplies.id as supply_id', 'sellofferssupplies.id as selloffersupply_id', 'maders.name as mader', 'supplies.ref as ref', 'supplies.name as name', 'sellofferssupplies.pvp', 'sellofferssupplies.cantity')
                         ->get();
             }
         }else{
@@ -67,7 +67,7 @@ class SellOfferService extends BaseService{
                 $supplies = SellOffersSupplies::join('supplies', 'sellofferssupplies.supply_id', '=', 'supplies.id')
                          ->join('maders', 'supplies.mader_id', '=', 'maders.id')
                         ->where('sellofferssupplies.selloffer_id', '=', intval($params['id']))
-                        ->select('sellofferssupplies.id as supply_id', 'sellofferssupplies.id as selloffersupply_id', 'maders.name as mader', 'supplies.ref as ref', 'supplies.name as name', 'sellofferssupplies.pvp', 'sellofferssupplies.cantity')
+                        ->select('supplies.id as supply_id', 'sellofferssupplies.id as selloffersupply_id', 'maders.name as mader', 'supplies.ref as ref', 'supplies.name as name', 'sellofferssupplies.pvp', 'sellofferssupplies.cantity')
                         ->get();
             }
         }        
@@ -78,18 +78,20 @@ class SellOfferService extends BaseService{
         $works = null;
         if ($request->getMethod() == 'POST') {
             $postData = $request->getParsedBody();
+            
             if(isset($postData['id'])){
                 $works = SellOffersWorks::join('works', 'selloffersworks.work_id', '=', 'works.id')
-                        ->where('selloffersworks.selloffer_id', '=', $postData['id'])
-                        ->select('works.id as work_id', 'selloffersworks.id as sellofferwork_id', 'works.reference', 'works.description as description', 'selloffersworks.pvp', 'selloffersworks.cantity')
+                        ->where('selloffersworks.selloffer_id', '=', intval($postData['id']))
+                        ->select('works.id as work_id', 'selloffersworks.id as sellofferwork_id', 'works.ref as ref', 'works.name as name', 'selloffersworks.pvp', 'selloffersworks.cantity')
                         ->get();
             }
         }else{
             $params = $request->getQueryParams();
+           
             if(isset($params['id'])){
                 $works = SellOffersWorks::join('works', 'selloffersworks.work_id', '=', 'works.id')
-                        ->where('selloffersworks.selloffer_id', '=', $params['id'])
-                        ->select('works.id as work_id', 'selloffersworks.id as sellofferwork_id', 'works.reference', 'works.description as description', 'selloffersworks.pvp', 'selloffersworks.cantity')
+                        ->where('selloffersworks.selloffer_id', '=', intval($params['id']))
+                        ->select('works.id as work_id', 'selloffersworks.id as sellofferwork_id', 'works.ref', 'works.name', 'selloffersworks.pvp', 'selloffersworks.cantity')
                         ->get();
             }
         }
@@ -144,8 +146,7 @@ class SellOfferService extends BaseService{
     }
     
     public function deleteSellOfferComponentAjax($postData){
-    
-        $component = SellOffersComponents::where('id', '=', $postData['id'])
+        $component = SellOffersComponents::where('id', '=', $postData['selloffercomponent_id'])
                 ->get()->first();
         $component->delete();
         $responseMessage = "Componente Eliminado";
@@ -178,7 +179,7 @@ class SellOfferService extends BaseService{
     
     public function deleteSellOfferSupplyAjax($postData){
     
-        $supply = SellOffersSupplies::where('id', '=', $postData['id'])
+        $supply = SellOffersSupplies::where('id', '=', $postData['selloffersupply_id'])
                 ->get()->first();
         $supply->delete();
         $responseMessage = "Componente Eliminado";
@@ -212,7 +213,7 @@ class SellOfferService extends BaseService{
     
     public function deleteSellOfferWorkAjax($postData){
     
-        $work = SellOffersWorks::where('id', '=', $postData['id'])
+        $work = SellOffersWorks::where('id', '=', $postData['sellofferwork_id'])
                 ->get()->first();
         $work->delete();
         $responseMessage = "Componente Eliminado";

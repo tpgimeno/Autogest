@@ -9,7 +9,7 @@ class Works extends Model
 {
     use SoftDeletes;
     protected $table = "works";
-    protected $properties = ['reference', 'description', 'observations', 'pvc', 'pvp'];
+    protected $properties = ['ref', 'name', 'observations', 'pvc', 'pvp'];
     public function getProperties(){
         return $this->properties;
     }

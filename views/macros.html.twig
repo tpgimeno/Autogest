@@ -1,7 +1,7 @@
 {% macro items_list_modal(modal_id, labels, main_labels, currencies, title, table_id, function, values) %}
 <div class="modal" id="{{ modal_id }}" tabindex="-1" role="dialog">
        
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">{{ title }}</h5>
@@ -28,7 +28,8 @@
                             {% set modalTemp = [] %}
                             <tr> 
                                 {% for item in labels %}
-                                    <td>{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
+                                    
+                                    <td>{% if item in currencies %}{{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
                                     {% if (item == 'id' or (item == 'ref') or (item == 'reference') or (item == 'description') or (item == 'name') or (item == 'pvp'))%}
                                         {% set modalTemp = modalTemp|merge({(item) : attribute(value, item)}) %}
                                     {% endif %}
@@ -60,10 +61,10 @@
   </div>
 </div> 
 {% endmacro items_list_modal %}
-{% macro input_form_modal(parent_id, object_id, modal_id, title, labels, main_labels, currencies, form_id, function ) %}
+{% macro input_form_modal(parent_id, object_id, modal_id, title, labels, main_labels, currencies, form_id, function, setUrl ) %}
 <div class="modal" id="{{ modal_id }}" tabindex="-1" role="dialog">
       
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">{{ title }}</h5>
@@ -105,4 +106,67 @@
   </div>
 </div> 
 {% endmacro input_form_modal %}
+{% macro assetsDataTable(wrapper, table_id, labels, main_labels, values, currencies, setFunction, delFunction, url, data, base_asset, base_text, tva_asset, tva_text, total_asset, total_text, assets_modal) %}
+    <div id="{{ wrapper }}" class="dataTables_wrapper dt-bootstrap4">
+        <div class="row">
+            <div class="col-sm-12">
+                <table id="{{ table_id }}" class="table-light table-listados table-bordered table-striped dataTable dtr-inline">
+                    <thead>
+                        <tr>
+                            {% for item in labels %}
+                                <th>{{ main_labels[item] }}</th>
+                            {% endfor %}
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>                                    
+                    {% for value in values %}                                                    
+                        <tr>
+                            {% for item in labels %}
+                                {% if item == 'total' %}
+                                    {% set total = value.cantity * value.pvp %}
+                                        <td item="{{ item }}" item_value="{{ attribute(value, item) }}">{{ total|format_currency('EUR', locale='es') }}</td> 
+                                {% else %}
+                                    <td item="{{ item }}" item_value="{{ attribute(value, item) }}">{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
+                                {% endif %}
+                            {% endfor %}
+                            <td>
+                                <a id="addButton{{value.id}}" href="javascript:{{ setFunction }}({{ value|json_encode() }});"><i class="fa fa-edit"></i></a>
+                                <a id="delButton{{value.id}}" href="javascript:{{ delFunction }}({{ value|json_encode() }});"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            {% for item in labels %}
+                                <th>{{ main_labels[item] }}</th>
+                            {% endfor %}
+                            <th>Acciones</th>                                        
+                        </tr>
+                    </tfoot>                                
+                </table>
+            </div>
+        </div>
+    </div> 
+    <div class="totals-wrapper offset-7 col mt-2 mb-2">
+        <div class="row">
+            <div class="input-group">                                          
+                <label class="control-label" for="{{ base_asset }}">{{ base_text }}</label>                                            
+                <input type="text" disabled="true" id="{{ base_asset }}" name="{{ base_asset }}s" class="assets_prices text-center"  value="">
+            </div>
+            <div class="input-group">  
+                <label class="control-label" for="{{ tva_asset }}">{{ tva_text }}</label>                                            
+                <input type="text" disabled="true" id="{{ tva_asset }}" name="{{ tva_asset }}" class="assets_prices text-center" value="">
+            </div>
+            <div class="input-group">  
+                <label class="control-label" for="{{ total_asset }}">{{ total_text }}</label>                                            
+                <input type="text" disabled="true" id="{{ total_asset }}" name="{{ total_asset }}" class="assets_prices text-center" value="">
+            </div>
+        </div>
+    </div>
+    <div class="button-wrapper float-left">
+        <button type="button" data-toggle="modal" data-target="#{{ assets_modal }}" class="btn btn-primary" id="addComponent">Añadir</button>                                   
+    </div>
+{% endmacro assetsDataTable %}
 

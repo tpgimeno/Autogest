@@ -59,7 +59,8 @@ class SellOffersController extends BaseController {
             'vehicle_supplies' => $this->sellOfferService->getSellOfferSupplies($request),
             'vehicle_works' => $this->sellOfferService->getSellOfferWorks($request)
         ];
-//        var_dump($iterables['vehicle_components']);die();
+//        var_dump($request->getQueryParams());
+//        var_dump($iterables['vehicle_works']);die();
         if($request->getMethod() == 'POST'){
             $postData = $request->getParsedBody();             
             $offerValidator = v::key('offerNumber', v::stringType()->notEmpty())

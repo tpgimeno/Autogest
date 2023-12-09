@@ -1,117 +1,15 @@
 /* Jquery */
+/* global numeral */
+
 $(document).ready(function(){ 
     
     /*
-     *   Init DataTables
-     */    
-    
-    $('.dataTable').DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#dataTable_wrapper .col-md-6:eq(0)');
-    
-    /*
-     *   Add Double Click event to DataTables in Vehicles and Offers
-     */  
-    var assets = ['Components', 'Supplies', 'Works'];
-    var assetsFunctions = ['setVehicleComponent', 'setVehicleSupply', 'setWork'];
-    for(let i = 0;i < assets.length; i++){
-        let table = new DataTable('#dataTable'+assets[i]);
-        table.on('dblclick', 'tbody tr', function(){
-            let data = table.row(this).data();
-            assetsFunctions[i](data);        
-        });
-    }
-    
-    /*
-     *  Function to reset all the inputs 
-     *  */
-    
-    $('#reset').on('click', function(){
-        $('input[type=text]').each(function(){
-           $(this).val(""); 
-        });
-        
-    });
-    
-    /*
-     * ==================================================================================
-     *   Function to keep opened the menu-collapse selected and activate current screen.
-     * ==================================================================================
-     */
-    
-    $('.nav-link').each(function(){
-        $(this).on('shown.bs.tab', function(){
-            $('.select2').select2();
-            if($(this).attr('id') === 'accesories-tab'){
-                set_accesories();
-            }            
-            if($(this).attr('id') === 'components-tab' || $(this).attr('id') === 'supplies-tab' || $(this).attr('id') === 'works-tab'){
-                var delButton = $('#delete_button');
-                delButton.attr('style', 'display:none;');
-            }
-        });
-    });
-    
-    /*
      * =============================================================================
-     * Initializing Select2
-     * =============================================================================
-     */
-    $('.select2').select2({
-        tags : true,        
-    });
-    
-    
-    
-    // Function to validate checked on checboxes
-    
-    var checks_form = ['secondKey', 'rebu'];
-    for(let i = 0; i < checks_form.length; i++){        
-        $('#'+checks_form[i]).change(function(){
-            if($(this).prop('checked')){
-               $(this).val(1);
-            }else{
-               $(this).val(0);
-            }
-        });
-    }
-    
-    // Function to set and unset Vehicle Accesories
-    
-    var checks_accesories = $('.accesory_check');
-    checks_accesories.each(function(){
-        $(this).change(function(){
-            if($(this).prop('checked')){
-                add_accesories($(this).attr('id'));
-            }else{
-                del_accesories($(this).attr('id'));
-            }
-        });
-        set_accesories();
-    });    
-    
-     /*
-     * =============================================================================
-     * Calculate Imports in Modals and Currency Format them
+     * GLOBAL FUNCTIONS ON PAGE READY
      * =============================================================================
      */
     
-    
-    $('.modal-form').each(function(){
-        $(this).each(function(){
-            var modal = $(this).attr('id');
-            $('#'+modal+' #cantity').change(function(){
-              var cant = $(this).val();
-              var price = $('#'+modal+' #pvp').val();
-              var total = numeral(parseFloat(cant) * parseFloat(price));
-              $('#'+modal+' #total').val(total.format('(0,0.00$)'));
-           });
-        });
-    });
-    
-     /*
-     * =============================================================================
+    /*
      * Numeral JS Function
      * =============================================================================
      */
@@ -134,11 +32,96 @@ $(document).ready(function(){
     });
     numeral.locale('es');
     
-     /*
-     * =============================================================================
-     * EventListener to set SellOffer Vehicle Prices
+    /*
+     *   Init DataTables
+     *   ==========================================================================
+     */    
+    
+    $('.dataTable').DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#dataTable_wrapper .col-md-6:eq(0)');
+    
+    
+    
+    /*
+     *  Function to reset all the inputs 
+     *  ============================================================================
+     * /
+    
+    $('#reset').on('click', function(){
+        $('input[type=text]').each(function(){
+           $(this).val(""); 
+        });
+        
+    });   
+    
+    /*
+     *  Initializing Select2
      * =============================================================================
      */
+    $('.select2').select2({
+        tags : true       
+    });
+    
+    
+    
+    Date.prototype.toDateInputValue = (function() {
+        var local = new Date(this);
+        local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+        return local.toJSON().slice(0,10);
+    });
+    if(!$('#offerDate').val()){
+        $('#offerDate').val(new Date().toDateInputValue());
+    }
+    
+    /*
+     * =============================================================================
+     * VEHICLE FUNCTIONS ON PAGE READY
+     * =============================================================================
+     */
+    
+    // Function to validate checked on checboxes
+    if($('form.form-horizontal').attr('id') === "formVehiculo"){
+        var checks_form = ['secondKey', 'rebu'];
+        for(let i = 0; i < checks_form.length; i++){        
+            $('#'+checks_form[i]).change(function(){
+                if($(this).prop('checked')){
+                   $(this).val(1);
+                }else{
+                   $(this).val(0);
+                }
+            });
+        }
+    
+    // Function to set and unset Vehicle Accesories
+    
+        var checks_accesories = $('.accesory_check');
+        checks_accesories.each(function(){
+            $(this).change(function(){
+                if($(this).prop('checked')){
+                    add_accesories($(this).attr('id'));
+                }else{
+                    del_accesories($(this).attr('id'));
+                }
+            });
+            set_accesories();
+        }); 
+        
+        set_components_prices();
+        set_supplies_prices();
+        set_works_prices();
+    }
+    /*
+     * =============================================================================
+     * SELLOFFERS FUNCTIONS ON PAGE READY
+     * =============================================================================
+     */
+      
+    /*
+    * EventListener to set SellOffer Vehicle Prices
+    * =============================================================================
+    */
    
     var titleForm = $('.form-horizontal').attr('id');
     if(titleForm === 'formOfertadeVenta'){   
@@ -166,33 +149,223 @@ $(document).ready(function(){
         $('#formOfertadeVenta #discount').change(function(){
             set_selloffer_price();
             $('#formOfertadeVenta #discount').val(numeral($('#formOfertadeVenta #discount').val()).format('(0,0.00$)'));
-        })
-       
+        });
+        
+        if(!$('#offerNumber').val()){
+            get_new_offerNumber();
+        }
+        
+        if(($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'components-tab') || ($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'supplies-tab') || ($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'works-tab')){
+            var delButton = $('#delete_button');            
+            delButton.attr('style', 'display:none;');
+        }
+        set_components_prices();
+        set_supplies_prices();
+        set_works_prices();
     }
     
-    Date.prototype.toDateInputValue = (function() {
-        var local = new Date(this);
-        local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-        return local.toJSON().slice(0,10);
+    /*
+     * =============================================================================
+     * TABS PAGES FUNCTIONS ON PAGE READY
+     * =============================================================================
+     */    
+    
+    /*
+     * Calculate Imports in Modals and Currency Format them
+     * =============================================================================
+     */    
+    
+    
+    $('.modal-form').each(function(){
+        $(this).each(function(){
+            var modal = $(this).attr('id');
+            $('#'+modal+' #cantity').change(function(){
+              var cant = $(this).val();
+              var price = $('#'+modal+' #pvp').val();
+              var total = numeral(parseFloat(cant) * parseFloat(price));
+              $('#'+modal+' #total').val(total.format('(0,0.00$)'));
+           });
+        });
     });
-    if(!$('#offerDate').val()){
-        $('#offerDate').val(new Date().toDateInputValue());
-    }
     
-    if(!$('#offerNumber').val()){
-        get_new_offerNumber();
-    }
-    set_components_prices();
-    set_supplies_prices();
-    set_works_prices();
+    /*
+     *   Function to keep opened the menu-collapse selected and activate current screen.
+     * ==================================================================================
+     */
     
-    if($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'components-tab' || $('.nav-tabs .nav-item .nav-link.active').attr('id') === 'supplies-tab' || $('.nav-tabs .nav-item .nav-link.active').attr('id') === 'works-tab'){
-        var delButton = $('#delete_button');
-        delButton.attr('style', 'display:none;');
+    $('.nav-link').each(function(){
+        $(this).on('shown.bs.tab', function(){
+            $('.select2').select2();
+            if($(this).attr('id') === 'accesories-tab'){
+                set_accesories();
+            }            
+            if($(this).attr('id') === 'components-tab' || $(this).attr('id') === 'supplies-tab' || $(this).attr('id') === 'works-tab'){
+                
+                var delButton = $('#delete_button');
+                delButton.attr('style', 'display:none;');
+            }
+        });
+    });
+        
+    /*
+     *   Add Double Click event to DataTables in Vehicles and Offers
+     *   =======================================================================
+     */  
+    var assets = ['Components', 'Supplies', 'Works'];
+    var assetsFunctions = ['setComponent', 'setSupply', 'setWork'];
+    for(let i = 0;i < assets.length; i++){
+        let table = new DataTable('#dataTable'+assets[i]);
+        table.on('dblclick', 'tbody tr', function(){
+            let data = table.row(this).data();
+            assetsFunctions[i](data);        
+        });
     }
-    
     
 });
+
+/*
+ * =============================================================================
+ * Vehicle and SellOffer Common Functions
+ * =============================================================================
+ */
+
+function setAsset(form, asset, data){    
+    var array = [];
+    if(!data[asset]){
+        array.push(null);
+    }
+    for (var value in data){   
+        if(value !== "mader"){
+            array.push(data[value]);
+        }
+    }    
+    
+    if($('#' + form + ' .modal-body #selloffer_id').attr('id')){
+        $('#' + form + ' .modal-body #selloffer_id').val($('.form-horizontal #id').val());
+    }else if($('#' + form + ' .modal-body #vehicle_id').attr('id')){
+        $('#' + form + ' .modal-body #vehicle_id').val($('#id').val());
+    }
+    
+    if(array[0] === null){       
+        $('#' + form + ' .modal-body .row .input-group #id').val(array[0]);
+        $('#' + form + ' .modal-body #' + asset).val(array[1]);  
+    }else{
+        $('#' + form + ' .modal-body .row .input-group #id').val(array[1]);
+        $('#' + form + ' .modal-body #' + asset).val(array[0]);  
+    }      
+    $('#' + form + ' .modal-body .row .input-group #ref').val(array[2]);
+    $('#' + form + ' .modal-body .row .input-group #name').val(array[3]);    
+    $('#' + form + ' .modal-body .row .input-group #pvp').val(numeral(parseFloat(array[4])).format('(0,0.00$)'));
+    $('#' + form + ' .modal-body .row .input-group #cantity').val(array[5]);    
+    $('#' + form + ' .modal-body .row .input-group #total').val(numeral(numeral(parseFloat(array[4])).value() * numeral(parseFloat(array[5])).value()).format('(0,0.00$)'));    
+    $('#' + form).modal('show');    
+}
+
+function set_assets(tab){     
+    var urlData = location.href; 
+    var pos = urlData.indexOf('&selected_tab=');
+    if(pos !== -1){
+        urlData = urlData.substr(0, pos);
+    }
+    urlData = urlData + "&selected_tab=" + tab;
+    location.href = urlData;
+}
+
+function saveAssets(url, data, modal, modal_form){  
+    console.log(data);
+    if(!$('.form-horizontal #id').val()){
+        $('#' + modal_form).modal('hide');
+        $('#' + modal).modal('hide');
+        $('#alert').html('Debe guardar primero!');
+    }else{
+        $.ajax({
+            method: "POST",
+            url: url,
+            data: data,
+            dataType: "json",
+            success: function(result){
+                $(modal_form).modal('hide');
+                $(modal).modal('hide');
+                $('.alert').html(result);
+            }
+        });
+    }
+}
+
+function delAsset(url, data){ 
+    $.ajax({
+        method: "POST",
+        url: url,
+        data: data,
+        dataType: "json",
+        success: function(result){
+            $('.alert').html(result);                     
+        }
+    });
+}
+
+function setComponent(data){ 
+    setAsset("component_form_modal", "component_id", data);       
+}
+
+function setSupply(data){ 
+    setAsset("supply_form_modal", "supply_id", data);
+}
+
+function setWork(data){   
+    setAsset("work_form_modal", "work_id", data);
+}
+
+function set_components_prices(){
+    var base_total = 0;
+    $('#dataTableVehicleComponents td').each(function(){
+        if($(this).attr('item') === 'pvp'){
+            base_total = numeral(base_total).value() + numeral($(this).attr('item_value')).value();
+        }
+    });
+    $('#baseComponents').val(numeral(base_total).format('(0,0.00$)'));
+    $('#tvaComponents').val(numeral(base_total * 0.21).format('(0,0.00$)'));
+    $('#totalComponents').val(numeral(numeral(base_total).value() + numeral($('#tvaComponents').val()).value()).format('(0,0.00$)'));
+    if($('form#formVehiculo').attr('id')){
+        set_vehicle_price();
+    }else if($('form#formOfertadeVenta').attr('id')){
+        set_selloffer_price();
+    }
+}
+
+function set_supplies_prices(){
+    var base_total = 0;
+    $('#dataTableVehicleSupplies td').each(function(){        
+        if($(this).attr('item') === 'pvp'){
+            base_total = numeral(base_total).value() + numeral($(this).attr('item_value')).value();
+        }
+    });
+    $('#baseSupplies').val(numeral(base_total).format('(0,0.00$)'));
+    $('#tvaSupplies').val(numeral(base_total * 0.21).format('(0,0.00$)'));
+    $('#totalSupplies').val(numeral(numeral(base_total).value() + numeral($('#tvaSupplies').val()).value()).format('(0,0.00$)'));
+    if($('form#formVehiculo').attr('id')){
+        set_vehicle_price();
+    }else if($('form#formOfertadeVenta').attr('id')){
+        set_selloffer_price();
+    }
+}
+
+function set_works_prices(){
+    var base_total = 0;    
+    $('#dataTableVehicleWorks td').each(function(){
+        if($(this).attr('item') === 'pvp'){
+            base_total = numeral(base_total).value() + numeral($(this).attr('item_value')).value();
+        }
+    });
+    $('#baseWorks').val(numeral(base_total).format('(0,0.00$)'));
+    $('#tvaWorks').val(numeral(base_total * 0.21).format('(0,0.00$)'));
+    $('#totalWorks').val(numeral(numeral(base_total).value() + numeral($('#tvaWorks').val()).value()).format('(0,0.00$)'));
+    if($('form#formVehiculo').attr('id')){
+        set_vehicle_price();
+    }else if($('form#formOfertadeVenta').attr('id')){
+        set_selloffer_price();
+    }
+}
 
 /*
  * =============================================================================
@@ -281,153 +454,56 @@ function set_vehicles_by_model(brand, model){
     });
 }
 
-function set_sellOffer_components(){          
-    var url = location.href; 
-    var pos = url.indexOf('&selected_tab=');
-    if(pos !== -1){
-        url = url.substr(0, pos);
-    }
-    url = url + "&selected_tab=components";
-    location.href = url;
-    
-    set_selloffer_price();
+function saveSellOfferComponent(){
+    var data = {'selloffer_id' : $('#selloffer_component_form #selloffer_id').val(), 
+            'component_id' : $('#selloffer_component_form #component_id').val(),
+            'pvp' : $('#selloffer_component_form #pvp').val(),
+            'cantity' : $('#selloffer_component_form #cantity').val()};
+    saveAssets("Intranet/sales/offers/components/add",  data, '#components_modal', '#component_form_modal');     
+    let timeout = setTimeout(set_assets('components'), 3000);
+    clearTimeout(timeout);
 }
 
-function saveSellOfferComponent(){ 
-    if(!$('#id').val()){
-        $('#component_form_modal').modal('hide');
-        $('#components_modal').modal('hide');
-        $('#alert').html('Debe guardar la oferta primero!');
-    }else{
-        $.ajax({
-            method: "POST",
-            url: "Intranet/sales/offers/components/add",
-            data: {'selloffer_id' : $('#id').val(), 
-                'component_id' : $('#selloffer_component_form #component_id').val(),
-                'pvp' : $('#selloffer_component_form #pvp').val(),
-                'cantity' : $('#selloffer_component_form #cantity').val()},
-            dataType: "json",
-            success: function(result){   
-                
-                $('#component_form_modal').modal('hide');
-                $('#components_modal').modal('hide');
-                $('.alert').html(result); 
-                set_sellOffer_components();
-            }
-        });
-    }
+function delSellOfferComponent(data){ 
+    var url = "Intranet/sales/offers/components/del";    
+    delAsset(url, data); 
+    let timeout = setTimeout(set_assets('components'), 3000);
+    clearTimeout(timeout);
 }
 
-function delSellOfferComponent(data){    
-    url = "Intranet/sales/offers/components/del";        
-    $.ajax({
-        method: "POST",
-        url: url,
-        data: {'id' : data.selloffercomponent_id},
-        dataType: "json",
-        success: function(result){
-            $('.alert').html(result);
-            set_vehicle_components();         
-        }
-    });
-   
-}
-
-
-function set_sellOffer_supplies(){
-    var url = location.href;            
-    var pos = url.indexOf('&selected_tab=');            
-    if(pos !== -1){
-        url = url.substr(0, pos);
-    }
-    url = url + '&selected_tab=supplies';
-    location.href = url;
-    set_supplies_prices();    
-}
-
-function saveSellOfferSupply(){    
-    if(!$('#id').val()){        
-        $('#supply_form_modal').modal('hide');
-        $('#supply_modal').modal('hide');
-        $('#alert').html('Debe guardar la oferta primero!');
-    }else{
-        $.ajax({
-            method: "POST",
-            url: "Intranet/sales/offers/supplies/add",
-            data: {'selloffer_id' : $('#id').val(), 
-                'supply_id' : $('#selloffer_supply_form #supply_id').val(),
-                'pvp' : $('#selloffer_supply_form #pvp').val(),
-                'cantity' : $('#selloffer_supply_form #cantity').val()},
-            dataType: "json",
-            success: function(result){ 
-                $('#supply_form_modal').modal('hide');
-                $('#supplies_modal').modal('hide');
-                $('.alert').html(result);
-                set_sellOffer_supplies();
-            }
-        });
-    }
+function saveSellOfferSupply(){   
+    var data = {'selloffer_id' : $('#selloffer_supply_form #selloffer_id').val(), 
+        'supply_id' : $('#selloffer_supply_form #supply_id').val(),
+        'pvp' : $('#selloffer_supply_form #pvp').val(),
+        'cantity' : $('#selloffer_supply_form #cantity').val()};    
+    saveAssets("Intranet/sales/offers/supplies/add",  data, '#supplies_modal', '#supply_form_modal');     
+    let timeout = setTimeout(set_assets('supplies'), 3000);
+    clearTimeout(timeout);
 }
 
 function delSellOfferSupply(data){ 
-    $.ajax({
-        method: "POST",
-        url: "Intranet/sales/offers/supplies/del",
-        data: {'id' : data.selloffersupply_id},
-        dataType: "json",
-        success: function(result){            
-            $('.alert').html(result);
-            set_sellOffer_supplies();
-        }
-    });
+    var url = "Intranet/sales/offers/supplies/del";
+    delAsset(url, data);
+    let timeout = setTimeout(set_assets('supplies'), 3000);
+    clearTimeout(timeout);
 }
 
-function set_sellOffer_works(){
-    var url = location.href;             
-    var pos = url.indexOf('&selected_tab=');            
-    if(pos !== -1){
-        url = url.substr(0, pos);
-    }
-    url = url + '&selected_tab=works';                
-    location.href = url;
-    set_works_prices();
+function saveSellOfferWork(){
+    var data = {'selloffer_id' : $('#selloffer_work_form #selloffer_id').val(), 
+        'work_id' : $('#selloffer_work_form #work_id').val(),
+        'pvp' : $('#selloffer_work_form #pvp').val(),
+        'cantity' : $('#selloffer_work_form #cantity').val()};
+   
+    saveAssets("Intranet/sales/offers/works/add",  data, '#works_modal', '#work_form_modal');     
+    let timeout = setTimeout(set_assets('works'), 3000);
+    clearTimeout(timeout);
 }
 
-function saveSellOfferWork(){ 
-    if(!$('#id').val()){        
-        $('#work_form_modal').modal('hide');
-        $('#works_modal').modal('hide');
-        $('#alert').html('Debe guardar la oferta primero!');
-    }else{
-        $.ajax({
-            method: "POST",
-            url: "Intranet/sales/offers/works/add",
-            data: {'selloffer_id' : $('#id').val(), 
-                'work_id' : $('#selloffer_work_form #work_id').val(),
-                'pvp' : $('#selloffer_work_form #pvp').val(),
-                'cantity' : $('#selloffer_work_form #cantity').val()},
-            dataType: "json",
-            success: function(result){                
-                $('#work_form_modal').modal('hide');
-                $('#works_modal').modal('hide');
-                $('.alert').html(result);
-                set_sellOffer_works()
-            }
-        });
-    }
-}
-
-function delSellOfferWork(data){    
-    $.ajax({
-        method: "POST",
-        url: "Intranet/sales/offers/works/del",
-        data: {'id' : data.sellofferwork_id},
-        dataType: "json",
-        success: function(result){            
-            $('.alert').html(result);
-            set_sellOffer_works();
-        }
-    });
+function delSellOfferWork(data){ 
+    var url = "Intranet/sales/offers/works/del";
+    delAsset(url, data);
+    let timeout = setTimeout(set_assets('works'), 3000);
+    clearTimeout(timeout);
 }
 
 /*
@@ -478,8 +554,7 @@ function add_accesories(accesory){
     });
 }
 
-function del_accesories(accesory){
-    
+function del_accesories(accesory){    
     $.ajax({
         method: "POST",
         url: "Intranet/vehicles/accesories/del",
@@ -492,309 +567,54 @@ function del_accesories(accesory){
     });
 }
 
-function set_vehicle_components(){
-    $.ajax({
-        method: "POST",
-        url: "Intranet/vehicles/vehicleComponents/set",
-        data: {'vehicle_id' : $('#id').val()},
-        dataType: "json",
-        success: function(){
-            var url = location.href; 
-            var pos = url.indexOf('&selected_tab=');
-            if(pos !== -1){
-                url = url.substr(0, pos);
-            }
-            url = url + "&selected_tab=components";
-            location.href = url;           
-        }
-    });
-}
-
-function saveVehicleComponent(){    
-    $.ajax({
-        method: "POST",
-        url: "Intranet/vehicles/vehicleComponents/save",
-        data: {'vehicle_id' : $('#id').val(), 
+function saveVehicleComponent(){  
+    var url = "Intranet/vehicles/vehicleComponents/save";
+    var data = {'vehicle_id' :  $('#vehicle_component_form #vehicle_id').val(), 
             'component_id' : $('#vehicle_component_form #component_id').val(),
             'pvp' : $('#vehicle_component_form #pvp').val(),
-            'cantity' : $('#vehicle_component_form #cantity').val()},
-        dataType: "json",
-        success: function(result){            
-            $('#component_form_modal').modal('hide');
-            $('#components_modal').modal('hide');
-            $('.alert').html(result);
-            set_vehicle_components();          
-        }
-    });
+            'cantity' : $('#vehicle_component_form #cantity').val()};
+    saveAssets(url, data, '#components_modal', '#component_form_modal');
+    set_assets('components');
 }
 
 function delVehicleComponent(data){    
-    url = "Intranet/vehicles/vehicleComponents/del";
-    $.ajax({
-        method: "POST",
-        url: url,
-        data: {'id' : data.id},
-        dataType: "json",
-        success: function(result){
-            $('.alert').html(result);
-            set_vehicle_components();         
-        }
-    });
+    var url = "Intranet/vehicles/vehicleComponents/del";
+    var data = {'id' : data.id};
+    delAsset(url, data);
+    set_assets('components');
 }
 
-function set_vehicle_supplies(){    
-    var url = location.href;             
-    var pos = url.indexOf('&selected_tab=');            
-    if(pos !== -1){
-        url = url.substr(0, pos);
-    }
-    url = url + '&selected_tab=supplies';
-    location.href = url;
-    set_supplies_prices();    
-}
 
 function saveVehicleSupply(){  
-    
-    $.ajax({
-        method: "POST",
-        url: "Intranet/vehicles/vehicleSupplies/add",
-        data: {'vehicle_id' : $('#id').val(), 
+    var url = "Intranet/vehicles/vehicleSupplies/add";
+    var data = {'vehicle_id' : $('#vehicle_supply_form #vehicle_id').val(), 
             'supply_id' : $('#vehicle_supply_form #supply_id').val(),
             'pvp' : $('#vehicle_supply_form #pvp').val(),
-            'cantity' : $('#vehicle_supply_form #cantity').val()},
-        dataType: "json",
-        success: function(result){ 
-            $('#supply_form_modal').modal('hide');
-            $('#supplies_modal').modal('hide');
-            $('.alert').html(result);
-            set_vehicle_supplies();
-        }
-    });
+            'cantity' : $('#vehicle_supply_form #cantity').val()};
+    saveAssets(url, data, '#supplies_modal', '#vehicle_supply_form');
+    set_assets('supplies');
 }
 
 function delVehicleSupply(data){ 
-    $.ajax({
-        method: "POST",
-        url: "Intranet/vehicles/vehicleSupplies/del",
-        data: {'id' : data.id},
-        dataType: "json",
-        success: function(result){            
-            $('.alert').html(result);
-            set_vehicle_supplies();
-        }
-    });
+    var url = "Intranet/vehicles/vehicleSupplies/del";
+    var data = {'id' : data.id};
+    delAsset(url, data);
+    set_assets('supplies');
 }
 
-function set_vehicle_works(){
-    var url = location.href;             
-    var pos = url.indexOf('&selected_tab=');            
-    if(pos !== -1){
-        url = url.substr(0, pos);
-    }
-    url = url + '&selected_tab=works';                
-    location.href = url;
-    set_works_prices();    
-}
-
-function saveVehicleWork(){    
-    $.ajax({
-        method: "POST",
-        url: "Intranet/vehicles/vehicleWorks/add",
-        data: {'vehicle_id' : $('#id').val(), 
+function saveVehicleWork(){ 
+    var url = "Intranet/vehicles/vehicleWorks/add";
+    var data = {'vehicle_id' : $('#vehicle_work_form #vehicle_id').val(), 
             'work_id' : $('#vehicle_work_form #id').val(),
             'pvp' : $('#vehicle_work_form #pvp').val(),
-            'cantity' : $('#vehicle_work_form #cantity').val()},
-        dataType: "json",
-        success: function(result){
-            $('#works_form_modal').modal('hide');
-            $('#works_modal').modal('hide');
-            $('.alert').html(result);
-            set_vehicle_works();
-        }
-    });
+            'cantity' : $('#vehicle_work_form #cantity').val()};
+    saveAssets(url, data, '#works_modal', '#works_form_modal');
+    set_assets('works');
 }
 
 function delVehicleWork(data){  
-    console.log(data);
-    $.ajax({
-        method: "POST",
-        url: "Intranet/vehicles/vehicleWorks/del",
-        data: {'id' : data.id},
-        dataType: "json",
-        success: function(result){            
-            $('.alert').html(result);
-            set_vehicle_works();
-        }
-    });
+    var url = "Intranet/vehicles/vehicleWorks/del";
+    var data = {'id' : data.id};
+    delAsset(url, data);
+    set_assets('works');
 }
-
-/*
- * =============================================================================
- * Vehicle and SellOffer Common Functions
- * =============================================================================
- */
-
-function setVehicleComponent(data){
-    var array = [];
-    if(!data.component_id){
-        array.push(null);
-    }
-    for (var value in data){   
-        if(value !== "mader"){
-            array.push(data[value]);
-        }
-    }  
-    if($('#component_form_modal .modal-body #selloffer_id').attr('id')){
-        $('#component_form_modal .modal-body #selloffer_id').val($('#id').val());
-    }else if($('#component_form_modal .modal-body #vehicle_id').attr('id')){
-        $('#component_form_modal .modal-body #vehicle_id').val($('#id').val());
-    }
-    if(!array[0]){
-        $('#component_form_modal .modal-body .row .input-group #id').val(array[0]);
-    }else{
-        $('#component_form_modal .modal-body .row .input-group #id').val(array[1]);
-    }    
-    $('#component_form_modal .modal-body #component_id').val(array[1]);    
-    $('#component_form_modal .modal-body .row .input-group #ref').val(array[2]);
-    $('#component_form_modal .modal-body .row .input-group #name').val(array[3]);    
-    $('#component_form_modal .modal-body .row .input-group #pvp').val(numeral(parseFloat(array[4])).format('(0,0.00$)'));
-    $('#component_form_modal .modal-body .row .input-group #cantity').val(array[5]);   
-    $('#component_form_modal').modal('show');
-    updateComponentFormPrice();
-}
-
-function updateComponentFormPrice(){
-    var cant = numeral($('#component_form_modal .modal-body .row .input-group #cantity').val());
-    var price = numeral($('#component_form_modal .modal-body .row .input-group #pvp').val());
-    var total = numeral(cant.value() * price.value());
-    $('#component_form_modal .modal-body .row .input-group #total').val(total.format('(0,0.00$)'));
-}
-
-
-
-function set_components_prices(){
-    var base_total = 0;
-    $('#dataTableVehicleComponents td').each(function(){
-        if($(this).attr('item') === 'pvp'){
-            base_total = numeral(base_total).value() + numeral($(this).attr('item_value')).value();
-        }
-    });
-    $('#baseComponents').val(numeral(base_total).format('(0,0.00$)'));
-    $('#tvaComponents').val(numeral(base_total * 0.21).format('(0,0.00$)'));
-    $('#totalComponents').val(numeral(numeral(base_total).value() + numeral($('#tvaComponents').val()).value()).format('(0,0.00$)'));
-    if($('form#formVehiculo').attr('id')){
-        set_vehicle_price();
-    }else if($('form#formOfertadeVenta').attr('id')){
-        set_selloffer_price();
-    }
-}
-
-function set_supplies_prices(){
-    var base_total = 0;
-    $('#dataTableVehicleSupplies td').each(function(){        
-        if($(this).attr('item') === 'pvp'){
-            base_total = numeral(base_total).value() + numeral($(this).attr('item_value')).value();
-        }
-    });
-    $('#baseSupplies').val(numeral(base_total).format('(0,0.00$)'));
-    $('#tvaSupplies').val(numeral(base_total * 0.21).format('(0,0.00$)'));
-    $('#totalSupplies').val(numeral(numeral(base_total).value() + numeral($('#tvaSupplies').val()).value()).format('(0,0.00$)'));
-    if($('form#formVehiculo').attr('id')){
-        set_vehicle_price();
-    }else if($('form#formOfertadeVenta').attr('id')){
-        set_selloffer_price();
-    }
-}
-
-function set_works_prices(){
-    var base_total = 0;    
-    $('#dataTableVehicleWorks td').each(function(){
-        if($(this).attr('item') === 'pvp'){
-            base_total = numeral(base_total).value() + numeral($(this).attr('item_value')).value();
-        }
-    });
-    $('#baseWorks').val(numeral(base_total).format('(0,0.00$)'));
-    $('#tvaWorks').val(numeral(base_total * 0.21).format('(0,0.00$)'));
-    $('#totalWorks').val(numeral(numeral(base_total).value() + numeral($('#tvaWorks').val()).value()).format('(0,0.00$)'));
-    if($('form#formVehiculo').attr('id')){
-        set_vehicle_price();
-    }else if($('form#formOfertadeVenta').attr('id')){
-        set_selloffer_price();
-    }
-}
-
-function setVehicleSupply(data){ 
-    
-    var array = [];
-    if(!data.supply_id){
-        array.push(null);
-    }
-    for (var value in data){   
-        if(value !== "mader"){
-            array.push(data[value]);
-        }
-    } 
-    if($('#supply_form_modal .modal-body #selloffer_id').attr('id')){
-        $('#supply_form_modal .modal-body #selloffer_id').val($('#id').val());
-        
-    }else if($('#supply_form_modal .modal-body #vehicle_id').attr('id')){
-        $('#supply_form_modal .modal-body #vehicle_id').val($('#id').val());
-        
-    }    
-    if(!array[0]){        
-        $('#supply_form_modal .modal-body .row .input-group #id').val(array[0]);
-    }else{
-        $('#supply_form_modal .modal-body .row .input-group #id').val(array[1]);
-    }      
-    $('#supply_form_modal .modal-body #supply_id').val(array[1]);   
-    $('#supply_form_modal .modal-body .row .input-group #ref').val(array[2]);
-    $('#supply_form_modal .modal-body .row .input-group #name').val(array[3]);    
-    $('#supply_form_modal .modal-body .row .input-group #pvp').val(numeral(parseFloat(array[4])).format('(0,0.00$)'));      
-    $('#supply_form_modal .modal-body .row .input-group #cantity').val(array[5]);
-    $('#supply_form_modal .modal-body .row .input-group #total').val(numeral(parseFloat(array[5]) * parseFloat(array[4])).format('(0,0.00$)'));
-    $('#supply_form_modal').modal('show');   
-}
-
-function setVehicleWork(data){   
-    
-    var array = [];
-    if(!data.work_id){
-        array.push(null);
-    }
-    for (var value in data){   
-        if(value !== "mader"){
-            array.push(data[value]);
-        }
-    } 
-    
-    if($('#work_form_modal .modal-body #selloffer_id').attr('id')){
-        $('#work_form_modal .modal-body #selloffer_id').val($('#id').val());        
-    }else if($('#work_form_modal .modal-body #vehicle_id').attr('id')){
-        $('#work_form_modal .modal-body #vehicle_id').val($('#id').val());        
-    }    
-    if(!array[0]){
-        $('#work_form_modal .modal-body .row .input-group #id').val(array[0]);
-    }else{
-        $('#work_form_modal .modal-body .row .input-group #id').val(array[1]);
-    }    
-    $('#work_form_modal .modal-body #work_id').val(array[1]);
-    $('#work_form_modal .modal-body .row .input-group #reference').val(array[2]);
-    $('#work_form_modal .modal-body .row .input-group #description').val(array[3]);    
-    $('#work_form_modal .modal-body .row .input-group #pvp').val(numeral(parseFloat(array[4])).format('(0,0.00$)'));      
-    $('#work_form_modal .modal-body .row .input-group #cantity').val(array[5]);
-    $('#work_form_modal .modal-body .row .input-group #total').val(numeral(parseFloat(array[4]) * parseFloat(array[5])).format('(0,0.00$)'));
-    $('#work_form_modal').modal('show');
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
