@@ -108,6 +108,11 @@ $(document).ready(function(){
             set_accesories();
         }); 
         
+        if(($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'components-tab') || ($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'supplies-tab') || ($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'works-tab')){            
+            var delButton = $('#delete_button');            
+            delButton.attr('style', 'display:none;');
+        }
+        
         set_components_prices();
         set_supplies_prices();
         set_works_prices();
@@ -153,9 +158,9 @@ $(document).ready(function(){
         
         if(!$('#offerNumber').val()){
             get_new_offerNumber();
-        }
-        
+        }        
         if(($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'components-tab') || ($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'supplies-tab') || ($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'works-tab')){
+            
             var delButton = $('#delete_button');            
             delButton.attr('style', 'display:none;');
         }
@@ -229,7 +234,8 @@ $(document).ready(function(){
  * =============================================================================
  */
 
-function setAsset(form, asset, data){    
+function setAsset(form, asset, data){ 
+    
     var array = [];
     if(!data[asset]){
         array.push(null);
@@ -238,14 +244,13 @@ function setAsset(form, asset, data){
         if(value !== "mader"){
             array.push(data[value]);
         }
-    }    
-    
+    }     
     if($('#' + form + ' .modal-body #selloffer_id').attr('id')){
         $('#' + form + ' .modal-body #selloffer_id').val($('.form-horizontal #id').val());
     }else if($('#' + form + ' .modal-body #vehicle_id').attr('id')){
-        $('#' + form + ' .modal-body #vehicle_id').val($('#id').val());
+        $('#' + form + ' .modal-body #vehicle_id').val($('.form-horizontal #id').val());
     }
-    
+    console.log(array);
     if(array[0] === null){       
         $('#' + form + ' .modal-body .row .input-group #id').val(array[0]);
         $('#' + form + ' .modal-body #' + asset).val(array[1]);  
@@ -271,8 +276,8 @@ function set_assets(tab){
     location.href = urlData;
 }
 
-function saveAssets(url, data, modal, modal_form){  
-    console.log(data);
+function saveAssets(url, data, modal, modal_form, tab){ 
+   console.log(data);
     if(!$('.form-horizontal #id').val()){
         $('#' + modal_form).modal('hide');
         $('#' + modal).modal('hide');
@@ -283,23 +288,27 @@ function saveAssets(url, data, modal, modal_form){
             url: url,
             data: data,
             dataType: "json",
-            success: function(result){
+            success: function(result){                
                 $(modal_form).modal('hide');
                 $(modal).modal('hide');
                 $('.alert').html(result);
+                let timeout = setTimeout(set_assets(tab), 3000);
+                clearTimeout(timeout);
             }
         });
     }
 }
 
-function delAsset(url, data){ 
+function delAsset(url, data, tab){ 
     $.ajax({
         method: "POST",
         url: url,
         data: data,
         dataType: "json",
         success: function(result){
-            $('.alert').html(result);                     
+            $('.alert').html(result);
+            let timeout = setTimeout(set_assets(tab), 3000);
+            clearTimeout(timeout);
         }
     });
 }
@@ -459,16 +468,14 @@ function saveSellOfferComponent(){
             'component_id' : $('#selloffer_component_form #component_id').val(),
             'pvp' : $('#selloffer_component_form #pvp').val(),
             'cantity' : $('#selloffer_component_form #cantity').val()};
-    saveAssets("Intranet/sales/offers/components/add",  data, '#components_modal', '#component_form_modal');     
-    let timeout = setTimeout(set_assets('components'), 3000);
-    clearTimeout(timeout);
+    saveAssets("Intranet/sales/offers/components/add",  data, '#components_modal', '#component_form_modal', 'components');     
+    
 }
 
 function delSellOfferComponent(data){ 
     var url = "Intranet/sales/offers/components/del";    
-    delAsset(url, data); 
-    let timeout = setTimeout(set_assets('components'), 3000);
-    clearTimeout(timeout);
+    delAsset(url, data, 'components'); 
+    
 }
 
 function saveSellOfferSupply(){   
@@ -476,34 +483,26 @@ function saveSellOfferSupply(){
         'supply_id' : $('#selloffer_supply_form #supply_id').val(),
         'pvp' : $('#selloffer_supply_form #pvp').val(),
         'cantity' : $('#selloffer_supply_form #cantity').val()};    
-    saveAssets("Intranet/sales/offers/supplies/add",  data, '#supplies_modal', '#supply_form_modal');     
-    let timeout = setTimeout(set_assets('supplies'), 3000);
-    clearTimeout(timeout);
+    saveAssets("Intranet/sales/offers/supplies/add",  data, '#supplies_modal', '#supply_form_modal', 'supplies');    
 }
 
 function delSellOfferSupply(data){ 
     var url = "Intranet/sales/offers/supplies/del";
-    delAsset(url, data);
-    let timeout = setTimeout(set_assets('supplies'), 3000);
-    clearTimeout(timeout);
+    delAsset(url, data, 'supplies');    
 }
 
 function saveSellOfferWork(){
     var data = {'selloffer_id' : $('#selloffer_work_form #selloffer_id').val(), 
         'work_id' : $('#selloffer_work_form #work_id').val(),
         'pvp' : $('#selloffer_work_form #pvp').val(),
-        'cantity' : $('#selloffer_work_form #cantity').val()};
-   
-    saveAssets("Intranet/sales/offers/works/add",  data, '#works_modal', '#work_form_modal');     
-    let timeout = setTimeout(set_assets('works'), 3000);
-    clearTimeout(timeout);
+        'cantity' : $('#selloffer_work_form #cantity').val()};   
+    saveAssets("Intranet/sales/offers/works/add",  data, '#works_modal', '#work_form_modal', 'works');    
 }
 
 function delSellOfferWork(data){ 
     var url = "Intranet/sales/offers/works/del";
-    delAsset(url, data);
-    let timeout = setTimeout(set_assets('works'), 3000);
-    clearTimeout(timeout);
+    delAsset(url, data, 'works');
+    
 }
 
 /*
@@ -567,21 +566,20 @@ function del_accesories(accesory){
     });
 }
 
-function saveVehicleComponent(){  
-    var url = "Intranet/vehicles/vehicleComponents/save";
+function saveVehicleComponent(){
     var data = {'vehicle_id' :  $('#vehicle_component_form #vehicle_id').val(), 
             'component_id' : $('#vehicle_component_form #component_id').val(),
             'pvp' : $('#vehicle_component_form #pvp').val(),
-            'cantity' : $('#vehicle_component_form #cantity').val()};
-    saveAssets(url, data, '#components_modal', '#component_form_modal');
-    set_assets('components');
+            'cantity' : $('#vehicle_component_form #cantity').val()};    
+    saveAssets("Intranet/vehicles/vehicleComponents/save", data, '#components_modal', '#component_form_modal','components');
+   
 }
 
-function delVehicleComponent(data){    
+function delVehicleComponent(data){     
     var url = "Intranet/vehicles/vehicleComponents/del";
-    var data = {'id' : data.id};
-    delAsset(url, data);
-    set_assets('components');
+    var setData = {'id' : data.id};
+    delAsset(url, setData, 'components');
+    
 }
 
 
@@ -591,30 +589,30 @@ function saveVehicleSupply(){
             'supply_id' : $('#vehicle_supply_form #supply_id').val(),
             'pvp' : $('#vehicle_supply_form #pvp').val(),
             'cantity' : $('#vehicle_supply_form #cantity').val()};
-    saveAssets(url, data, '#supplies_modal', '#vehicle_supply_form');
-    set_assets('supplies');
+    saveAssets(url, data, '#supplies_modal', '#vehicle_supply_form', 'supplies');
+   
 }
 
 function delVehicleSupply(data){ 
     var url = "Intranet/vehicles/vehicleSupplies/del";
     var data = {'id' : data.id};
-    delAsset(url, data);
-    set_assets('supplies');
+    delAsset(url, data, 'supplies');
+    
 }
 
 function saveVehicleWork(){ 
     var url = "Intranet/vehicles/vehicleWorks/add";
     var data = {'vehicle_id' : $('#vehicle_work_form #vehicle_id').val(), 
-            'work_id' : $('#vehicle_work_form #id').val(),
+            'work_id' : $('#vehicle_work_form #work_id').val(),
             'pvp' : $('#vehicle_work_form #pvp').val(),
             'cantity' : $('#vehicle_work_form #cantity').val()};
-    saveAssets(url, data, '#works_modal', '#works_form_modal');
-    set_assets('works');
+    saveAssets(url, data, '#works_modal', '#work_form_modal', 'works');
+    
 }
 
 function delVehicleWork(data){  
     var url = "Intranet/vehicles/vehicleWorks/del";
     var data = {'id' : data.id};
-    delAsset(url, data);
-    set_assets('works');
+    delAsset(url, data, 'works');
+    
 }

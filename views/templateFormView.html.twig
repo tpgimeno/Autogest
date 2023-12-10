@@ -19,16 +19,12 @@
 {% if titleForm == 'Vehículo' %}    
     {% set parent_id = 'vehicle_id' %}
     {% set object_id = {'1':'component_id', '2':'supply_id', '3':'work_id'} %}
-    {% set functions = {'setComponent':'setComponent','saveComponent':'saveVehicleComponent()' 
-                        ,'setSupply':'setSupply', 'saveSupply':'saveVehicleSupply()'
-                        ,'setWork':'setComponent','saveWork':'saveVehicleWork()'} %}
-    {% set titles = {'1':'vehicle_component_form','2':'vehicle_supply_form','3':'vehicle_works_form'} %}
+    {% set functions = {'setComponent':'setComponent','saveComponent':'saveVehicleComponent()' ,'setSupply':'setSupply', 'saveSupply':'saveVehicleSupply()','setWork':'setWork','saveWork':'saveVehicleWork()'} %}
+    {% set titles = {'1':'vehicle_component_form','2':'vehicle_supply_form','3':'vehicle_work_form'} %}
 {% else %}        
     {% set parent_id = 'selloffer_id' %}
     {% set object_id = {'1':'component_id','2':'supply_id','3':'work_id'} %}
-    {% set functions = {'setComponent':'setComponent','saveComponent':'saveSellOfferComponent()' 
-                        ,'setSupply':'setSupply', 'saveSupply':'saveSellOfferSupply()'
-                        ,'setWork':'setWork','saveWork':'saveSellOfferWork()'} %}
+    {% set functions = {'setComponent':'setComponent','saveComponent':'saveSellOfferComponent()','setSupply':'setSupply', 'saveSupply':'saveSellOfferSupply()','setWork':'setWork','saveWork':'saveSellOfferWork()'} %}
     {% set titles = {'1':'selloffer_component_form','2':'selloffer_supply_form','3':'selloffer_work_form'} %}
 {% endif %}
 {{ macros.items_list_modal('components_modal', assets_labels, labels, currencies, 'Componentes', 'dataTableComponents',functions['setComponent'], optionsArray['components']) }}
