@@ -1,6 +1,6 @@
 {% extends "layout.html.twig" %}
 {% block content %}
-    {% set currencies = {'pvd':'pvd','pvp':'pvp','cost':'cost','vehiclePvp':'vehiclePvp'} %}
+    {% set currencies = {'pvd':'pvd','pvp':'pvp','cost':'cost','pvc':'pvc','vehiclePvp':'vehiclePvp', 'discount':'discount', 'vehicleDiscount':'vehicleDiscount','tva':'tva','total':'total','costTva':'costTva','costTotal':'costTotal','vehicleTva':'vehicleTva','vehicleTotal':'vehicleTotal'} %}
     <div class="content-wrapper pb-2" style="min-height: 960px">
         <section class="content-header"><h2>{{ titleList }}</h2></section>
         <section class="content">
@@ -28,7 +28,7 @@
                                 {% for value in values %}
                                     <tr>
                                         {% for item in itemsList %}
-                                            <td>{% if item in currencies %} {{ attribute(value, item)|number_format(0,".",",") ~ "€"}}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
+                                            <td>{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR')}}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
                                         {% endfor %}
                                         <td>
                                             <a id="editButton{{value.id}}" href="Intranet/{{ route }}/form?id={{ value.id }}&menu={{ menuState }}&item={{ menuItem }}"><i class="fa fa-edit"></i></a>

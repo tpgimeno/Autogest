@@ -56,11 +56,9 @@ class BaseService {
         return $exist;
     }
 
-    public function saveRegister($model, $array) {
-        var_dump($model);
-        var_dump($array);die();
+    public function saveRegister($model, $array) {        
         $properties = $model->getProperties();
-        $content = array_values($array);
+        $content = array_values($array);       
         $diference = 3;
         $keys = [];
         $assetsNumber = 0;
@@ -76,7 +74,8 @@ class BaseService {
             $properties_array = array_slice($properties, 0, array_search('vehicle_id', $properties)+1);        
             $end_array = array_slice($properties, array_search('vehicle_id', $properties)+6, count($properties));
             $properties = array_merge($properties_array, $end_array);
-        }        
+        } 
+        
         unset($content[0], $content[1],$content[2]);
         if(count($content) > count($properties)){
             $assetsNumber = count($content) - count($properties); 
@@ -91,11 +90,14 @@ class BaseService {
 //            var_dump($properties);
 //            var_dump($array);
         for ($i = 0; $i < (sizeof($properties)); $i++) {
+            
             if ($properties[$i] == 'password') {
                 $model->{$properties[$i]} = password_hash($content[$i+$diference], PASSWORD_DEFAULT);
             }elseif (str_ends_with($properties[$i], 'Date')){
                 $model->{$properties[$i]} = date('Y/m/d', strtotime($content[$i+$diference]));
-            }elseif(in_array("€", str_split($properties[$i]))){                
+            }elseif(strpos($content[$i+$diference], "€")){   
+                $content[$i+$diference] = str_replace(".", "", $content[$i+$diference]);
+//                var_dump($content[$i+$diference]);die();
                 $model->{$properties[$i]} = floatval($content[$i+$diference]);
             }else{            
                 $model->{$properties[$i]} = $content[$i+$diference];

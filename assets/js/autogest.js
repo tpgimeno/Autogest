@@ -1,8 +1,7 @@
 /* Jquery */
 /* global numeral */
-
-$(document).ready(function(){ 
-    
+var original_vehicle_price;
+$(document).ready(function(){    
     /*
      * =============================================================================
      * GLOBAL FUNCTIONS ON PAGE READY
@@ -33,6 +32,21 @@ $(document).ready(function(){
     numeral.locale('es');
     
     /*
+     *   Manage Nav-Tabs Main Menu
+     *   ==========================================================================
+     */  
+    
+    $('.nav-pills .nav-item').each(function(){
+        if($(this).attr('id') === $('#menu').val()){
+            $(this).removeClass('menu-close');
+            $(this).addClass('menu-open');
+        }else{
+            $(this).removeClass('menu-open');
+            $(this).addClass('menu-close');
+        }        
+    });
+    
+    /*
      *   Init DataTables
      *   ==========================================================================
      */    
@@ -47,7 +61,7 @@ $(document).ready(function(){
     /*
      *  Function to reset all the inputs 
      *  ============================================================================
-     * /
+     */
     
     $('#reset').on('click', function(){
         $('input[type=text]').each(function(){
@@ -83,6 +97,7 @@ $(document).ready(function(){
     
     // Function to validate checked on checboxes
     if($('form.form-horizontal').attr('id') === "formVehiculo"){
+        original_vehicle_price = $('#vehiclePvp').val();
         var checks_form = ['secondKey', 'rebu'];
         for(let i = 0; i < checks_form.length; i++){        
             $('#'+checks_form[i]).change(function(){
@@ -94,7 +109,7 @@ $(document).ready(function(){
             });
         }
     
-    // Function to set and unset Vehicle Accesories
+        // Function to set and unset Vehicle Accesories
     
         var checks_accesories = $('.accesory_check');
         checks_accesories.each(function(){
@@ -106,13 +121,16 @@ $(document).ready(function(){
                 }
             });
             set_accesories();
-        }); 
-        
+        });        
         if(($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'components-tab') || ($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'supplies-tab') || ($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'works-tab')){            
             var delButton = $('#delete_button');            
             delButton.attr('style', 'display:none;');
         }
-        
+        $('#formVehiculo #vehicleDiscount').change(function(){
+            set_vehicle_price();
+            $('#formVehiculo #vehicleDiscount').val(numeral($('#formVehiculo #vehicleDiscount').val()).format('(0.0,$)'));
+        });
+        set_vehicle_price();
         set_components_prices();
         set_supplies_prices();
         set_works_prices();
@@ -129,7 +147,7 @@ $(document).ready(function(){
     */
    
     var titleForm = $('.form-horizontal').attr('id');
-    if(titleForm === 'formOfertadeVenta'){   
+    if(titleForm === 'formOfertadeVenta'){         
         set_selloffer_vehicle_prices();
         $('#formOfertadeVenta #plate').change(function(){            
             set_selloffer_vehicle_prices();        
@@ -153,14 +171,13 @@ $(document).ready(function(){
         
         $('#formOfertadeVenta #discount').change(function(){
             set_selloffer_price();
-            $('#formOfertadeVenta #discount').val(numeral($('#formOfertadeVenta #discount').val()).format('(0,0.00$)'));
+            $('#formOfertadeVenta #discount').val(numeral($('#formOfertadeVenta #discount').val()).format('(0.0,$)'));
         });
         
         if(!$('#offerNumber').val()){
             get_new_offerNumber();
         }        
-        if(($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'components-tab') || ($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'supplies-tab') || ($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'works-tab')){
-            
+        if(($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'components-tab') || ($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'supplies-tab') || ($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'works-tab')){            
             var delButton = $('#delete_button');            
             delButton.attr('style', 'display:none;');
         }
@@ -188,7 +205,7 @@ $(document).ready(function(){
               var cant = $(this).val();
               var price = $('#'+modal+' #pvp').val();
               var total = numeral(parseFloat(cant) * parseFloat(price));
-              $('#'+modal+' #total').val(total.format('(0,0.00$)'));
+              $('#'+modal+' #total').val(total.format('(0.0,$)'));
            });
         });
     });
@@ -209,6 +226,7 @@ $(document).ready(function(){
                 var delButton = $('#delete_button');
                 delButton.attr('style', 'display:none;');
             }
+            
         });
     });
         
@@ -260,23 +278,18 @@ function setAsset(form, asset, data){
     }      
     $('#' + form + ' .modal-body .row .input-group #ref').val(array[2]);
     $('#' + form + ' .modal-body .row .input-group #name').val(array[3]);    
-    $('#' + form + ' .modal-body .row .input-group #pvp').val(numeral(parseFloat(array[4])).format('(0,0.00$)'));
+    $('#' + form + ' .modal-body .row .input-group #pvp').val(numeral(parseFloat(array[4])).format('(0.0,$)'));
     $('#' + form + ' .modal-body .row .input-group #cantity').val(array[5]);    
-    $('#' + form + ' .modal-body .row .input-group #total').val(numeral(numeral(parseFloat(array[4])).value() * numeral(parseFloat(array[5])).value()).format('(0,0.00$)'));    
+    $('#' + form + ' .modal-body .row .input-group #total').val(numeral(numeral(parseFloat(array[4])).value() * numeral(parseFloat(array[5])).value()).format('(0.0,$)'));    
     $('#' + form).modal('show');    
 }
 
-function set_assets(tab){     
-    var urlData = location.href; 
-    var pos = urlData.indexOf('&selected_tab=');
-    if(pos !== -1){
-        urlData = urlData.substr(0, pos);
-    }
+function set_assets(tab, urlData){    
     urlData = urlData + "&selected_tab=" + tab;
     location.href = urlData;
 }
 
-function saveAssets(url, data, modal, modal_form, tab){ 
+function saveAssets(url, data, modal, modal_form, tab, setUrl){ 
    console.log(data);
     if(!$('.form-horizontal #id').val()){
         $('#' + modal_form).modal('hide');
@@ -292,14 +305,14 @@ function saveAssets(url, data, modal, modal_form, tab){
                 $(modal_form).modal('hide');
                 $(modal).modal('hide');
                 $('.alert').html(result);
-                let timeout = setTimeout(set_assets(tab), 3000);
+                let timeout = setTimeout(set_assets(tab, setUrl), 3000);
                 clearTimeout(timeout);
             }
         });
     }
 }
 
-function delAsset(url, data, tab){ 
+function delAsset(url, data, tab, setUrl){ 
     $.ajax({
         method: "POST",
         url: url,
@@ -307,7 +320,7 @@ function delAsset(url, data, tab){
         dataType: "json",
         success: function(result){
             $('.alert').html(result);
-            let timeout = setTimeout(set_assets(tab), 3000);
+            let timeout = setTimeout(set_assets(tab, setUrl), 3000);
             clearTimeout(timeout);
         }
     });
@@ -332,9 +345,9 @@ function set_components_prices(){
             base_total = numeral(base_total).value() + numeral($(this).attr('item_value')).value();
         }
     });
-    $('#baseComponents').val(numeral(base_total).format('(0,0.00$)'));
-    $('#tvaComponents').val(numeral(base_total * 0.21).format('(0,0.00$)'));
-    $('#totalComponents').val(numeral(numeral(base_total).value() + numeral($('#tvaComponents').val()).value()).format('(0,0.00$)'));
+    $('#baseComponents').val(numeral(base_total).format('(0.0,$)'));
+    $('#tvaComponents').val(numeral(base_total * 0.21).format('(0.0,$)'));
+    $('#totalComponents').val(numeral(numeral(base_total).value() + numeral($('#tvaComponents').val()).value()).format('(0.0,$)'));
     if($('form#formVehiculo').attr('id')){
         set_vehicle_price();
     }else if($('form#formOfertadeVenta').attr('id')){
@@ -349,9 +362,9 @@ function set_supplies_prices(){
             base_total = numeral(base_total).value() + numeral($(this).attr('item_value')).value();
         }
     });
-    $('#baseSupplies').val(numeral(base_total).format('(0,0.00$)'));
-    $('#tvaSupplies').val(numeral(base_total * 0.21).format('(0,0.00$)'));
-    $('#totalSupplies').val(numeral(numeral(base_total).value() + numeral($('#tvaSupplies').val()).value()).format('(0,0.00$)'));
+    $('#baseSupplies').val(numeral(base_total).format('(0.0,$)'));
+    $('#tvaSupplies').val(numeral(base_total * 0.21).format('(0.0,$)'));
+    $('#totalSupplies').val(numeral(numeral(base_total).value() + numeral($('#tvaSupplies').val()).value()).format('(0.0,$)'));
     if($('form#formVehiculo').attr('id')){
         set_vehicle_price();
     }else if($('form#formOfertadeVenta').attr('id')){
@@ -366,9 +379,9 @@ function set_works_prices(){
             base_total = numeral(base_total).value() + numeral($(this).attr('item_value')).value();
         }
     });
-    $('#baseWorks').val(numeral(base_total).format('(0,0.00$)'));
-    $('#tvaWorks').val(numeral(base_total * 0.21).format('(0,0.00$)'));
-    $('#totalWorks').val(numeral(numeral(base_total).value() + numeral($('#tvaWorks').val()).value()).format('(0,0.00$)'));
+    $('#baseWorks').val(numeral(base_total).format('(0.0,$)'));
+    $('#tvaWorks').val(numeral(base_total * 0.21).format('(0.0,$)'));
+    $('#totalWorks').val(numeral(numeral(base_total).value() + numeral($('#tvaWorks').val()).value()).format('(0.0,$)'));
     if($('form#formVehiculo').attr('id')){
         set_vehicle_price();
     }else if($('form#formOfertadeVenta').attr('id')){
@@ -396,29 +409,30 @@ function get_new_offerNumber(){
 
 function set_selloffer_price(){    
     var discount = numeral($('#discount').val());    
-    var vehiclePvp = numeral($('#vehiclePvp').val());
-    var vehicleDiscount = numeral($('#vehicleDiscount').val());
+    var vehiclePvp = numeral($('#vehiclePvp').val());    
     var baseComponents = numeral($('#baseComponents').val());    
     var baseSupplies = numeral($('#baseSupplies').val());
     var baseWorks = numeral($('#baseWorks').val());
-    var sum_bases = numeral(((vehiclePvp.value() - vehicleDiscount.value()) + baseComponents.value() + baseSupplies.value() + baseWorks.value()) - discount.value());
-    $('#formOfertadeVenta #pvp').val(sum_bases.format('(0,0.00$)'));
-    $('#formOfertadeVenta #tva').val(numeral(sum_bases.value() * 0.21).format('(0,0.00$)'));
+    var sum_bases = numeral((vehiclePvp.value() + baseComponents.value() + baseSupplies.value() + baseWorks.value()) - discount.value());
+    $('#formOfertadeVenta #pvp').val(sum_bases.format('(0.0,$)'));
+    $('#formOfertadeVenta #tva').val(numeral(sum_bases.value() * 0.21).format('(0.0,$)'));
     var tva = numeral($('#tva').val());
-    $('#formOfertadeVenta #total').val(numeral(sum_bases.value() + tva.value()).format('(0,0.00$)'));    
+    $('#formOfertadeVenta #total').val(numeral(sum_bases.value() + tva.value()).format('(0.0,$)'));    
 }
 
 function set_selloffer_vehicle_prices(){
-    let pvp = numeral(parseFloat($('#formOfertadeVenta #plate option:selected').attr('price')));
-    $('#formOfertadeVenta #vehiclePvp').val(pvp.format('(0,0.00$)'));
-    let tva = numeral(pvp.value() * 0.21);
-    $('#formOfertadeVenta #vehicleTva').val(tva.format('(0,0.00$)'));
+    original_vehicle_price = $('#formOfertadeVenta #plate option:selected').attr('price');
+    let pvp = numeral(parseFloat(original_vehicle_price));
     let discount = numeral(parseFloat($('#formOfertadeVenta #vehicleDiscount').val()));
+    $('#formOfertadeVenta #vehiclePvp').val(numeral(pvp.value() - discount.value()).format('(0.0,$)'));
+    let tva = numeral(numeral($('#formOfertadeVenta #vehiclePvp').val()).value() * 0.21);
+    $('#formOfertadeVenta #vehicleTva').val(tva.format('(0.0,$)'));    
     let total = numeral(pvp.value() - discount.value() + tva.value());
-    $('#formOfertadeVenta #vehicleDiscount').val(discount.format('(0,0.00$)'));
-    $('#formOfertadeVenta #vehicleTotal').val(total.format('(0,0.00$)')); 
+    $('#formOfertadeVenta #vehicleDiscount').val(discount.format('(0.0,$)'));
+    $('#formOfertadeVenta #vehicleTotal').val(total.format('(0.0,$)')); 
     $('#formOfertadeVenta #vin').val($('#formOfertadeVenta #plate option:selected').attr('vin'));
-    $('#formOfertadeVenta #km').val($('#formOfertadeVenta #plate option:selected').attr('km'));    
+    $('#formOfertadeVenta #km').val($('#formOfertadeVenta #plate option:selected').attr('km')); 
+    set_selloffer_price();
 }
 
 function set_models_by_brand(brand){    
@@ -468,13 +482,13 @@ function saveSellOfferComponent(){
             'component_id' : $('#selloffer_component_form #component_id').val(),
             'pvp' : $('#selloffer_component_form #pvp').val(),
             'cantity' : $('#selloffer_component_form #cantity').val()};
-    saveAssets("Intranet/sales/offers/components/add",  data, '#components_modal', '#component_form_modal', 'components');     
+    saveAssets("Intranet/sales/offers/components/add",  data, '#components_modal', '#component_form_modal', 'components', "Intranet/sales/offers/form?id=" + $('#selloffer_component_form #selloffer_id').val() + "&menu=ventas&item=offers");     
     
 }
 
 function delSellOfferComponent(data){ 
     var url = "Intranet/sales/offers/components/del";    
-    delAsset(url, data, 'components'); 
+    delAsset(url, data, 'components', "Intranet/sales/offers/form?id=" + $('#.form-horizontal #id').val() + "&menu=ventas&item=offers"); 
     
 }
 
@@ -483,12 +497,12 @@ function saveSellOfferSupply(){
         'supply_id' : $('#selloffer_supply_form #supply_id').val(),
         'pvp' : $('#selloffer_supply_form #pvp').val(),
         'cantity' : $('#selloffer_supply_form #cantity').val()};    
-    saveAssets("Intranet/sales/offers/supplies/add",  data, '#supplies_modal', '#supply_form_modal', 'supplies');    
+    saveAssets("Intranet/sales/offers/supplies/add",  data, '#supplies_modal', '#supply_form_modal', 'supplies', "Intranet/sales/offers/form?id=" + $('#selloffer_supply_form #selloffer_id').val() + "&menu=ventas&item=offers");    
 }
 
 function delSellOfferSupply(data){ 
     var url = "Intranet/sales/offers/supplies/del";
-    delAsset(url, data, 'supplies');    
+    delAsset(url, data, 'supplies', "Intranet/sales/offers/form?id=" + $('#.form-horizontal #id').val() + "&menu=ventas&item=offers");    
 }
 
 function saveSellOfferWork(){
@@ -496,12 +510,12 @@ function saveSellOfferWork(){
         'work_id' : $('#selloffer_work_form #work_id').val(),
         'pvp' : $('#selloffer_work_form #pvp').val(),
         'cantity' : $('#selloffer_work_form #cantity').val()};   
-    saveAssets("Intranet/sales/offers/works/add",  data, '#works_modal', '#work_form_modal', 'works');    
+    saveAssets("Intranet/sales/offers/works/add",  data, '#works_modal', '#work_form_modal', 'works', "Intranet/sales/offers/form?id=" + $('#selloffer_work_form #selloffer_id').val() + "&menu=ventas&item=offers");    
 }
 
 function delSellOfferWork(data){ 
     var url = "Intranet/sales/offers/works/del";
-    delAsset(url, data, 'works');
+    delAsset(url, data, 'works', "Intranet/sales/offers/form?id=" + $('#.form-horizontal #id').val() + "&menu=ventas&item=offers");
     
 }
 
@@ -512,17 +526,22 @@ function delSellOfferWork(data){
  */
 
 function set_vehicle_price(){    
-    var discount = numeral($('#discount').val());    
-    var vehiclePvp = numeral($('#vehiclePvp').val());
+    var vehiclePvp = numeral(original_vehicle_price);
     var vehicleDiscount = numeral($('#vehicleDiscount').val());
     var baseComponents = numeral($('#baseComponents').val());    
     var baseSupplies = numeral($('#baseSupplies').val());
-    var baseWorks = numeral($('#baseWorks').val());    
-    var sum_bases = numeral(((vehiclePvp.value() - vehicleDiscount.value()) + baseComponents.value() + baseSupplies.value() + baseWorks.value()) - discount.value());
-    $('#formVehiculo #vehiclePvp').val(sum_bases.format('(0,0.00$)'));
-    $('#formVehiculo #tva').val(numeral(sum_bases.value() * 0.21).format('(0,0.00$)'));
-    var tva = numeral($('#tva').val());
-    $('#formVehiculo #total').val(numeral(sum_bases.value() + tva.value()).format('(0,0.00$)'));    
+    var baseWorks = numeral($('#baseWorks').val());  
+    var pvp_vehicle = numeral(vehiclePvp.value() - vehicleDiscount.value());
+    var sum_assets = numeral(baseComponents.value() + baseSupplies.value() + baseWorks.value());
+    var sum_bases = numeral(pvp_vehicle.value() + sum_assets.value());
+    $('#formVehiculo #costTva').val(numeral(numeral($('#formVehiculo #cost').val()).value() * 0.21).format('(0.0,$)'));
+    $('#formVehiculo #costTotal').val(numeral((numeral($('#formVehiculo #cost').val()).value()) + (numeral($('#formVehiculo #costTva').val()).value())).format('(0.0,$)'));
+    $('#formVehiculo #vehiclePvp').val(sum_bases.format('(0.0,$)'));
+    $('#formVehiculo #vehicleTva').val(numeral(sum_bases.value() * 0.21).format('(0.0,$)'));
+    var tva = numeral($('#formVehiculo #vehicleTva').val());
+    $('#formVehiculo #vehicleTva').val(tva.format('(0.0,$)'));
+    $('#formVehiculo #vehicleTotal').val(numeral(sum_bases.value() + tva.value()).format('(0.0,$)'));
+    
 }
 
 function set_accesories(){
@@ -567,18 +586,19 @@ function del_accesories(accesory){
 }
 
 function saveVehicleComponent(){
+    var url = "Intranet/vehicles/vehicleComponents/save";
     var data = {'vehicle_id' :  $('#vehicle_component_form #vehicle_id').val(), 
             'component_id' : $('#vehicle_component_form #component_id').val(),
             'pvp' : $('#vehicle_component_form #pvp').val(),
             'cantity' : $('#vehicle_component_form #cantity').val()};    
-    saveAssets("Intranet/vehicles/vehicleComponents/save", data, '#components_modal', '#component_form_modal','components');
+    saveAssets(url, data, '#components_modal', '#component_form_modal','components', 'Intranet/vehicles/form?id=' + $('#vehicle_component_form #vehicle_id').val() + '&menu=stock&item=vehicles');
    
 }
 
 function delVehicleComponent(data){     
     var url = "Intranet/vehicles/vehicleComponents/del";
     var setData = {'id' : data.id};
-    delAsset(url, setData, 'components');
+    delAsset(url, setData, 'components', 'Intranet/vehicles/form?id=' + $('.form-horizontal #id').val() + '&menu=stock&item=vehicles');
     
 }
 
@@ -589,14 +609,14 @@ function saveVehicleSupply(){
             'supply_id' : $('#vehicle_supply_form #supply_id').val(),
             'pvp' : $('#vehicle_supply_form #pvp').val(),
             'cantity' : $('#vehicle_supply_form #cantity').val()};
-    saveAssets(url, data, '#supplies_modal', '#vehicle_supply_form', 'supplies');
+    saveAssets(url, data, '#supplies_modal', '#vehicle_supply_form', 'supplies', 'Intranet/vehicles/form?id=' + $('#vehicle_supply_form #vehicle_id').val() + '&menu=stock&item=vehicles');
    
 }
 
 function delVehicleSupply(data){ 
     var url = "Intranet/vehicles/vehicleSupplies/del";
     var data = {'id' : data.id};
-    delAsset(url, data, 'supplies');
+    delAsset(url, data, 'supplies', 'Intranet/vehicles/form?id=' + $('.form-horizontal #id').val() + '&menu=stock&item=vehicles');
     
 }
 
@@ -606,13 +626,13 @@ function saveVehicleWork(){
             'work_id' : $('#vehicle_work_form #work_id').val(),
             'pvp' : $('#vehicle_work_form #pvp').val(),
             'cantity' : $('#vehicle_work_form #cantity').val()};
-    saveAssets(url, data, '#works_modal', '#work_form_modal', 'works');
+    saveAssets(url, data, '#works_modal', '#work_form_modal', 'works', 'Intranet/vehicles/form?id=' + $('#vehicle_work_form #vehicle_id').val() + '&menu=stock&item=vehicles');
     
 }
 
 function delVehicleWork(data){  
     var url = "Intranet/vehicles/vehicleWorks/del";
     var data = {'id' : data.id};
-    delAsset(url, data, 'works');
+    delAsset(url, data, 'works', 'Intranet/vehicles/form?id=' + $('.form-horizontal #id').val() + '&menu=stock&item=vehicles');
     
 }
