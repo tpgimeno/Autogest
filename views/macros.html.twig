@@ -113,13 +113,15 @@
                 <table id="{{ table_id }}" class="table-light table-listados table-bordered table-striped dataTable dtr-inline">
                     <thead>
                         <tr>
+                            
                             {% for item in labels %}
                                 <th>{{ main_labels[item] }}</th>
                             {% endfor %}
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>                                    
+                    <tbody>   
+                        
                     {% for value in values %}                                                    
                         <tr>
                             {% for item in labels %}

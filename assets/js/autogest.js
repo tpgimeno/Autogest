@@ -268,7 +268,7 @@ function setAsset(form, asset, data){
     }else if($('#' + form + ' .modal-body #vehicle_id').attr('id')){
         $('#' + form + ' .modal-body #vehicle_id').val($('.form-horizontal #id').val());
     }
-    console.log(array);
+    
     if(array[0] === null){       
         $('#' + form + ' .modal-body .row .input-group #id').val(array[0]);
         $('#' + form + ' .modal-body #' + asset).val(array[1]);  
@@ -289,11 +289,10 @@ function set_assets(tab, urlData){
     location.href = urlData;
 }
 
-function saveAssets(url, data, modal, modal_form, tab, setUrl){ 
-   console.log(data);
+function saveAssets(url, data, modal, modal_form, tab, setUrl){    
     if(!$('.form-horizontal #id').val()){
-        $('#' + modal_form).modal('hide');
-        $('#' + modal).modal('hide');
+        $(modal_form).modal('hide');
+        $(  modal).modal('hide');
         $('#alert').html('Debe guardar primero!');
     }else{
         $.ajax({
@@ -634,5 +633,64 @@ function delVehicleWork(data){
     var url = "Intranet/vehicles/vehicleWorks/del";
     var data = {'id' : data.id};
     delAsset(url, data, 'works', 'Intranet/vehicles/form?id=' + $('.form-horizontal #id').val() + '&menu=stock&item=vehicles');
+    
+}
+
+
+/*
+ * =============================================================================
+ * Garage Orders Functions
+ * =============================================================================
+ */
+
+function saveGarageOrderComponent(){
+    var url = "Intranet/garageOrders/components/add";
+    var data = {'garageOrder_id' :  $('#garageOrder_component_form #garageOrder_id').val(), 
+            'component_id' : $('#garageOrder_component_form #component_id').val(),
+            'pvp' : $('#garageOrder_component_form #pvp').val(),
+            'cantity' : $('#garageOrder_component_form #cantity').val()};    
+    saveAssets(url, data, '#components_modal', '#component_form_modal','components', 'Intranet/garageOrders/form?id=' + $('#garageOrder_component_form #garageOrder_id').val() + '&menu=stock&item=vehicles');
+   
+}
+
+function delGarageOrderComponent(data){     
+    var url = "Intranet/garageOrders/components/del";
+    var setData = {'id' : data.id};
+    delAsset(url, setData, 'components', 'Intranet/garageOrders/form?id=' + $('.form-horizontal #id').val() + '&menu=stock&item=garageOrders');
+    
+}
+
+
+function saveGarageOrderSupply(){  
+    var url = "Intranet/garageOrders/supplies/add";
+    var data = {'vehicle_id' : $('#vehicle_supply_form #vehicle_id').val(), 
+            'supply_id' : $('#vehicle_supply_form #supply_id').val(),
+            'pvp' : $('#vehicle_supply_form #pvp').val(),
+            'cantity' : $('#vehicle_supply_form #cantity').val()};
+    saveAssets(url, data, '#supplies_modal', '#garageOrder_supply_form', 'supplies', 'Intranet/garageOrderss/form?id=' + $('#vehicle_supply_form #vehicle_id').val() + '&menu=stock&item=vehicles');
+   
+}
+
+function delGarageOrderSupply(data){ 
+    var url = "Intranet/garageOrders/supplies/del";
+    var data = {'id' : data.id};
+    delAsset(url, data, 'supplies', 'Intranet/garageOrders/form?id=' + $('.form-horizontal #id').val() + '&menu=stock&item=vehicles');
+    
+}
+
+function saveGarageOrderWork(){ 
+    var url = "Intranet/garageOrders/works/add";
+    var data = {'vehicle_id' : $('#vehicle_work_form #vehicle_id').val(), 
+            'work_id' : $('#vehicle_work_form #work_id').val(),
+            'pvp' : $('#vehicle_work_form #pvp').val(),
+            'cantity' : $('#vehicle_work_form #cantity').val()};
+    saveAssets(url, data, '#works_modal', '#work_form_modal', 'works', 'Intranet/garageOrders/form?id=' + $('#vehicle_work_form #vehicle_id').val() + '&menu=stock&item=vehicles');
+    
+}
+
+function delGarageOrderWork(data){  
+    var url = "Intranet/garageOrders/works/del";
+    var data = {'id' : data.id};
+    delAsset(url, data, 'works', 'Intranet/garageOrders/form?id=' + $('.form-horizontal #id').val() + '&menu=stock&item=vehicles');
     
 }

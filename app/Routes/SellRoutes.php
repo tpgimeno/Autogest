@@ -85,10 +85,7 @@ class SellRoutes
         ]);
         
         
-        $map->post('setComponentsSellOffers', '/Intranet/sales/offers/components/set', [
-           'App\Controllers\Sales\SellOffersController',
-           'getComponentsSellOffersAction'
-        ]);
+        
        
         $map->post('addComponentsSellOffers', '/Intranet/sales/offers/components/add', [
             'App\Controllers\Sales\SellOffersController',

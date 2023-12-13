@@ -363,17 +363,13 @@ class BuyRoutes
 
        //GARAGE ORDERS
 
-       $map->get('ordersList', '/Intranet/buys/orders/form', [
+       $map->get('ordersForm', '/Intranet/garageOrders/form', [
            'App\Controllers\Garages\GarageOrdersController',
            'getOrderDataAction'
        ]);
-       $map->get('ordersForm', '/Intranet/buys/orders/list', [
+       $map->get('ordersList', '/Intranet/garageOrders/list', [
            'App\Controllers\Garages\GarageOrdersController',
            'getIndexAction'
-       ]);
-       $map->post('saveWork', '/Intranet/buys/orders/form/work/save', [
-           'App\Controllers\Garages\GarageOrdersController',
-           'getOrderDataAction'
        ]);
        $map->post('saveOrder', '/Intranet/buys/orders/save', [
            'App\Controllers\Garages\GarageOrdersController',
@@ -383,6 +379,30 @@ class BuyRoutes
            'App\Controllers\Garages\GarageOrdersController',
            'deleteAction'
        ]);
+       $map->post('saveOrderComponent', '/Intranet/garageOrders/components/add', [
+           'App\Controllers\Garages\GarageOrdersController',
+           'addComponentsGarageOrdersAction'
+       ]);
+       $map->post('delOrderComponent', '/Intranet/garageOrders/components/del', [
+           'App\Controllers\Garages\GarageOrdersController',
+           'delComponentsGarageOrdersAction'
+       ]);
+       $map->post('addOrderSupply', '/Intranet/garageOrders/supplies/add', [
+           'App\Controllers\Garages\GarageOrdersController',
+           'addSuppliesGarageOrdersAction'
+       ]);
+       $map->post('delOrderSupply', '/Intranet/garageOrders/supplies/del', [
+           'App\Controllers\Garages\GarageOrdersController',
+           'delSuppliesGarageOrdersAction'
+       ]);
+       $map->post('addOrderWork', '/Intranet/garageOrders/works/add', [
+           'App\Controllers\Garages\GarageOrdersController',
+           'addWorksGarageOrdersAction'
+       ]);
+       $map->post('delOrderWork', '/Intranet/garageOrders/works/add', [
+           'App\Controllers\Garages\GarageOrdersController',
+           'delWorksGarageOrdersAction'
+       ]); 
        return $routerContainer;
     }
     

@@ -9,5 +9,26 @@ class GarageOrder extends Model
 {
     use SoftDeletes;
 
-    protected $table = "garageorders";
+    protected $table = "garage_orders";
+    protected $properties = ['data' => ['inDate', 
+        'outDate',
+        'plate',
+        'brand',
+        'model',
+        'customer_id',
+        'inKm',
+        'outKm',
+        'description',
+        'text'],
+        'detail' => ['baseOrder',
+        'tvaOrder',
+        'totalOrder',
+        'observations'],
+        'components' => [],
+        'supplies' => [],
+        'works' => []];
+    
+    public function getProperties(){
+        return $this->properties;
+    }
 }
