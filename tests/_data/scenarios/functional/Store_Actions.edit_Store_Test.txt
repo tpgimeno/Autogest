@@ -1,10 +1,6 @@
 I WANT TO EDIT STORE TEST
 
 I am on page ""/stores/list?menu=stock&item=stores"" 
-I grab num records('stores', array 'deleted_at' => null)" 
-I grab num records('stores', array 'deleted_at' => null)" 
-I grab column from database('stores', 'id', array 'deleted_at' => null)" 
-I click '#editButton' . $registers[$lastRegister - 1]" 
 I click '#editButton' . $this->id" 
 I submit form '#formAlmacen'," $almacen" 
 I see 'Updated'

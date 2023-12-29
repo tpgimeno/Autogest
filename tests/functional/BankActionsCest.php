@@ -40,20 +40,11 @@ class BankActionsCest {
     }
 
     public function delFromBankFormTest(FunctionalTester $I) {
-        $I->amOnPage("/banks/list?menu=mantenimiento&item=banks");
-        $lastRegister = $I->grabNumRecords('banks', array('deleted_at' => null));  
-        if($lastRegister === 0){
-            $this->addBankTest($I);
-            $lastRegister = $I->grabNumRecords('banks', array('deleted_at' => null));  
-        }
-        $registers = $I->grabColumnFromDatabase('banks', 'id', array('deleted_at' => null));
-        $I->click('#editButton' . $registers[$lastRegister -1]);
-        $I->click('Eliminar');
-        $I->dontSeeInDatabase('banks', array('id' => intval($registers[$lastRegister-1]), 'deleted_at' => null));
-    }
-    
-    public function _after(FunctionalTester $I){
         $this->addBankTest($I);
+        $this->_before($I);
+        $I->amOnPage("/banks/list?menu=mantenimiento&item=banks");        
+        $I->click('#editButton' . $this->id);
+        $I->click('Eliminar');
+        $I->dontSeeInDatabase('banks', array('id' => intval($this->id), 'deleted_at' => null));
     }
-
 }

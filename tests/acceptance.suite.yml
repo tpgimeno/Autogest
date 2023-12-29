@@ -12,10 +12,6 @@ modules:
             browser: chrome
             window_size: 2000x1000
             port: 4123            
-            capabilities:            
-                chromeOptions:
-                    args: ["--headless", "--disable-gpu"] # Run Chrome in headless mode
-                    prefs:
-                        download.default_directory: "..."        
+                 
         - \Helper\Acceptance
 step_decorators: ~        

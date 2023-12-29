@@ -1,0 +1,7 @@
+I WANT TO EDIT PAYMENT WAYS TEST
+
+I am on page ""/paymentWays/list?menu=compras&item=buypaymentWays"" 
+I click '#editButton' . $this->id" 
+I submit form '#formFormadePago'," $paymentWay" 
+I see 'Updated'
+

@@ -42,21 +42,14 @@ class FinanceActionsCest {
     }
 
     public function delFromFinanceFormTest(FunctionalTester $I) {
-        $I->amOnPage("/finance/list?menu=mantenimiento&item=finance");
-        $lastRegister = $I->grabNumRecords('finance', array('deleted_at' => null));
-        if($lastRegister === 0){
-            $this->addFinanceTest($I);
-            $I->click('Lista');
-            $lastRegister = $I->grabNumRecords('finance', array('deleted_at' => null));
-        }
-        $registers = $I->grabColumnFromDatabase('finance', 'id', array('deleted_at' => null));
-        $I->click('#editButton' . $registers[$lastRegister - 1]);
+        $this->addFinanceTest($I);
+        $this->_before($I);
+        $I->amOnPage("/finance/list?menu=mantenimiento&item=finance");        
+        $I->click('#editButton' . $this->id);
         $I->click('Eliminar');
-        $I->dontSeeInDatabase('finance', array('id' => intval($registers[$lastRegister - 1]), 'deleted_at' => null));
+        $I->dontSeeInDatabase('finance', array('id' => intval($this->id), 'deleted_at' => null));
     }
     
-    public function _after(FunctionalTester $I){
-        $this->addFinanceTest($I);
-    }
+   
 
 }

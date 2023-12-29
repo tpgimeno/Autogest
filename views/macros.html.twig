@@ -112,8 +112,7 @@
             <div class="col-sm-12">
                 <table id="{{ table_id }}" class="table-light table-listados table-bordered table-striped dataTable dtr-inline">
                     <thead>
-                        <tr>
-                            
+                        <tr>                            
                             {% for item in labels %}
                                 <th>{{ main_labels[item] }}</th>
                             {% endfor %}
@@ -125,6 +124,7 @@
                     {% for value in values %}                                                    
                         <tr>
                             {% for item in labels %}
+                                
                                 {% if item == 'total' %}
                                     {% set total = value.cantity * value.pvp %}
                                         <td item="{{ item }}" item_value="{{ attribute(value, item) }}">{{ total|format_currency('EUR', locale='es') }}</td> 

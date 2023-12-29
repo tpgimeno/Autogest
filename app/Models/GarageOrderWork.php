@@ -7,11 +7,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
+
 /**
  * Description of GarageOrderWork
  *
  * @author tonyl
  */
-class GarageOrderWork {
-    //put your code here
+class GarageOrderWork extends Model{
+    protected $table = "orderWorks";
 }

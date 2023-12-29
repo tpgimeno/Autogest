@@ -60,12 +60,14 @@ table.dataTable>thead .sorting_asc_disabled:before, table.dataTable>thead .sorti
 .form-horizontal .form-group .input-group{
     margin-bottom: 1em;
     width: 100%;
+    
 }
 
 .form-horizontal .form-group .input-group label{
     width: 14em;
     margin-right: 2em;
-    margin-top: auto;
+    
+    
 }
 
 

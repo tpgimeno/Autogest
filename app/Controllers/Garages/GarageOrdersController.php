@@ -32,7 +32,8 @@ class GarageOrdersController extends BaseController
     }
     
     public function getIndexAction($request) {
-        return $this->getBaseIndexAction($request, $this->model, null);
+        $values = $this->GarageOrderService->list();
+        return $this->getBaseIndexAction($request, $this->model, $values);
     }    
     
     public function getOrderDataAction($request) {                
@@ -48,15 +49,15 @@ class GarageOrdersController extends BaseController
             'vehicle_component_labels' => ['garageOrdercomponent_id' => 'garageOrdercomponent_id','mader' => 'mader','ref' => 'ref','name' => 'name','cantity' => 'cantity','pvp' => 'pvp','total' => 'total'],
             'vehicle_supply_labels' => ['garageOrdersupply_id' => 'garageOrdersupply_id','mader' => 'mader','ref' => 'ref','name' => 'name','cantity' => 'cantity','pvp' => 'pvp','total' => 'total'],
             'vehicle_work_labels' => ['garageOrderwork_id' => 'garageOrderwork_id','ref' => 'ref','name' => 'name','cantity' => 'cantity','pvp' => 'pvp','total' => 'total'],
-            'component_functions' => ['set' => 'setComponent', 'delete' => 'delgarageOrderComponent'],
-            'supply_functions' => ['set' => 'setSupply', 'delete' => 'delgarageOrderSupply'],
-            'work_functions' => ['set' => 'setWork', 'delete' => 'delgarageOrderWork'],
-            'assets_prices' => ['1' => 'baseComponents','2' => 'Base Componentes','3' => 'tvaComponents','4' => 'Iva','5' => 'totalComponents', '6' => 'Total Componentes'],
+            'component_functions' => ['set' => 'setComponent', 'delete' => 'delGarageOrderComponent'],
+            'supply_functions' => ['set' => 'setSupply', 'delete' => 'delGarageOrderSupply'],
+            'work_functions' => ['set' => 'setWork', 'delete' => 'delGarageOrderWork'],
+            'assets_prices' => ['1' => 'baseComponents','2' => 'Base Componentes','3' => 'tvaComponents','4' => 'Iva','5' => 'totalComponents', '6' => 'Total Componentes','7' => 'baseSupplies', '8' => 'Base Recambios', '9' => 'tvaSupplies', '10' => 'Iva Recambios', '11' => 'totalSupplies', '12' => 'Total Recambios', '13' => 'baseWorks', '14' => 'Base Trabajos', '15' => 'tvaWorks', '16' => 'Iva Trabajos', '17' => 'totalWorks', '18' => 'Total Trabajos'],
             'assets_labels' => ['id' => 'id', 'ref' => 'ref','name' => 'name','pvp' => 'pvp'],
             'setComponentsUrl' => "Intranet/garageOrders/components/set",
-//            'vehicle_components' => $this->GarageOrderService->getGarageOrderComponents($request),
-//            'vehicle_supplies' => $this->GarageOrderService->getGarageOrderSupplies($request),
-//            'vehicle_works' => $this->GarageOrderService->getGarageOrderWorks($request),
+            'vehicle_components' => $this->GarageOrderService->getGarageOrderComponents($request),
+            'vehicle_supplies' => $this->GarageOrderService->getGarageOrderSupplies($request),
+            'vehicle_works' => $this->GarageOrderService->getGarageOrderWorks($request),
             'parent_id' => 'garageOrder_id',
             'object_id' => ['1' => 'component_id','2' => 'supply_id','3' => 'work_id'],
             'modals_functions' => ['setComponent' => 'setComponent','saveComponent' => 'saveGarageOrderComponent()','setSupply' => 'setSupply', 'saveSupply' => 'saveGarageOrderSupply()','setWork' => 'setWork','saveWork' => 'saveGarageOrderWork()'],
@@ -82,14 +83,16 @@ class GarageOrdersController extends BaseController
     public function getGarageOrdersNumberAction(){
         $template = "OR2023";
         $new_order_number = null;
-        $lastNumber = $this->GarageOrderService->getLastOrderNumber()->orderNumber;
-        if(!$lastNumber){
+        $lastNumber = $this->GarageOrderService->getLastOrderNumber();   
+        
+        if(!$lastNumber){  
+            
             $lastNumber = 1;
             $new_order_number = $template . "0000" . $lastNumber;
         }else{
-            $offset = strrpos($lastNumber, "0");
-            $prenumber_last_order = substr($lastNumber, 0, $offset);            
-            $number_last_order = intval(substr($lastNumber, $offset, strlen($lastNumber))) + 1;
+            $offset = strrpos($lastNumber->orderNumber, "0");
+            $prenumber_last_order = substr($lastNumber->orderNumber, 0, $offset);            
+            $number_last_order = intval(substr($lastNumber->orderNumber, $offset, strlen($lastNumber))) + 1;
             if(strlen($prenumber_last_order) > 8){
                 $new_order_number = $prenumber_last_order . strval($number_last_order);
             }else{
@@ -97,59 +100,58 @@ class GarageOrdersController extends BaseController
                     $prenumber_last_order[$i] = 0;
                 }
                 $new_order_number = $prenumber_last_order . strval($number_last_order);
-            }
-            
+            }            
         }
         $response = new JsonResponse($new_order_number);
+        
         return $response;
     }
     
     public function addComponentsGarageOrdersAction($request){
-        $postData = $request->getParsedBody();        
-        $responseMessage = $this->GarageOrderService->saveGarageOrderComponentAjax($postData);
+        $postData = $request->getParsedBody();     
+        
+        $responseMessage = $this->GarageOrderService->addComponentsGarageOrdersAction($postData);
         $response = new JsonResponse($responseMessage);
         return $response;
     }
     
     public function delComponentsGarageOrdersAction($request){        
         $postData = $request->getParsedBody();        
-        $component = $this->GarageOrderService->deleteGarageOrderComponentAjax($postData);
+        $component = $this->GarageOrderService->delComponentsGarageOrdersAction($postData);
         $response = new JsonResponse($component);
         return $response;
     }
     
     public function addSuppliesGarageOrdersAction($request){
         $postData = $request->getParsedBody();        
-        $responseMessage = $this->GarageOrderService->saveGarageOrderSupplyAjax($postData);
+        $responseMessage = $this->GarageOrderService->addSuppliesGarageOrdersAction($postData);
         $response = new JsonResponse($responseMessage);
         return $response;
     }    
     
     public function delSuppliesGarageOrdersAction($request){        
         $postData = $request->getParsedBody();        
-        $supply = $this->GarageOrderService->deleteGarageOrderSupplyAjax($postData);
+        $supply = $this->GarageOrderService->delSuppliesGarageOrdersAction($postData);
         $response = new JsonResponse($supply);
         return $response;
     }
     
     public function addWorksGarageOrdersAction($request){
         $postData = $request->getParsedBody();        
-        $responseMessage = $this->GarageOrderService->saveGarageOrderWorkAjax($postData);
+        $responseMessage = $this->GarageOrderService->addWorksGarageOrdersAction($postData);
         $response = new JsonResponse($responseMessage);
         return $response;
     }   
     
     public function delWorksGarageOrdersAction($request){        
         $postData = $request->getParsedBody();        
-        $work = $this->GarageOrderService->deleteGarageOrderWorkAjax($postData);
+        $work = $this->GarageOrderService->delWorksGarageOrdersAction($postData);
         $response = new JsonResponse($work);
         return $response;
     }
 
     public function deleteAction($request){
         return $this->deleteItemAction($request, $this->model);
-    }
-
-   
+    }  
 
 }

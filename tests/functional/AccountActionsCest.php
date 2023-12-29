@@ -17,14 +17,17 @@ class AccountActionsCest {
         $I->amOnPage("/accounts/list?menu=mantenimiento&item=accounts");
         $I->click('#newButton');
         $this->permitted_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $accountNumbers = $I->grabColumnFromDatabase('accounts', 'accountNumber', ['deleted_at' => null]);
         $this->accountNumber = substr(str_shuffle($this->permitted_chars), 0, 20);
-        $lastBank = $I->grabNumRecords('banks', array('deleted_at' => null));
+        while(array_search($this->accountNumber, $accountNumbers)){
+            $this->accountNumber = substr(str_shuffle($this->permitted_chars), 0, 20);
+        }        
         $banks = $I->grabColumnFromDatabase('banks', 'id', array('deleted_at' => null));        
-        $this->bank = $banks[$lastBank -1];
-        $account = ['bank' => $banks[$lastBank -1], 'owner' => 'LoremIpsum', 'accountNumber' => $this->accountNumber, 'observations' => 'Lorem ipsum ...'];
+        $this->bank = $banks[count($banks) -1];
+        $account = ['bank_id' => $this->bank, 'owner' => 'LoremIpsum', 'accountNumber' => $this->accountNumber, 'observations' => 'Lorem ipsum ...'];
         $I->submitForm('#formCuentaBancaria', $account);        
         $this->id = $I->grabFromDatabase('accounts', 'id', ['accountNumber' => $this->accountNumber]);        
-        $I->see('Saved');
+        $I->seeInDatabase('accounts', ['accountNumber' => $this->accountNumber]);
     }
 
     public function editAccountTest(FunctionalTester $I) {
@@ -42,6 +45,8 @@ class AccountActionsCest {
     }
 
     public function delFromAccountFormTest(FunctionalTester $I) {
+        $this->addAccountTest($I);
+        $this->_before($I);
         $I->amOnPage("/accounts/list?menu=mantenimiento&item=accounts");
         $lastRegister = $I->grabNumRecords('accounts', array('deleted_at' => null));  
         if($lastRegister === 0){
@@ -52,10 +57,6 @@ class AccountActionsCest {
         $I->click('#editButton' . $registers[$lastRegister -1]);
         $I->click('Eliminar');
         $I->dontSeeInDatabase('accounts', array('id' => intval($registers[$lastRegister-1]), 'deleted_at' => null));
-    }
-    
-    public function _after(FunctionalTester $I){
-        $this->addAccountTest($I);
-    }
+    }   
 
 }

@@ -1,0 +1,8 @@
+I WANT TO ADD PAYMENT WAYS TEST
+
+I am on page ""/paymentWays/list?menu=compras&item=paymentWays"" 
+I click '#newButton' 
+I submit form '#formFormadePago'," $paymentWay" 
+I grab from database 'paymentWays'," 'id'," ['name' => 'Transferencia Bancaria']" 
+I see 'Saved'
+

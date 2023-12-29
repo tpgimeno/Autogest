@@ -34,25 +34,15 @@ class MadersActionsTestCest {
     public function delFromMaderListTest(FunctionalTester $I) {
         $I->amOnPage("/maders/list?menu=stock&item=maders");
         $I->click('#delButton' . $this->id);
-        $I->dontSeeInDatabase('maders', array('id' => intval($this->id), 'deleted_at' => null));
-        
+        $I->dontSeeInDatabase('maders', array('id' => intval($this->id), 'deleted_at' => null));        
     }
     
     public function delFromMaderFormTest(FunctionalTester $I) {
-        $I->amOnPage("/maders/list?menu=stock&item=maders");
-        $lastRegister = $I->grabNumRecords('maders', array('deleted_at' => null)); 
-        if($lastRegister === 0){
-            $this->addMaderTest($I);
-            $lastRegister = $I->grabNumRecords('maders', array('deleted_at' => null));
-        }
-        $registers = $I->grabColumnFromDatabase('maders', 'id', array('deleted_at' => null));        
-        $I->click('#editButton' . $registers[$lastRegister -1]);
-        $I->click('Eliminar');
-        $I->dontSeeInDatabase('maders', array('id' => intval($lastRegister), 'deleted_at' => null));
-    }
-    
-    public function _after(FunctionalTester $I){
         $this->addMaderTest($I);
+        $this->_before($I);
+        $I->amOnPage("/maders/list?menu=stock&item=maders");               
+        $I->click('#editButton' . $this->id);
+        $I->click('Eliminar');
+        $I->dontSeeInDatabase('maders', array('id' => intval($this->id), 'deleted_at' => null));
     }
-
 }

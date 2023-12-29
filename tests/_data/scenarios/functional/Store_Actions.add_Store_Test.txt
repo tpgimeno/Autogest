@@ -3,5 +3,6 @@ I WANT TO ADD STORE TEST
 I am on page ""/stores/list?menu=stock&item=stores"" 
 I click '#newButton' 
 I submit form '#formAlmacen'," $almacen" 
+I grab from database('stores', 'id', array 'name' => $this->name)" 
 I see 'Saved'
 

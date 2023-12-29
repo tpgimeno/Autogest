@@ -39,20 +39,11 @@ class CompanyActionsTestCest {
     }
     
     public function delFromCompanyFormTest(FunctionalTester $I) {
-        $I->amOnPage("/company/list?menu=mantenimiento&item=companies");
-        $lastRegister = $I->grabNumRecords('company', array('deleted_at' => null)); 
-        if($lastRegister === 0){
-            $this->addCompanyTest($I);
-            $lastRegister = $I->grabNumRecords('company', array('deleted_at' => null));
-        }
-        $registers = $I->grabColumnFromDatabase('company', 'id', array('deleted_at' => null));        
-        $I->click('#editButton' . $registers[$lastRegister -1]);
-        $I->click('Eliminar');
-        $I->dontSeeInDatabase('company', array('id' => intval($lastRegister), 'deleted_at' => null));
-    }
-    
-    public function _after(FunctionalTester $I){
         $this->addCompanyTest($I);
+        $this->_before($I);
+        $I->amOnPage("/company/list?menu=mantenimiento&item=companies");
+        $I->click('#editButton' . $this->id);
+        $I->click('Eliminar');
+        $I->dontSeeInDatabase('company', array('id' => intval($this->id), 'deleted_at' => null));
     }
-
 }

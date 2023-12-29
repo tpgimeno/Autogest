@@ -44,25 +44,17 @@ class LocationActionsCest {
     public function delFromLocationListTest(FunctionalTester $I) {
         $I->amOnPage("/locations/list?menu=stock&item=locations");
         $I->click('#delButton' . $this->id);
-        $I->dontSeeInDatabase('locations', array('id' => intval($this->id), 'deleted_at' => null));        
-        
+        $I->dontSeeInDatabase('locations', array('id' => intval($this->id), 'deleted_at' => null));
     }
 
     public function delFromLocationFormTest(FunctionalTester $I) {
-        $I->amOnPage("/locations/list?menu=stock&item=locations");
-        $lastRegister = $I->grabNumRecords('locations', array('deleted_at' => null));
-        if($lastRegister === 0){
-            $this->addLocationTest($I);            
-            $lastRegister = $I->grabNumRecords('locations', array('deleted_at' => null));
-        }
-        $registers = $I->grabColumnFromDatabase('locations', 'id', array('deleted_at' => null));
-        $I->click('#editButton' . $registers[$lastRegister - 1]);
+        $this->addLocationTest($I);
+        $this->_before($I);
+        $I->amOnPage("/locations/list?menu=stock&item=locations");        
+        $I->click('#editButton' . $this->id);
         $I->click('Eliminar');
-        $I->dontSeeInDatabase('locations', array('id' => intval($registers[$lastRegister - 1]), 'deleted_at' => null));
+        $I->dontSeeInDatabase('locations', array('id' => intval($this->id), 'deleted_at' => null));
     }
     
-    public function _after(FunctionalTester $I){
-        $this->addLocationTest($I);
-    }
-
+    
 }

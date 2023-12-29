@@ -1,0 +1,7 @@
+I WANT TO EDIT MADER TEST
+
+I am on page ""/maders/list?menu=stock&item=maders"" 
+I click '#editButton' . $this->id" 
+I submit form '#formFabricante'," $fabricante" 
+I see 'Updated'
+

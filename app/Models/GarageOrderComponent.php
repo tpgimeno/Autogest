@@ -7,11 +7,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
+
 /**
  * Description of GarageOrderComponent
  *
  * @author tonyl
  */
-class GarageOrderComponent {
-    //put your code here
+class GarageOrderComponent extends Model{
+    protected $table = "orderComponents";
 }

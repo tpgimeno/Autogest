@@ -36,6 +36,7 @@ final class CreateGarageOrderTable extends AbstractMigration
                 ->addColumn('baseWorks', 'string', ['null' => true])
                 ->addColumn('discountWorks', 'string', ['null' => true])
                 ->addColumn('baseOrder', 'string', ['null' => true])
+                ->addColumn('discountOrder', 'string', ['null' => true])
                 ->addColumn('tvaOrder', 'string', ['null' => true])
                 ->addColumn('totalOrder', 'string', ['null' => true])               
                 ->addColumn('created_at', 'datetime')

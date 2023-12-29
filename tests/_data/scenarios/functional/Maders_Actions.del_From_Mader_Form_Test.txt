@@ -1,0 +1,10 @@
+I WANT TO DEL FROM MADER FORM TEST
+
+I am on page ""/maders/list?menu=stock&item=maders"" 
+I grab num records('maders', array 'deleted_at' => null)" 
+I grab num records('maders', array 'deleted_at' => null)" 
+I grab column from database('maders', 'id', array 'deleted_at' => null)" 
+I click '#editButton' . $registers[$lastRegister -1]" 
+I click 'Eliminar' 
+I don't see in database('maders', array('id' => intval "$lastRegister)"," 'deleted_at' => null)"
+

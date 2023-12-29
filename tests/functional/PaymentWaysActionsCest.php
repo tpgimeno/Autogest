@@ -14,13 +14,14 @@ class PaymentWaysActionsCest {
 
     // tests
     public function addPaymentWaysTest(FunctionalTester $I) {
-        $I->amOnPage("/paymentWays/list?menu=compras&item=paymentWays");
+        $I->amOnPage("/paymentWays/list?menu=compras&item=buypaymentWays");
         $I->click('#newButton');
         $this->permitted_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $this->name = substr(str_shuffle($this->permitted_chars), 0, 20);        
-        $paymentWay = ['name' => $this->name, 'account_id' => '1', 'discount' => '20'];
+        $this->name = substr(str_shuffle($this->permitted_chars), 0, 20);
+        $accounts = $I->grabColumnFromDatabase('accounts', 'id', ['deleted_at' => null]);
+        $paymentWay = ['name' => $this->name, $accounts[count($accounts) - 1], 'discount' => '20'];
         $I->submitForm('#formFormadePago', $paymentWay);        
-        $this->id = $I->grabFromDatabase('paymentWays', 'id', ['name' => 'Transferencia Bancaria']);        
+        $this->id = $I->grabFromDatabase('paymentWays', 'id', ['name' => $this->name]);        
         $I->see('Saved');
     }
 
@@ -33,26 +34,17 @@ class PaymentWaysActionsCest {
     }
 
     public function delFromPaymentWayssListTest(FunctionalTester $I) {
-        $I->amOnPage("/paymentWays/list?menu=compras&item=paymentWays");
+        $I->amOnPage("/paymentWays/list?menu=compras&item=buypaymentWays");
         $I->click('#delButton' . $this->id);
         $I->dontSeeInDatabase('paymentWays', array('id' => intval($this->id), 'deleted_at' => null));
     }
 
     public function delFromPaymentWaysFormTest(FunctionalTester $I) {
-        $I->amOnPage("/paymentWays/list?menu=compras&item=paymentWays");
-        $lastRegister = $I->grabNumRecords('paymentWays', array('deleted_at' => null));  
-        if($lastRegister === 0){
-            $this->addPaymentWaysTest($I);
-            $lastRegister = $I->grabNumRecords('paymentWays', array('deleted_at' => null));  
-        }
-        $registers = $I->grabColumnFromDatabase('paymentWays', 'id', array('deleted_at' => null));
-        $I->click('#editButton' . $registers[$lastRegister -1]);
-        $I->click('Eliminar');
-        $I->dontSeeInDatabase('paymentWays', array('id' => intval($registers[$lastRegister-1]), 'deleted_at' => null));
-    }
-    
-    public function _after(FunctionalTester $I){
         $this->addPaymentWaysTest($I);
+        $this->_before($I);
+        $I->amOnPage("/paymentWays/list?menu=compras&item=buypaymentWays");
+        $I->click('#editButton' . $this->id);
+        $I->click('Eliminar');
+        $I->dontSeeInDatabase('paymentWays', array('id' => intval($this->id), 'deleted_at' => null));
     }
-
 }

@@ -2,6 +2,6 @@ I WANT TO EDIT LOCATION TEST
 
 I am on page ""/locations/list?menu=stock&item=locations"" 
 I click '#editButton' . $this->id" 
-I submit form '#formFinanciera'," $location" 
+I submit form '#formUbicacion'," $location" 
 I see 'Updated'
 

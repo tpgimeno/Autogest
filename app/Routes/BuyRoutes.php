@@ -371,11 +371,15 @@ class BuyRoutes
            'App\Controllers\Garages\GarageOrdersController',
            'getIndexAction'
        ]);
-       $map->post('saveOrder', '/Intranet/buys/orders/save', [
+       $map->post('getOrderNumber', '/Intranet/garageOrders/number/get', [
+           'App\Controllers\Garages\GarageOrdersController',
+           'getGarageOrdersNumberAction'
+       ]);
+       $map->post('saveOrder', '/Intranet/garageOrders/save', [
            'App\Controllers\Garages\GarageOrdersController',
            'getOrderDataAction'
        ]);
-       $map->get('ordersDelete', '/Intranet/buys/orders/delete', [
+       $map->get('ordersDelete', '/Intranet/garageOrders/delete', [
            'App\Controllers\Garages\GarageOrdersController',
            'deleteAction'
        ]);
@@ -399,7 +403,7 @@ class BuyRoutes
            'App\Controllers\Garages\GarageOrdersController',
            'addWorksGarageOrdersAction'
        ]);
-       $map->post('delOrderWork', '/Intranet/garageOrders/works/add', [
+       $map->post('delOrderWork', '/Intranet/garageOrders/works/del', [
            'App\Controllers\Garages\GarageOrdersController',
            'delWorksGarageOrdersAction'
        ]); 

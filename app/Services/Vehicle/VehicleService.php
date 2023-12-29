@@ -92,7 +92,7 @@ class VehicleService extends BaseService {
                     ->join('vehicles', 'vehiclecomponents.vehicle_id', '=', 'vehicles.id')
                     ->join('components', 'vehiclecomponents.component_id', '=', 'components.id')
                     ->join('maders', 'components.mader_id', '=', 'maders.id')
-                    ->select('components.id as component_id', 'vehiclecomponents.id', 'maders.name as mader', 'components.ref as ref', 'components.name as name', 'components.pvp as pvp', 'vehiclecomponents.cantity as cantity')
+                    ->select('components.id as component_id', 'vehiclecomponents.id as vehiclecomponent_id', 'maders.name as mader', 'components.ref as ref', 'components.name as name', 'components.pvp as pvp', 'vehiclecomponents.cantity as cantity')
                     ->where('vehiclecomponents.vehicle_id', '=', $postData['vehicle_id'])
                     ->get();
         } else {
@@ -101,7 +101,7 @@ class VehicleService extends BaseService {
                     ->join('vehicles', 'vehiclecomponents.vehicle_id', '=', 'vehicles.id')
                     ->join('components', 'vehiclecomponents.component_id', '=', 'components.id')
                     ->join('maders', 'components.mader_id', '=', 'maders.id')
-                    ->select('components.id as component_id', 'vehiclecomponents.id', 'maders.name as mader', 'components.ref as ref', 'components.name as name', 'components.pvp as pvp', 'vehiclecomponents.cantity as cantity')
+                    ->select('components.id as component_id', 'vehiclecomponents.id as vehiclecomponent_id', 'maders.name as mader', 'components.ref as ref', 'components.name as name', 'components.pvp as pvp', 'vehiclecomponents.cantity as cantity')
                     ->where('vehiclecomponents.vehicle_id', '=', $params['id'])
                     ->get();
         }
@@ -149,7 +149,7 @@ class VehicleService extends BaseService {
                     ->join('vehicles', 'vehiclesupplies.vehicle_id', '=', 'vehicles.id')
                     ->join('supplies', 'vehiclesupplies.supply_id', '=', 'supplies.id')
                     ->join('maders', 'supplies.mader_id', '=', 'maders.id')
-                    ->select('supplies.id as supply_id', 'vehiclesupplies.id', 'maders.name as mader', 'supplies.ref as ref', 'supplies.name as name', 'supplies.pvp as pvp', 'vehiclesupplies.cantity as cantity')
+                    ->select('supplies.id as supply_id', 'vehiclesupplies.id as vehiclesupply_id', 'maders.name as mader', 'supplies.ref as ref', 'supplies.name as name', 'supplies.pvp as pvp', 'vehiclesupplies.cantity as cantity')
                     ->where('vehiclesupplies.vehicle_id', '=', $postData['vehicle_id'])
                     ->get();
         } else {
@@ -158,7 +158,7 @@ class VehicleService extends BaseService {
                     ->join('vehicles', 'vehiclesupplies.vehicle_id', '=', 'vehicles.id')
                     ->join('supplies', 'vehiclesupplies.supply_id', '=', 'supplies.id')
                     ->join('maders', 'supplies.mader_id', '=', 'maders.id')
-                    ->select('supplies.id as supply_id', 'vehiclesupplies.id', 'maders.name as mader', 'supplies.ref as ref', 'supplies.name as name', 'supplies.pvp as pvp', 'vehiclesupplies.cantity as cantity')
+                    ->select('supplies.id as supply_id', 'vehiclesupplies.id as vehiclesupply_id', 'maders.name as mader', 'supplies.ref as ref', 'supplies.name as name', 'supplies.pvp as pvp', 'vehiclesupplies.cantity as cantity')
                     ->where('vehiclesupplies.vehicle_id', '=', $params['id'])
                     ->get();
         }
@@ -206,7 +206,7 @@ class VehicleService extends BaseService {
             $works = DB::table('vehicleworks')
                     ->join('vehicles', 'vehicleworks.vehicle_id', '=', 'vehicles.id')
                     ->join('works', 'vehicleworks.work_id', '=', 'works.id')
-                    ->select('works.id as work_id', 'vehicleworks.id', 'works.ref as ref', 'works.name as name', 'works.pvp as pvp', 'vehicleworks.cantity as cantity')
+                    ->select('works.id as work_id', 'vehicleworks.id as vehiclework_id', 'works.ref as ref', 'works.name as name', 'works.pvp as pvp', 'vehicleworks.cantity as cantity')
                     ->where('vehicleworks.vehicle_id', '=', $postData['vehicle_id'])
                     ->get();
         } else {
@@ -214,7 +214,7 @@ class VehicleService extends BaseService {
             $works = DB::table('vehicleworks')
                     ->join('vehicles', 'vehicleworks.vehicle_id', '=', 'vehicles.id')
                     ->join('works', 'vehicleworks.work_id', '=', 'works.id')
-                    ->select('works.id as work_id', 'vehicleworks.id', 'works.ref as ref', 'works.name as name', 'works.pvp as pvp', 'vehicleworks.cantity as cantity')
+                    ->select('works.id as work_id', 'vehicleworks.id as vehiclework_id', 'works.ref as ref', 'works.name as name', 'works.pvp as pvp', 'vehicleworks.cantity as cantity')
                     ->where('vehicleworks.vehicle_id', '=', $params['id'])
                     ->get();
         }

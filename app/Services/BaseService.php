@@ -12,6 +12,7 @@ use App\Models\Accesories;
 use App\Models\Label;
 use App\Models\VehicleAccesories;
 use Exception;
+use Illuminate\Support\Facades\Date;
 use function str_ends_with;
 
 /**
@@ -40,6 +41,7 @@ class BaseService {
     }
 
     public function setInstance($model, $array) {
+//        var_dump($array);die();
         if (isset($array['id'])) {
             $instanceSelected = $model::find(intval($array['id']));
         } else {
@@ -56,54 +58,43 @@ class BaseService {
         return $exist;
     }
 
-    public function saveRegister($model, $array) {        
-        $properties = $model->getProperties();
-        $content = array_values($array);       
-        $diference = 3;
-        $keys = [];
+    public function saveRegister($model, $array) {
+        $properties = $model->getProperties();        
+        $content = [];              
         $assetsNumber = 0;
         if(isset($properties['data']) && is_array($properties['data'])){
-            $keys = array_keys($properties);
-            $total_properties = [];
-            for($j = 0; $j < count($keys);$j++){            
-               foreach($properties[$keys[$j]] as $item){
-                   array_push($total_properties, $item);
-               }                  
-            }
-            $properties = $total_properties;
-            $properties_array = array_slice($properties, 0, array_search('vehicle_id', $properties)+1);        
-            $end_array = array_slice($properties, array_search('vehicle_id', $properties)+6, count($properties));
-            $properties = array_merge($properties_array, $end_array);
-        } 
-        
-        unset($content[0], $content[1],$content[2]);
-        if(count($content) > count($properties)){
-            $assetsNumber = count($content) - count($properties); 
-            $assets = array_slice($content, count($content) - $assetsNumber);
-            $content = array_slice($content, 0, count($content) - $assetsNumber);
-            $diference = 0;
+            $properties = $this->filterProperties($properties);            
+                      
         }
+        $response = $this->filterContent($array, $properties);
+        $content = $response[0];  
         if ($this->findRegister($model, $array) == true) {
             $model = $model::find(intval($array['id']));
         }
         // At this point we receive the form inputs with 3 item more than object properties. So we do $i + 3 to correct it.
-//            var_dump($properties);
-//            var_dump($array);
-        for ($i = 0; $i < (sizeof($properties)); $i++) {
             
+//            var_dump($content);
+//            var_dump($properties);die();
+        for ($i = 0; $i < (sizeof($content)); $i++) {            
             if ($properties[$i] == 'password') {
-                $model->{$properties[$i]} = password_hash($content[$i+$diference], PASSWORD_DEFAULT);
-            }elseif (str_ends_with($properties[$i], 'Date')){
-                $model->{$properties[$i]} = date('Y/m/d', strtotime($content[$i+$diference]));
-            }elseif(strpos($content[$i+$diference], "€")){   
-                $content[$i+$diference] = str_replace(".", "", $content[$i+$diference]);
-//                var_dump($content[$i+$diference]);die();
-                $model->{$properties[$i]} = floatval($content[$i+$diference]);
+                $model->{$properties[$i]} = password_hash($content[$i], PASSWORD_DEFAULT);
+            }elseif ($properties[$i] == 'plate' && is_int($content[$i])){                
+                $model->vehicle_id = $content[$i];   
+            }elseif (str_ends_with($properties[$i], 'Date')){   
+                if ($properties[$i] === 'inDate' || $properties[$i] === 'outDate'){ 
+                    $date = date_create_from_format('d/m/Y H:i:s', $content[$i]);                    
+                    $model->{$properties[$i]} = $date;
+                }else{
+                    $model->{$properties[$i]} = date('Y/m/d', strtotime($content[$i]));
+                }
+            }elseif(strpos($content[$i], "€")){   
+                $content[$i] = str_replace(".", "", $content[$i]);
+                $model->{$properties[$i]} = floatval($content[$i]);
             }else{            
-                $model->{$properties[$i]} = $content[$i+$diference];
+                $model->{$properties[$i]} = $content[$i];
             }
-        } 
-        
+        }  
+//        var_dump($model);die();
         try {
             if ($this->findRegister($model, $array) == true) {
                 $model->update();
@@ -116,7 +107,7 @@ class BaseService {
             $responseMessage = $e->getMessage();
         }
         if($assetsNumber > 0){  
-            $this->saveAssets($assets, $model);
+            $this->saveAssets($response[2], $model);
         }
         return array($model->id, $responseMessage);
     }
@@ -156,9 +147,45 @@ class BaseService {
                     $vehicle_accesory_unchecked->delete();
                 }
             }
+        }       
+    }
+    
+    public function filterProperties($properties){
+        $keys = array_keys($properties);
+        $total_properties = [];
+        for($j = 0; $j < count($keys);$j++){
+           foreach($properties[$keys[$j]] as $item){
+               array_push($total_properties, $item);
+           }               
+        }        
+        $properties = $total_properties;
+        if($properties[0] === 'offerNumber'){
+                $properties_array = array_slice($properties, 0, array_search('vehicle_id', $properties)+1);        
+                $end_array = array_slice($properties, array_search('vehicle_id', $properties)+6, count($properties));
+                $properties = array_merge($properties_array, $end_array);
+            }
+        if($properties[0] === 'orderNumber'){                
+            $properties_array = array_slice($properties, 0, array_search('plate', $properties));
+//                var_dump($properties_array);
+            $end_array = array_slice($properties, array_search('plate', $properties)+3, count($properties));
+//                var_dump($end_array);
+            $properties = array_merge($properties_array, $end_array);
         }
-        
-        
+        return $properties;              
+    }
+    
+    public function filterContent($array, $properties){
+        $content = [];
+        $assets = null;
+        for($i = 0; $i < count($properties); $i++){
+            if($properties[$i] === 'vehicle_id'){
+                array_push($content, $array['plate']);
+            }
+            if(isset($array[$properties[$i]])){
+                array_push($content, $array[$properties[$i]]);
+            }
+        }
+        return [$content, $assets];
     }
 
     public function deleteRegister($model, $array) {
@@ -196,5 +223,7 @@ class BaseService {
 
         return $string;
     }
+    
+   
 
 }

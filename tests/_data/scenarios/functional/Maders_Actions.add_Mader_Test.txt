@@ -1,0 +1,8 @@
+I WANT TO ADD MADER TEST
+
+I am on page ""/maders/list?menu=stock&item=maders"" 
+I click '#newButton' 
+I submit form '#formFabricante'," $fabricante" 
+I grab from database 'maders'," 'id'," ['fiscalId' => $this->fiscalId]" 
+I see 'Saved'
+

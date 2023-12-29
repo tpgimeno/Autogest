@@ -2,9 +2,9 @@ I WANT TO ADD LOCATION TEST
 
 I am on page ""/locations/list?menu=stock&item=locations"" 
 I click '#newButton' 
-I grab num records('stores', array 'deleted_at' => null)" 
-I grab column from database('stores', 'id', array 'deleted_at' => null)" 
+I grab num records 'stores' 
+I grab column from database 'stores'," 'id' 
 I submit form '#formUbicacion'," $location" 
-I grab from database 'locations'," 'id'," ['storeId' => $store"," 'name' => $name]" 
+I grab from database 'locations'," 'id'," ['store_id' => $lastStore"," 'name' => $this->name]" 
 I see 'Saved'
 

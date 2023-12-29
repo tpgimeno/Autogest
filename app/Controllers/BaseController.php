@@ -79,7 +79,7 @@ class BaseController {
             unset($temp['plate']);
             $postData = array_merge($postDataInitial, $temp);
         }
-        
+//        var_dump($postData);die();
         $response = $this->baseService->saveRegister(new $model, $postData);        
         if($response){
             $responseMessage = $response[1];
@@ -91,6 +91,7 @@ class BaseController {
         }else{
             $selectedTab = 'data';
         }
+        
         $menuState = $postData['menu'];
         $menuItem = $postData['menuItem'];
         $this->properties = $this->baseService->getModelProperties(new $model);        
@@ -110,9 +111,13 @@ class BaseController {
     }
     
     public function getBaseGetDataAction(ServerRequest $request, $model, $iterables) {           
-        $params = $request->getQueryParams();        
-        $valueSelected = $this->baseService->setInstance(new $model, $params);  
-        
+        $params = $request->getQueryParams(); 
+//        var_dump($params);die();
+        $valueSelected = $this->baseService->setInstance(new $model, $params);
+        $responseMessage = null;
+        if(isset($params['responseMessage'])){
+            $responseMessage = $params['responseMessage'];
+        }        
         $menuState = $params['menu'];
         $menuItem = $params['item'];
         $selectedTab = null;
@@ -123,7 +128,8 @@ class BaseController {
         }
         $this->properties = $this->baseService->getModelProperties(new $model);             
         return $this->renderHTML('templateFormView.html.twig', [
-                    'userEmail' => $this->currentUser->getCurrentUserEmailAction(),                                      
+                    'userEmail' => $this->currentUser->getCurrentUserEmailAction(), 
+                    'responseMessage' => $responseMessage,
                     'value' => $valueSelected,
                     'labels' => $this->labels,
                     'optionsArray' => $iterables,
@@ -139,7 +145,8 @@ class BaseController {
     public function deleteItemAction(ServerRequest $request, $model){
         $params = $request->getQueryParams();
         $this->baseService->deleteRegister($model, $params);
-        return new RedirectResponse('/Intranet/' . $this->route . '/list?menu=' . $params['menu'] . '&item=' . $params['item']);
+        $responseMessage = 'Deleted';
+        return new RedirectResponse('/Intranet/' . $this->route . '/list?menu=' . $params['menu'] . '&item=' . $params['item'] . '&responseMessage=' . $responseMessage);
     }
 
     function tofloat($num) {

@@ -94,7 +94,20 @@ class VehicleController extends BaseController {
             'vehicle_accesories' => $vehicle_accesories,
             'vehicle_components' => $vehicle_components,
             'vehicle_supplies' => $vehicle_supplies,
-            'vehicle_works' => $vehicle_works);
+            'vehicle_works' => $vehicle_works,
+            'vehicle_component_labels' => ['vehiclecomponent_id' => 'vehiclecomponent_id','mader' => 'mader','ref' => 'ref','name' => 'name','cantity' => 'cantity','pvp' => 'pvp','total' => 'total'],
+            'vehicle_supply_labels' => ['vehiclesupply_id' => 'vehiclesupply_id','mader' => 'mader','ref' => 'ref','name' => 'name','cantity' => 'cantity','pvp' => 'pvp','total' => 'total'],
+            'vehicle_work_labels' => ['vehiclework_id' => 'vehiclework_id','ref' => 'ref','name' => 'name','cantity' => 'cantity','pvp' => 'pvp','total' => 'total'],
+            'component_functions' => ['set' => 'setComponent', 'delete' => 'delVehicleComponent'],
+            'supply_functions' => ['set' => 'setSupply', 'delete' => 'delVehicleSupply'],
+            'work_functions' => ['set' => 'setWork', 'delete' => 'delVehicleWork'],
+            'assets_prices' => ['1' => 'baseComponents','2' => 'Base Componentes','3' => 'tvaComponents','4' => 'Iva','5' => 'totalComponents', '6' => 'Total Componentes','7' => 'baseSupplies', '8' => 'Base Recambios', '9' => 'tvaSupplies', '10' => 'Iva Recambios', '11' => 'totalSupplies', '12' => 'Total Recambios', '13' => 'baseWorks', '14' => 'Base Trabajos', '15' => 'tvaWorks', '16' => 'Iva Trabajos', '17' => 'totalWorks', '18' => 'Total Trabajos'],
+            'assets_labels' => ['id' => 'id', 'ref' => 'ref','name' => 'name','pvp' => 'pvp'],
+            'setComponentsUrl' => "Intranet/Vehicles/components/set",
+            'parent_id' => 'vehicle_id',
+            'object_id' => ['1' => 'component_id','2' => 'supply_id','3' => 'work_id'],
+            'modals_functions' => ['setComponent' => 'setComponent', 'saveComponent' => 'saveVehicleComponent()' ,'setSupply' => 'setSupply', 'saveSupply' => 'saveVehicleSupply()','setWork' => 'setWork','saveWork' => 'saveVehicleWork()'],
+            'forms' => ['1' => 'vehicle_component_form','2' => 'vehicle_supply_form','3' => 'vehicle_work_form']);
         if($request->getMethod() == 'POST') {
             $postData = $request->getParsedBody();
             $postData = $this->getCheckboxes($postData);                     

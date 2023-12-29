@@ -57,7 +57,20 @@ class SellOffersController extends BaseController {
             'works' => $this->sellOfferService->getAllRegisters(new Works()),
             'vehicle_components' => $this->sellOfferService->getSellOfferComponents($request),
             'vehicle_supplies' => $this->sellOfferService->getSellOfferSupplies($request),
-            'vehicle_works' => $this->sellOfferService->getSellOfferWorks($request)
+            'vehicle_works' => $this->sellOfferService->getSellOfferWorks($request),
+            'vehicle_component_labels' => ['sellOffercomponent_id' => 'sellOffercomponent_id','mader' => 'mader','ref' => 'ref','name' => 'name','cantity' => 'cantity','pvp' => 'pvp','total' => 'total'],
+            'vehicle_supply_labels' => ['sellOffersupply_id' => 'sellOffersupply_id','mader' => 'mader','ref' => 'ref','name' => 'name','cantity' => 'cantity','pvp' => 'pvp','total' => 'total'],
+            'vehicle_work_labels' => ['sellOfferwork_id' => 'sellOfferwork_id','ref' => 'ref','name' => 'name','cantity' => 'cantity','pvp' => 'pvp','total' => 'total'],
+            'component_functions' => ['set' => 'setComponent', 'delete' => 'delSellOfferComponent'],
+            'supply_functions' => ['set' => 'setSupply', 'delete' => 'delSellOfferSupply'],
+            'work_functions' => ['set' => 'setWork', 'delete' => 'delSellOfferWork'],
+            'assets_prices' => ['1' => 'baseComponents','2' => 'Base Componentes','3' => 'tvaComponents','4' => 'Iva','5' => 'totalComponents', '6' => 'Total Componentes','7' => 'baseSupplies', '8' => 'Base Recambios', '9' => 'tvaSupplies', '10' => 'Iva Recambios', '11' => 'totalSupplies', '12' => 'Total Recambios', '13' => 'baseWorks', '14' => 'Base Trabajos', '15' => 'tvaWorks', '16' => 'Iva Trabajos', '17' => 'totalWorks', '18' => 'Total Trabajos'],
+            'assets_labels' => ['id' => 'id', 'ref' => 'ref','name' => 'name','pvp' => 'pvp'],
+            'setComponentsUrl' => "Intranet/sellOffers/components/set",
+            'parent_id' => 'sellOffer_id',
+            'object_id' => ['1' => 'component_id','2' => 'supply_id','3' => 'work_id'],
+            'modals_functions' => ['setComponent' => 'setComponent','saveComponent' => 'saveSellOfferComponent()','setSupply' => 'setSupply', 'saveSupply' => 'saveSellOfferSupply()','setWork' => 'setWork','saveWork' => 'saveSellOfferWork()'],
+            'forms' => ['1' => 'sellOffer_component_form','2' => 'sellOffer_supply_form','3' => 'sellOffer_work_form']
         ];
 //        var_dump($request->getQueryParams());
 //        var_dump($iterables['vehicle_works']);die();

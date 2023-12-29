@@ -1,0 +1,6 @@
+I WANT TO DEL FROM PAYMENT WAYSS LIST TEST
+
+I am on page ""/paymentWays/list?menu=compras&item=paymentWays"" 
+I click '#delButton' . $this->id" 
+I don't see in database('payment ways', array('id' => intval "$this->id)"," 'deleted_at' => null)"
+
