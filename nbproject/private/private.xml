@@ -12,11 +12,10 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Intranet/views/macros.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Intranet/App/Services/Vehicle/VehicleService.php</file>
+            <file>file:/C:/xampp/htdocs/Intranet/App/Models/Assurances.php</file>
             <file>file:/C:/xampp/htdocs/Intranet/views/templateFormView.html.twig</file>
-            <file>file:/C:/xampp/htdocs/Intranet/App/Controllers/Vehicle/VehicleController.php</file>
-            <file>file:/C:/xampp/htdocs/Intranet/assets/js/autogest.js</file>
+            <file>file:/C:/xampp/htdocs/Intranet/App/Controllers/Entitys/AssuranceController.php</file>
+            <file>file:/C:/xampp/htdocs/Intranet/logs/app.log</file>
         </group>
     </open-files>
 </project-private>

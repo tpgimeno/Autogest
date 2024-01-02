@@ -46,7 +46,8 @@ class BaseController {
     }
     
     public function getBaseIndexAction(ServerRequest $request, $model, $values) {
-        $params = $request->getQueryParams();        
+        $params = $request->getQueryParams();
+//        var_dump($params);die();        
         $menuState = $params['menu'];  
         $menuItem = $params['item'];
 //        var_dump($values);die();

@@ -4,7 +4,7 @@ namespace App\Controllers\Garages;
 
 use App\Controllers\BaseController;
 use App\Models\Garage;
-use App\Services\Buys\GarageService;
+use App\Services\Garages\GarageService;
 use Exception;
 use Laminas\Diactoros\ServerRequest;
 use Respect\Validation\Validator as v;

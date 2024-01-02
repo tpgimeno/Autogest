@@ -47,16 +47,10 @@ class AccountActionsCest {
     public function delFromAccountFormTest(FunctionalTester $I) {
         $this->addAccountTest($I);
         $this->_before($I);
-        $I->amOnPage("/accounts/list?menu=mantenimiento&item=accounts");
-        $lastRegister = $I->grabNumRecords('accounts', array('deleted_at' => null));  
-        if($lastRegister === 0){
-            $this->addAccountTest($I);
-            $lastRegister = $I->grabNumRecords('accounts', array('deleted_at' => null));  
-        }
-        $registers = $I->grabColumnFromDatabase('accounts', 'id', array('deleted_at' => null));
-        $I->click('#editButton' . $registers[$lastRegister -1]);
+        $I->amOnPage("/accounts/list?menu=mantenimiento&item=accounts");        
+        $I->click('#editButton' . $this->id);
         $I->click('Eliminar');
-        $I->dontSeeInDatabase('accounts', array('id' => intval($registers[$lastRegister-1]), 'deleted_at' => null));
+        $I->dontSeeInDatabase('accounts', array('id' => intval($this->id), 'deleted_at' => null));
     }   
 
 }

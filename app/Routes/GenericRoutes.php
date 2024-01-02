@@ -179,6 +179,25 @@ class GenericRoutes {
            'App\Controllers\Entitys\FinanceController',
            'deleteAction'    
        ]);
+       
+       //ASSURANCES
+
+       $map->get('assurancesList', '/Intranet/assurances/form', [
+           'App\Controllers\Entitys\AssuranceController',
+           'getAssuranceDataAction'
+       ]);
+       $map->get('assurancesForm', '/Intranet/assurances/list', [
+           'App\Controllers\Entitys\AssuranceController',
+           'getIndexAction'    
+       ]);
+       $map->post('saveAssurance', '/Intranet/assurances/save', [
+           'App\Controllers\Entitys\AssuranceController',
+           'getAssuranceDataAction'
+       ]);
+       $map->get('assurancesDelete', '/Intranet/assurances/delete', [
+           'App\Controllers\Entitys\AssuranceController',
+           'deleteAction'    
+       ]);
 
        //STORES
 

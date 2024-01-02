@@ -26,10 +26,13 @@ final class AssurancesTable extends AbstractMigration
         
         $table = $this->table('assurances');
         $table->addColumn('ref', 'string')
-                ->addColumn('date', 'datetime')
+                ->addColumn('inDate', 'datetime')
+                ->addColumn('effectDate', 'datetime')
                 ->addColumn('duration', 'integer')
-                ->addColumn('owner', 'string')
-                ->addColumn('object', 'string')
+                ->addColumn('getter_id', 'integer')
+                ->addColumn('owner_id', 'integer')
+                ->addColumn('object_id', 'integer')
+                ->addColumn('discount', 'float')
                 ->addColumn('price', 'float')
                 ->addColumn('description', 'text')
                 ->addColumn('options', 'text')

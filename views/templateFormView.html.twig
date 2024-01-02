@@ -7,12 +7,13 @@
                         'customer_id':'customer_id', 'seller_id':'seller_id',
                         'model_id':'model_id','providor_id':'providor_id',
                         'mader_id':'mader_id', 'taxes_id':'taxes_id', 
-                        'paymentWay_id':'paymentWay_id', 'customerType':'customerType'} %}
-{% set textareas = {'vehicleComments':'vehicleComments', 'texts':'texts'} %}
+                        'paymentWay_id':'paymentWay_id', 'customerType':'customerType',
+                        'getter_id':'getter_id', 'owner_id':'owner_id', 'object_id':'object_id'} %}
+{% set textareas = {'vehicleComments':'vehicleComments', 'texts':'texts','options':'options'} %}
 {% set large_textareas = {'observations':'observations','text':'text', 'description':'description'} %}
 {% set dates = {'birthDate':'birthDate','registryDate':'registryDate','sellDate':'sellDate','buyDate':'buyDate', 'arrival':'arrival','appointDate':'appointDate','offerDate':'offerDate'} %}
-{% set datetimes = {'inDate':'inDate', 'outDate':'outDate'} %}
-{% set currencies = {'pvd':'pvd','pvp':'pvp','cost':'cost','pvc':'pvc','vehiclePvp':'vehiclePvp', 'discount':'discount', 'vehicleDiscount':'vehicleDiscount','tva':'tva','total':'total','costTva':'costTva','costTotal':'costTotal','vehicleTva':'vehicleTva','vehicleTotal':'vehicleTotal'} %}
+{% set datetimes = {'inDate':'inDate', 'outDate':'outDate', 'effectDate':'effectDate'} %}
+{% set currencies = {'pvd':'pvd','pvp':'pvp','cost':'cost','pvc':'pvc','vehiclePvp':'vehiclePvp', 'discount':'discount', 'vehicleDiscount':'vehicleDiscount','tva':'tva','total':'total','costTva':'costTva','costTotal':'costTotal','vehicleTva':'vehicleTva','vehicleTotal':'vehicleTotal','price':'price'} %}
 {% set checks = {'rebu':'rebu','secondKey':'secondKey'} %}
 {% set hidden = {'vehicle_id':'vehicle_id'} %}
 {% set garageOrders = {} %}
@@ -224,6 +225,13 @@
                                         <textarea type="text" id="{{ property }}" name="{{ property }}" class="form-control">{{ attribute(value, property) }}</textarea>
                                     </div>                            
                                 </div>
+                            {% elseif property in large_textareas %}
+                                    <div class="row">
+                                        <div class="input-group col-10">
+                                            <label class="control-label" for="{{ property }}">{{ labels[property] }}</label>
+                                            <textarea type="text" id="{{ property }}" name="{{ property }}" rows="8" class="form-control">{{ attribute(value, property) }}</textarea>
+                                        </div>                            
+                                    </div>
                             {% elseif property in dates %}
                                 <div class="row">
                                     <div class="input-group col-10">                                            
