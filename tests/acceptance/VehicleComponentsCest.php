@@ -1,6 +1,6 @@
 <?php
 
-class UserLevelsCest
+class VehicleComponentsCest
 {
     public function _before(AcceptanceTester $I)
     {

@@ -36,9 +36,58 @@ class ProductionRoutes {
             'getProductionDataAction'
         ]);
         $map->get('productionDelete', '/Intranet/production/delete', [
-            'App\Controllers\Entitys\ProductionController',
+            'App\Controllers\Garages\ProductionController',
             'deleteAction'
         ]);
+        
+        $map->post('getWorkSheetNumber', '/Intranet/workSheets/number/get', [
+            'App\Controllers\Garages\WorkSheetsController',
+            'getWorkSheetsNumberAction'
+        ]);
+        $map->get('workSheetsList', '/Intranet/workSheets/form', [
+            'App\Controllers\Garages\WorkSheetsController',
+            'getWorkSheetsDataAction'
+        ]);
+        $map->get('workSheetsForm', '/Intranet/workSheets/list', [
+            'App\Controllers\Garages\WorkSheetsController',
+            'getIndexAction'
+        ]);
+        $map->post('saveWorkSheets', '/Intranet/workSheets/save', [
+            'App\Controllers\Garages\WorkSheetsController',
+            'getWorkSheetsDataAction'
+        ]);
+        $map->get('workSheetsDelete', '/Intranet/workSheets/delete', [
+            'App\Controllers\Garages\WorkSheetsController',
+            'deleteAction'
+        ]);
+        $map->post('saveWorkSheetComponent', '/Intranet/workSheets/components/add', [
+           'App\Controllers\Garages\WorkSheetsController',
+           'addComponentsWorkSheetsAction'
+        ]);
+        $map->post('delWorkSheetComponent', '/Intranet/workSheets/components/del', [
+            'App\Controllers\Garages\WorkSheetsController',
+            'delComponentsWorkSheetsAction'
+        ]);
+        $map->post('addWorkSheetSupply', '/Intranet/workSheets/supplies/add', [
+            'App\Controllers\Garages\WorkSheetsController',
+            'addSuppliesWorkSheetsAction'
+        ]);
+        $map->post('delWorkSheetSupply', '/Intranet/workSheets/supplies/del', [
+            'App\Controllers\Garages\WorkSheetsController',
+            'delSuppliesWorkSheetsAction'
+        ]);
+        $map->post('addWorkSheetWork', '/Intranet/workSheets/works/add', [
+            'App\Controllers\Garages\WorkSheetsController',
+            'addWorksWorkSheetsAction'
+        ]);
+        $map->post('delWorkSheetWork', '/Intranet/workSheets/works/del', [
+            'App\Controllers\Garages\WorkSheetsController',
+            'delWorksWorkSheetsAction'
+        ]); 
+        
+        
+        
+        
         return $routerContainer;
     }
 }

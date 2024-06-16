@@ -31,7 +31,7 @@ class GenericRoutes {
            'postLogin'
 
        ]);
-       $map->post('logout', '/Intranet/logout', [
+       $map->get('logout', '/Intranet/logout', [
            'App\Controllers\AuthController',
            'getLogout'    
        ]);

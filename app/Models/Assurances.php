@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
 class Assurances extends Model{
     //put your code here
     protected $table = 'assurances';
-    protected $properties = ['ref', 'inDate', 'effectDate','duration', 'getter_id','object_id','discount','price', 'observations', 'options'];
+    protected $properties = ['ref', 'inDate', 'effectDate','duration', 'getter_id','owner_id','object_id','discount','price', 'description', 'options'];
     public function getProperties(){
         return $this->properties;
     }

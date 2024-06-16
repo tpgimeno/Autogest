@@ -22,6 +22,14 @@
     opacity: .4;
 }
 
+.exitButton{
+    text-align: right;
+}
+
+#exitButton:hover{
+    color: #007fff;
+}
+
 /*
 * ================
 *   DataTables

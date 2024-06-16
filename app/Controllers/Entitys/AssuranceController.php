@@ -41,7 +41,9 @@ class AssuranceController extends BaseController {
     }  
     public function getAssuranceDataAction($request) {                
         $responseMessage = null;        
-        $iterables = ['customers' => $this->assuranceService->getAllRegisters(new Customer()),
+        $iterables = ['owner_id' => $this->assuranceService->getAllRegisters(new Customer()),
+            'getter_id' => $this->assuranceService->getAllRegisters(new Customer()),
+            'object_id' => $this->assuranceService->getAllRegisters(new Vehicle()),
             'vehicles' => $this->assuranceService->getAllRegisters(new Vehicle())
             ];
         if($request->getMethod() == 'POST') {

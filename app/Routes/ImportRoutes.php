@@ -18,13 +18,18 @@ class ImportRoutes {
         $sellRoutes = new SellRoutes();
         $buyRoutes = new BuyRoutes();
         $genericRoutes = new GenericRoutes();
-        $reportRoutes = new ReportsRoutes();        
+        $reportRoutes = new ReportsRoutes();  
+        $productionRoutes = new ProductionRoutes();
         $routes = $genericRoutes->getGenericRoutes()->getMap();
         foreach ($sellRoutes->getSellRoutes()->getMap()->getRoutes() as $route)
         {
             $routes->addRoute($route);
         }
         foreach ($buyRoutes->getBuyRoutes()->getMap()->getRoutes() as $route)
+        {
+            $routes->addRoute($route);
+        }
+        foreach ($productionRoutes->getProductionRoutes()->getMap()->getRoutes() as $route)
         {
             $routes->addRoute($route);
         }

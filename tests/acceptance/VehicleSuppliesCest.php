@@ -1,6 +1,6 @@
 <?php
 
-class TaxesCest
+class VehicleSuppliesCest
 {
     public function _before(AcceptanceTester $I)
     {

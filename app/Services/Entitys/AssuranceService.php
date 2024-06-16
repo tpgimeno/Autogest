@@ -18,12 +18,9 @@ use App\Services\BaseService;
  */
 class AssuranceService extends BaseService {
     public function list(){
-        $values = Assurances::join('customers', function(\Illuminate\Database\Query\JoinClause $join){
-                    $join->on('assurances.owner_id', '=', 'customers.id')->orOn('assurances.getter_id', '=', 'customers.id');
-                    
-                    })                 
+        $values = Assurances::join('customers', 'assurances.owner_id', '=', 'customers.id')
                 ->join('vehicles', 'assurances.object_id', '=', 'vehicles.id')                
-                ->get(['assurances.id', 'assurances.ref', 'assurances.effectDate', 'assurances.owner_id', 'assurances.price'])->toArray();
+                ->get(['assurances.id', 'assurances.ref', 'assurances.effectDate', 'customers.name as owner_id','vehicles.plate as object_id', 'assurances.price'])->toArray();
         return $values;
     }
 }

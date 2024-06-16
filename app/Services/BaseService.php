@@ -63,9 +63,9 @@ class BaseService {
         $content = [];              
         $assetsNumber = 0;
         if(isset($properties['data']) && is_array($properties['data'])){
-            $properties = $this->filterProperties($properties);            
-                      
+            $properties = $this->filterProperties($properties);                     
         }
+        
         $response = $this->filterContent($array, $properties);
         $content = $response[0];  
         if ($this->findRegister($model, $array) == true) {
@@ -81,7 +81,7 @@ class BaseService {
             }elseif ($properties[$i] == 'plate' && is_int($content[$i])){                
                 $model->vehicle_id = $content[$i];   
             }elseif (str_ends_with($properties[$i], 'Date')){   
-                if ($properties[$i] === 'inDate' || $properties[$i] === 'outDate'){ 
+                if ($properties[$i] === 'inDate' || $properties[$i] === 'outDate' || $properties[$i] === 'effectDate'){ 
                     $date = date_create_from_format('d/m/Y H:i:s', $content[$i]);                    
                     $model->{$properties[$i]} = $date;
                 }else{
@@ -148,8 +148,7 @@ class BaseService {
                 }
             }
         }       
-    }
-    
+    }    
     public function filterProperties($properties){
         $keys = array_keys($properties);
         $total_properties = [];
@@ -157,14 +156,15 @@ class BaseService {
            foreach($properties[$keys[$j]] as $item){
                array_push($total_properties, $item);
            }               
-        }        
+        }
         $properties = $total_properties;
+        
         if($properties[0] === 'offerNumber'){
-                $properties_array = array_slice($properties, 0, array_search('vehicle_id', $properties)+1);        
+                $properties_array = array_slice($properties, 0, array_search('vehicle_id', $properties)+1);                
                 $end_array = array_slice($properties, array_search('vehicle_id', $properties)+6, count($properties));
                 $properties = array_merge($properties_array, $end_array);
             }
-        if($properties[0] === 'orderNumber'){                
+        if($properties[0] === 'orderNumber' || $properties[0] === 'workSheetNumber'){                
             $properties_array = array_slice($properties, 0, array_search('plate', $properties));
 //                var_dump($properties_array);
             $end_array = array_slice($properties, array_search('plate', $properties)+3, count($properties));
@@ -177,18 +177,21 @@ class BaseService {
     public function filterContent($array, $properties){
         $content = [];
         $assets = null;
+        
         for($i = 0; $i < count($properties); $i++){
             if($properties[$i] === 'vehicle_id'){
                 array_push($content, $array['plate']);
+            }else{
+                if(isset($array[$properties[$i]])){
+                    array_push($content, $array[$properties[$i]]);
+                }
             }
-            if(isset($array[$properties[$i]])){
-                array_push($content, $array[$properties[$i]]);
-            }
+            
         }
         return [$content, $assets];
     }
 
-    public function deleteRegister($model, $array) {
+    public function deleteRegister($model, $array) {        
         $model::find(intval($array['id']))->delete();
     }
     

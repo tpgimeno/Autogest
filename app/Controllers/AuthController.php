@@ -37,8 +37,8 @@ class AuthController extends BaseController {
     }
     
     public function getLogout() {
-        unset($_SESSION['userId']);
-        return new RedirectResponse('/Intranet/');
+        setcookie('userId', null);        
+        return new RedirectResponse('Intranet/');
     }
 
 }

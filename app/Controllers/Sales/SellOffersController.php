@@ -95,7 +95,8 @@ class SellOffersController extends BaseController {
     public function getSellOffersNumberAction(){
         $template = "OV2023";
         $new_offer_number = null;
-        $lastNumber = $this->sellOfferService->getLastOfferNumber()->offerNumber;
+        $offers = $this->sellOfferService->getLastOfferNumber();
+        $lastNumber = $offers[count($offers) - 1]['offerNumber'];        
         if(!$lastNumber){
             $lastNumber = 1;
             $new_offer_number = $template . "0000" . $lastNumber;
@@ -103,7 +104,7 @@ class SellOffersController extends BaseController {
             $offset = strrpos($lastNumber, "0");
             $prenumber_last_offer = substr($lastNumber, 0, $offset);            
             $number_last_offer = intval(substr($lastNumber, $offset, strlen($lastNumber))) + 1;
-            if(strlen($prenumber_last_offer) > 8){
+            if(strlen($prenumber_last_offer) > 10){
                 $new_offer_number = $prenumber_last_offer . strval($number_last_offer);
             }else{
                 for($i=strlen($prenumber_last_offer);$i<10;$i++){
@@ -192,6 +193,10 @@ class SellOffersController extends BaseController {
         $work = $this->sellOfferService->deleteSellOfferWorkAjax($postData);
         $response = new JsonResponse($work);
         return $response;
+    }
+    
+    public function deleteSellOfferAction($request){
+        return $this->deleteItemAction($request, $this->model);
     }
     
 }

@@ -8,16 +8,18 @@
                         'model_id':'model_id','providor_id':'providor_id',
                         'mader_id':'mader_id', 'taxes_id':'taxes_id', 
                         'paymentWay_id':'paymentWay_id', 'customerType':'customerType',
-                        'getter_id':'getter_id', 'owner_id':'owner_id', 'object_id':'object_id'} %}
+                        'getter_id':'getter_id', 'owner_id':'owner_id', 'order_id' : 'order_id',
+                        'workId':'workId'} %}
 {% set textareas = {'vehicleComments':'vehicleComments', 'texts':'texts','options':'options'} %}
 {% set large_textareas = {'observations':'observations','text':'text', 'description':'description'} %}
 {% set dates = {'birthDate':'birthDate','registryDate':'registryDate','sellDate':'sellDate','buyDate':'buyDate', 'arrival':'arrival','appointDate':'appointDate','offerDate':'offerDate'} %}
 {% set datetimes = {'inDate':'inDate', 'outDate':'outDate', 'effectDate':'effectDate'} %}
-{% set currencies = {'pvd':'pvd','pvp':'pvp','cost':'cost','pvc':'pvc','vehiclePvp':'vehiclePvp', 'discount':'discount', 'vehicleDiscount':'vehicleDiscount','tva':'tva','total':'total','costTva':'costTva','costTotal':'costTotal','vehicleTva':'vehicleTva','vehicleTotal':'vehicleTotal','price':'price'} %}
+{% set currencies = {'pvd':'pvd','pvp':'pvp','cost':'cost','pvc':'pvc','vehiclePvp':'vehiclePvp', 'discount':'discount', 'vehicleDiscount':'vehicleDiscount','tva':'tva','total':'total','costTva':'costTva','costTotal':'costTotal',
+                    'vehicleTva':'vehicleTva','vehicleTotal':'vehicleTotal','price':'price'} %}
 {% set checks = {'rebu':'rebu','secondKey':'secondKey'} %}
 {% set hidden = {'vehicle_id':'vehicle_id'} %}
 {% set garageOrders = {} %}
-{% set orders = {'plate':'plate','brand':'brand', 'model':'model'} %}
+{% set orders = {'plate':'plate','brand':'brand', 'model':'model', 'object_id':'object_id'} %}
 {% set assets = {'accesories':'accesories'} %}
 {{ macros.items_list_modal('components_modal', optionsArray['assets_labels'], labels, currencies, 'Componentes', 'dataTableComponents',optionsArray['modals_functions']['setComponent'], optionsArray['components']) }}
 {{ macros.input_form_modal(optionsArray['parent_id'], optionsArray['object_id']['1'], 'component_form_modal', 'Componente', optionsArray['assets_labels'], labels, currencies, optionsArray['forms']['1'], optionsArray['modals_functions']['saveComponent'])}}
@@ -73,7 +75,9 @@
                                 {% elseif titleForm == 'Oferta de Venta' %}                                    
                                     {% set data = { 'selloffer_id': value.id } %}                                   
                                 {% elseif titleForm == 'Orden de Trabajo' %}
-                                    {% set data = { 'garageOrder_id': value.id } %}                                    
+                                    {% set data = { 'garageOrder_id': value.id } %}  
+                                {% elseif titleForm == 'Hoja de Trabajo' %}
+                                    {% set data = { 'workSheetComponent_id': value.id } %}   
                                 {% endif %}
                                 {{ macros.assetsDataTable("dataTableVehicleComponents_wrapper", "dataTableVehicleComponents", optionsArray['vehicle_component_labels'], labels, optionsArray['vehicle_components'], currencies, optionsArray['component_functions']['set'], optionsArray['component_functions']['delete'], setComponentsUrl, data, optionsArray['assets_prices'][1], optionsArray['assets_prices'][2], optionsArray['assets_prices'][3], optionsArray['assets_prices'][4], optionsArray['assets_prices'][5], optionsArray['assets_prices'][6], 'components_modal') }}
                             {% endif %}
@@ -84,7 +88,9 @@
                                 {% elseif titleForm == 'Oferta de Venta' %}                                    
                                     {% set data = { 'selloffer_id': value.id } %} 
                                 {% elseif titleForm == 'Orden de Trabajo' %}
-                                    {% set data = { 'garageOrder_id': value.id } %}                                    
+                                    {% set data = { 'garageOrder_id': value.id } %}  
+                                {% elseif titleForm == 'Hoja de Trabajo' %}
+                                    {% set data = { 'workSheet_id': value.id } %}  
                                 {% endif %}                                
                                 {{ macros.assetsDataTable("dataTableVehicleSupplies_wrapper", "dataTableVehicleSupplies", optionsArray['vehicle_supply_labels'], labels, optionsArray['vehicle_supplies'], currencies, optionsArray['supply_functions']['set'], optionsArray['supply_functions']['delete'], setSuppliesUrl, data, optionsArray['assets_prices'][7], optionsArray['assets_prices'][8], optionsArray['assets_prices'][9], optionsArray['assets_prices'][10], optionsArray['assets_prices'][11], optionsArray['assets_prices'][12], 'supplies_modal') }}
                             {% endif %}
@@ -94,13 +100,14 @@
                                 {% elseif titleForm == 'Oferta de Venta' %}                                    
                                     {% set data = { 'selloffer_id': value.id } %}                                    
                                 {% elseif titleForm == 'Orden de Trabajo' %}
-                                    {% set data = { 'garageOrder_id': value.id } %}                                    
+                                    {% set data = { 'garageOrder_id': value.id } %} 
+                                {% elseif titleForm == 'Hoja de Trabajo' %}
+                                    {% set data = { 'workSheet_id': value.id } %} 
                                 {% endif %}                                
                                 {{ macros.assetsDataTable("dataTableVehicleWorks_wrapper", "dataTableVehicleWorks", optionsArray['vehicle_work_labels'], labels, optionsArray['vehicle_works'], currencies, optionsArray['work_functions']['set'], optionsArray['work_functions']['delete'], setWorksUrl, data, optionsArray['assets_prices'][13], optionsArray['assets_prices'][14], optionsArray['assets_prices'][15], optionsArray['assets_prices'][16], optionsArray['assets_prices'][17], optionsArray['assets_prices'][18], 'works_modal') }}                                
                             {% endif %}                                
                                 {% for item in properties[tab] %}                                                                        
-                                {% if item in selects %}
-                                    
+                                {% if item in selects %}                                    
                                     <div class="row">                                        
                                         <div class="input-group col-10">
                                             <label class="control-label" for="{{ item }}">{{ labels[item] }}</label>
@@ -110,7 +117,11 @@
                                                         {% if item == 'account_id' %}
                                                             <option value="{{ option['id'] }}" {% if option['id'] == attribute(value, item) %}{{ 'selected="true"' }}{% endif %}>{{ option['accountNumber'] }}</option>
                                                         {% elseif item == 'vehicle_id' %}
-                                                            <option value="{{ option['id'] }}" {% if option['id'] == attribute(value, item) %}{{ 'selected="true"' }}{% endif %}>{{ option['plate'] }}</option>                                                        
+                                                            <option value="{{ option['id'] }}" {% if option['id'] == attribute(value, item) %}{{ 'selected="true"' }}{% endif %}>{{ option['plate'] }}</option> 
+                                                        {% elseif item == 'order_id' %}
+                                                            <option value="{{ option['id'] }}" {% if option['id'] == attribute(value, item) %}{{ 'selected="true"' }}{% endif %}>{{ option['orderNumber'] }}</option>
+                                                        {% elseif item == 'worksheet_id' %}
+                                                            <option value="{{ option['id'] }}" {% if option['id'] == attribute(value, item) %}{{ 'selected="true"' }}{% endif %}>{{ option['workSheetNumber'] }}</option>
                                                         {% else %}
                                                             <option value="{{ option['id'] }}" {% if option['id'] == attribute(value, item) %}{{ 'selected="true"' }}{% endif %}>{{ option['name'] }}</option>
                                                         {% endif %}
@@ -121,8 +132,7 @@
                                             </select>        
                                         </div>                            
                                     </div>
-                                {% elseif item in orders %} 
-                                    
+                                {% elseif item in orders %}                                     
                                     <div class="row">
                                         <div class="input-group col-10">
                                             <label class="control-label" for="{{ item }}">{{ labels[item] }}</label>
@@ -202,8 +212,7 @@
                                     <div class="input-group col-10">
                                         <label class="control-label" for="{{ property }}">{{ labels[property] }}</label>
                                         <select id="{{ property }}" name="{{ property }}" class="form-control select2" value="{{ attribute(value, property) }}">                                        
-                                        {% if optionsArray[property] %} 
-                                            
+                                        {% if optionsArray[property] %}                                             
                                             {% for option in optionsArray[property] %}
                                                 
                                                 {% if property == 'account_id' %}
@@ -218,6 +227,20 @@
                                         </select>        
                                     </div>                            
                                 </div>
+                            {% elseif property in orders %}                                
+                                <div class="row">
+                                    <div class="input-group col-10">
+                                        <label class="control-label" for="{{ property }}">{{ labels[property] }}</label>
+                                        <select id="{{ property }}" name="{{ property }}" class="form-control select2" value="">
+                                            {% for option in optionsArray['vehicles'] %}                                                    
+                                                {% if property == 'object_id' %}                                                        
+                                                    <option km="{{ option['km'] }}" vin="{{ option['vin'] }}" price="{{ option['vehiclePvp'] }}" vehicle_brand="{{ option['brand_id'] }}" vehicle_model="{{ option['model_id'] }}" value="{{ option['id'] }}" >{{ option['plate'] }}</option>                                                    
+                                                {% endif %}
+                                            {% endfor %}
+                                            <option value="0">Sin datos</option>
+                                        </select>        
+                                    </div>                            
+                                </div>      
                             {% elseif property in textareas %}
                                 <div class="row">
                                     <div class="input-group col-10">
@@ -238,6 +261,16 @@
                                         <label class="control-label" for="{{ property }}">{{ labels[property] }}</label>
                                         <input type="date" id="{{ property }}" name="{{ property }}" class="form-control" value="{{ attribute(value, property) }}">
                                     </div>                            
+                                </div>
+                            {% elseif property in datetimes %}
+                                <div class="row">
+                                    <div class="input-group col-10 date" id="{{property}}" data-target-input="nearest">
+                                        <label class="control-label" for="{{ property }}">{{ labels[property] }}</label>
+                                        <input id="{{ property }}" name="{{ property }}" type="text" class="form-control datetimepicker-input" data-target="#{{ property }}" value="{{ attribute(value, property)|format_datetime('short', 'full', locale="es") }}    ">
+                                        <div class="input-group-append" data-target="#{{ property }}" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
                                 </div>
                             {% else %}
                                 <div class="row">

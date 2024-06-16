@@ -1,6 +1,6 @@
 <?php
 
-class UserCest
+class OfferSuppliesCest
 {
     public function _before(AcceptanceTester $I)
     {

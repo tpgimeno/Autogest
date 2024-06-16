@@ -1,6 +1,6 @@
 <?php
 
-class RecipesCest
+class VehicleWorksCest
 {
     public function _before(AcceptanceTester $I)
     {

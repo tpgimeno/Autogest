@@ -201,9 +201,15 @@ $(document).ready(function(){
             var delButton = $('#delete_button');            
             delButton.attr('style', 'display:none;');
         }
+        $('#formOrdendeTrabajo #discount').change(function(){
+            set_garageOrder_price();
+            $('#formOrdendeTrabajo #discount').val(numeral($('#formOrdendeTrabajo #discount').val()).format('(0.0,$)'));
+        });
+        
         set_components_prices();
         set_supplies_prices();
         set_works_prices();
+        set_garageOrder_price();
     }
     
     
@@ -268,8 +274,45 @@ $(document).ready(function(){
     }
     
     
+    var titleForm = $('.form-horizontal').attr('id');
+    if(titleForm === 'formHojadeTrabajo'){         
+        if($('#workSheetNumber').val() === null || $('#workSheetNumber').val() === ""){            
+            get_new_workSheetNumber();
+        } 
+        if(($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'components-tab') || ($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'supplies-tab') || ($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'works-tab')){            
+            var delButton = $('#delete_button');            
+            delButton.attr('style', 'display:none;');
+        }
+         $('#formHojadeTrabajo #discount').change(function(){
+            set_worksheet_prices();
+            $('#formHojadeTrabajo #discount').val(numeral($('#formHojadeTrabajo #discount').val()).format('(0.0,$)'));
+        });       
+        set_components_prices();
+        set_supplies_prices();
+        set_works_prices();
+        set_worksheet_prices();
+    }
+     
+    
+  
+    
+    
     
 });
+
+/*
+ * =============================================================================
+ * Common Functions
+ * =============================================================================
+ */
+
+
+function init_selects(){
+    $('.select2').select2({
+        tags : true       
+    });
+}
+
 
 /*
  * =============================================================================
@@ -293,7 +336,9 @@ function setAsset(form, asset, data){
     }else if($('#' + form + ' .modal-body #vehicle_id').attr('id')){
         $('#' + form + ' .modal-body #vehicle_id').val($('.form-horizontal #id').val());
     }else if($('#' + form + '.modal-body #garageOrder_id').attr('id')){
-        $('#' + form + '.modal-body #garageOrder_id').val($('.form-horizontal #id').val());
+        $('#' + form + '.modal-body #garageOrder_id').val($('.form-horizontal #id').val());    
+    }else if($('#' + form + '.modal-body #workSheet_id').attr('id')){
+        $('#' + form + '.modal-body #workSheet_id').val($('.form-horizontal #id').val());
     }
     
     if(array[0] === null){       
@@ -327,8 +372,7 @@ function saveAssets(url, data, modal, modal_form, tab, setUrl){
             url: url,
             data: data,
             dataType: "json",
-            success: function(result){ 
-                
+            success: function(result){                 
                 $(modal_form).modal('hide');
                 $(modal).modal('hide');
                 $('.alert').html(result);
@@ -346,6 +390,7 @@ function delAsset(url, data, tab, setUrl){
         data: data,
         dataType: "json",
         success: function(result){
+            
             $('.alert').html(result);
             let timeout = setTimeout(set_assets(tab, setUrl), 3000);
             clearTimeout(timeout);
@@ -382,6 +427,8 @@ function set_components_prices(){
         set_selloffer_price();
     }else if($('#formOrdendeTrabajo').attr('id')){
         set_garageOrder_price();
+    }else if($('#formHojadeTrabajo').attr('id')){
+        set_garageOrder_price();
     }
 }
 
@@ -401,6 +448,8 @@ function set_supplies_prices(){
         set_selloffer_price();
     }else if($('form#formOrdendeTrabajo').attr('id')){
         set_garageOrder_price();
+    }else if($('form#formHojadeTrabajo').attr('id')){
+        set_garageOrder_price();
     }
 }
 
@@ -419,6 +468,8 @@ function set_works_prices(){
     }else if($('form#formOfertadeVenta').attr('id')){
         set_selloffer_price();
     }else if($('form#formOrdendeTrabajo').attr('id')){
+        set_garageOrder_price();
+    }else if($('#formHojadeTrabajo').attr('id')){
         set_garageOrder_price();
     }
 }
@@ -761,8 +812,89 @@ function set_garageOrder_price(){
     $('#formOrdendeTrabajo #totalOrder').val(numeral(sum_bases.value() + tva.value()).format('(0.0,$)'));    
 }
 
-function init_selects(){
-    $('.select2').select2({
-        tags : true       
+
+/*
+ * =============================================================================
+ * Work Sheets Functions
+ * =============================================================================
+ */
+
+function get_new_workSheetNumber(){
+     $.ajax({
+        method: "POST",
+        url: "Intranet/workSheets/number/get",
+        data: {},
+        dataType: "json",
+        success: function(data){            
+            $('#workSheetNumber').val(data);
+        }
     });
+}
+
+function saveWorkSheetsComponent(){
+    var url = "Intranet/workSheets/components/add";   
+    var data = {'workSheet_id' :  $('.form-horizontal #id').val(), 
+            'component_id' : $('#workSheets_component_form #component_id').val(),
+            'pvp' : $('#workSheets_component_form #pvp').val(),
+            'cantity' : $('#workSheets_component_form #cantity').val()};
+    console.log(data);
+    saveAssets(url, data, '#components_modal', '#component_form_modal','components', 'Intranet/workSheets/form?id=' + $('.form-horizontal #id').val() + '&menu=garages&item=workSheets');
+   
+}
+
+function delWorkSheetsComponent(data){     
+    var url = "Intranet/workSheets/components/del";
+    var setData = {'id' : data.worksheetcomponent_id};    
+    delAsset(url, setData, 'components', 'Intranet/workSheets/form?id=' + $('.form-horizontal #id').val() + '&menu=stock&item=workSheets');
+    
+}
+
+
+function saveWorkSheetsSupply(){  
+    var url = "Intranet/workSheets/supplies/add";
+    var data = {'workSheet_id' : $('.form-horizontal #id').val(), 
+            'supply_id' : $('#workSheets_supply_form #supply_id').val(),
+            'pvp' : $('#workSheets_supply_form #pvp').val(),
+            'cantity' : $('#workSheets_supply_form #cantity').val()};
+    
+    saveAssets(url, data, '#supplies_modal', '#supply_form_modal', 'supplies', 'Intranet/workSheets/form?id=' + $('.form-horizontal #id').val() + '&menu=stock&item=vehicles');
+   
+}
+
+function delWorkSheetsSupply(data){    
+    var url = "Intranet/workSheets/supplies/del";
+    var setData = {'id' : data.worksheetsupply_id};
+    delAsset(url, setData, 'supplies', 'Intranet/workSheets/form?id=' + $('.form-horizontal #id').val() + '&menu=stock&item=vehicles');
+    
+}
+
+function saveWorkSheetsWork(){ 
+    var url = "Intranet/workSheets/works/add";
+    
+    var data = {'workSheet_id' : $('.form-horizontal #id').val(), 
+            'work_id' : $('#workSheets_work_form #work_id').val(),
+            'pvp' : $('#workSheets_work_form #pvp').val(),
+            'cantity' : $('#workSheets_work_form #cantity').val()};
+    saveAssets(url, data, '#works_modal', '#work_form_modal', 'works', 'Intranet/workSheets/form?id=' + $('.form-horizontal #id').val() + '&menu=stock&item=vehicles');
+    
+}
+
+function delWorkSheetsWork(data){  
+    var url = "Intranet/workSheets/works/del";
+    var data = {'id' : data.worksheetwork_id};
+    delAsset(url, data, 'works', 'Intranet/workSheets/form?id=' + $('.form-horizontal #id').val() + '&menu=stock&item=repairOrders');
+    
+}
+
+function set_worksheet_prices(){  
+    
+    var discount = numeral($('#discountWorkSheet').val());      
+    var baseComponents = numeral($('#baseComponents').val());    
+    var baseSupplies = numeral($('#baseSupplies').val());
+    var baseWorks = numeral($('#baseWorks').val());
+    var sum_bases = numeral(baseComponents.value() + baseSupplies.value() + baseWorks.value() - discount.value());
+    $('#formHojadeTrabajo #baseWorkSheet').val(sum_bases.format('(0.0,$)'));
+    $('#formHojadeTrabajo #tvaWorkSheet').val(numeral(sum_bases.value() * 0.21).format('(0.0,$)'));
+    var tva = numeral($('#tvaWorkSheet').val());
+    $('#formHojadeTrabajo #totalWorkSheet').val(numeral(sum_bases.value() + tva.value()).format('(0.0,$)'));    
 }

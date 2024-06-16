@@ -220,8 +220,7 @@ class SellOfferService extends BaseService{
     }
     
     public function getLastOfferNumber(){
-        $lastOfferNumber = SellOffer::select('selloffers.offerNumber')
-                ->get()->last();
+        $lastOfferNumber = SellOffer::all()->toArray();
         return $lastOfferNumber;
         
     }
