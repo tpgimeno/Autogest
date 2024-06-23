@@ -1,5 +1,6 @@
 /* Jquery */
 /* global numeral */
+import "expertOpinions.js"
 var original_vehicle_price;
 $(document).ready(function(){    
     /*
@@ -316,7 +317,7 @@ function init_selects(){
 
 /*
  * =============================================================================
- * Vehicle and SellOffer Common Functions
+ * Common Functions
  * =============================================================================
  */
 
@@ -740,14 +741,14 @@ function saveGarageOrderComponent(){
             'pvp' : $('#garageOrder_component_form #pvp').val(),
             'cantity' : $('#garageOrder_component_form #cantity').val()};
     
-    saveAssets(url, data, '#components_modal', '#component_form_modal','components', 'Intranet/garageOrders/form?id=' + $('.form-horizontal #id').val() + '&menu=stock&item=vehicles');
+    saveAssets(url, data, '#components_modal', '#component_form_modal','components', 'Intranet/garageOrders/form?id=' + $('.form-horizontal #id').val() + '&menu=taller&item=repairOrders');
    
 }
 
 function delGarageOrderComponent(data){     
     var url = "Intranet/garageOrders/components/del";
     var setData = {'id' : data.garageOrdercomponent_id};    
-    delAsset(url, setData, 'components', 'Intranet/garageOrders/form?id=' + $('.form-horizontal #id').val() + '&menu=stock&item=garageOrders');
+    delAsset(url, setData, 'components', 'Intranet/garageOrders/form?id=' + $('.form-horizontal #id').val() + '&menu=taller&item=repairOrders');
     
 }
 
@@ -758,7 +759,7 @@ function saveGarageOrderSupply(){
             'supply_id' : $('#garageOrder_supply_form #supply_id').val(),
             'pvp' : $('#garageOrder_supply_form #pvp').val(),
             'cantity' : $('#garageOrder_supply_form #cantity').val()};
-    saveAssets(url, data, '#supplies_modal', '#supply_form_modal', 'supplies', 'Intranet/garageOrders/form?id=' + $('.form-horizontal #id').val() + '&menu=stock&item=vehicles');
+    saveAssets(url, data, '#supplies_modal', '#supply_form_modal', 'supplies', 'Intranet/garageOrders/form?id=' + $('.form-horizontal #id').val() + '&menu=taller&item=repairOrders');
    
 }
 
@@ -766,7 +767,7 @@ function delGarageOrderSupply(data){
     console.log(data);  
     var url = "Intranet/garageOrders/supplies/del";
     var setData = {'id' : data.garageOrdersupply_id};
-    delAsset(url, setData, 'supplies', 'Intranet/garageOrders/form?id=' + $('.form-horizontal #id').val() + '&menu=stock&item=vehicles');
+    delAsset(url, setData, 'supplies', 'Intranet/garageOrders/form?id=' + $('.form-horizontal #id').val() + '&menu=taller&item=repairOrders');
     
 }
 
@@ -777,14 +778,14 @@ function saveGarageOrderWork(){
             'work_id' : $('#garageOrder_work_form #work_id').val(),
             'pvp' : $('#garageOrder_work_form #pvp').val(),
             'cantity' : $('#garageOrder_work_form #cantity').val()};
-    saveAssets(url, data, '#works_modal', '#work_form_modal', 'works', 'Intranet/garageOrders/form?id=' + $('.form-horizontal #id').val() + '&menu=stock&item=vehicles');
+    saveAssets(url, data, '#works_modal', '#work_form_modal', 'works', 'Intranet/garageOrders/form?id=' + $('.form-horizontal #id').val() + '&menu=taller&item=repairOrders');
     
 }
 
 function delGarageOrderWork(data){  
     var url = "Intranet/garageOrders/works/del";
     var data = {'id' : data.garageOrderwork_id};
-    delAsset(url, data, 'works', 'Intranet/garageOrders/form?id=' + $('.form-horizontal #id').val() + '&menu=stock&item=repairOrders');
+    delAsset(url, data, 'works', 'Intranet/garageOrders/form?id=' + $('.form-horizontal #id').val() + '&menu=taller&item=repairOrders');
     
 }
 
@@ -838,14 +839,14 @@ function saveWorkSheetsComponent(){
             'pvp' : $('#workSheets_component_form #pvp').val(),
             'cantity' : $('#workSheets_component_form #cantity').val()};
     console.log(data);
-    saveAssets(url, data, '#components_modal', '#component_form_modal','components', 'Intranet/workSheets/form?id=' + $('.form-horizontal #id').val() + '&menu=garages&item=workSheets');
+    saveAssets(url, data, '#components_modal', '#component_form_modal','components', 'Intranet/workSheets/form?id=' + $('.form-horizontal #id').val() + '&menu=taller&item=workSheets');
    
 }
 
 function delWorkSheetsComponent(data){     
     var url = "Intranet/workSheets/components/del";
-    var setData = {'id' : data.worksheetcomponent_id};    
-    delAsset(url, setData, 'components', 'Intranet/workSheets/form?id=' + $('.form-horizontal #id').val() + '&menu=stock&item=workSheets');
+    var setData = {'id' : data.workSheetComponent_id};    
+    delAsset(url, setData, 'components', 'Intranet/workSheets/form?id=' + $('.form-horizontal #id').val() + '&menu=taller&item=workSheets');
     
 }
 
@@ -857,14 +858,14 @@ function saveWorkSheetsSupply(){
             'pvp' : $('#workSheets_supply_form #pvp').val(),
             'cantity' : $('#workSheets_supply_form #cantity').val()};
     
-    saveAssets(url, data, '#supplies_modal', '#supply_form_modal', 'supplies', 'Intranet/workSheets/form?id=' + $('.form-horizontal #id').val() + '&menu=stock&item=vehicles');
+    saveAssets(url, data, '#supplies_modal', '#supply_form_modal', 'supplies', 'Intranet/workSheets/form?id=' + $('.form-horizontal #id').val() + '&menu=taller&item=workSheets');
    
 }
 
 function delWorkSheetsSupply(data){    
     var url = "Intranet/workSheets/supplies/del";
-    var setData = {'id' : data.worksheetsupply_id};
-    delAsset(url, setData, 'supplies', 'Intranet/workSheets/form?id=' + $('.form-horizontal #id').val() + '&menu=stock&item=vehicles');
+    var setData = {'id' : data.workSheetSupply_id};
+    delAsset(url, setData, 'supplies', 'Intranet/workSheets/form?id=' + $('.form-horizontal #id').val() + '&menu=taller&item=vehicles');
     
 }
 
@@ -875,14 +876,14 @@ function saveWorkSheetsWork(){
             'work_id' : $('#workSheets_work_form #work_id').val(),
             'pvp' : $('#workSheets_work_form #pvp').val(),
             'cantity' : $('#workSheets_work_form #cantity').val()};
-    saveAssets(url, data, '#works_modal', '#work_form_modal', 'works', 'Intranet/workSheets/form?id=' + $('.form-horizontal #id').val() + '&menu=stock&item=vehicles');
+    saveAssets(url, data, '#works_modal', '#work_form_modal', 'works', 'Intranet/workSheets/form?id=' + $('.form-horizontal #id').val() + '&menu=taller&item=workSheets');
     
 }
 
 function delWorkSheetsWork(data){  
     var url = "Intranet/workSheets/works/del";
-    var data = {'id' : data.worksheetwork_id};
-    delAsset(url, data, 'works', 'Intranet/workSheets/form?id=' + $('.form-horizontal #id').val() + '&menu=stock&item=repairOrders');
+    var data = {'id' : data.workSheetWork_id};
+    delAsset(url, data, 'works', 'Intranet/workSheets/form?id=' + $('.form-horizontal #id').val() + '&menu=taller&item=workSheets');
     
 }
 

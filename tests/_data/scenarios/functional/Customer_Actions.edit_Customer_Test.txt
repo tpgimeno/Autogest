@@ -1,0 +1,7 @@
+I WANT TO EDIT CUSTOMER TEST
+
+I am on page ""customers/list?menu=stock&item=customers"" 
+I click '#editButton' . $this->id" 
+I submit form '#formCliente'," $customer" 
+I see 'Updated'
+

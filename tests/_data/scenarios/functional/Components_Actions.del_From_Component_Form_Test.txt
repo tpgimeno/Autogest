@@ -1,0 +1,7 @@
+I WANT TO DEL FROM COMPONENT FORM TEST
+
+I am on page ""/vehicles/components/list?menu=stock&item=components"" 
+I click '#editButton' . $this->id" 
+I click 'Eliminar' 
+I don't see in database('components', array('id' => intval "$this->id)"," 'deleted_at' => null)"
+

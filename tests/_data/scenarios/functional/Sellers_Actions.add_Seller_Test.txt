@@ -1,0 +1,8 @@
+I WANT TO ADD SELLER TEST
+
+I am on page ""/sellers/list?menu=stock&item=sellers"" 
+I click '#newButton' 
+I submit form '#formComercial'," $seller" 
+I grab from database 'sellers'," 'id'," ['name' => $this->name]" 
+I see in database 'sellers'," ['name' => $this->name]"
+

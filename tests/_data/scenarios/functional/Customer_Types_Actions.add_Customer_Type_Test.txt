@@ -1,0 +1,8 @@
+I WANT TO ADD CUSTOMER TYPE TEST
+
+I am on page ""/customers/type/list?menu=stock&item=customerTypes"" 
+I click '#newButton' 
+I submit form '#formTipodeCliente'," $customerType" 
+I grab from database 'customerTypes'," 'id'," ['name' => $this->name]" 
+I see in database 'customerTypes'," ['name' => $this->name]"
+

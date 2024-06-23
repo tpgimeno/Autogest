@@ -1,0 +1,7 @@
+I WANT TO EDIT SUPPLY TEST
+
+I am on page ""/vehicles/supplies/list?menu=stock&item=supplies"" 
+I click '#editButton' . $this->id" 
+I submit form '#formRecambio'," $supply" 
+I see 'Updated'
+

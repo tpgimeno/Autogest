@@ -1,0 +1,7 @@
+I WANT TO EDIT WORK SHEET TEST
+
+I am on page ""/workSheets/list?menu=garagesk&item=workSheets"" 
+I click '#editButton' . $this->id" 
+I submit form '#formHojadeTrabajo'," $workSheet" 
+I see 'Updated'
+

@@ -1,0 +1,7 @@
+I WANT TO EDIT CUSTOMER TYPE TEST
+
+I am on page ""/customers/type/list?menu=stock&item=customerTypes"" 
+I click '#editButton' . $this->id" 
+I submit form '#formTipodeCliente'," $customerType" 
+I see 'Updated'
+

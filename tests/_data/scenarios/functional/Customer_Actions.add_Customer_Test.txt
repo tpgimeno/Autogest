@@ -1,0 +1,8 @@
+I WANT TO ADD CUSTOMER TEST
+
+I am on page ""customers/list?menu=stock&item=customers"" 
+I click '#newButton' 
+I submit form '#formCliente'," $customer" 
+I grab from database 'customers'," 'id'," ['fiscalId' => $this->fiscalId]" 
+I see in database 'customers'," ['fiscalId' => $this->fiscalId]"
+

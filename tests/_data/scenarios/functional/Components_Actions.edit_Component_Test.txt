@@ -1,0 +1,7 @@
+I WANT TO EDIT COMPONENT TEST
+
+I am on page ""/vehicles/components/list?menu=stock&item=components"" 
+I click '#editButton' . $this->id" 
+I submit form '#formComponente'," $component" 
+I see 'Updated'
+

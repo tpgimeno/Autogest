@@ -1,0 +1,7 @@
+I WANT TO EDIT SELLER TEST
+
+I am on page ""/sellers/list?menu=stock&item=sellers"" 
+I click '#editButton' . $this->id" 
+I submit form '#formComercial'," $seller" 
+I see 'Updated'
+

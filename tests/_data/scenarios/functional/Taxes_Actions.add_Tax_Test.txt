@@ -1,0 +1,8 @@
+I WANT TO ADD TAX TEST
+
+I am on page ""/taxes/list?menu=stock&item=taxes"" 
+I click '#newButton' 
+I submit form '#formTipodeIva'," $tax" 
+I grab from database 'taxes'," 'id'," ['name' => $this->name]" 
+I see in database 'taxes'," ['name' => $this->name]"
+

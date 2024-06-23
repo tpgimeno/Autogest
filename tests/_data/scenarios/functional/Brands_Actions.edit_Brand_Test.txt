@@ -1,0 +1,7 @@
+I WANT TO EDIT BRAND TEST
+
+I am on page ""/vehicles/brands/list?menu=stock&item=brands"" 
+I click '#editButton' . $this->id" 
+I submit form '#formMarca'," $brand" 
+I see 'Updated'
+

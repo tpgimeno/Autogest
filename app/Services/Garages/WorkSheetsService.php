@@ -50,7 +50,7 @@ class WorkSheetsService extends BaseService{
                 $components = WorkSheetComponents::join('components', 'worksheetsComponents.component_id', '=', 'components.id')
                         ->join('maders', 'components.mader_id', '=', 'maders.id')
                         ->where('worksheetsComponents.workSheet_id', '=', intval($postData['id']))
-                        ->select('components.id as component_id', 'worksheetsComponents.id as worksheetcomponent_id', 'maders.name as mader', 'components.ref as ref', 'components.name as name', 'worksheetsComponents.pvp', 'worksheetsComponents.cantity')
+                        ->select('components.id as component_id', 'worksheetsComponents.id as workSheetComponent_id', 'maders.name as mader', 'components.ref as ref', 'components.name as name', 'worksheetsComponents.pvp', 'worksheetsComponents.cantity')
                         ->get();
             }
         }else{
@@ -59,7 +59,7 @@ class WorkSheetsService extends BaseService{
                 $components = WorkSheetComponents::join('components', 'worksheetsComponents.component_id', '=', 'components.id')
                         ->join('maders', 'components.mader_id', '=', 'maders.id')
                         ->where('worksheetsComponents.workSheet_id', '=', intval($params['id']))
-                        ->select('components.id as component_id', 'worksheetsComponents.id as worksheetcomponent_id', 'maders.name as mader', 'components.ref as ref', 'components.name as name', 'worksheetsComponents.pvp', 'worksheetsComponents.cantity')
+                        ->select('components.id as component_id', 'worksheetsComponents.id as workSheetComponent_id', 'maders.name as mader', 'components.ref as ref', 'components.name as name', 'worksheetsComponents.pvp', 'worksheetsComponents.cantity')
                         ->get();
             }
         }
@@ -107,7 +107,7 @@ class WorkSheetsService extends BaseService{
                 $supplies = WorkSheetSupplies::join('supplies', 'worksheetssupplies.supply_id', '=', 'supplies.id')
                         ->join('maders', 'supplies.mader_id', '=', 'maders.id')
                         ->where('worksheetssupplies.workSheet_id', '=', intval($postData['id']))
-                        ->select('supplies.id as supply_id', 'worksheetssupplies.id as worksheetsupply_id', 'maders.name as mader', 'supplies.ref as ref', 'supplies.name as name', 'worksheetssupplies.pvp', 'worksheetssupplies.cantity')
+                        ->select('supplies.id as supply_id', 'worksheetssupplies.id as workSheetSupply_id', 'maders.name as mader', 'supplies.ref as ref', 'supplies.name as name', 'worksheetssupplies.pvp', 'worksheetssupplies.cantity')
                         ->get();
             }
         }else{
@@ -116,7 +116,7 @@ class WorkSheetsService extends BaseService{
                 $supplies = WorkSheetSupplies::join('supplies', 'worksheetssupplies.supply_id', '=', 'supplies.id')
                         ->join('maders', 'supplies.mader_id', '=', 'maders.id')
                         ->where('worksheetssupplies.workSheet_id', '=', intval($params['id']))
-                        ->select('supplies.id as supply_id', 'worksheetssupplies.id as worksheetsupply_id', 'maders.name as mader', 'supplies.ref as ref', 'supplies.name as name', 'worksheetssupplies.pvp', 'worksheetssupplies.cantity')
+                        ->select('supplies.id as supply_id', 'worksheetssupplies.id as workSheetSupply_id', 'maders.name as mader', 'supplies.ref as ref', 'supplies.name as name', 'worksheetssupplies.pvp', 'worksheetssupplies.cantity')
                         ->get();
             }
         }
@@ -164,7 +164,7 @@ class WorkSheetsService extends BaseService{
             if(isset($postData['id'])){
                 $works = WorkSheetWorks::join('works', 'worksheetsworks.work_id', '=', 'works.id')                        
                         ->where('worksheetsworks.workSheet_id', '=', intval($postData['id']))
-                        ->select('works.id as work_id', 'worksheetsworks.id as worksheetwork_id', 'works.ref as ref', 'works.name as name', 'worksheetsworks.pvp', 'worksheetsworks.cantity')
+                        ->select('works.id as work_id', 'worksheetsworks.id as workSheetWork_id', 'works.ref as ref', 'works.name as name', 'worksheetsworks.pvp', 'worksheetsworks.cantity')
                         ->get();
             }
         }else{
@@ -172,7 +172,7 @@ class WorkSheetsService extends BaseService{
             if(isset($params['id'])){
                 $works = WorkSheetWorks::join('works', 'worksheetsworks.work_id', '=', 'works.id')                       
                         ->where('worksheetsworks.workSheet_id', '=', intval($params['id']))
-                        ->select('works.id as work_id', 'worksheetsworks.id as worksheetwork_id', 'works.ref as ref', 'works.name as name', 'worksheetsworks.pvp', 'worksheetsworks.cantity')
+                        ->select('works.id as work_id', 'worksheetsworks.id as workSheetWork_id', 'works.ref as ref', 'works.name as name', 'worksheetsworks.pvp', 'worksheetsworks.cantity')
                         ->get();
             }
         }

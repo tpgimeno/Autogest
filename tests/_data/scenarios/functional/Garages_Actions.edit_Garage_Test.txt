@@ -1,0 +1,7 @@
+I WANT TO EDIT GARAGE TEST
+
+I am on page ""/garages/list?menu=stock&item=garages"" 
+I click '#editButton' . $this->id" 
+I submit form '#formTaller'," $garage" 
+I see 'Updated'
+

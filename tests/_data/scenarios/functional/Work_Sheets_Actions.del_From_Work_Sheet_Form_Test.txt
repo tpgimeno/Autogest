@@ -1,0 +1,7 @@
+I WANT TO DEL FROM WORK SHEET FORM TEST
+
+I am on page ""/workSheets/list?menu=garagesk&item=workSheets"" 
+I click '#editButton' . $this->id" 
+I click 'Eliminar' 
+I don't see in database('worksheets', array('id' => intval "$this->id)"," 'deleted_at' => null)"
+

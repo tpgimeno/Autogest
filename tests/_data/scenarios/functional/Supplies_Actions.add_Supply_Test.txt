@@ -1,0 +1,9 @@
+I WANT TO ADD SUPPLY TEST
+
+I am on page ""/vehicles/supplies/list?menu=stock&item=supplies"" 
+I click '#newButton' 
+I grab column from database 'maders'," 'id'," ['deleted_at' => null]" 
+I submit form '#formRecambio'," $supply" 
+I grab from database 'supplies'," 'id'," ['name' => $this->name]" 
+I see in database 'supplies'," ['name' => $this->name]"
+

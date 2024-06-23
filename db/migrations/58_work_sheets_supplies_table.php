@@ -25,7 +25,6 @@ final class WorkSheetsSuppliesTable extends AbstractMigration
                 ->addColumn('pvp', 'float')
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime', ['null' => true])
-                ->addColumn('deleted_at', 'datetime', ['null' => true])
                 ->create();
     }
 }

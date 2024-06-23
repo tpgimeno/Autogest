@@ -1,0 +1,7 @@
+I WANT TO EDIT SELL OFFER TEST
+
+I am on page ""/sales/offers/list?menu=stock&item=offers"" 
+I click '#editButton' . $this->id" 
+I submit form '#formOfertadeVenta'," $selloffer" 
+I see 'Updated'
+

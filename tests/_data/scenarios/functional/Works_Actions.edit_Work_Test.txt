@@ -1,0 +1,7 @@
+I WANT TO EDIT WORK TEST
+
+I am on page ""/vehicles/works/list?menu=stock&item=works"" 
+I click '#editButton' . $this->id" 
+I submit form '#formTrabajo'," $work" 
+I see 'Updated'
+

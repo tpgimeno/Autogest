@@ -106,7 +106,7 @@
 {% endmacro input_form_modal %}
 {% macro assetsDataTable(wrapper, table_id, labels, main_labels, values, currencies, setFunction, delFunction, url, data, base_asset, base_text, tva_asset, tva_text, total_asset, total_text, assets_modal) %}
     <div id="{{ wrapper }}" class="dataTables_wrapper dt-bootstrap4">
-        <div class="row">
+        <div class="row">            
             <div class="col-sm-12">
                 <table id="{{ table_id }}" class="table-light table-listados table-bordered table-striped dataTable dtr-inline">
                     <thead>
@@ -126,13 +126,15 @@
                                 {% if item == 'total' %}
                                     {% set total = value.cantity * value.pvp %}
                                         <td item="{{ item }}" item_value="{{ attribute(value, item) }}">{{ total|format_currency('EUR', locale='es') }}</td> 
+                                {% elseif item in data|keys %}                                    
+                                    <td item="{{ item }}" item_value="{{ attribute(value, item) }}">{{ attribute(value, data|keys[0]) }}</td>
                                 {% else %}
                                     <td item="{{ item }}" item_value="{{ attribute(value, item) }}">{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
                                 {% endif %}
                             {% endfor %}
-                            <td>
-                                <a id="addButton{{value.sellOffercomponent_id}}" href="javascript:{{ setFunction }}({{ value|json_encode() }});"><i class="fa fa-edit"></i></a>
-                                <a id="delButton{{value.sellOffercomponent_id}}" href="javascript:{{ delFunction }}({{ value|json_encode() }});"><i class="fa fa-trash"></i></a>
+                            <td>                               
+                                <a id="addButton{{attribute(value, data|keys[0])}}" href="javascript:{{ setFunction }}({{ value|json_encode() }});"><i class="fa fa-edit"></i></a>
+                                <a id="delButton{{attribute(value, data|keys[0])}}" href="javascript:{{ delFunction }}({{ value|json_encode() }});"><i class="fa fa-trash"></i></a>
                             </td>
                         </tr>
                     {% endfor %}

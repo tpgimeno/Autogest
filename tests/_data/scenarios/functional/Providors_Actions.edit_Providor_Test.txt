@@ -1,0 +1,7 @@
+I WANT TO EDIT PROVIDOR TEST
+
+I am on page ""/buys/providors/list?menu=stock&item=providors"" 
+I click '#editButton' . $this->id" 
+I submit form '#formProveedor'," $providor" 
+I see 'Updated'
+

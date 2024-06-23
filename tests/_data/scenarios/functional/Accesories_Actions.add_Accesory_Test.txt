@@ -1,0 +1,8 @@
+I WANT TO ADD ACCESORY TEST
+
+I am on page ""/vehicles/accesories/list?menu=stock&item=accesories"" 
+I click '#newButton' 
+I submit form '#formAccesorio'," $accesory" 
+I grab from database 'accesories'," 'id'," ['name' => $this->name]" 
+I see in database 'accesories'," ['keyString' => $key]"
+

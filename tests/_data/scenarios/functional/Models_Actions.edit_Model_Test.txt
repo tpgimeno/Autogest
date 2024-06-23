@@ -1,0 +1,7 @@
+I WANT TO EDIT MODEL TEST
+
+I am on page ""/vehicles/models/list?menu=stock&item=models"" 
+I click '#editButton' . $this->id" 
+I submit form '#formModelo'," $model" 
+I see 'Updated'
+

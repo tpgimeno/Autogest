@@ -1,0 +1,7 @@
+I WANT TO DEL FROM ASSURANCE FORM TEST
+
+I am on page ""/assurances/list?menu=mantenimiento&item=assurances"" 
+I click '#editButton' . $this->id" 
+I click 'Eliminar' 
+I don't see in database('assurances', array('id' => intval "$this->id)"," 'deleted_at' => null)"
+

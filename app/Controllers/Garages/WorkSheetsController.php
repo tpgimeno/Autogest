@@ -57,9 +57,9 @@ class WorkSheetsController extends BaseController{
             'supplies' => $this->WorkSheetsService->getAllRegisters(new Supplies()),
             'works' => $this->WorkSheetsService->getAllRegisters(new Works()),
             'workId' => $this->WorkSheetsService->getAllRegisters(new Works()),
-            'vehicle_component_labels' => ['workSheetscomponent_id' => 'workSheetscomponent_id','mader' => 'mader','ref' => 'ref','name' => 'name','cantity' => 'cantity','pvp' => 'pvp','total' => 'total'],
-            'vehicle_supply_labels' => ['workSheetssupply_id' => 'workSheetssupply_id','mader' => 'mader','ref' => 'ref','name' => 'name','cantity' => 'cantity','pvp' => 'pvp','total' => 'total'],
-            'vehicle_work_labels' => ['workSheetswork_id' => 'workSheetswork_id','ref' => 'ref','name' => 'name','cantity' => 'cantity','pvp' => 'pvp','total' => 'total'],
+            'vehicle_component_labels' => ['workSheetComponent_id' => 'workSheetComponent_id','mader' => 'mader','ref' => 'ref','name' => 'name','cantity' => 'cantity','pvp' => 'pvp','total' => 'total'],
+            'vehicle_supply_labels' => ['workSheetSupply_id' => 'workSheetSupply_id','mader' => 'mader','ref' => 'ref','name' => 'name','cantity' => 'cantity','pvp' => 'pvp','total' => 'total'],
+            'vehicle_work_labels' => ['workSheetWork_id' => 'workSheetWork_id','ref' => 'ref','name' => 'name','cantity' => 'cantity','pvp' => 'pvp','total' => 'total'],
             'component_functions' => ['set' => 'setComponent', 'delete' => 'delWorkSheetsComponent'],
             'supply_functions' => ['set' => 'setSupply', 'delete' => 'delWorkSheetsSupply'],
             'work_functions' => ['set' => 'setWork', 'delete' => 'delWorkSheetsWork'],
@@ -129,8 +129,7 @@ class WorkSheetsController extends BaseController{
     }
     
     public function addSuppliesWorkSheetsAction($request){
-        $postData = $request->getParsedBody();   
-        
+        $postData = $request->getParsedBody();          
         $responseMessage = $this->WorkSheetsService->addSuppliesWorkSheetsAction($postData);
         $response = new JsonResponse($responseMessage);
         return $response;

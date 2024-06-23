@@ -1,0 +1,8 @@
+I WANT TO ADD GARAGE TEST
+
+I am on page ""/garages/list?menu=stock&item=garages"" 
+I click '#newButton' 
+I submit form '#formTaller'," $garage" 
+I grab from database 'garages'," 'id'," ['name' => $this->name]" 
+I see in database 'garages'," ['name' => $this->name]"
+

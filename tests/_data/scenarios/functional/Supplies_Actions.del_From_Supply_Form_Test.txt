@@ -1,0 +1,7 @@
+I WANT TO DEL FROM SUPPLY FORM TEST
+
+I am on page ""/vehicles/supplies/list?menu=stock&item=supplies"" 
+I click '#editButton' . $this->id" 
+I click 'Eliminar' 
+I don't see in database('supplies', array('id' => intval "$this->id)"," 'deleted_at' => null)"
+

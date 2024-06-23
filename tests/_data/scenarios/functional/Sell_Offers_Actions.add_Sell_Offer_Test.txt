@@ -1,0 +1,12 @@
+I WANT TO ADD SELL OFFER TEST
+
+I am on page ""/sales/offers/list?menu=stock&item=offers"" 
+I click '#newButton' 
+I grab column from database 'taxes'," 'id'," ['deleted_at' => null]" 
+I grab column from database 'paymentWays'," 'id'," ['deleted_at' => null]" 
+I grab column from database 'customers'," 'id'," ['deleted_at' => null]" 
+I grab column from database 'selloffers'," 'offerNumber'," []" 
+I submit form '#formOfertadeVenta'," $selloffer" 
+I grab from database 'selloffers'," 'id'," ['offerNumber' => $offerNumber"," 'deleted_at' => null]" 
+I see in database 'selloffers'," ['offerNumber' => $offerNumber]"
+

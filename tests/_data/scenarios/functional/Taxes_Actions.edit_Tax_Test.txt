@@ -1,0 +1,8 @@
+I WANT TO EDIT TAX TEST
+
+I am on page ""/taxes/list?menu=stock&item=taxes"" 
+I click '#editButton' . $this->id" 
+I submit form '#formTipodeIva'," $tax" 
+I submit form '#formTipodeIva'," $tax" 
+I see 'Updated'
+

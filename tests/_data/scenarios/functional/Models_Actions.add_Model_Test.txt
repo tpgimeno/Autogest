@@ -1,0 +1,9 @@
+I WANT TO ADD MODEL TEST
+
+I am on page ""/vehicles/models/list?menu=stock&item=models"" 
+I click '#newButton' 
+I grab column from database 'brands'," 'id'," ['deleted_at' => null]" 
+I submit form '#formModelo'," $model" 
+I grab from database 'models'," 'id'," ['name' => $this->name]" 
+I see in database 'models'," ['name' => $this->name]"
+

@@ -1,0 +1,12 @@
+I WANT TO ADD WORK SHEET TEST
+
+I am on page ""/workSheets/list?menu=garagesk&item=workSheets"" 
+I click '#newButton' 
+I grab column from database 'customers'," 'id'," ['deleted_at' => null]" 
+I grab column from database 'vehicles'," 'id'," ['deleted_at' => null]" 
+I grab column from database 'garage_orders'," 'id'," ['deleted_at' => null]" 
+I grab column from database 'worksheets'," 'workSheetNumber'," []" 
+I submit form '#formHojadeTrabajo'," $workSheet" 
+I grab from database 'worksheets'," 'id'," ['workSheetNumber' => $workSheetNumber"," 'deleted_at' => null]" 
+I see in database 'worksheets'," ['workSheetNumber' => $workSheetNumber]"
+

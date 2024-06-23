@@ -1,0 +1,8 @@
+I WANT TO ADD PROVIDOR TEST
+
+I am on page ""/buys/providors/list?menu=stock&item=providors"" 
+I click '#newButton' 
+I submit form '#formProveedor'," $providor" 
+I grab from database 'providors'," 'id'," ['name' => $this->name]" 
+I see in database 'providors'," ['name' => $this->name]"
+

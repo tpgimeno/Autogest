@@ -1,0 +1,8 @@
+I WANT TO ADD WORK TEST
+
+I am on page ""/vehicles/works/list?menu=stock&item=works"" 
+I click '#newButton' 
+I submit form '#formTrabajo'," $work" 
+I grab from database 'works'," 'id'," ['name' => $this->name]" 
+I see in database 'works'," ['name' => $this->name]"
+

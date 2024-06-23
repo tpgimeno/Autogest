@@ -1,0 +1,7 @@
+I WANT TO DEL FROM MODEL FORM TEST
+
+I am on page ""/vehicles/models/list?menu=stock&item=models"" 
+I click '#editButton' . $this->id" 
+I click 'Eliminar' 
+I don't see in database('models', array('id' => intval "$this->id)"," 'deleted_at' => null)"
+

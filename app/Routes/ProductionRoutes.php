@@ -85,6 +85,23 @@ class ProductionRoutes {
             'delWorksWorkSheetsAction'
         ]); 
         
+        $map->get('expertOpinionsList', '/Intranet/expertOpinions/form', [
+            'App\Controllers\Garages\ExpertOpinionsController',
+            'getExpertOpinionsDataAction'
+        ]);
+        $map->get('expertOpinionsForm', '/Intranet/expertOpinions/list', [
+            'App\Controllers\Garages\ExpertOpinionsController',
+            'getIndexAction'
+        ]);
+        $map->post('saveExpertOpinions', '/Intranet/expertOpinions/save', [
+            'App\Controllers\Garages\ExpertOpinionsController',
+            'getExpertOpinionsDataAction'
+        ]);
+        $map->get('expertOpinionsDelete', '/Intranet/expertOpinions/delete', [
+            'App\Controllers\Garages\ExpertOpinionsController',
+            'deleteAction'
+        ]);
+        
         
         
         

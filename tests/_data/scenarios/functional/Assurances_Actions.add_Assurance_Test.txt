@@ -1,0 +1,10 @@
+I WANT TO ADD ASSURANCE TEST
+
+I am on page ""/assurances/list?menu=mantenimiento&item=assurances"" 
+I click '#newButton' 
+I grab column from database 'assurances'," 'ref'," ['deleted_at' => null]" 
+I grab column from database 'customers'," 'id'," ['deleted_at' => null]" 
+I submit form '#formPolizadeSeguro'," $assurance" 
+I grab from database 'assurances'," 'id'," ['ref' => $this->ref]" 
+I see in database 'assurances'," ['ref' => $this->ref]"
+

@@ -73,11 +73,11 @@
                                 {% set prices = {'1':'baseComponents','2':'Base Componentes','3':'tvaComponents','4':'Iva','5':'totalComponents', '6':'Total Componentes'} %}
                                 {% if titleForm == 'Vehículo' %}                                                                   
                                 {% elseif titleForm == 'Oferta de Venta' %}                                    
-                                    {% set data = { 'selloffer_id': value.id } %}                                   
+                                    {% set data = { 'sellOffercomponent_id': value.id } %}                                   
                                 {% elseif titleForm == 'Orden de Trabajo' %}
-                                    {% set data = { 'garageOrder_id': value.id } %}  
+                                    {% set data = { 'garageOrdercomponent_id': value.id } %}  
                                 {% elseif titleForm == 'Hoja de Trabajo' %}
-                                    {% set data = { 'workSheetComponent_id': value.id } %}   
+                                    {% set data = { 'worksheetcomponent_id': value.id } %}   
                                 {% endif %}
                                 {{ macros.assetsDataTable("dataTableVehicleComponents_wrapper", "dataTableVehicleComponents", optionsArray['vehicle_component_labels'], labels, optionsArray['vehicle_components'], currencies, optionsArray['component_functions']['set'], optionsArray['component_functions']['delete'], setComponentsUrl, data, optionsArray['assets_prices'][1], optionsArray['assets_prices'][2], optionsArray['assets_prices'][3], optionsArray['assets_prices'][4], optionsArray['assets_prices'][5], optionsArray['assets_prices'][6], 'components_modal') }}
                             {% endif %}
@@ -86,11 +86,11 @@
                                 {% if titleForm == 'Vehículo' %}                                    
                                     {% set data = { 'vehicle_id': value.id } %}                                    
                                 {% elseif titleForm == 'Oferta de Venta' %}                                    
-                                    {% set data = { 'selloffer_id': value.id } %} 
+                                    {% set data = { 'sellOffersupply_id': value.id } %} 
                                 {% elseif titleForm == 'Orden de Trabajo' %}
-                                    {% set data = { 'garageOrder_id': value.id } %}  
+                                    {% set data = { 'garageOrdersupply_id': value.id } %}  
                                 {% elseif titleForm == 'Hoja de Trabajo' %}
-                                    {% set data = { 'workSheet_id': value.id } %}  
+                                    {% set data = { 'workSheetSupply_id': value.id } %}  
                                 {% endif %}                                
                                 {{ macros.assetsDataTable("dataTableVehicleSupplies_wrapper", "dataTableVehicleSupplies", optionsArray['vehicle_supply_labels'], labels, optionsArray['vehicle_supplies'], currencies, optionsArray['supply_functions']['set'], optionsArray['supply_functions']['delete'], setSuppliesUrl, data, optionsArray['assets_prices'][7], optionsArray['assets_prices'][8], optionsArray['assets_prices'][9], optionsArray['assets_prices'][10], optionsArray['assets_prices'][11], optionsArray['assets_prices'][12], 'supplies_modal') }}
                             {% endif %}
@@ -98,11 +98,11 @@
                                 {% if titleForm == 'Vehículo' %}                                    
                                     {% set data = { 'vehicle_id': value.id } %}                                    
                                 {% elseif titleForm == 'Oferta de Venta' %}                                    
-                                    {% set data = { 'selloffer_id': value.id } %}                                    
+                                    {% set data = { 'sellOfferwork_id': value.id } %}                                    
                                 {% elseif titleForm == 'Orden de Trabajo' %}
-                                    {% set data = { 'garageOrder_id': value.id } %} 
+                                    {% set data = { 'garageOrderwork_id': value.id } %} 
                                 {% elseif titleForm == 'Hoja de Trabajo' %}
-                                    {% set data = { 'workSheet_id': value.id } %} 
+                                    {% set data = { 'workSheetWork_id': value.id } %} 
                                 {% endif %}                                
                                 {{ macros.assetsDataTable("dataTableVehicleWorks_wrapper", "dataTableVehicleWorks", optionsArray['vehicle_work_labels'], labels, optionsArray['vehicle_works'], currencies, optionsArray['work_functions']['set'], optionsArray['work_functions']['delete'], setWorksUrl, data, optionsArray['assets_prices'][13], optionsArray['assets_prices'][14], optionsArray['assets_prices'][15], optionsArray['assets_prices'][16], optionsArray['assets_prices'][17], optionsArray['assets_prices'][18], 'works_modal') }}                                
                             {% endif %}                                

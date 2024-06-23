@@ -1,0 +1,8 @@
+I WANT TO EDIT ASSURANCE TEST
+
+I am on page ""/assurances/list?menu=mantenimiento&item=assurances"" 
+I click '#editButton' . $this->id" 
+I grab column from database 'assurances'," 'ref'," ['deleted_at' => null]" 
+I submit form '#formPolizadeSeguro'," $assurance" 
+I see 'Updated'
+

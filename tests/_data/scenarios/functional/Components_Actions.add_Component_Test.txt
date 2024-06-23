@@ -1,0 +1,9 @@
+I WANT TO ADD COMPONENT TEST
+
+I am on page ""/vehicles/components/list?menu=stock&item=components"" 
+I click '#newButton' 
+I grab column from database 'maders'," 'id'," ['deleted_at' => null]" 
+I submit form '#formComponente'," $component" 
+I grab from database 'components'," 'id'," ['name' => $this->name]" 
+I see in database 'components'," ['name' => $this->name]"
+

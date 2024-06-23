@@ -1,0 +1,7 @@
+I WANT TO EDIT ACCESORY TEST
+
+I am on page ""/vehicles/accesories/list?menu=stock&item=accesories"" 
+I click '#editButton' . $this->id" 
+I submit form '#formAccesorio'," $accesory" 
+I see 'Updated'
+

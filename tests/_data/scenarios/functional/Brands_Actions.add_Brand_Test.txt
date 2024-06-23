@@ -1,0 +1,8 @@
+I WANT TO ADD BRAND TEST
+
+I am on page ""/vehicles/brands/list?menu=stock&item=brands"" 
+I click '#newButton' 
+I submit form '#formMarca'," $brand" 
+I grab from database 'brands'," 'id'," ['name' => $this->name]" 
+I see in database 'brands'," ['name' => $this->name]"
+

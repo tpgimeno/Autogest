@@ -1,0 +1,6 @@
+I WANT TO DEL FROM CUSTOMER TYPES LIST TEST
+
+I am on page ""/customers/type/list?menu=stock&item=customerTypes"" 
+I click '#delButton' . $this->id" 
+I don't see in database('customer types', array('id' => intval "$this->id)"," 'deleted_at' => null)"
+
