@@ -25,4 +25,10 @@ class ExpertOpinionsService extends BaseService{
                 ->toArray();
         return $values;
     }
+    
+     public function getLastOpinionId(){
+        $lastOpinionId = ExpertOpinion::select('expertopinions.opinionId')
+                ->get()->last();
+        return $lastOpinionId;        
+    }
 }

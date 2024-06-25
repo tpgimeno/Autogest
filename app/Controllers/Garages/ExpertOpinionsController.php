@@ -75,6 +75,34 @@ class ExpertOpinionsController extends BaseController{
             return $this->getBaseGetDataAction($request, $this->model, $iterables);
         }        
     }
+    
+    public function getExpertOpinionIdAction(){
+        $template = "EO2023";
+        $new_opinion_number = null;
+        $lastNumber = $this->ExpertOpinionsService->getLastOpinionId();   
+        
+        if(!$lastNumber){  
+            
+            $lastNumber = 1;
+            $new_opinion_number = $template . "0000" . $lastNumber;
+        }else{
+            $offset = strrpos($lastNumber->opinionId, "0");
+            $prenumber_last_opinion = substr($lastNumber->opinionId, 0, $offset);            
+            $number_last_opinion = intval(substr($lastNumber->opinionId, $offset, strlen($lastNumber))) + 1;
+            if(strlen($prenumber_last_opinion) > 8){
+                $new_opinion_number = $prenumber_last_opinion . strval($number_last_opinion);
+            }else{
+                for($i=strlen($prenumber_last_opinion);$i<10;$i++){
+                    $prenumber_last_opinion[$i] = 0;
+                }
+                $new_opinion_number = $prenumber_last_opinion . strval($number_last_opinion);
+            }            
+        }
+        $response = new JsonResponse($new_opinion_number);
+        
+        return $response;
+    }
+    
     public function deleteAction(ServerRequest $request) {         
         return $this->deleteItemAction($request, $this->model);
     }
