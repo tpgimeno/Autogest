@@ -1,6 +1,6 @@
 /* Jquery */
 /* global numeral */
-import "expertOpinions.js"
+
 var original_vehicle_price;
 $(document).ready(function(){    
     /*
@@ -147,26 +147,27 @@ $(document).ready(function(){
     */
    
     var titleForm = $('.form-horizontal').attr('id');
-    if(titleForm === 'formOfertadeVenta'){         
+    if(titleForm === 'formOfertadeVenta'){        
         set_selloffer_vehicle_prices();
         $('#formOfertadeVenta #plate').change(function(){            
+//            set_vehicles_by_plate("Intranet/sales/offers/plate/get", "#formOfertadeVenta", $('#formOfertadeVenta #plate').val());
             set_selloffer_vehicle_prices();        
         });
         $('#formOfertadeVenta #vehicleDiscount').change(function(){
             set_selloffer_vehicle_prices();
         });
         $('#formOfertadeVenta #brand').change(function(){ 
-           set_models_by_brand($('#formOfertadeVenta #brand option:selected').val());               
+           set_models_by_brand("Intranet/sales/offers/brands/get", '#formOfertadeVenta', $('#formOfertadeVenta #brand option:selected').val(), $('#formOfertadeVenta #model option:selected').val());               
            $('#formOfertadeVenta #plate').val('0');
            $('#formOfertadeVenta #plate').trigger('change');
            let brand = $('#formOfertadeVenta #brand option:selected').val();
            let model = $('#formOfertadeVenta #model option:selected').val();
-           set_vehicles_by_model(brand,model); 
+           set_vehicles_by_model("Intranet/sales/offers/brands/get", "#formOfertadeVenta", brand, model); 
            $('#formOfertadeVenta #plate').trigger('change');
            
         });
         $('#formOfertadeVenta #model').change(function(){
-            set_vehicles_by_model($('#formOfertadeVenta #brand option:selected').val(), $('#formOfertadeVenta #model option:selected').val());
+            set_vehicles_by_model("Intranet/sales/offers/vehicles/get", "#formOfertadeVenta", $('#formOfertadeVenta #brand option:selected').val(), $('#formOfertadeVenta #model option:selected').val());
         });
         
         $('#formOfertadeVenta #discount').change(function(){
@@ -293,6 +294,52 @@ $(document).ready(function(){
         set_works_prices();
         set_worksheet_prices();
     }
+    
+    
+    var titleForm = $('.form-horizontal').attr('id');
+    if(titleForm === 'formPeritacion'){         
+        if($('#opinionId').val() === null || $('#opinionId').val() === ""){            
+            get_new_opinionId();
+        } 
+        if(($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'components-tab') || ($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'supplies-tab') || ($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'works-tab')){            
+            var delButton = $('#delete_button');            
+            delButton.attr('style', 'display:none;');
+        }
+        
+        
+         $('#formPeritacion #discount').change(function(){
+            set_worksheet_prices();
+            $('#formPeritacion #discount').val(numeral($('#formPeritacion #discount').val()).format('(0.0,$)'));
+        });  
+        
+        $('#formPeritacion #brand').change(function(){ 
+           set_models_by_brand($('#formPeritacion #brand option:selected').val());               
+           $('#formPeritacion #plate').val('0');
+           $('#formPeritacion #plate').trigger('change');
+           let brand = $('#formPeritacion #brand option:selected').val();
+           let model = $('#formPeritacion #model option:selected').val();
+           set_vehicles_by_model(brand,model); 
+           $('#formPeritacion #plate').trigger('change');
+           
+        });
+        
+        $('#formPeritacion #plate').change(function(){
+            
+        });
+        
+        $('#formOfertadeVenta #model').change(function(){
+            set_vehicles_by_model($('#formOfertadeVenta #brand option:selected').val(), $('#formOfertadeVenta #model option:selected').val());
+        });
+        
+        $('#formOfertadeVenta #discount').change(function(){
+            set_selloffer_price();
+            $('#formOfertadeVenta #discount').val(numeral($('#formOfertadeVenta #discount').val()).format('(0.0,$)'));
+        });
+        set_components_prices();
+        set_supplies_prices();
+        set_works_prices();
+        set_expertOpinion_prices();
+    }
      
     
   
@@ -340,6 +387,8 @@ function setAsset(form, asset, data){
         $('#' + form + '.modal-body #garageOrder_id').val($('.form-horizontal #id').val());    
     }else if($('#' + form + '.modal-body #workSheet_id').attr('id')){
         $('#' + form + '.modal-body #workSheet_id').val($('.form-horizontal #id').val());
+    }else if($('#' + form + '.modal-body #expertOpinion_id').attr('id')){
+        $('#' + form + '.modal-body #expertOpinion_id').val($('.form-horizontal #id').val());
     }
     
     if(array[0] === null){       
@@ -521,45 +570,59 @@ function set_selloffer_vehicle_prices(){
     set_selloffer_price();
 }
 
-function set_models_by_brand(brand){    
+function set_models_by_brand(url, form, brand){    
     $.ajax({
         method: "POST",
-        url: "Intranet/sales/offers/brands/get",
+        url: url,
         data: {'brand' : brand},
         async: false,
         dataType: "json",
         success: function(data){
             var newArray = [];
-            $('#formOfertadeVenta #model').empty();
+            $(form + ' #model').empty();
             for(let i = 0;i < data.length; i++){
                 let tempArray = {'id' : data[i].id ,'text' : data[i].name };
                 newArray.push(tempArray);
             }
             newArray.push({'id' : '0', 'text' : 'Sin datos'});
-            $('#formOfertadeVenta #model').select2({
+            $(form + '#model').select2({
                 data : newArray
             });
         }
     });
 }
 
-function set_vehicles_by_model(brand, model){
+function set_vehicles_by_model(url, form, brand, model){
     $.ajax({
         method: "POST",
-        url: "Intranet/sales/offers/vehicles/get",
+        url: url,
         data: {'brand' : brand, 'model' : model},
         async: false,
-        dataType: "json",
-        success: function(data){
-            console.log("Prueba");
-            $('#formOfertadeVenta #plate').empty();
+        dataType: "html",
+        success: function(data){ 
+            console.log(data);
+            $(form + ' #plate').empty();
             for(let i = 0;i < data.length; i++){
                 let tempOption = '<option km="' + data[i].km + '" vin="' + data[i].vin + '" price="' + data[i].pvp + '" vehicle_brand="' + data[i].brand_id + '" vehicle_model="' + data[i].model_id + '" value="' + data[i].id + '" >'+ data[i].plate + '</option>'; 
-                $('#formOfertadeVenta #plate').append(tempOption);
+                $(form + ' #plate').append(tempOption);
             }
-            $('#formOfertadeVenta #plate').append('<option value="0">Sin datos</option>');             
-            $('#formOfertadeVenta #plate').select2();
+            $(form + ' #plate').append('<option value="0">Sin datos</option>');             
+            $(form + ' #plate').select2();
             
+        }
+    });
+}
+
+function set_vehicles_by_plate(url, form, plate){   
+    $.ajax({
+        method: "POST",
+        url: url,
+        data: {'plate' : plate},
+        async: false,
+        dataType: "json",
+        success: function(data){    
+            
+            $(form + '#brand').val(data['brand']).trigger('change.select2');           
         }
     });
 }
@@ -898,4 +961,89 @@ function set_worksheet_prices(){
     $('#formHojadeTrabajo #tvaWorkSheet').val(numeral(sum_bases.value() * 0.21).format('(0.0,$)'));
     var tva = numeral($('#tvaWorkSheet').val());
     $('#formHojadeTrabajo #totalWorkSheet').val(numeral(sum_bases.value() + tva.value()).format('(0.0,$)'));    
+}
+
+/*
+ * =============================================================================
+ * Expert Opinions Functions
+ * =============================================================================
+ */
+
+function get_new_opinionId(){
+     $.ajax({
+        method: "POST",
+        url: "Intranet/garages/expertOpinions/id/get",
+        data: {},
+        dataType: "json",
+        success: function(data){  
+            $('#opinionId').val(data);
+        }
+    });
+}
+
+function saveExpertOpinionsComponent(){
+    var url = "Intranet/garages/expertOpinions/components/add";   
+    var data = {'expertOpinion_id' :  $('.form-horizontal #id').val(), 
+            'component_id' : $('#expertOpinion_component_form #component_id').val(),
+            'pvp' : $('#expertOpinion_component_form #pvp').val(),
+            'cantity' : $('#expertOpinion_component_form #cantity').val()};  
+    
+    saveAssets(url, data, '#components_modal', '#component_form_modal','components', 'Intranet/garages/expertOpinions/form?id=' + $('.form-horizontal #id').val() + '&menu=taller&item=expertOpinions');
+   
+}
+
+function delExpertOpinionsComponent(data){     
+    var url = "Intranet/garages/expertOpinions/components/del";
+    var setData = {'id' : data.expertOpinionComponent_id};    
+    delAsset(url, setData, 'components', 'Intranet/garages/expertOpinions/form?id=' + $('.form-horizontal #id').val() + '&menu=taller&item=expertOpinions');
+    
+}
+
+
+function saveExpertOpinionsSupply(){  
+    var url = "Intranet/garages/expertOpinions/supplies/add";
+    var data = {'expertOpinion_id' : $('.form-horizontal #id').val(), 
+            'supply_id' : $('#expertOpinion_supply_form #supply_id').val(),
+            'pvp' : $('#expertOpinion_supply_form #pvp').val(),
+            'cantity' : $('#expertOpinion_supply_form #cantity').val()};
+    
+    saveAssets(url, data, '#supplies_modal', '#supply_form_modal', 'supplies', 'Intranet/garages/expertOpinions/form?id=' + $('.form-horizontal #id').val() + '&menu=taller&item=expertOpinions');
+   
+}
+
+function delExpertOpinionsSupply(data){    
+    var url = "Intranet/garages/expertOpinions/supplies/del";
+    var setData = {'id' : data.expertOpinionSupply_id};
+    delAsset(url, setData, 'supplies', 'Intranet/garages/expertOpinions/form?id=' + $('.form-horizontal #id').val() + '&menu=taller&item=expertOpinions');
+    
+}
+
+function saveExpertOpinionsWork(){ 
+    var url = "Intranet/garages/expertOpinions/works/add";
+    
+    var data = {'expertOpinion_id' : $('.form-horizontal #id').val(), 
+            'work_id' : $('#expertOpinion_work_form #work_id').val(),
+            'pvp' : $('#expertOpinion_work_form #pvp').val(),
+            'cantity' : $('#expertOpinion_work_form #cantity').val()};
+    saveAssets(url, data, '#works_modal', '#work_form_modal', 'works', 'Intranet/garages/expertOpinions/form?id=' + $('.form-horizontal #id').val() + '&menu=taller&item=expertOpinions');
+    
+}
+
+function delExpertOpinionsWork(data){  
+    var url = "Intranet/garages/expertOpinions/works/del";
+    var data = {'id' : data.expertOpinionWork_id};
+    delAsset(url, data, 'works', 'Intranet/garages/expertOpinions/form?id=' + $('.form-horizontal #id').val() + '&menu=taller&item=expertOpinions');
+    
+}
+
+function set_expertOpinion_prices(){      
+    var discount = numeral($('#discountExpertOpinion').val());      
+    var baseComponents = numeral($('#baseComponents').val());    
+    var baseSupplies = numeral($('#baseSupplies').val());
+    var baseWorks = numeral($('#baseWorks').val());
+    var sum_bases = numeral(baseComponents.value() + baseSupplies.value() + baseWorks.value() - discount.value());
+    $('#formPeritacion #baseExpertOpinion').val(sum_bases.format('(0.0,$)'));
+    $('#formPeritacion #tvaExpertOpinion').val(numeral(sum_bases.value() * 0.21).format('(0.0,$)'));
+    var tva = numeral($('#tvaExpertOpinion').val());
+    $('#formPeritacion #totalExpertOpinion').val(numeral(sum_bases.value() + tva.value()).format('(0.0,$)'));    
 }

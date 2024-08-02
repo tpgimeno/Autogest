@@ -3,13 +3,20 @@
 *   Login Page
 * ================
 */
+html{
+    box-sizing: border-box;
+}
 
 *, ::after, ::before{
-    box-sizing: border-box;
+    box-sizing: inherit;
 }
 
 #logo-login{
     max-width: 250px;
+}
+
+div.card.bg-gradient-info > div.card-footer.bg-transparent > div > div:nth-child(3) > input{
+    max-width: 8em;
 }
 
 /*

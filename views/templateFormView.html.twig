@@ -10,11 +10,11 @@
                         'paymentWay_id':'paymentWay_id', 'customerType':'customerType',
                         'getter_id':'getter_id', 'owner_id':'owner_id', 'order_id' : 'order_id',
                         'workId':'workId'} %}
-{% set textareas = {'vehicleComments':'vehicleComments', 'texts':'texts','options':'options'} %}
-{% set large_textareas = {'observations':'observations','text':'text', 'description':'description'} %}
-{% set dates = {'birthDate':'birthDate','registryDate':'registryDate','sellDate':'sellDate','buyDate':'buyDate', 'arrival':'arrival','appointDate':'appointDate','offerDate':'offerDate'} %}
+{% set textareas = {'vehicleComments':'vehicleComments', 'texts':'texts','options':'options','object':'object'} %}
+{% set large_textareas = {'observations':'observations','text':'text', 'description':'description','actions':'actions','conclusions':'conclusions','anexed':'anexed'} %}
+{% set dates = {'birthDate':'birthDate','registryDate':'registryDate','sellDate':'sellDate','buyDate':'buyDate', 'arrival':'arrival','appointDate':'appointDate','offerDate':'offerDate','date':'date'} %}
 {% set datetimes = {'inDate':'inDate', 'outDate':'outDate', 'effectDate':'effectDate'} %}
-{% set currencies = {'pvd':'pvd','pvp':'pvp','cost':'cost','pvc':'pvc','vehiclePvp':'vehiclePvp', 'discount':'discount', 'vehicleDiscount':'vehicleDiscount','tva':'tva','total':'total','costTva':'costTva','costTotal':'costTotal',
+{% set currencies = {'pvd':'pvd','pvp':'pvp','cost':'cost','pvc':'pvc','vehiclePvp':'vehiclePvp', 'discount':'discount', 'vehicleDiscount':'vehicleDiscount','tva':'tva','total':'total','costTva':'costTva','costTotal':'costTotal','baseExpertOpinion':'baseExpertOpinion', 'tvaExpertOpinion':'tvaExpertOpinion','totalExpertOpinion':'totalExpertOpinion',
                     'vehicleTva':'vehicleTva','vehicleTotal':'vehicleTotal','price':'price'} %}
 {% set checks = {'rebu':'rebu','secondKey':'secondKey'} %}
 {% set hidden = {'vehicle_id':'vehicle_id'} %}
@@ -77,7 +77,9 @@
                                 {% elseif titleForm == 'Orden de Trabajo' %}
                                     {% set data = { 'garageOrdercomponent_id': value.id } %}  
                                 {% elseif titleForm == 'Hoja de Trabajo' %}
-                                    {% set data = { 'worksheetcomponent_id': value.id } %}   
+                                    {% set data = { 'workSheetComponent_id': value.id } %}  
+                                {% elseif titleForm == 'Peritacion' %}
+                                    {% set data = { 'expertOpinionComponent_id': value.id } %}  
                                 {% endif %}
                                 {{ macros.assetsDataTable("dataTableVehicleComponents_wrapper", "dataTableVehicleComponents", optionsArray['vehicle_component_labels'], labels, optionsArray['vehicle_components'], currencies, optionsArray['component_functions']['set'], optionsArray['component_functions']['delete'], setComponentsUrl, data, optionsArray['assets_prices'][1], optionsArray['assets_prices'][2], optionsArray['assets_prices'][3], optionsArray['assets_prices'][4], optionsArray['assets_prices'][5], optionsArray['assets_prices'][6], 'components_modal') }}
                             {% endif %}
@@ -91,6 +93,8 @@
                                     {% set data = { 'garageOrdersupply_id': value.id } %}  
                                 {% elseif titleForm == 'Hoja de Trabajo' %}
                                     {% set data = { 'workSheetSupply_id': value.id } %}  
+                                {% elseif titleForm == 'Peritacion' %}
+                                    {% set data = { 'expertOpinionSupply_id': value.id } %}  
                                 {% endif %}                                
                                 {{ macros.assetsDataTable("dataTableVehicleSupplies_wrapper", "dataTableVehicleSupplies", optionsArray['vehicle_supply_labels'], labels, optionsArray['vehicle_supplies'], currencies, optionsArray['supply_functions']['set'], optionsArray['supply_functions']['delete'], setSuppliesUrl, data, optionsArray['assets_prices'][7], optionsArray['assets_prices'][8], optionsArray['assets_prices'][9], optionsArray['assets_prices'][10], optionsArray['assets_prices'][11], optionsArray['assets_prices'][12], 'supplies_modal') }}
                             {% endif %}
@@ -103,6 +107,8 @@
                                     {% set data = { 'garageOrderwork_id': value.id } %} 
                                 {% elseif titleForm == 'Hoja de Trabajo' %}
                                     {% set data = { 'workSheetWork_id': value.id } %} 
+                                {% elseif titleForm == 'Peritacion' %}
+                                    {% set data = { 'expertOpinionWork_id': value.id } %}  
                                 {% endif %}                                
                                 {{ macros.assetsDataTable("dataTableVehicleWorks_wrapper", "dataTableVehicleWorks", optionsArray['vehicle_work_labels'], labels, optionsArray['vehicle_works'], currencies, optionsArray['work_functions']['set'], optionsArray['work_functions']['delete'], setWorksUrl, data, optionsArray['assets_prices'][13], optionsArray['assets_prices'][14], optionsArray['assets_prices'][15], optionsArray['assets_prices'][16], optionsArray['assets_prices'][17], optionsArray['assets_prices'][18], 'works_modal') }}                                
                             {% endif %}                                

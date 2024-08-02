@@ -11,6 +11,7 @@ use App\Models\Supplies;
 use App\Models\Vehicle;
 use App\Models\Works;
 use App\Services\Garages\ExpertOpinionsService;
+use Laminas\Diactoros\Response\JsonResponse;
 use Laminas\Diactoros\ServerRequest;
 use Respect\Validation\Validator as v;
 
@@ -26,7 +27,7 @@ class ExpertOpinionsController extends BaseController{
         parent::__construct();
         $this->expertOpinionsService = $expertOpinionsService;
         $this->model = new ExpertOpinions();
-        $this->route = 'expertOpinions';
+        $this->route = 'garages/expertOpinions';
         $this->titleList = 'Peritaciones';
         $this->titleForm = 'Peritacion';
         $this->labels = $this->expertOpinionsService->getLabelsArray(); 
@@ -45,15 +46,15 @@ class ExpertOpinionsController extends BaseController{
             'components' => $this->expertOpinionsService->getAllRegisters(new Components()),
             'supplies' => $this->expertOpinionsService->getAllRegisters(new Supplies()),
             'works' => $this->expertOpinionsService->getAllRegisters(new Works()),
-            'vehicle_component_labels' => ['expertOpinioncomponent_id' => 'expertOpinioncomponent_id','mader' => 'mader','ref' => 'ref','name' => 'name','cantity' => 'cantity','pvp' => 'pvp','total' => 'total'],
-            'vehicle_supply_labels' => ['expertOpinionsupply_id' => 'expertOpinionsupply_id','mader' => 'mader','ref' => 'ref','name' => 'name','cantity' => 'cantity','pvp' => 'pvp','total' => 'total'],
-            'vehicle_work_labels' => ['expertOpinionwork_id' => 'expertOpinionwork_id','ref' => 'ref','name' => 'name','cantity' => 'cantity','pvp' => 'pvp','total' => 'total'],
+            'vehicle_component_labels' => ['expertOpinionComponent_id' => 'expertOpinionComponent_id','mader' => 'mader','ref' => 'ref','name' => 'name','cantity' => 'cantity','pvp' => 'pvp','total' => 'total'],
+            'vehicle_supply_labels' => ['expertOpinionSupply_id' => 'expertOpinionSupply_id','mader' => 'mader','ref' => 'ref','name' => 'name','cantity' => 'cantity','pvp' => 'pvp','total' => 'total'],
+            'vehicle_work_labels' => ['expertOpinionWork_id' => 'expertOpinionWork_id','ref' => 'ref','name' => 'name','cantity' => 'cantity','pvp' => 'pvp','total' => 'total'],
             'component_functions' => ['set' => 'setComponent', 'delete' => 'delExpertOpinionsComponent'],
             'supply_functions' => ['set' => 'setSupply', 'delete' => 'delExpertOpinionsSupply'],
             'work_functions' => ['set' => 'setWork', 'delete' => 'delExpertOpinionsWork'],
             'assets_prices' => ['1' => 'baseComponents','2' => 'Base Componentes','3' => 'tvaComponents','4' => 'Iva','5' => 'totalComponents', '6' => 'Total Componentes','7' => 'baseSupplies', '8' => 'Base Recambios', '9' => 'tvaSupplies', '10' => 'Iva Recambios', '11' => 'totalSupplies', '12' => 'Total Recambios', '13' => 'baseWorks', '14' => 'Base Trabajos', '15' => 'tvaWorks', '16' => 'Iva Trabajos', '17' => 'totalWorks', '18' => 'Total Trabajos'],
             'assets_labels' => ['id' => 'id', 'ref' => 'ref','name' => 'name','pvp' => 'pvp'],
-            'setComponentsUrl' => "Intranet/expertOpinions/components/set",
+            'setComponentsUrl' => "/Intranet/garages/expertOpinions/components/set",
             'vehicle_components' => $this->expertOpinionsService->getExpertOpinionsComponents($request),
             'vehicle_supplies' => $this->expertOpinionsService->getExpertOpinionsSupplies($request),
             'vehicle_works' => $this->expertOpinionsService->getExpertOpinionsWorks($request),
@@ -79,10 +80,8 @@ class ExpertOpinionsController extends BaseController{
     public function getExpertOpinionIdAction(){
         $template = "EO2023";
         $new_opinion_number = null;
-        $lastNumber = $this->ExpertOpinionsService->getLastOpinionId();   
-        
-        if(!$lastNumber){  
-            
+        $lastNumber = $this->expertOpinionsService->getLastOpinionId();         
+        if(!$lastNumber){              
             $lastNumber = 1;
             $new_opinion_number = $template . "0000" . $lastNumber;
         }else{
@@ -100,6 +99,48 @@ class ExpertOpinionsController extends BaseController{
         }
         $response = new JsonResponse($new_opinion_number);
         
+        return $response;
+    }
+    
+    public function addComponentsExpertOpinionsAction($request){
+        $postData = $request->getParsedBody();          
+        $responseMessage = $this->expertOpinionsService->addComponentsExpertOpinionsAction($postData);
+        $response = new JsonResponse($responseMessage);
+        return $response;
+    }
+    
+    public function delComponentsExpertOpinionsAction($request){        
+        $postData = $request->getParsedBody();        
+        $component = $this->expertOpinionsService->delComponentsExpertOpinionsAction($postData);
+        $response = new JsonResponse($component);
+        return $response;
+    }
+    
+    public function addSuppliesExpertOpinionsAction($request){
+        $postData = $request->getParsedBody();        
+        $responseMessage = $this->expertOpinionsService->addSuppliesExpertOpinionsAction($postData);
+        $response = new JsonResponse($responseMessage);
+        return $response;
+    }    
+    
+    public function delSuppliesExpertOpinionsAction($request){        
+        $postData = $request->getParsedBody();        
+        $supply = $this->expertOpinionsService->delSuppliesExpertOpinionsAction($postData);
+        $response = new JsonResponse($supply);
+        return $response;
+    }
+    
+    public function addWorksExpertOpinionsAction($request){
+        $postData = $request->getParsedBody();        
+        $responseMessage = $this->expertOpinionsService->addWorksExpertOpinionsAction($postData);
+        $response = new JsonResponse($responseMessage);
+        return $response;
+    }   
+    
+    public function delWorksExpertOpinionsAction($request){        
+        $postData = $request->getParsedBody();        
+        $work = $this->expertOpinionsService->delWorksExpertOpinionsAction($postData);
+        $response = new JsonResponse($work);
         return $response;
     }
     

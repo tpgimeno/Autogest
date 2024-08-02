@@ -108,8 +108,7 @@ class GarageOrdersController extends BaseController
     }
     
     public function addComponentsGarageOrdersAction($request){
-        $postData = $request->getParsedBody();     
-        
+        $postData = $request->getParsedBody();          
         $responseMessage = $this->GarageOrderService->addComponentsGarageOrdersAction($postData);
         $response = new JsonResponse($responseMessage);
         return $response;

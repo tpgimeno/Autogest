@@ -121,14 +121,14 @@
                         
                     {% for value in values %}                                                    
                         <tr>
-                            {% for item in labels %}
-                                
+                            {% for item in labels %}   
+                               
                                 {% if item == 'total' %}
                                     {% set total = value.cantity * value.pvp %}
                                         <td item="{{ item }}" item_value="{{ attribute(value, item) }}">{{ total|format_currency('EUR', locale='es') }}</td> 
                                 {% elseif item in data|keys %}                                    
-                                    <td item="{{ item }}" item_value="{{ attribute(value, item) }}">{{ attribute(value, data|keys[0]) }}</td>
-                                {% else %}
+                                    <td item="{{ item }}" item_value="{{ attribute(value, item) }}">{{ attribute(value, data|keys[0]) }}</td>                                    
+                                {% else %}                                   
                                     <td item="{{ item }}" item_value="{{ attribute(value, item) }}">{% if item in currencies %} {{ attribute(value, item)|format_currency('EUR', locale='es') }}{% else %}{{ attribute(value, item)|e }}{% endif %}</td> 
                                 {% endif %}
                             {% endfor %}

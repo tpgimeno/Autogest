@@ -83,6 +83,10 @@ class SellRoutes
             'App\Controllers\Sales\SellOffersController',
             'getSellOffersVehiclesByModel'
         ]);
+         $map->post('getVehiclesByPlate', '/Intranet/sales/offers/plate/get', [
+            'App\Controllers\Sales\SellOffersController',
+            'getSellOffersVehiclesByPlate'
+        ]);
         
         
         

@@ -33,7 +33,7 @@ class OfferWorksCest
         $I->see('Debe guardar primero!');
     }
     
-    public function offerSupplySave(AcceptanceTester $I) {
+    public function offerWorkSave(AcceptanceTester $I) {
         $I->click('Ventas');
         $I->click('Ofertas');
         $I->click('Nuevo'); 
@@ -53,7 +53,7 @@ class OfferWorksCest
             
     }
     
-    public function offerSupplyEdit(AcceptanceTester $I) {
+    public function offerWorkEdit(AcceptanceTester $I) {
         $I->click('Ventas');
         $I->click('Ofertas');
         $I->click('#dataTable_next');
@@ -74,7 +74,7 @@ class OfferWorksCest
         $I->seeInDatabase('selloffersworks', ['id' => $offer_works[count($offer_works) - 1], 'cantity' => 2]);
     }
     
-     public function offerSupplyDelete(AcceptanceTester $I) {
+     public function offerWorkDelete(AcceptanceTester $I) {
         $offers = $I->grabColumnFromDatabase('selloffers', 'id', ['deleted_at' => null]);        
         $I->click('Ventas');
         $I->click('Ofertas');

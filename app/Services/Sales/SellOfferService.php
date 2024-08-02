@@ -115,8 +115,13 @@ class SellOfferService extends BaseService{
     public function getVehiclesByModelAjax($brand, $model){
         $vehicles = Vehicle::where('vehicles.brand_id', '=', intval($brand))
                 ->where('vehicles.model_id', '=', intval($model))
-                ->get();
-        
+                ->get();        
+        return $vehicles;
+    }
+    
+    public function getVehiclesByPlateAjax($plate){
+        $vehicles = Vehicle::where('vehicles.plate', '=', $plate)                
+                ->get();        
         return $vehicles;
     }
     

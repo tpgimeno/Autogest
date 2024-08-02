@@ -126,8 +126,16 @@ class SellOffersController extends BaseController {
     }
     
     public function getSellOffersVehiclesByModel($request){
-        $postData = $request->getParsedBody();        
+        $postData = $request->getParsedBody();    
+//        var_dump($postData);die();
         $vehicles = $this->sellOfferService->getVehiclesByModelAjax($postData['brand'], $postData['model']);        
+        $response = new JsonResponse($vehicles);
+        return $response;
+    }
+    
+    public function getSellOffersVehiclesByPlate($request){
+        $postData = $request->getParsedBody();        
+        $vehicles = $this->sellOfferService->getVehiclesByPlateAjax($postData['plate']);        
         $response = new JsonResponse($vehicles);
         return $response;
     }

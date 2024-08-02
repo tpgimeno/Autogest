@@ -83,25 +83,59 @@ class ProductionRoutes {
         $map->post('delWorkSheetWork', '/Intranet/workSheets/works/del', [
             'App\Controllers\Garages\WorkSheetsController',
             'delWorksWorkSheetsAction'
-        ]); 
+        ]);
         
-        $map->get('expertOpinionsList', '/Intranet/expertOpinions/form', [
+        $map->post('getExpertOpinionsNumber', '/Intranet/garages/expertOpinions/id/get', [
+            'App\Controllers\Garages\ExpertOpinionsController',
+            'getExpertOpinionIdAction'
+        ]);        
+        $map->get('expertOpinionsList', '/Intranet/garages/expertOpinions/form', [
             'App\Controllers\Garages\ExpertOpinionsController',
             'getExpertOpinionsDataAction'
         ]);
-        $map->get('expertOpinionsForm', '/Intranet/expertOpinions/list', [
+        $map->get('expertOpinionsForm', '/Intranet/garages/expertOpinions/list', [
             'App\Controllers\Garages\ExpertOpinionsController',
             'getIndexAction'
         ]);
-        $map->post('saveExpertOpinions', '/Intranet/expertOpinions/save', [
+        $map->post('saveExpertOpinions', '/Intranet/garages/expertOpinions/save', [
             'App\Controllers\Garages\ExpertOpinionsController',
             'getExpertOpinionsDataAction'
         ]);
-        $map->get('expertOpinionsDelete', '/Intranet/expertOpinions/delete', [
+        $map->get('expertOpinionsDelete', '/Intranet/garages/expertOpinions/delete', [
             'App\Controllers\Garages\ExpertOpinionsController',
             'deleteAction'
         ]);
+        $map->post('saveExpertOpinionComponent', '/Intranet/garages/expertOpinions/components/add', [
+           'App\Controllers\Garages\ExpertOpinionsController',
+           'addComponentsExpertOpinionsAction'
+        ]);
+        $map->post('delExpertOpinionComponent', '/Intranet/garages/expertOpinions/components/del', [
+            'App\Controllers\Garages\ExpertOpinionsController',
+            'delComponentsExpertOpinionsAction'
+        ]);
+        $map->post('addExpertOpinionSupply', '/Intranet/garages/expertOpinions/supplies/add', [
+            'App\Controllers\Garages\ExpertOpinionsController',
+            'addSuppliesExpertOpinionsAction'
+        ]);
+        $map->post('delExpertOpinionSupply', '/Intranet/garages/expertOpinions/supplies/del', [
+            'App\Controllers\Garages\ExpertOpinionsController',
+            'delSuppliesExpertOpinionsAction'
+        ]);
+        $map->post('addExpertOpiniontWork', '/Intranet/garages/expertOpinions/works/add', [
+            'App\Controllers\Garages\ExpertOpinionsController',
+            'addWorksExpertOpinionsAction'
+        ]);
+        $map->post('delExpertOpinionWork', '/Intranet/garages/expertOpinions/works/del', [
+            'App\Controllers\Garages\ExpertOpinionsController',
+            'delExpertOpinionsAction'
+        ]); 
         
+        
+        
+        $map->get('planningForm', '/Intranet/garages/planning/list', [
+            'App\Controllers\Garages\PlanningController',
+            'getIndexAction'
+        ]);
         
         
         

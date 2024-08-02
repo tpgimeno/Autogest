@@ -12,7 +12,6 @@ use App\Models\Accesories;
 use App\Models\Label;
 use App\Models\VehicleAccesories;
 use Exception;
-use Illuminate\Support\Facades\Date;
 use function str_ends_with;
 
 /**
@@ -52,6 +51,7 @@ class BaseService {
 
     public function findRegister($model, $array) {
         $exist = false;
+        
         if (isset($array['id']) && $model::find(intval($array['id']))) {
             $exist = true;
         }
@@ -159,7 +159,7 @@ class BaseService {
         }
         $properties = $total_properties;
         
-        if($properties[0] === 'offerNumber'){
+        if($properties[0] === 'offerNumber' || $properties[0] === 'opinionId'){
                 $properties_array = array_slice($properties, 0, array_search('vehicle_id', $properties)+1);                
                 $end_array = array_slice($properties, array_search('vehicle_id', $properties)+6, count($properties));
                 $properties = array_merge($properties_array, $end_array);
