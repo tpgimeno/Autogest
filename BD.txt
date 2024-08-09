@@ -1,0 +1,3164 @@
+-- phpMyAdmin SQL Dump
+-- version 5.0.2
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 09-08-2024 a las 20:44:20
+-- Versión del servidor: 10.4.11-MariaDB
+-- Versión de PHP: 7.4.7
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+--
+-- Base de datos: `automotive`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `accesories`
+--
+
+CREATE TABLE `accesories` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `keyString` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `accesories`
+--
+
+INSERT INTO `accesories` (`id`, `name`, `keyString`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Dirección Asistida', 'dir_asist', '2023-10-21 12:03:33', '2023-10-21 12:03:33', NULL),
+(2, 'Aire acondicionado', 'aacc', '2023-10-31 20:02:23', '2023-10-31 20:10:20', NULL),
+(4, 'Cambio Automático', 'auto', '2023-10-31 20:05:05', '2023-10-31 20:05:30', NULL),
+(6, '4werasers', 'ascaesfxsfs', '2023-12-29 22:49:24', '2023-12-29 22:49:24', NULL),
+(7, 'ENV73OQ46XSG', 'SM72VR5WET1YUGCHKXL4', '2023-12-29 22:53:04', '2023-12-29 22:53:04', NULL),
+(8, '2HREVGJSQPON', '71T9MGSIAZOP02NRFYJU', '2023-12-29 22:53:21', '2023-12-29 22:53:21', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `accounts`
+--
+
+CREATE TABLE `accounts` (
+  `id` int(11) NOT NULL,
+  `accountNumber` varchar(255) NOT NULL,
+  `bank_id` int(11) NOT NULL,
+  `owner` varchar(255) NOT NULL,
+  `observations` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `accounts`
+--
+
+INSERT INTO `accounts` (`id`, `accountNumber`, `bank_id`, `owner`, `observations`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'VH0DYQLZMT875IKGJ?2X', 36, 'LoremIpsum', 'Lorem ipsum ...', '2023-01-22 12:39:33', '2023-01-22 12:39:33', NULL),
+(2, 'TMY8B0EVIJX34LGRN6UW', 36, 'LoremIpsum', 'Lorem ipsum ...', '2023-01-22 12:43:54', '2023-01-22 12:43:54', NULL),
+(3, 'RJY?7VN?GKM410CL6DE8', 36, 'LoremIpsum', 'Lorem ipsum ...', '2023-01-22 12:44:07', '2023-01-22 12:44:24', '2023-01-22 12:44:24'),
+(4, 'GJP3KBD41YV2RZOH968T', 36, 'LoremIpsum', 'Lorem ipsum ...', '2023-01-22 12:45:45', '2023-12-28 20:41:25', '2023-12-28 20:41:25'),
+(5, 'HJP?OI29MXCDZKVQ68RS', 36, 'LoremIpsum', 'Lorem ipsum ...', '2023-01-22 12:46:27', '2023-01-26 20:32:53', '2023-01-26 20:32:53'),
+(6, '?T4OCNEX8LW?YSR0F7KI', 36, 'LoremIpsum', 'Lorem ipsum ...', '2023-01-22 12:48:02', '2023-01-25 20:32:19', '2023-01-25 20:32:19'),
+(7, 'C8WY?6FB5VUXGEJ1Q74I', 36, 'LoremIpsum', 'Lorem ipsum ...', '2023-01-22 12:48:45', '2023-01-24 20:04:44', '2023-01-24 20:04:44'),
+(8, 'D4OVFB6LWG3MKTIQU2ZA', 36, 'LoremIpsum', 'Lorem ipsum ...', '2023-01-24 20:02:52', '2023-01-24 20:03:47', '2023-01-24 20:03:47'),
+(9, 'A35W2D7MZN0ICG1JSHLR', 36, 'LoremIpsum', 'Lorem ipsum ...', '2023-01-24 20:03:27', '2023-01-24 20:03:39', '2023-01-24 20:03:39'),
+(10, '0RQ29PV8G61XIBH5M47L', 36, 'LoremIpsum', 'Lorem ipsum ...', '2023-01-24 20:04:24', '2023-01-24 20:04:37', '2023-01-24 20:04:37'),
+(11, '9LKNXCS2DI48B6H7VQMO', 36, 'LoremIpsum', 'Lorem ipsum ...', '2023-01-25 20:31:57', '2023-01-25 20:32:11', '2023-01-25 20:32:11'),
+(12, 'SJNR3Z24UA1KYLT0ICHM', 36, 'LoremIpsum', 'Lorem ipsum ...', '2023-01-26 20:32:31', '2023-01-26 20:32:44', '2023-01-26 20:32:44'),
+(13, '8PE4Y95O6IWJMC2KS7AF', 35, 'LoremIpsum', 'Lorem ipsum ...', '2023-10-04 20:34:48', '2023-12-27 20:10:29', '2023-12-27 20:10:29'),
+(14, '0WO6UJEDHQ3N4YM1AP9C', 35, 'LoremIpsum', 'Lorem ipsum ...', '2023-10-04 20:34:51', '2023-12-26 20:56:03', '2023-12-26 20:56:03'),
+(15, 'IU36N7CPKSTWJX4RHF89', 35, 'LoremIpsum', 'Lorem ipsum ...', '2023-10-04 20:35:02', '2023-10-04 20:35:08', '2023-10-04 20:35:08'),
+(16, 'IRY4D615FX2A8ZVLMJGW', 35, 'LoremIpsum', 'Lorem ipsum ...', '2023-10-04 20:35:13', '2023-10-04 20:35:20', '2023-10-04 20:35:20'),
+(17, 'S5PCL29Y8GQ0ZB6OR37N', 35, 'LoremIpsum', 'Lorem ipsum ...', '2023-10-04 20:35:25', '2023-12-26 20:31:20', '2023-12-26 20:31:20'),
+(18, 'SBZMU5QKLPVJ4XINODFY', 12, 'LoremIpsum', 'Lorem ipsum ...', '2023-10-21 20:18:36', '2023-12-26 20:29:27', '2023-12-26 20:29:27'),
+(19, 'NTL2R5Q9GZUYWFKO16ID', 12, 'LoremIpsum', 'Lorem ipsum ...', '2023-10-21 20:18:40', '2023-12-26 20:27:58', '2023-12-26 20:27:58'),
+(20, '7IWOLXFECV8PBT6AQ0NS', 12, 'LoremIpsum', 'Lorem ipsum ...', '2023-10-21 20:18:50', '2023-10-21 20:18:56', '2023-10-21 20:18:56'),
+(21, 'ZV8PY5R6TAUSJGI43LKM', 12, 'LoremIpsum', 'Lorem ipsum ...', '2023-10-21 20:19:01', '2023-10-21 20:19:08', '2023-10-21 20:19:08'),
+(22, 'J3ZQ95NLGUDTERFX1PAC', 12, 'LoremIpsum', 'Lorem ipsum ...', '2023-10-21 20:19:12', '2023-12-26 20:25:39', '2023-12-26 20:25:39'),
+(65, '', 0, '', NULL, '2023-12-28 19:57:36', '2023-12-28 19:57:36', NULL),
+(66, 'Q0V8HPYCE6WTGJAS145Z', 57, 'LoremIpsum', 'Lorem ipsum ...', '2023-12-28 20:05:04', '2023-12-28 20:05:49', '2023-12-28 20:05:49'),
+(67, 'DP1O2XW8JLS4MV50A96K', 57, 'LoremIpsum', 'Lorem ipsum ...', '2023-12-28 20:05:26', '2023-12-28 20:05:41', '2023-12-28 20:05:41'),
+(68, 'IVLE152H9BPD7Y468N3A', 57, 'LoremIpsum', 'Lorem ipsum ...', '2023-12-28 20:09:31', '2023-12-28 20:10:15', '2023-12-28 20:10:15'),
+(69, 'TJZK9IF2A41N6BOCELUS', 57, 'LoremIpsum', 'Lorem ipsum ...', '2023-12-28 20:09:52', '2023-12-28 20:10:06', '2023-12-28 20:10:06'),
+(70, 'J6PTE04C9IBOZYLRHGWD', 57, 'LoremIpsum', 'Lorem ipsum ...', '2023-12-28 20:12:44', '2023-12-28 20:41:14', '2023-12-28 20:41:14'),
+(71, '8HPJO5GXDUE0672NRT13', 57, 'LoremIpsum', 'Lorem ipsum ...', '2023-12-28 20:17:03', '2023-12-28 20:17:22', '2023-12-28 20:17:22'),
+(72, 'SQ5NFGDH4YEK07R9WMTV', 57, 'LoremIpsum', 'Lorem ipsum ...', '2023-12-28 20:17:34', '2023-12-28 20:41:06', '2023-12-28 20:41:06'),
+(73, '1D09FU8T3O2KZMISEL4N', 57, 'LoremIpsum', 'Lorem ipsum ...', '2023-12-28 20:19:28', '2023-12-28 20:19:47', '2023-12-28 20:19:47'),
+(74, '2TYP7MLKBZE9GO1R0QHD', 57, 'LoremIpsum', 'Lorem ipsum ...', '2023-12-28 20:19:59', '2023-12-28 20:20:09', '2023-12-28 20:20:09'),
+(75, 'GHDAMNOE0FKWZC6BTRLQ', 57, 'LoremIpsum', 'Lorem ipsum ...', '2023-12-28 20:22:41', '2023-12-28 20:23:01', '2023-12-28 20:23:01'),
+(76, '64K3Q0Z28HJ7NTOPFUMY', 57, 'LoremIpsum', 'Lorem ipsum ...', '2023-12-28 20:23:13', '2023-12-28 20:23:23', '2023-12-28 20:23:23'),
+(77, 'OE837YIQU2VTCX6GBRN1', 57, 'LoremIpsum', 'Lorem ipsum ...', '2023-12-28 20:23:41', '2023-12-28 20:24:00', '2023-12-28 20:24:00'),
+(78, 'LS2N6G0A9YZUODBEM5RK', 57, 'LoremIpsum', 'Lorem ipsum ...', '2023-12-28 20:24:12', '2023-12-28 20:24:23', '2023-12-28 20:24:23'),
+(79, 'FW42VB3XG1KCPTML0RJ9', 57, 'LoremIpsum', 'Lorem ipsum ...', '2023-12-28 20:24:53', '2023-12-28 20:25:13', '2023-12-28 20:25:13'),
+(80, 'MHYCA34KJEIBZD8LWN2F', 57, 'LoremIpsum', 'Lorem ipsum ...', '2023-12-28 20:25:26', '2023-12-28 20:25:37', '2023-12-28 20:25:37'),
+(81, 'VKCD6H2JZIBX7NLPTRA5', 57, 'LoremIpsum', 'Lorem ipsum ...', '2023-12-28 20:42:16', '2023-12-28 20:42:37', '2023-12-28 20:42:37'),
+(82, 'BN2GLRXMVTUP091CHEFJ', 57, 'LoremIpsum', 'Lorem ipsum ...', '2023-12-28 20:42:49', '2023-12-28 20:43:00', '2023-12-28 20:43:00'),
+(83, 'MCH58Q4B23TVSU917XWI', 57, 'LoremIpsum', 'Lorem ipsum ...', '2023-12-28 22:13:54', '2023-12-28 22:14:09', '2023-12-28 22:14:09'),
+(84, 'X34RQWPZB12MSAUHGNY0', 67, 'LoremIpsum', 'Lorem ipsum ...', '2023-12-29 20:00:53', '2023-12-29 20:01:08', '2023-12-29 20:01:08'),
+(85, 'ZV5OSRLGUJ78PKWH046Y', 67, 'LoremIpsum', 'Lorem ipsum ...', '2023-12-29 20:01:17', '2023-12-29 20:01:25', '2023-12-29 20:01:25'),
+(86, 'E3JKWYAUO0B6RDNTSCXQ', 67, 'LoremIpsum', 'Lorem ipsum ...', '2023-12-29 20:13:12', '2023-12-29 20:13:26', '2023-12-29 20:13:26'),
+(87, 'QEUJLB1NO34IX52C86YK', 67, 'LoremIpsum', 'Lorem ipsum ...', '2023-12-29 20:13:35', '2023-12-29 20:13:43', '2023-12-29 20:13:43'),
+(88, '6PA4UG8JYB9RCXHV05QE', 67, 'LoremIpsum', 'Lorem ipsum ...', '2024-01-02 20:03:12', '2024-01-02 20:03:27', '2024-01-02 20:03:27'),
+(89, 'HNKJATV7DQ1WULYG9E2B', 67, 'LoremIpsum', 'Lorem ipsum ...', '2024-01-02 20:03:37', '2024-01-02 20:03:46', '2024-01-02 20:03:46'),
+(90, '8WHMTV2BKP9ZFRD7NLQA', 67, 'LoremIpsum', 'Lorem ipsum ...', '2024-01-09 22:39:36', '2024-01-09 22:39:51', '2024-01-09 22:39:51'),
+(91, '1GT069YOJW3LS7CHMA48', 67, 'LoremIpsum', 'Lorem ipsum ...', '2024-01-09 22:40:00', '2024-01-09 22:40:09', '2024-01-09 22:40:09'),
+(92, 'HMJCDAPSWZ1RT0E97GF5', 67, 'LoremIpsum', 'Lorem ipsum ...', '2024-01-12 16:53:01', '2024-01-12 16:53:23', '2024-01-12 16:53:23'),
+(93, '8LJC9Y5XM67FGTH1I2VQ', 67, 'LoremIpsum', 'Lorem ipsum ...', '2024-01-12 16:53:35', '2024-01-12 16:53:48', '2024-01-12 16:53:48'),
+(94, 'U4M7EFQVI0OT3Z5R1X9D', 67, 'LoremIpsum', 'Lorem ipsum ...', '2024-06-11 22:14:04', '2024-06-11 22:14:24', '2024-06-11 22:14:24'),
+(95, 'C91VYHNUXSB87MZITFAR', 67, 'LoremIpsum', 'Lorem ipsum ...', '2024-06-11 22:14:37', '2024-06-11 22:14:48', '2024-06-11 22:14:48'),
+(96, 'MS68430OL5XKJVWGI71P', 67, 'LoremIpsum', 'Lorem ipsum ...', '2024-06-11 22:17:30', '2024-06-11 22:17:41', NULL),
+(97, 'X76RO1G3BTSFEA8HMQCL', 67, 'LoremIpsum', 'Lorem ipsum ...', '2024-06-11 22:17:59', '2024-06-11 22:18:10', '2024-06-11 22:18:10'),
+(98, 'BVAD6YCURM8FW17GKEPQ', 67, 'LoremIpsum', 'Lorem ipsum ...', '2024-06-12 19:33:59', '2024-06-12 19:34:21', '2024-06-12 19:34:21'),
+(99, '9BO2JK1TQEPC3H8AZSMX', 67, 'LoremIpsum', 'Lorem ipsum ...', '2024-06-12 19:34:34', '2024-06-12 19:34:44', '2024-06-12 19:34:44'),
+(100, '0QI8TCVHB4PNLDWJ926A', 67, 'LoremIpsum', 'Lorem ipsum ...', '2024-06-12 19:40:57', '2024-06-12 19:41:08', '2024-06-12 19:41:08'),
+(101, 'T5VBIOREC27K3LAG1DPU', 67, 'LoremIpsum', 'Lorem ipsum ...', '2024-06-12 19:42:01', '2024-06-12 19:42:21', '2024-06-12 19:42:21'),
+(102, 'P8E93QV4WM2ZULJX5HAK', 67, 'LoremIpsum', 'Lorem ipsum ...', '2024-06-12 19:42:33', '2024-06-12 19:42:44', '2024-06-12 19:42:44'),
+(103, 'MA6FGXH09U7QZEIDL1WR', 67, 'LoremIpsum', 'Lorem ipsum ...', '2024-06-12 19:43:33', '2024-06-12 19:43:47', '2024-06-12 19:43:47'),
+(104, 'TIUY8G9FRSOVNH7L4XM3', 67, 'LoremIpsum', 'Lorem ipsum ...', '2024-06-12 19:43:56', '2024-06-12 19:44:05', '2024-06-12 19:44:05'),
+(105, 'HRQYXP1COV5ZL9UBIG4A', 67, 'LoremIpsum', 'Lorem ipsum ...', '2024-06-12 19:45:27', '2024-06-12 19:45:42', '2024-06-12 19:45:42'),
+(106, 'WP5REZUBAKTDF3YG1H8V', 67, 'LoremIpsum', 'Lorem ipsum ...', '2024-06-12 19:45:51', '2024-06-12 19:45:59', '2024-06-12 19:45:59'),
+(107, 'WT2ZY54CSH03UBP6OFME', 67, 'LoremIpsum', 'Lorem ipsum ...', '2024-07-15 19:55:16', '2024-07-15 19:55:43', '2024-07-15 19:55:43'),
+(108, 'NFEG4X8IBA9V23MJQUTZ', 67, 'LoremIpsum', 'Lorem ipsum ...', '2024-07-15 19:55:59', '2024-07-15 19:56:13', '2024-07-15 19:56:13');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `articles`
+--
+
+CREATE TABLE `articles` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `ref` varchar(255) NOT NULL,
+  `maderId` int(11) DEFAULT NULL,
+  `pvc` float DEFAULT NULL,
+  `pvp` float DEFAULT NULL,
+  `observations` varchar(255) DEFAULT NULL,
+  `accesories` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `assurances`
+--
+
+CREATE TABLE `assurances` (
+  `id` int(11) NOT NULL,
+  `ref` varchar(255) NOT NULL,
+  `inDate` datetime NOT NULL,
+  `effectDate` datetime NOT NULL,
+  `duration` int(11) NOT NULL,
+  `getter_id` int(11) NOT NULL,
+  `owner_id` int(11) NOT NULL,
+  `object_id` int(11) NOT NULL,
+  `discount` float NOT NULL,
+  `price` float NOT NULL,
+  `description` text NOT NULL,
+  `options` text NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `assurances`
+--
+
+INSERT INTO `assurances` (`id`, `ref`, `inDate`, `effectDate`, `duration`, `getter_id`, `owner_id`, `object_id`, `discount`, `price`, `description`, `options`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'f5w4fw3afrse', '2024-01-03 08:42:35', '2024-01-03 08:42:35', 12, 3, 3, 9, 0, 0, '', '', '2024-01-03 20:44:35', '2024-01-03 20:49:44', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `banks`
+--
+
+CREATE TABLE `banks` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `fiscalId` varchar(255) DEFAULT NULL,
+  `fiscalName` varchar(255) DEFAULT NULL,
+  `bankCode` varchar(255) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `postalCode` int(11) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `site` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `banks`
+--
+
+INSERT INTO `banks` (`id`, `name`, `fiscalId`, `fiscalName`, `bankCode`, `address`, `city`, `postalCode`, `state`, `country`, `phone`, `email`, `site`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Banco Sabadell', 'A45431321', 'Banco Sabadell', '0081', 'C/ Ipsum Lorem, 45', 'Benicarlo', 14356, 'Castellon', 'España', '97464565', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2022-12-24 15:21:52', '2023-01-15 09:52:43', '2023-01-15 09:52:43'),
+(6, 'LoremIpsum', 'YFG?PHJ7ES', 'LoremIpsum SA', '8441', 'C/ Lorem Ipsum, 123', 'Ipsum', 31606, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-15 09:26:42', '2023-01-15 09:52:51', '2023-01-15 09:52:51'),
+(7, 'LoremIpsum', '78HQO62?VX', 'LoremIpsum SA', '3558', 'C/ Lorem Ipsum, 123', 'Ipsum', 93220, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-15 09:27:41', '2023-01-15 09:32:40', '2023-01-15 09:32:40'),
+(8, 'LoremIpsumEdited', 'QJ8BFIL??6', 'LoremIpsum SA', '1587', 'C/ Lorem Ipsum, 123', 'Ipsum', 63662, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-15 09:28:57', '2023-01-15 09:29:09', '2023-01-15 09:29:09'),
+(9, 'LoremIpsum', '3Z?8R?LHKQ', 'LoremIpsum SA', '3344', 'C/ Lorem Ipsum, 123', 'Ipsum', 88940, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-15 09:29:51', '2023-01-15 09:59:39', '2023-01-15 09:59:39'),
+(10, 'LoremIpsum', 'M5J8FKOP24', 'LoremIpsum SA', '7311', 'C/ Lorem Ipsum, 123', 'Ipsum', 95513, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-15 09:31:58', '2023-01-16 20:13:35', '2023-01-16 20:13:35'),
+(11, 'LoremIpsum', 'ZW7TH4AKON', 'LoremIpsum SA', '8277', 'C/ Lorem Ipsum, 123', 'Ipsum', 15974, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-15 09:32:11', '2023-01-17 20:17:53', '2023-01-17 20:17:53'),
+(12, 'LoremIpsum', 'XTF?ZY8OHL', 'LoremIpsum SA', '7928', 'C/ Lorem Ipsum, 123', 'Ipsum', 95847, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-15 09:32:23', '2023-01-15 09:32:23', NULL),
+(13, 'Banco Sabadell', '2Q5M64L0BU', 'LoremIpsum SA', '3826', 'C/ Lorem Ipsum, 123', 'Ipsum', 76106, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-15 09:52:29', '2023-11-25 08:32:10', NULL),
+(14, 'LoremIpsum', '?TOEWBIKU2', 'LoremIpsum SA', '9743', 'C/ Lorem Ipsum, 123', 'Ipsum', 78348, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-15 09:53:34', '2023-01-15 09:53:34', NULL),
+(15, 'LoremIpsum', '61VM2DNG0?', 'LoremIpsum SA', '9768', 'C/ Lorem Ipsum, 123', 'Ipsum', 40753, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-15 09:55:44', '2023-01-15 09:55:44', NULL),
+(16, 'LoremIpsum', 'QA8?MHEVR?', 'LoremIpsum SA', '6913', 'C/ Lorem Ipsum, 123', 'Ipsum', 27933, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-15 09:57:30', '2023-01-15 09:57:30', NULL),
+(17, 'LoremIpsum', 'YJ18?BCFRZ', 'LoremIpsum SA', '5768', 'C/ Lorem Ipsum, 123', 'Ipsum', 39236, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-15 09:59:23', '2023-01-16 20:10:52', '2023-01-16 20:10:52'),
+(18, 'LoremIpsum', 'QIB?R8?4YJ', 'LoremIpsum SA', '5286', 'C/ Lorem Ipsum, 123', 'Ipsum', 98819, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-15 10:02:08', '2023-01-16 20:07:44', '2023-01-16 20:07:44'),
+(19, 'LoremIpsumEdited', 'CI058?FH19', 'LoremIpsum SA', '3982', 'C/ Lorem Ipsum, 123', 'Ipsum', 16457, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-16 19:57:02', '2023-01-16 20:03:17', '2023-01-16 20:03:17'),
+(20, 'LoremIpsum', 'V5PT1J?EN8', 'LoremIpsum SA', '2839', 'C/ Lorem Ipsum, 123', 'Ipsum', 88438, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-16 20:00:03', '2023-01-16 20:04:13', '2023-01-16 20:04:13'),
+(21, 'LoremIpsumEdited', '8MTCKEA?FQ', 'LoremIpsum SA', '7187', 'C/ Lorem Ipsum, 123', 'Ipsum', 37520, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-16 20:00:53', '2023-01-16 20:06:00', '2023-01-16 20:06:00'),
+(22, 'LoremIpsum', '2?4F6H3AYG', 'LoremIpsum SA', '9836', 'C/ Lorem Ipsum, 123', 'Ipsum', 62224, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-16 20:11:16', '2023-01-16 20:11:16', NULL),
+(23, 'LoremIpsum', '6KJDNS4Q1?', 'LoremIpsum SA', '6906', 'C/ Lorem Ipsum, 123', 'Ipsum', 98942, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-16 20:11:53', '2023-01-16 20:11:53', NULL),
+(24, 'LoremIpsum', 'M4C?86IZR2', 'LoremIpsum SA', '3833', 'C/ Lorem Ipsum, 123', 'Ipsum', 59459, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-16 20:13:18', '2023-01-16 20:13:18', NULL),
+(25, 'LoremIpsumEdited', 'WE9QTSNVO0', 'LoremIpsum SA', '5134', 'C/ Lorem Ipsum, 123', 'Ipsum', 53657, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-16 20:15:07', '2023-01-16 20:15:20', '2023-01-16 20:15:20'),
+(26, 'LoremIpsum', '?E7AGZRNFH', 'LoremIpsum SA', '5851', 'C/ Lorem Ipsum, 123', 'Ipsum', 62519, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-17 20:16:47', '2023-01-17 20:16:47', NULL),
+(27, 'LoremIpsum', 'LME?BCT9QY', 'LoremIpsum SA', '2369', 'C/ Lorem Ipsum, 123', 'Ipsum', 69174, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-17 20:17:36', '2023-01-17 20:17:36', NULL),
+(28, 'LoremIpsumEdited', 'ORG6A18ULV', 'LoremIpsum SA', '8202', 'C/ Lorem Ipsum, 123', 'Ipsum', 73405, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-17 20:18:18', '2023-01-17 20:18:31', '2023-01-17 20:18:31'),
+(29, 'LoremIpsumEdited', '6BQDTOLH54', 'LoremIpsum SA', '6060', 'C/ Lorem Ipsum, 123', 'Ipsum', 31336, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-17 20:20:48', '2023-01-17 20:21:01', '2023-01-17 20:21:01'),
+(30, 'LoremIpsum', 'QHE?B876YT', 'LoremIpsum SA', '2303', 'C/ Lorem Ipsum, 123', 'Ipsum', 76522, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-17 20:27:57', '2023-01-17 20:27:57', NULL),
+(31, 'LoremIpsum', 'M?RPZD30C1', 'LoremIpsum SA', '7893', 'C/ Lorem Ipsum, 123', 'Ipsum', 32948, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-17 20:48:05', '2023-01-17 20:48:05', NULL),
+(32, 'LoremIpsum', 'Z06SGLYU28', 'LoremIpsum SA', '6038', 'C/ Lorem Ipsum, 123', 'Ipsum', 59983, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-19 20:18:23', '2023-01-19 20:18:23', NULL),
+(33, 'LoremIpsum', 'D7L9?CWZ1J', 'LoremIpsum SA', '7599', 'C/ Lorem Ipsum, 123', 'Ipsum', 47445, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-19 20:18:36', '2023-01-19 20:18:36', NULL),
+(34, 'LoremIpsum', 'COW6ZDGFV8', 'LoremIpsum SA', '1892', 'C Lorem Ipsum, 123', 'Ipsum', 95816, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-19 20:19:45', '2023-01-19 20:19:45', NULL),
+(35, 'LoremIpsum', 'QW8UMTFI9G', 'LoremIpsum SA', '1219', 'C Lorem Ipsum, 123', 'Ipsum', 63208, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-19 20:19:56', '2023-01-19 20:19:56', NULL),
+(36, 'LoremIpsum', '1VYHEQN9?W', 'LoremIpsum SA', '2728', 'C Lorem Ipsum, 123', 'Ipsum', 53288, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-19 20:20:08', '2023-01-26 20:33:22', '2023-01-26 20:33:22'),
+(37, 'LoremIpsum', '3E9O?YXUMC', 'LoremIpsum SA', '3608', 'C/ Lorem Ipsum, 123', 'Ipsum', 16329, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-19 20:25:20', '2023-01-21 22:01:52', '2023-01-21 22:01:52'),
+(38, 'LoremIpsum', 'BKYM?1ED5Z', 'LoremIpsum SA', '1445', 'C/ Lorem Ipsum, 123', 'Ipsum', 37943, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-19 20:28:17', '2023-01-20 20:55:52', '2023-01-20 20:55:52'),
+(39, 'LoremIpsum', 'TLFR254WZ?', 'LoremIpsum SA', '7798', 'C/ Lorem Ipsum, 123', 'Ipsum', 37530, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-19 20:28:27', '2023-01-20 20:23:05', '2023-01-20 20:23:05'),
+(40, 'LoremIpsum', '3RQKPJYSAU', 'LoremIpsum SA', '4309', 'C/ Lorem Ipsum, 123', 'Ipsum', 30756, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-19 20:28:38', '2023-01-19 20:45:06', '2023-01-19 20:45:06'),
+(41, 'LoremIpsum', 'WH2EKGQ415', 'LoremIpsum SA', '5072', 'C/ Lorem Ipsum, 123', 'Ipsum', 60755, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-19 20:28:47', '2023-01-19 20:44:20', '2023-01-19 20:44:20'),
+(42, 'LoremIpsumEdited', '12ND?FZ4LR', 'LoremIpsum SA', '2512', 'C/ Lorem Ipsum, 123', 'Ipsum', 72312, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-19 20:29:34', '2023-01-19 20:29:47', '2023-01-19 20:29:47'),
+(43, 'LoremIpsumEdited', 'K1SGZV64RD', 'LoremIpsum SA', '2092', 'C/ Lorem Ipsum, 123', 'Ipsum', 56052, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-19 20:44:45', '2023-01-19 20:44:58', '2023-01-19 20:44:58'),
+(44, 'LoremIpsumEdited', 'GW7MU5NLDR', 'LoremIpsum SA', '8975', 'C/ Lorem Ipsum, 123', 'Ipsum', 65069, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-20 20:22:43', '2023-01-20 20:22:56', '2023-01-20 20:22:56'),
+(45, 'LoremIpsumEdited', '41X2D9BRHK', 'LoremIpsum SA', '6836', 'C/ Lorem Ipsum, 123', 'Ipsum', 60628, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-20 20:55:30', '2023-01-20 20:55:44', '2023-01-20 20:55:44'),
+(46, 'LoremIpsumEdited', 'VF?M0?G1LU', 'LoremIpsum SA', '5227', 'C/ Lorem Ipsum, 123', 'Ipsum', 71814, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-21 22:01:30', '2023-01-21 22:01:43', '2023-01-21 22:01:43'),
+(47, 'LoremIpsumEdited', 'T1CDH9V0MJ', 'LoremIpsum SA', '3976', 'C/ Lorem Ipsum, 123', 'Ipsum', 30439, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-26 20:33:01', '2023-01-26 20:33:14', '2023-01-26 20:33:14'),
+(48, 'LoremIpsum', 'VKS70OW2L8', 'LoremIpsum SA', '2147', 'C/ Lorem Ipsum, 123', 'Ipsum', 39684, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-04 20:35:33', '2023-10-04 20:35:33', NULL),
+(49, 'LoremIpsumEdited', 'RF2BVSDI5A', 'LoremIpsum SA', '8392', 'C/ Lorem Ipsum, 123', 'Ipsum', 58952, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-04 20:35:36', '2023-10-04 20:35:43', NULL),
+(50, 'LoremIpsum', '4D5QML8ZFI', 'LoremIpsum SA', '2642', 'C/ Lorem Ipsum, 123', 'Ipsum', 51447, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-04 20:35:47', '2023-10-04 20:35:53', '2023-10-04 20:35:53'),
+(51, 'LoremIpsum', 'Y48BI5WEVL', 'LoremIpsum SA', '4574', 'C/ Lorem Ipsum, 123', 'Ipsum', 32393, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-04 20:35:58', '2023-10-04 20:36:05', '2023-10-04 20:36:05'),
+(52, 'LoremIpsum', 'AVCSKBP41E', 'LoremIpsum SA', '9784', 'C/ Lorem Ipsum, 123', 'Ipsum', 69993, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-04 20:36:10', '2023-10-04 20:36:10', NULL),
+(53, 'LoremIpsum', 'RG6F3IQDBH', 'LoremIpsum SA', '8658', 'C/ Lorem Ipsum, 123', 'Ipsum', 39008, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-21 20:19:20', '2023-10-21 20:19:20', NULL),
+(54, 'LoremIpsumEdited', 'DI5FYLRNTB', 'LoremIpsum SA', '2863', 'C/ Lorem Ipsum, 123', 'Ipsum', 51584, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-21 20:19:23', '2023-10-21 20:19:30', NULL),
+(55, 'LoremIpsum', '9UMQJTWZA5', 'LoremIpsum SA', '3196', 'C/ Lorem Ipsum, 123', 'Ipsum', 53277, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-21 20:19:34', '2023-10-21 20:19:40', '2023-10-21 20:19:40'),
+(56, 'LoremIpsum', 'VEJ2KWQUSC', 'LoremIpsum SA', '3356', 'C/ Lorem Ipsum, 123', 'Ipsum', 29771, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-21 20:19:44', '2023-10-21 20:19:52', '2023-10-21 20:19:52'),
+(57, 'LoremIpsum', 'WO1RKU9G23', 'LoremIpsum SA', '6862', 'C/ Lorem Ipsum, 123', 'Ipsum', 83005, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-21 20:19:56', '2023-10-21 20:19:56', NULL),
+(63, 'LoremIpsum', 'ZJ8PKA5B19', 'LoremIpsum SA', '8692', 'C/ Lorem Ipsum, 123', 'Ipsum', 62470, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-12-28 22:14:24', '2023-12-28 22:14:24', NULL),
+(64, 'LoremIpsumEdited', '48IYO3B0VU', 'LoremIpsum SA', '2974', 'C/ Lorem Ipsum, 123', 'Ipsum', 77236, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-12-28 22:14:30', '2023-12-28 22:14:38', NULL),
+(65, 'LoremIpsum', '5N2Y937DL8', 'LoremIpsum SA', '3828', 'C/ Lorem Ipsum, 123', 'Ipsum', 92134, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-12-28 22:14:43', '2023-12-28 22:14:49', '2023-12-28 22:14:49'),
+(66, 'LoremIpsum', '2RXCIBQSZ9', 'LoremIpsum SA', '7766', 'C/ Lorem Ipsum, 123', 'Ipsum', 83941, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-12-28 22:14:55', '2023-12-28 22:15:03', '2023-12-28 22:15:03'),
+(67, 'LoremIpsum', 'Q39KVAHMIT', 'LoremIpsum SA', '7272', 'C/ Lorem Ipsum, 123', 'Ipsum', 27929, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-12-28 22:15:09', '2023-12-28 22:15:09', NULL),
+(68, 'LoremIpsumEdited', '53OFUWHXQY', 'LoremIpsum SA', '4219', 'C/ Lorem Ipsum, 123', 'Ipsum', 89080, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-12-29 20:13:52', '2023-12-29 20:14:06', '2023-12-29 20:14:06'),
+(69, 'LoremIpsum', 'PNS3D54IHT', 'LoremIpsum SA', '3719', 'C/ Lorem Ipsum, 123', 'Ipsum', 10464, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-12-29 20:14:15', '2023-12-29 20:14:23', '2023-12-29 20:14:23'),
+(70, 'LoremIpsumEdited', 'TEN398GRJY', 'LoremIpsum SA', '3649', 'C/ Lorem Ipsum, 123', 'Ipsum', 68216, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2024-01-02 20:03:56', '2024-01-02 20:04:11', '2024-01-02 20:04:11'),
+(71, 'LoremIpsum', 'UZGREV358L', 'LoremIpsum SA', '8114', 'C/ Lorem Ipsum, 123', 'Ipsum', 17225, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2024-01-02 20:04:21', '2024-01-02 20:04:29', '2024-01-02 20:04:29'),
+(72, 'LoremIpsumEdited', 'VQFUT81M4X', 'LoremIpsum SA', '3833', 'C/ Lorem Ipsum, 123', 'Ipsum', 25011, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2024-01-09 22:40:57', '2024-01-09 22:41:12', '2024-01-09 22:41:12'),
+(73, 'LoremIpsum', 'TI9L4BGKW3', 'LoremIpsum SA', '9306', 'C/ Lorem Ipsum, 123', 'Ipsum', 88424, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2024-01-09 22:41:21', '2024-01-09 22:41:29', '2024-01-09 22:41:29'),
+(74, 'LoremIpsumEdited', 'JEG0MR7PLB', 'LoremIpsum SA', '7128', 'C/ Lorem Ipsum, 123', 'Ipsum', 43105, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2024-01-12 16:54:55', '2024-01-12 16:55:15', '2024-01-12 16:55:15'),
+(75, 'LoremIpsum', 'QJ3X6UL8AP', 'LoremIpsum SA', '1737', 'C/ Lorem Ipsum, 123', 'Ipsum', 48233, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2024-01-12 16:55:26', '2024-01-12 16:55:36', '2024-01-12 16:55:36'),
+(76, 'LoremIpsumEdited', 'W81BKU5FO4', 'LoremIpsum SA', '8115', 'C/ Lorem Ipsum, 123', 'Ipsum', 90233, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2024-06-12 19:46:48', '2024-06-12 19:47:03', '2024-06-12 19:47:03'),
+(77, 'LoremIpsum', 'D7C1HBRUV3', 'LoremIpsum SA', '9527', 'C/ Lorem Ipsum, 123', 'Ipsum', 33788, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2024-06-12 19:47:11', '2024-06-12 19:47:20', '2024-06-12 19:47:20');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `brands`
+--
+
+CREATE TABLE `brands` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `brands`
+--
+
+INSERT INTO `brands` (`id`, `name`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'CITROEN', '2023-10-21 11:54:06', '2023-10-21 11:54:06', NULL),
+(2, 'FORD', '2023-11-24 19:36:55', '2023-11-24 19:36:55', NULL),
+(3, '6LEXANOQVG14', '2023-12-29 23:00:42', '2023-12-29 23:00:56', '2023-12-29 23:00:56'),
+(4, '49UDVEF1N56W', '2023-12-29 23:01:05', '2023-12-29 23:01:13', '2023-12-29 23:01:13'),
+(5, 'PLYO1BA05UJ2', '2024-01-02 20:04:38', '2024-01-02 20:04:53', '2024-01-02 20:04:53'),
+(6, 'C6TKZU9HFMW7', '2024-01-02 20:05:02', '2024-01-02 20:05:11', '2024-01-02 20:05:11'),
+(7, '4XQA5OU862SM', '2024-01-09 22:41:38', '2024-01-09 22:41:54', '2024-01-09 22:41:54'),
+(8, 'HMLS84WX6D3Q', '2024-01-09 22:42:03', '2024-01-09 22:42:12', '2024-01-09 22:42:12'),
+(9, 'URXW4G2E8V9Y', '2024-01-12 16:55:48', '2024-01-12 16:56:14', '2024-01-12 16:56:14'),
+(10, '7Y8U6ONH0SJL', '2024-01-12 16:56:29', '2024-01-12 16:56:42', '2024-01-12 16:56:42'),
+(11, 'HBS87DWIQ3OA', '2024-06-12 19:47:28', '2024-06-12 19:47:43', '2024-06-12 19:47:43'),
+(12, '0DA3G8REQHF2', '2024-06-12 19:47:52', '2024-06-12 19:48:00', '2024-06-12 19:48:00');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `buydelivery`
+--
+
+CREATE TABLE `buydelivery` (
+  `id` int(11) NOT NULL,
+  `deliveryNumber` varchar(255) NOT NULL,
+  `date` date NOT NULL,
+  `providorId` int(11) NOT NULL,
+  `articles` varchar(255) DEFAULT NULL,
+  `base` float DEFAULT NULL,
+  `tva` float DEFAULT NULL,
+  `total` float DEFAULT NULL,
+  `observations` varchar(255) DEFAULT NULL,
+  `text` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `buyinvoices`
+--
+
+CREATE TABLE `buyinvoices` (
+  `id` int(11) NOT NULL,
+  `invoiceNumber` varchar(255) NOT NULL,
+  `date` date NOT NULL,
+  `providorId` int(11) NOT NULL,
+  `articles` varchar(255) DEFAULT NULL,
+  `base` float DEFAULT NULL,
+  `tva` float DEFAULT NULL,
+  `total` float DEFAULT NULL,
+  `observations` varchar(255) DEFAULT NULL,
+  `text` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `company`
+--
+
+CREATE TABLE `company` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `fiscalId` varchar(255) NOT NULL,
+  `fiscalName` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `postalCode` int(11) NOT NULL,
+  `state` varchar(255) NOT NULL,
+  `country` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `site` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `company`
+--
+
+INSERT INTO `company` (`id`, `name`, `fiscalId`, `fiscalName`, `address`, `city`, `postalCode`, `state`, `country`, `phone`, `email`, `site`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, '', 'Emsanet', 'B324345345', 'Emsanet SL', '14563', 0, 'Benicarlo', 'Castellon', 'España', '948751424', 'emsanet@emsanet.es', '2022-12-26 20:36:18', '2022-12-26 20:53:27', '2022-12-26 20:53:27'),
+(3, 'mantenimiento', 'companies', '', 'Emsanet', 'Emsanet SL', 0, 'C/ Pruebas, 2', '14563', 'Benicarlo', 'Castellon', 'España', '2022-12-26 20:39:27', '2022-12-26 20:54:48', '2022-12-26 20:54:48'),
+(8, 'Emsanet', 'B25414684', 'Emsanet SL', 'C/ Pruebas, 2', 'Benicarlo', 12598, 'Castellon', 'España', '97464565', 'emsanet@emsanet.es', 'www.emsanet.es', '2022-12-26 20:53:18', '2022-12-26 20:55:33', NULL),
+(9, 'Automotive', 'B324345345', 'Automotive SL', 'Crtr Burgos, km 1345', 'Burgos', 45632, 'Burgos', 'España', '45654753542', 'automo@automotive.com', 'automotive.com', '2022-12-26 20:56:16', '2022-12-26 20:56:16', NULL),
+(10, 'LoremIpsum', '0TVEZYQ6MX', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 72545, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-04 21:00:39', '2023-01-04 21:00:39', NULL),
+(11, 'LoremIpsum', 'VNI37FKA4U', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 96526, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-08 15:32:04', '2023-01-08 15:32:04', NULL),
+(12, 'LoremIpsum', 'PXZ8KY0TR7', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 65456, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-09 20:08:11', '2023-01-09 20:08:11', NULL),
+(13, 'LoremIpsum', 'BN09WHZ6CA', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 87853, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-09 20:12:52', '2023-01-09 20:12:52', NULL),
+(14, 'LoremIpsum', 'P0YKEIWU1Z', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 52090, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-09 20:19:18', '2023-01-09 20:19:18', NULL),
+(15, 'LoremIpsum', 'IBWSNAMU7J', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 19067, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-09 20:19:40', '2023-01-16 20:06:28', '2023-01-16 20:06:28'),
+(16, 'LoremIpsum', 'SP8HEGV30Y', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 94657, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-09 20:41:10', '2023-01-09 20:41:10', NULL),
+(17, 'LoremIpsum', 'GPBV1MAHWJ', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 16959, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-09 20:46:37', '2023-01-09 20:46:37', NULL),
+(18, 'LoremIpsum', 'TGPIHESMV6', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 98399, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-09 20:46:54', '2023-01-09 20:46:54', NULL),
+(19, 'LoremIpsum', 'Y2RWVZX7UA', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 28572, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-09 20:55:33', '2023-01-09 20:55:33', NULL),
+(20, 'LoremIpsum', 'XEQNGFKC2A', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 20122, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-09 20:56:52', '2023-01-09 20:56:52', NULL),
+(21, 'LoremIpsum', 'N61WU9T8BD', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 70658, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-09 20:57:08', '2023-01-09 20:57:08', NULL),
+(22, 'LoremIpsum', 'XZTRONPVC2', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 74830, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-09 20:57:36', '2023-01-09 20:57:36', NULL),
+(23, 'LoremIpsum', '9XT6YWUM2O', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 48979, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-09 20:58:08', '2023-01-09 20:58:08', NULL),
+(24, 'LoremIpsum', 'AMZ0QHB6L1', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 81087, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-09 21:58:25', '2023-01-09 21:58:25', NULL),
+(25, 'LoremIpsum', 'OPFEBN0ZS7', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 18927, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-09 21:58:53', '2023-01-09 21:58:53', NULL),
+(26, 'LoremIpsum', '8ZERY2TPWD', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 46136, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-09 21:59:13', '2023-01-09 21:59:13', NULL),
+(27, 'LoremIpsum', 'M6WLOD43ZH', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 21157, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-09 22:01:44', '2023-01-17 20:33:17', '2023-01-17 20:33:17'),
+(28, 'LoremIpsum', 'TEXN6GZU2K', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 44012, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-09 22:10:39', '2023-01-12 20:44:59', '2023-01-12 20:44:59'),
+(29, 'LoremIpsum', 'P92YSL6QUN', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 77127, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-09 22:11:08', '2023-01-12 20:38:51', '2023-01-12 20:38:51'),
+(30, 'LoremIpsum', 'SKEXGL0ZQO', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 25547, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-09 22:11:24', '2023-01-09 22:11:24', NULL),
+(31, 'LoremIpsum', 'M?BJ9Y38P4', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 24641, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-10 19:17:08', '2023-01-10 19:17:08', NULL),
+(32, 'LoremIpsum', '4?7C0W1DL?', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 60942, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-10 19:17:28', '2023-01-10 19:17:28', NULL),
+(33, 'LoremIpsum', '8S4VMZNRA1', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 79552, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-10 21:22:03', '2023-01-10 21:22:03', NULL),
+(34, 'LoremIpsumEdited', 'OF3ZTHBGSD', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 16929, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-11 21:50:26', '2023-01-11 21:50:34', NULL),
+(35, 'LoremIpsumEdited', '1CDP0JLQRU', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 49957, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-12 20:15:33', '2023-01-12 20:15:41', NULL),
+(36, 'LoremIpsumEdited', '5TSJARYLCH', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 84271, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-12 20:17:10', '2023-01-12 20:20:47', '2023-01-12 20:20:47'),
+(37, 'LoremIpsumEdited', '3NVL0J95DC', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 59993, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-12 20:21:02', '2023-01-12 20:21:15', '2023-01-12 20:21:15'),
+(38, 'LoremIpsumEdited', 'XT1HJW6ZSR', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 90188, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-12 20:24:30', '2023-01-12 20:24:43', '2023-01-12 20:24:43'),
+(39, 'LoremIpsumEdited', '7CKMWNZ3EB', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 63163, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-12 20:25:15', '2023-01-12 20:25:28', '2023-01-12 20:25:28'),
+(40, 'LoremIpsumEdited', '836?EIKQRF', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 88368, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-12 20:31:53', '2023-01-12 20:32:06', '2023-01-12 20:32:06'),
+(41, 'LoremIpsumEdited', '?IL5QROW0M', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 20547, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-12 20:33:22', '2023-01-12 20:33:35', '2023-01-12 20:33:35'),
+(42, 'LoremIpsum', 'N9Y2OF8?5D', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 72545, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-12 20:38:34', '2023-01-12 20:38:34', NULL),
+(43, 'LoremIpsumEdited', 'SZJMRG4QCF', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 88560, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-12 20:44:37', '2023-01-12 20:44:51', '2023-01-12 20:44:51'),
+(44, 'LoremIpsum', 'SMT91BZ?6Q', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 70295, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-17 20:33:01', '2023-01-17 20:33:01', NULL),
+(45, 'LoremIpsum', 'IL?7XVMRO4', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 36585, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-19 20:30:00', '2023-01-19 20:30:00', NULL),
+(46, 'LoremIpsumEdited', 'M2X?G5OKAV', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 91929, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-19 20:45:54', '2023-01-19 20:46:08', '2023-01-19 20:46:08'),
+(47, 'LoremIpsumEdited', 'D?LZW4ESXO', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 42457, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-19 20:47:41', '2023-01-19 20:47:54', '2023-01-19 20:47:54'),
+(48, 'LoremIpsumEdited', 'KFA90?EGID', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 15505, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-20 20:09:24', '2023-01-20 20:09:41', '2023-01-20 20:09:41'),
+(49, 'LoremIpsum', 'N4KQZD19I?', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 10010, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-20 20:10:46', '2023-01-20 20:10:46', NULL),
+(50, 'Lorem Ipsum', 'B2541468456', 'Lorem Ipsum SL', 'C/ Ipsum Lorem, 45', 'Lorem', 12580, 'Ipsum', 'España', '97464565', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-20 20:12:19', '2023-01-20 20:12:19', NULL),
+(51, 'LoremIpsum', 'Y9WH?N15JR', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 85840, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-20 20:13:59', '2023-01-20 20:13:59', NULL),
+(52, 'LoremIpsum', 'FUM3YNHC?4', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 66806, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-20 20:14:56', '2023-01-20 20:14:56', NULL),
+(53, 'LoremIpsum', 'E4XAZM3N5I', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 37705, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-20 20:15:43', '2023-01-20 20:15:43', NULL),
+(54, 'LoremIpsum', 'IXY5J3Q41?', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 19232, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-20 20:16:15', '2023-01-20 20:16:15', NULL),
+(55, 'LoremIpsum', 'N3JTL6EH9?', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 61790, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-20 20:17:58', '2023-01-20 20:17:58', NULL),
+(56, 'LoremIpsum', '?1SJ9TMY4V', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 31827, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-20 20:18:58', '2023-01-20 20:18:58', NULL),
+(57, 'LoremIpsum', 'NXHG?M147E', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 81751, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-20 20:20:19', '2023-01-26 20:33:52', '2023-01-26 20:33:52'),
+(58, 'LoremIpsum', 'TK?1BA4DPJ', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 29997, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-20 20:27:13', '2023-01-21 22:02:21', '2023-01-21 22:02:21'),
+(59, 'LoremIpsumEdited', 'ZBGCTJ3LAV', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 76382, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-20 20:56:09', '2023-01-20 20:56:22', '2023-01-20 20:56:22'),
+(60, 'LoremIpsum', 'T?1AONF83E', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 11394, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-20 20:59:50', '2023-01-20 21:01:14', '2023-01-20 21:01:14'),
+(61, 'LoremIpsumEdited', 'N35FBU90RC', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 44663, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-20 21:00:52', '2023-01-20 21:01:05', '2023-01-20 21:01:05'),
+(62, 'LoremIpsumEdited', 'Z?EYF90O64', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 95974, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-21 22:02:00', '2023-01-21 22:02:13', '2023-01-21 22:02:13'),
+(63, 'LoremIpsumEdited', '6Q0FM79EK3', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 93825, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-26 20:33:30', '2023-01-26 20:33:44', '2023-01-26 20:33:44'),
+(64, 'LoremIpsum', '0CYF8XE7WQ', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 38593, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-04 20:36:17', '2023-10-04 20:36:17', NULL),
+(65, 'LoremIpsumEdited', 'VH8RZK0WYS', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 37542, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-04 20:36:21', '2023-10-04 20:36:29', NULL),
+(66, 'LoremIpsum', 'R1593KWZY7', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 38381, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-04 20:36:33', '2023-10-04 20:36:40', '2023-10-04 20:36:40'),
+(67, 'LoremIpsum', '1GER25NTAO', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 19641, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-04 20:36:47', '2023-10-04 20:36:55', '2023-10-04 20:36:55'),
+(68, 'LoremIpsum', '4NO6YHDEI8', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 55977, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-04 20:37:01', '2023-10-04 20:37:01', NULL),
+(69, 'LoremIpsum', 'BQVPKYSOEF', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 84064, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-21 20:20:03', '2023-10-21 20:20:03', NULL),
+(70, 'LoremIpsumEdited', 'BPZ8YS6NRE', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 98479, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-21 20:20:07', '2023-10-21 20:20:14', NULL),
+(71, 'LoremIpsum', 'NZ1JE96QMT', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 20923, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-21 20:20:18', '2023-10-21 20:20:24', '2023-10-21 20:20:24'),
+(72, 'LoremIpsum', '9MHUAIZR6B', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 75456, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-21 20:20:29', '2023-10-21 20:20:36', '2023-10-21 20:20:36'),
+(73, 'LoremIpsum', 'ECIXADYM1Q', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 92777, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-21 20:20:41', '2023-10-21 20:20:41', NULL),
+(74, '', '', '', '', '', 0, '', '', '', '', NULL, '2023-12-26 20:26:40', '2023-12-26 20:27:13', '2023-12-26 20:27:13'),
+(78, 'LoremIpsum', '6DTPXW7YR4', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 75416, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-12-28 22:15:17', '2023-12-28 22:15:17', NULL),
+(79, 'LoremIpsumEdited', '56ZTJSGCUK', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 60596, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-12-28 22:15:21', '2023-12-28 22:15:29', NULL),
+(80, 'LoremIpsum', '1TSR4H6A8Y', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 75150, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-12-28 22:15:35', '2023-12-28 22:15:42', '2023-12-28 22:15:42'),
+(81, 'LoremIpsum', 'PC79D3JH8V', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 38631, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-12-28 22:15:48', '2023-12-28 22:15:56', '2023-12-28 22:15:56'),
+(82, 'LoremIpsum', '4EBV5YLZ6O', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 54064, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-12-28 22:16:01', '2023-12-28 22:16:01', NULL),
+(83, 'LoremIpsumEdited', 'EY4SF2XQOC', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 34109, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-12-29 20:02:50', '2023-12-29 20:03:07', '2023-12-29 20:03:07'),
+(84, 'LoremIpsum', 'S7QNTODLFV', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 10497, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-12-29 20:03:17', '2023-12-29 20:03:26', '2023-12-29 20:03:26'),
+(85, 'LoremIpsum', '0YOBWPELMG', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 94330, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-12-29 20:05:06', '2023-12-29 20:05:14', '2023-12-29 20:05:14'),
+(86, 'LoremIpsumEdited', 'LMHO1XA52C', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 61002, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-12-29 20:14:32', '2023-12-29 20:14:46', '2023-12-29 20:14:46'),
+(87, 'LoremIpsum', 'UG1STFHP6Y', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 50785, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-12-29 20:14:55', '2023-12-29 20:15:03', '2023-12-29 20:15:03'),
+(88, 'LoremIpsumEdited', 'Q15PDOI0MA', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 54912, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2024-01-02 20:05:20', '2024-01-02 20:05:35', '2024-01-02 20:05:35'),
+(89, 'LoremIpsum', 'LGR4H96QYE', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 91285, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2024-01-02 20:05:44', '2024-01-02 20:05:52', '2024-01-02 20:05:52'),
+(90, 'LoremIpsumEdited', '46IV17F3KM', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 43530, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2024-01-09 22:42:21', '2024-01-09 22:42:40', '2024-01-09 22:42:40'),
+(91, 'LoremIpsum', 'CAKS07BG2Q', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 47721, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2024-01-09 22:42:53', '2024-01-09 22:43:02', '2024-01-09 22:43:02'),
+(92, 'LoremIpsumEdited', '5MC8ZNUHXA', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 77782, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2024-01-12 16:56:55', '2024-01-12 16:57:28', '2024-01-12 16:57:28'),
+(93, 'LoremIpsum', 'M1ENPGJC0Z', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 68103, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2024-01-12 16:57:42', '2024-01-12 16:57:58', '2024-01-12 16:57:58'),
+(94, 'LoremIpsumEdited', '3BYL26GOJ5', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 82745, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2024-06-12 19:48:09', '2024-06-12 19:48:24', '2024-06-12 19:48:24'),
+(95, 'LoremIpsum', '7WOSTLUQBF', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 52647, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2024-06-12 19:48:33', '2024-06-12 19:48:42', '2024-06-12 19:48:42');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `components`
+--
+
+CREATE TABLE `components` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `ref` varchar(255) NOT NULL,
+  `serialNumber` varchar(255) NOT NULL,
+  `mader_id` int(11) DEFAULT NULL,
+  `pvc` float DEFAULT NULL,
+  `pvp` float DEFAULT NULL,
+  `observations` varchar(255) DEFAULT NULL,
+  `accesories` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `components`
+--
+
+INSERT INTO `components` (`id`, `name`, `ref`, `serialNumber`, `mader_id`, `pvc`, `pvp`, `observations`, `accesories`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(3, 'Enganche de Remolque', 'eassfdasdf', '43524523dfre332', 1, 100, 200, '', NULL, '2023-11-14 20:27:44', '2023-11-14 21:12:04', NULL),
+(4, 'Baca de techo (2 barras)', '323rwesas', '765675876tuygkjkujk', 1, 120, 185, '', NULL, '2023-11-18 14:38:08', '2023-11-18 14:38:08', NULL),
+(5, 'H8MYORND', 'ZOB42H51VX', '', 20, 10, 20, '', NULL, '2023-12-30 19:03:01', '2023-12-30 19:03:16', '2023-12-30 19:03:16'),
+(9, 'FZVT3LB9', 'GXQ2W9NT16', 'WR3F67Z9D2IBKU5GEJAO', 20, 10, 20, '', NULL, '2023-12-30 19:06:22', '2023-12-30 19:06:37', '2023-12-30 19:06:37'),
+(10, 'YAIRSW4H', 'NXJ30SMBPI', '9OL5UD14FG270NXS3T8E', 20, 10, 20, '', NULL, '2023-12-30 19:06:47', '2023-12-30 19:06:55', '2023-12-30 19:06:55'),
+(11, 'IY7R5UZJ', 'FWPQEZID6G', 'IWHAJP51L4KOCY3RBQ29', 20, 10, 20, '', NULL, '2024-01-02 20:06:02', '2024-01-02 20:06:17', '2024-01-02 20:06:17'),
+(12, 'W4H6R7MG', 'LVSZK5AXTE', 'QZWNFD70MKU4ITYC2JOA', 20, 10, 20, '', NULL, '2024-01-02 20:06:32', '2024-01-02 20:06:41', '2024-01-02 20:06:41'),
+(13, '3QLAJWTN', 'RFXDT1LW93', 'ULFI8OS64CVRGM7T1Z5H', 20, 10, 20, '', NULL, '2024-01-09 22:43:11', '2024-01-09 22:43:26', '2024-01-09 22:43:26'),
+(14, 'ITALV7XG', 'CV8XIANMER', '15YTBLFMRK0VHAX643ZP', 20, 10, 20, '', NULL, '2024-01-09 22:43:35', '2024-01-09 22:43:44', '2024-01-09 22:43:44'),
+(15, '2TI3801J', '7XSKHP32M8', 'BG9OT4WNDACMVEJ0ULR7', 20, 10, 20, '', NULL, '2024-01-12 16:58:16', '2024-01-12 16:58:37', '2024-01-12 16:58:37'),
+(16, '1HXQIDOZ', 'X24CNLI0GZ', '3YH54QWP0ZSOUVTXGDM8', 20, 10, 20, '', NULL, '2024-01-12 16:58:53', '2024-01-12 16:59:10', '2024-01-12 16:59:10'),
+(17, 'V35SKI1L', 'ZDO4MP5G7N', 'MCF754QD983AROVW2E1Z', 20, 10, 20, '', NULL, '2024-06-12 19:48:53', '2024-06-12 19:49:11', '2024-06-12 19:49:11'),
+(18, 'DRWZGYJE', '7OMQ24NGE0', '3HUR4MF0YW9PLOEQTABN', 20, 10, 20, '', NULL, '2024-06-12 19:49:21', '2024-06-12 19:49:30', '2024-06-12 19:49:30');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `counters`
+--
+
+CREATE TABLE `counters` (
+  `id` int(11) NOT NULL,
+  `reference` varchar(255) NOT NULL,
+  `pattern` varchar(255) NOT NULL,
+  `counter` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `customers`
+--
+
+CREATE TABLE `customers` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `fiscalId` varchar(255) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `postalCode` int(11) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `birthDate` date DEFAULT NULL,
+  `customerType` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `customers`
+--
+
+INSERT INTO `customers` (`id`, `name`, `fiscalId`, `address`, `city`, `postalCode`, `state`, `country`, `phone`, `email`, `birthDate`, `customerType`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(3, 'Jose Antonio', '20243481P', 'C/ DR FERRAN, 7', 'BENICARLO', 12580, 'CASTELLON', 'ESPAÑA', '646545315', 'tony@tony.es', '1990-08-20', 1, '2023-11-27 20:30:14', '2023-11-27 20:30:14', NULL),
+(6, '8WZYO4KELJDC63RG9PQU', 'Z8HC5169F4', '', '', 0, '', '', '', '', '1970-01-01', 1, '2023-12-30 19:17:35', '2023-12-30 19:17:50', '2023-12-30 19:17:50'),
+(7, 'JR37W8FYLONHUDGEZPQX', 'P2ZLH4ATCX', '', '', 0, '', '', '', '', '1970-01-01', 1, '2023-12-30 19:17:59', '2023-12-30 19:18:08', '2023-12-30 19:18:08'),
+(8, 'Z43SDT95YOQKIU08N6G2', 'FR7LASE03G', '', '', 0, '', '', '', '', '1970-01-01', 1, '2024-01-02 20:06:51', '2024-01-02 20:07:08', '2024-01-02 20:07:08'),
+(9, 'O2RIES3AT7805CU6QG9B', 'ANSCMKH58J', '', '', 0, '', '', '', '', '1970-01-01', 1, '2024-01-02 20:07:18', '2024-01-02 20:07:27', '2024-01-02 20:07:27'),
+(10, 'H80NOVK59W4DLUG1SCQR', 'TU0JI1EHZK', '', '', 0, '', '', '', '', '1970-01-01', 1, '2024-01-09 22:43:53', '2024-01-09 22:44:09', '2024-01-09 22:44:09'),
+(11, 'FTMOPZE0NV15Y7B9XR2W', 'ROP29WN5UY', '', '', 0, '', '', '', '', '1970-01-01', 1, '2024-01-09 22:44:19', '2024-01-09 22:44:27', '2024-01-09 22:44:27'),
+(12, 'H7AIP5ZDT1JXBM63G98W', '5GMAE31KL2', '', '', 0, '', '', '', '', '1970-01-01', 1, '2024-01-12 16:59:28', '2024-01-12 16:59:58', '2024-01-12 16:59:58'),
+(13, '1UXSCP4G5LWMAJQZTVKY', 'DA53YIMJ17', '', '', 0, '', '', '', '', '1970-01-01', 1, '2024-01-12 17:00:09', '2024-01-12 17:00:25', '2024-01-12 17:00:25'),
+(14, 'YLNEH9RZ02DK8XWIUCGO', 'G9ZH8UYDIX', '', '', 0, '', '', '', '', '1970-01-01', 1, '2024-06-12 19:49:39', '2024-06-12 19:49:54', '2024-06-12 19:49:54'),
+(15, 'I3NCR4LQHP2F5YVJ18DB', 'XIEYBPA5M1', '', '', 0, '', '', '', '', '1970-01-01', 1, '2024-06-12 19:50:03', '2024-06-12 19:50:11', '2024-06-12 19:50:11');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `customertypes`
+--
+
+CREATE TABLE `customertypes` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `customertypes`
+--
+
+INSERT INTO `customertypes` (`id`, `name`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'AUTONOMO', '2023-10-19 21:58:49', '2023-10-19 21:58:49', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `expertopinions`
+--
+
+CREATE TABLE `expertopinions` (
+  `id` int(11) NOT NULL,
+  `opinionId` varchar(255) NOT NULL,
+  `expertId` varchar(255) NOT NULL,
+  `expertName` varchar(255) NOT NULL,
+  `expertSurname` varchar(255) NOT NULL,
+  `expertAddress` varchar(255) NOT NULL,
+  `expertState` varchar(255) NOT NULL,
+  `expertCP` int(11) NOT NULL,
+  `expertCity` varchar(255) NOT NULL,
+  `expertPhone` varchar(255) NOT NULL,
+  `expertEmail` varchar(255) NOT NULL,
+  `date` date NOT NULL,
+  `demander` varchar(255) NOT NULL,
+  `object` varchar(255) NOT NULL,
+  `actions` text NOT NULL,
+  `conclusions` text NOT NULL,
+  `anexed` varchar(255) NOT NULL,
+  `baseExpertOpinion` float NOT NULL,
+  `tvaExpertOpinion` float NOT NULL,
+  `totalExpertOpinion` float NOT NULL,
+  `vehicle_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `expertopinions`
+--
+
+INSERT INTO `expertopinions` (`id`, `opinionId`, `expertId`, `expertName`, `expertSurname`, `expertAddress`, `expertState`, `expertCP`, `expertCity`, `expertPhone`, `expertEmail`, `date`, `demander`, `object`, `actions`, `conclusions`, `anexed`, `baseExpertOpinion`, `tvaExpertOpinion`, `totalExpertOpinion`, `vehicle_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'EO202300001', '20211544R', 'Jose Antonio', 'Pinto Gimeno', 'Camí de Cervera, 30', 'Castellón', 12598, 'Peníscola', '630077660', 'tonyllomouse@gmail.com', '2024-06-27', 'Mapfre Seguros', 'Citroen C5', '', '', '', 0, 0, 0, 9, '2024-06-26 20:35:02', '2024-06-26 20:35:02', NULL),
+(4, 'EO20230002', '84684654353G', '', '', '', '', 0, '', '', '', '2024-07-16', '', '', '', '', '', 0, 0, 0, 9, '2024-07-16 19:53:06', '2024-07-16 19:53:06', NULL),
+(5, 'EO202300003', '84684654353G', '', '', '', '', 0, '', '', '', '2024-07-16', '', '', '', '', '', 0, 0, 0, 9, '2024-07-16 20:01:21', '2024-07-16 20:01:21', NULL),
+(6, 'EO20230004', '84684654353G', '', '', '', '', 0, '', '', '', '2024-07-16', '', '', '', '', '', 0, 0, 0, 9, '2024-07-16 20:04:04', '2024-07-16 20:04:04', NULL),
+(7, 'EO202300005', '84684654353G', '', '', '', '', 0, '', '', '', '2024-07-16', '', '', '', '', '', 0, 0, 0, 9, '2024-07-16 20:05:58', '2024-07-16 20:08:57', '2024-07-16 20:08:57'),
+(8, 'EO20230006', '84684654353G', '', '', '', '', 0, '', '', '', '2024-07-16', '', '', '', '', '', 0, 0, 0, 9, '2024-07-16 20:07:36', '2024-07-16 20:08:52', '2024-07-16 20:08:52');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `expertopinionscomponents`
+--
+
+CREATE TABLE `expertopinionscomponents` (
+  `id` int(11) NOT NULL,
+  `expertOpinion_id` int(11) NOT NULL,
+  `component_id` int(11) NOT NULL,
+  `cantity` int(11) NOT NULL,
+  `pvp` float NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `expertopinionscomponents`
+--
+
+INSERT INTO `expertopinionscomponents` (`id`, `expertOpinion_id`, `component_id`, `cantity`, `pvp`, `created_at`, `updated_at`) VALUES
+(3, 4, 4, 1, 185, '2024-07-16 19:53:12', '2024-07-16 19:53:12'),
+(4, 5, 4, 1, 185, '2024-07-16 20:01:26', '2024-07-16 20:01:26'),
+(5, 6, 4, 1, 185, '2024-07-16 20:04:10', '2024-07-16 20:04:10');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `expertopinionssupplies`
+--
+
+CREATE TABLE `expertopinionssupplies` (
+  `id` int(11) NOT NULL,
+  `expertOpinion_id` int(11) NOT NULL,
+  `supply_id` int(11) NOT NULL,
+  `cantity` int(11) NOT NULL,
+  `pvp` float NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `expertopinionsworks`
+--
+
+CREATE TABLE `expertopinionsworks` (
+  `id` int(11) NOT NULL,
+  `expertOpinion_id` int(11) NOT NULL,
+  `work_id` int(11) NOT NULL,
+  `cantity` int(11) NOT NULL,
+  `pvp` float NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `expertopinionsworks`
+--
+
+INSERT INTO `expertopinionsworks` (`id`, `expertOpinion_id`, `work_id`, `cantity`, `pvp`, `created_at`, `updated_at`) VALUES
+(1, 1, 4, 1, 30, '2024-07-15 22:05:07', '2024-07-15 22:05:07');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `finance`
+--
+
+CREATE TABLE `finance` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `fiscalId` varchar(255) NOT NULL,
+  `fiscalName` varchar(255) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `postalCode` int(11) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `site` varchar(255) DEFAULT NULL,
+  `bank_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `finance`
+--
+
+INSERT INTO `finance` (`id`, `name`, `fiscalId`, `fiscalName`, `address`, `city`, `postalCode`, `state`, `country`, `phone`, `email`, `site`, `bank_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(7, 'Lorem Ipsum', 'B1234233212', 'Lorem Ipsum SL', 'C/ Ipsum Lorem, 45', 'Lorem', 14356, 'Ipsum', 'Españaf', '97464565', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 12, '2023-01-17 20:49:18', '2023-01-21 21:56:25', '2023-01-21 21:56:25'),
+(12, 'LoremIpsum', 'AY4ZT7GVX?', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 42114, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 18, '2023-01-21 21:58:12', '2023-01-21 21:58:29', '2023-01-21 21:58:29'),
+(13, 'LoremIpsum', 'U0G2PXSIAR', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 18166, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 18, '2023-01-21 22:00:07', '2023-01-21 22:01:12', '2023-01-21 22:01:12'),
+(14, 'LoremIpsum', 'Q9G3C47KF8', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 41320, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 18, '2023-01-21 22:00:51', '2023-01-21 22:01:04', '2023-01-21 22:01:04'),
+(15, 'LoremIpsumEdited', '3CQSZOEA0U', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 96857, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 1, '2023-01-21 22:02:30', '2023-01-21 22:02:44', '2023-01-21 22:02:44'),
+(16, 'LoremIpsumEdited', 'XB7EG?JCHL', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 43836, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 1, '2023-01-21 22:06:35', '2023-01-21 22:06:48', '2023-01-21 22:06:48'),
+(17, 'LoremIpsum', 'B5E7UCX3S4', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 61861, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 17, '2023-01-21 22:06:57', '2023-01-21 22:08:59', '2023-01-21 22:08:59'),
+(18, 'LoremIpsumEdited', 'CQ9HWJ7XF8', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 12660, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 1, '2023-01-21 22:09:16', '2023-01-21 22:09:29', '2023-01-21 22:09:29'),
+(19, 'LoremIpsum', 'QPDEAKH9O0', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 86649, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 17, '2023-01-21 22:09:38', '2023-01-21 22:15:54', '2023-01-21 22:15:54'),
+(20, 'LoremIpsum', '1CN4?V3P8O', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 35977, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 17, '2023-01-21 22:11:50', '2023-01-21 22:12:08', '2023-01-21 22:12:08'),
+(21, 'LoremIpsum', '1XN39K?HSD', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 42457, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 17, '2023-01-21 22:12:53', '2023-01-21 22:13:10', '2023-01-21 22:13:10'),
+(22, 'LoremIpsum', 'AQZ7SGIBVK', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 73467, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 17, '2023-01-21 22:15:31', '2023-01-21 22:15:44', '2023-01-21 22:15:44'),
+(23, 'LoremIpsumEdited', 'NL597GE28F', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 73060, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 1, '2023-01-26 20:34:00', '2023-01-26 20:34:13', '2023-01-26 20:34:13'),
+(24, 'LoremIpsum', '4YIXNM21CB', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 47816, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 16, '2023-01-26 20:34:23', '2023-01-26 20:34:26', '2023-01-26 20:34:26'),
+(25, 'LoremIpsum', 'IL5VPTEHFU', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 80670, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 13, '2023-10-04 20:37:12', '2023-10-19 20:26:06', NULL),
+(26, 'LoremIpsum', '85EWSG2YO9', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 88078, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 19, '2023-10-04 20:37:18', '2023-10-04 20:37:18', NULL),
+(27, 'LoremIpsum', '9DJ3BYP7OC', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 74898, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 19, '2023-10-04 20:37:39', '2023-10-04 20:37:51', '2023-10-04 20:37:51'),
+(28, 'LoremIpsum', '32JABOVFSC', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 85896, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 19, '2023-10-04 20:38:03', '2023-10-04 20:38:29', '2023-10-04 20:38:29'),
+(29, 'LoremIpsum', 'YUWQB2LM3C', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 87465, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 19, '2023-10-04 20:38:35', '2023-10-04 20:38:35', NULL),
+(30, 'LoremIpsum', 'IYVMXATE6F', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 58314, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 12, '2023-10-21 20:20:49', '2023-10-21 20:20:49', NULL),
+(31, 'LoremIpsumEdited', 'VZLYIOBFMS', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 83690, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 12, '2023-10-21 20:20:52', '2023-10-21 20:20:59', NULL),
+(32, 'LoremIpsum', 'MVUE8GSILZ', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 76761, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 12, '2023-10-21 20:21:03', '2023-10-21 20:21:09', '2023-10-21 20:21:09'),
+(33, 'LoremIpsum', 'P3KWL1H7QF', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 11241, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 12, '2023-10-21 20:21:14', '2023-10-21 20:21:22', '2023-10-21 20:21:22'),
+(34, 'LoremIpsum', '01SHBVOQUP', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 34364, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 12, '2023-10-21 20:21:27', '2023-10-21 20:21:27', NULL),
+(35, 'LoremIpsum', 'MJ7K4GP6S3', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 72523, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 12, '2023-12-28 22:16:10', '2023-12-28 22:16:10', NULL),
+(36, 'LoremIpsumEdited', 'X8RG5L0WPS', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 33039, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 12, '2023-12-28 22:16:14', '2023-12-28 22:16:22', NULL),
+(37, 'LoremIpsum', 'GYXZORUVM2', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 19397, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 12, '2023-12-28 22:16:27', '2023-12-28 22:16:33', '2023-12-28 22:16:33'),
+(38, 'LoremIpsum', 'ZC8412FQWT', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 14468, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 12, '2023-12-28 22:16:38', '2023-12-28 22:16:46', '2023-12-28 22:16:46'),
+(39, 'LoremIpsum', 'ANSKHX8U7P', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 22910, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 12, '2023-12-28 22:16:51', '2023-12-28 22:16:51', NULL),
+(40, 'LoremIpsumEdited', 'Z1QJS89FUO', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 68652, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 12, '2023-12-29 20:15:13', '2023-12-29 20:15:28', '2023-12-29 20:15:28'),
+(41, 'LoremIpsum', '3OFH7IQZDK', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 13009, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 12, '2023-12-29 20:15:37', '2023-12-29 20:15:46', '2023-12-29 20:15:46'),
+(42, 'LoremIpsumEdited', 'WMC0ZEYJVK', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 56112, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 12, '2024-01-02 20:08:17', '2024-01-02 20:08:34', '2024-01-02 20:08:34'),
+(43, 'LoremIpsum', 'B0SUZKPJW4', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 75668, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 12, '2024-01-02 20:08:46', '2024-01-02 20:08:54', '2024-01-02 20:08:54'),
+(44, 'LoremIpsumEdited', 'D0UCR9ZVIM', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 37510, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 12, '2024-01-09 22:45:17', '2024-01-09 22:45:31', '2024-01-09 22:45:31'),
+(45, 'LoremIpsum', 'UJ7C5X49TH', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 79630, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 12, '2024-01-09 22:45:40', '2024-01-09 22:45:49', '2024-01-09 22:45:49'),
+(46, 'LoremIpsumEdited', 'B72U9ALND4', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 65196, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 12, '2024-01-12 17:01:25', '2024-01-12 17:01:41', '2024-01-12 17:01:41'),
+(47, 'LoremIpsum', 'WJ9HY60LQI', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 65027, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 12, '2024-01-12 17:01:51', '2024-01-12 17:01:59', '2024-01-12 17:01:59'),
+(48, 'LoremIpsumEdited', 'MSP2BG0IYC', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 81458, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 12, '2024-06-12 19:51:00', '2024-06-12 19:51:15', '2024-06-12 19:51:15'),
+(49, 'LoremIpsum', 'KCBG8OJXW5', 'LoremIpsum SA', 'C/ Lorem Ipsum, 123', 'Ipsum', 31698, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', 12, '2024-06-12 19:51:23', '2024-06-12 19:51:31', '2024-06-12 19:51:31');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `garages`
+--
+
+CREATE TABLE `garages` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `fiscalId` varchar(255) NOT NULL,
+  `fiscalName` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `postalCode` int(11) NOT NULL,
+  `state` varchar(255) NOT NULL,
+  `country` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `site` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `garages`
+--
+
+INSERT INTO `garages` (`id`, `name`, `fiscalId`, `fiscalName`, `address`, `city`, `postalCode`, `state`, `country`, `phone`, `email`, `site`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Box19', 'F2323421', 'BOX 19 SL', 'C/ Castellon ,2', 'Benicarlo', 12580, 'Castellon', 'España', '652354147', 'box@box19.com', 'box19.com', '2023-12-11 20:07:55', '2023-12-11 20:07:55', NULL),
+(2, '9KGEQMJXYFBS', 'SLVQNIXPG91J5U8D46CZ', '', '', '', 0, '', '', '675544333', 'lorem@lorem.com', '', '2023-12-30 19:28:52', '2023-12-30 19:29:08', '2023-12-30 19:29:08'),
+(3, 'FZMWBGNRS6DJ', 'S7GXR6I38VNWABKY51CH', '', '', '', 0, '', '', '675544333', 'lorem@lorem.com', '', '2023-12-30 19:29:17', '2023-12-30 19:29:25', '2023-12-30 19:29:25'),
+(4, 'OJBWSKLQ8YZU', 'SCVGHL4K6W9FPZ2UAQ5I', '', '', '', 0, '', '', '675544333', 'lorem@lorem.com', '', '2024-01-02 20:09:05', '2024-01-02 20:09:19', '2024-01-02 20:09:19'),
+(5, 'S59LRB0Q3CEP', 'HRSV239T58J0OQBLF7PE', '', '', '', 0, '', '', '675544333', 'lorem@lorem.com', '', '2024-01-02 20:09:28', '2024-01-02 20:09:36', '2024-01-02 20:09:36'),
+(6, '8ADCLMB02947', 'YLPG1CM5F3IO0U6ZVNW2', '', '', '', 0, '', '', '675544333', 'lorem@lorem.com', '', '2024-01-09 22:45:58', '2024-01-09 22:46:13', '2024-01-09 22:46:13'),
+(7, '2M37EXLZSP61', '9HSGDVJKO6ZXT4W2EQPI', '', '', '', 0, '', '', '675544333', 'lorem@lorem.com', '', '2024-01-09 22:46:22', '2024-01-09 22:46:30', '2024-01-09 22:46:30'),
+(8, 'UQMFNHZ9L58P', 'F43ROB2GPDKZIYV6QHNU', '', '', '', 0, '', '', '675544333', 'lorem@lorem.com', '', '2024-01-12 17:02:09', '2024-01-12 17:02:26', '2024-01-12 17:02:26'),
+(9, 'DKE4IWF3OHAS', 'GFSDI1AH6E0PKZTVR3NW', '', '', '', 0, '', '', '675544333', 'lorem@lorem.com', '', '2024-01-12 17:02:37', '2024-01-12 17:02:48', '2024-01-12 17:02:48'),
+(10, 'RFW1TNCG70PJ', '46VPDL20ITZO5NYSFWGJ', '', '', '', 0, '', '', '675544333', 'lorem@lorem.com', '', '2024-06-12 19:51:40', '2024-06-12 19:51:54', '2024-06-12 19:51:54'),
+(11, '1Z5FBK086NLQ', 'GSZ85TRDF9HVY3QBL0PN', '', '', '', 0, '', '', '675544333', 'lorem@lorem.com', '', '2024-06-12 19:52:03', '2024-06-12 19:52:12', '2024-06-12 19:52:12');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `garage_orders`
+--
+
+CREATE TABLE `garage_orders` (
+  `id` int(11) NOT NULL,
+  `orderNumber` varchar(255) NOT NULL,
+  `inDate` datetime DEFAULT NULL,
+  `outDate` datetime DEFAULT NULL,
+  `vehicle_id` int(11) DEFAULT NULL,
+  `customer_id` int(11) DEFAULT NULL,
+  `inKm` int(11) DEFAULT NULL,
+  `outKm` int(11) DEFAULT NULL,
+  `baseComponents` float DEFAULT NULL,
+  `discountComponents` float DEFAULT NULL,
+  `baseSupplies` float DEFAULT NULL,
+  `discountSupplies` float DEFAULT NULL,
+  `baseWorks` float DEFAULT NULL,
+  `discountWorks` float DEFAULT NULL,
+  `baseOrder` float DEFAULT NULL,
+  `discountOrder` float DEFAULT NULL,
+  `tvaOrder` float DEFAULT NULL,
+  `totalOrder` float DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `observations` varchar(255) DEFAULT NULL,
+  `text` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `garage_orders`
+--
+
+INSERT INTO `garage_orders` (`id`, `orderNumber`, `inDate`, `outDate`, `vehicle_id`, `customer_id`, `inKm`, `outKm`, `baseComponents`, `discountComponents`, `baseSupplies`, `discountSupplies`, `baseWorks`, `discountWorks`, `baseOrder`, `discountOrder`, `tvaOrder`, `totalOrder`, `description`, `observations`, `text`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(6, 'OR202300001', '2023-12-17 10:58:00', '2023-12-17 10:58:00', 9, 3, 34543, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, '', '', '', '2023-12-17 10:41:12', '2023-12-17 13:01:48', NULL),
+(8, 'OR20230002', '2023-12-17 01:08:44', '2023-12-19 07:36:44', 9, 3, 34543, 34548, NULL, NULL, NULL, NULL, NULL, NULL, 385, 0, 80, 465, 'Cambio de Aceite', '', 'Cambio de aceite y filtro.', '2023-12-17 13:09:10', '2023-12-19 19:36:58', NULL),
+(9, 'OR202300003', '2024-06-16 08:11:47', '2024-06-16 08:11:47', 9, 3, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, '', '', '', '2024-06-16 20:11:51', '2024-06-16 20:11:51', NULL),
+(10, 'OR20230004', '2024-06-16 08:23:07', '2024-06-16 08:23:07', 9, 3, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, '', '', '', '2024-06-16 20:23:10', '2024-06-16 20:23:10', NULL),
+(11, 'OR202300005', '2024-06-16 08:24:30', '2024-06-16 08:24:30', 9, 3, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, '', '', '', '2024-06-16 20:24:33', '2024-06-16 20:24:33', NULL),
+(12, 'OR20230006', '2024-06-16 09:56:34', '2024-06-16 09:56:34', 9, 3, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, '', '', '', '2024-06-16 21:56:38', '2024-06-16 21:56:38', NULL),
+(13, 'OR202300007', '2024-06-17 07:25:40', '2024-06-17 07:25:40', 9, 3, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, '', '', '', '2024-06-17 19:25:44', '2024-06-17 19:25:44', NULL),
+(14, 'OR20230008', '2024-06-17 08:21:19', '2024-06-17 08:21:19', 9, 3, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, '', '', '', '2024-06-17 20:21:23', '2024-06-17 20:21:23', NULL),
+(15, 'OV20230009', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 9, 3, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, '', '', '', '2024-06-17 20:33:23', '2024-06-17 20:33:38', '2024-06-17 20:33:38'),
+(16, 'OV20230010', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 9, 3, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, '', '', '', '2024-06-17 20:33:47', '2024-06-17 20:33:55', '2024-06-17 20:33:55'),
+(17, 'OR202300009', '2024-06-18 07:47:19', '2024-06-18 07:47:19', 9, 3, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, '', '', '', '2024-06-18 19:47:23', '2024-06-18 19:47:23', NULL),
+(18, 'OR202300010', '2024-06-19 07:17:02', '2024-06-19 07:17:02', 9, 3, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, '', '', '', '2024-06-19 19:17:06', '2024-06-19 19:17:06', NULL),
+(19, 'OR202300011', '2024-06-19 07:28:18', '2024-06-19 07:28:18', 9, 3, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, '', '', '', '2024-06-19 19:28:21', '2024-06-19 19:28:21', NULL),
+(20, 'OR2023000012', '2024-06-19 07:29:45', '2024-06-19 07:29:45', 9, 3, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, '', '', '', '2024-06-19 19:29:49', '2024-06-19 19:29:49', NULL),
+(21, 'OR202300013', '2024-06-19 07:31:31', '2024-06-19 07:31:31', 9, 3, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, '', '', '', '2024-06-19 19:31:35', '2024-06-19 19:31:35', NULL),
+(22, 'OR2023000014', '2024-06-19 07:32:56', '2024-06-19 07:32:56', 9, 3, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, '', '', '', '2024-06-19 19:33:00', '2024-06-19 19:33:00', NULL),
+(23, 'OR202300015', '2024-06-19 07:34:32', '2024-06-19 07:34:32', 9, 3, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, '', '', '', '2024-06-19 19:34:36', '2024-06-19 19:34:36', NULL),
+(24, 'OR2023000016', '2024-06-20 07:52:57', '2024-06-20 07:52:57', 9, 3, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, '', '', '', '2024-06-20 19:53:01', '2024-06-20 19:53:01', NULL),
+(25, 'OR202300017', '2024-06-20 07:56:58', '2024-06-20 07:56:58', 9, 3, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, '', '', '', '2024-06-20 19:57:02', '2024-06-20 19:57:02', NULL),
+(26, 'OR2023000018', '2024-07-15 08:00:01', '2024-07-15 08:00:01', 9, 3, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, '', '', '', '2024-07-15 20:00:05', '2024-07-15 20:00:05', NULL),
+(27, 'OR202300019', '2024-07-15 08:01:01', '2024-07-15 08:01:01', 9, 3, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, '', '', '', '2024-07-15 20:01:05', '2024-07-15 20:01:05', NULL),
+(28, 'OR2023000020', '2024-07-15 08:01:59', '2024-07-15 08:01:59', 9, 3, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, '', '', '', '2024-07-15 20:02:02', '2024-07-15 20:02:02', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `homologations`
+--
+
+CREATE TABLE `homologations` (
+  `id` int(11) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `homologationCode` varchar(255) NOT NULL,
+  `prototypeId` varchar(255) NOT NULL,
+  `large` int(11) DEFAULT NULL,
+  `width` int(11) DEFAULT NULL,
+  `height` int(11) DEFAULT NULL,
+  `doorsNumber` int(11) DEFAULT NULL,
+  `heightRearDoor` int(11) DEFAULT NULL,
+  `widthRearDoor` int(11) DEFAULT NULL,
+  `heightLateralDoor` int(11) DEFAULT NULL,
+  `widthLateralDoor` int(11) DEFAULT NULL,
+  `weight` int(11) DEFAULT NULL,
+  `coeficientK` float DEFAULT NULL,
+  `essay` varchar(255) DEFAULT NULL,
+  `dateEssay` date DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `labels`
+--
+
+CREATE TABLE `labels` (
+  `id` int(11) NOT NULL,
+  `property` varchar(255) NOT NULL,
+  `label` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `labels`
+--
+
+INSERT INTO `labels` (`id`, `property`, `label`, `created_at`, `updated_at`) VALUES
+(1, 'name', 'Nombre', '0000-00-00 00:00:00', NULL),
+(2, 'address', 'Dirección', '0000-00-00 00:00:00', NULL),
+(3, 'fiscalId', 'CIF', '0000-00-00 00:00:00', NULL),
+(4, 'fiscalName', 'Razón Social', '0000-00-00 00:00:00', NULL),
+(5, 'postalCode', 'Codigo Postal', '0000-00-00 00:00:00', NULL),
+(6, 'city', 'Ciudad', '0000-00-00 00:00:00', NULL),
+(7, 'state', 'Provincia', '0000-00-00 00:00:00', NULL),
+(8, 'country', 'Pais', '0000-00-00 00:00:00', NULL),
+(9, 'phone', 'Teléfono', '0000-00-00 00:00:00', NULL),
+(10, 'email', 'Email', '0000-00-00 00:00:00', NULL),
+(11, 'password', 'Password', '0000-00-00 00:00:00', NULL),
+(12, 'birthDate', 'Fecha Cumpleaños', '0000-00-00 00:00:00', NULL),
+(13, 'customerType', 'Tipo de Cliente', '0000-00-00 00:00:00', NULL),
+(14, 'customerTypes', 'Tipos de Cliente', '0000-00-00 00:00:00', NULL),
+(15, 'vehicle', 'Vehículo', '0000-00-00 00:00:00', NULL),
+(16, 'vehicles', 'Vehiculos', '0000-00-00 00:00:00', NULL),
+(17, 'supply', 'Recambio', '0000-00-00 00:00:00', NULL),
+(18, 'supplies', 'Recambios', '0000-00-00 00:00:00', NULL),
+(19, 'component', 'Componente', '0000-00-00 00:00:00', NULL),
+(20, 'components', 'Componentes', '0000-00-00 00:00:00', NULL),
+(21, 'work', 'Trabajo', '0000-00-00 00:00:00', NULL),
+(22, 'works', 'Trabajos', '0000-00-00 00:00:00', NULL),
+(23, 'garage', 'Taller', '0000-00-00 00:00:00', NULL),
+(24, 'garages', 'Talleres', '0000-00-00 00:00:00', NULL),
+(25, 'buyPaymentWays', 'Formas de Pago ', '0000-00-00 00:00:00', NULL),
+(26, 'sellPaymentWays', 'Formas de Cobro', '0000-00-00 00:00:00', NULL),
+(27, 'offer', 'Oferta', '0000-00-00 00:00:00', NULL),
+(28, 'offers', 'Ofertas', '0000-00-00 00:00:00', NULL),
+(29, 'rent', 'Alquiler', '0000-00-00 00:00:00', NULL),
+(30, 'Rents', 'Alquileres', '0000-00-00 00:00:00', NULL),
+(31, 'id', 'Id', '0000-00-00 00:00:00', NULL),
+(32, 'site', 'Página Web', '2023-01-03 20:10:49', NULL),
+(33, 'code', 'Códigos', '2023-01-12 19:56:22', NULL),
+(34, 'bankCode', 'Código Bancario', '2023-01-12 19:58:12', NULL),
+(35, 'bankId', 'Banco', '2023-01-17 19:11:49', NULL),
+(36, 'bank', 'Banco', '2023-01-22 07:56:04', NULL),
+(37, 'accountNumber', 'Número de Cuenta', '2023-01-22 07:56:04', NULL),
+(38, 'owner', 'Propietario', '2023-01-22 07:56:19', NULL),
+(39, 'observations', 'Observaciones', '2023-01-22 07:58:14', NULL),
+(40, 'storeId', 'Almacén', '2023-01-24 19:15:53', NULL),
+(41, 'store', 'Almacén', '2023-01-24 19:15:53', NULL),
+(42, 'postal_code', 'Código Postal', '2023-01-25 19:29:32', NULL),
+(43, 'account_id', 'Cuenta Asociada', '2023-01-27 19:43:10', NULL),
+(44, 'discount', 'Descuento', '2023-01-27 19:43:34', NULL),
+(45, 'porcentaje', 'Porcentaje', '2023-06-24 18:58:27', NULL),
+(46, 'percentaje', 'Porcentaje', '2023-06-24 18:58:58', NULL),
+(47, 'storeId', 'Almacén', '2023-10-04 18:56:33', NULL),
+(48, 'access', 'Nivel Acceso', '2023-10-12 17:26:55', NULL),
+(49, 'store_id', 'Almacén', '2023-10-14 11:21:34', NULL),
+(50, 'bank', 'Entidad Bancaria', '2023-10-14 11:50:01', NULL),
+(51, 'bank_id', 'Entidad Bancaria', '2023-10-14 11:50:45', NULL),
+(52, 'brand', 'Marca', '2023-10-21 09:50:31', NULL),
+(53, 'brand_id', 'Marca', '2023-10-21 09:51:39', NULL),
+(54, 'keyString', 'Clave', '2023-10-21 10:02:56', NULL),
+(55, 'ref', 'Referencia', '2023-10-21 16:01:09', NULL),
+(56, 'mader_id', 'Fabricante', '2023-10-21 16:01:09', NULL),
+(57, 'maderCode', 'Referencia Fabricante', '2023-10-21 16:01:28', NULL),
+(58, 'stock', 'Stock', '2023-10-21 16:02:07', NULL),
+(59, 'pvc', 'Precio Compra', '2023-10-21 16:02:07', NULL),
+(60, 'pvp', 'Precio Venta', '2023-10-21 16:02:21', NULL),
+(61, 'serialNumber', 'Número de Serie', '2023-10-21 16:19:05', NULL),
+(62, 'brand', 'Marca', '2023-10-22 17:42:09', NULL),
+(63, 'model', 'Modelo', '2023-10-22 17:42:09', NULL),
+(64, 'km', 'Kilómetros', '2023-10-22 17:42:09', NULL),
+(66, 'data', 'Datos', '2023-10-24 18:29:30', NULL),
+(67, 'technical', '', '2023-10-24 18:29:30', NULL),
+(68, 'detail', 'Detalles', '2023-10-24 18:29:30', NULL),
+(69, 'technical', 'Datos Técnicos', '2023-10-24 18:35:07', NULL),
+(70, 'model_id', 'Modelo', '2023-10-24 18:35:42', NULL),
+(71, 'description', 'Descripción', '2023-10-27 18:41:02', NULL),
+(72, 'plate', 'Matrícula', '2023-10-27 18:41:02', NULL),
+(73, 'vin', 'Bastidor', '2023-10-27 18:41:02', NULL),
+(74, 'registryDate', 'Fecha de Matriculación', '2023-10-27 18:41:02', NULL),
+(75, 'location', 'Ubicación', '2023-10-27 18:41:02', NULL),
+(76, 'type_id', 'Tipo de Vehículo', '2023-10-27 18:41:02', NULL),
+(77, 'color', 'Color', '2023-10-27 18:41:02', NULL),
+(78, 'places', 'Plazas', '2023-10-27 18:41:02', NULL),
+(79, 'doors', 'Puertas', '2023-10-27 18:41:02', NULL),
+(80, 'power', 'Potencia', '2023-10-27 18:41:02', NULL),
+(81, 'providor_id', 'Proveedor', '2023-10-27 20:24:51', NULL),
+(82, 'cost', 'Precio de Compra', '2023-10-27 20:24:51', NULL),
+(84, 'transference', 'Transferencia', '2023-10-27 20:24:51', NULL),
+(85, 'service', 'Servicio', '2023-10-27 20:24:51', NULL),
+(86, 'secondKey', 'Segunda Llave', '2023-10-27 20:24:51', NULL),
+(87, 'rebu', 'R.E.B.U.', '2023-10-27 20:24:51', NULL),
+(88, 'arrival', 'Llegada', '2023-10-27 20:24:51', NULL),
+(89, 'buyDate', 'Fecha de Compra', '2023-10-27 20:24:51', NULL),
+(90, 'sellDate', 'Fecha de Venta', '2023-10-27 20:24:51', NULL),
+(91, 'appointDate', 'Fecha de Reserva', '2023-10-27 20:24:51', NULL),
+(92, 'customer_id', 'Cliente', '2023-10-27 20:24:51', NULL),
+(93, 'seller_id', 'Vendedor', '2023-10-27 20:31:46', NULL),
+(94, 'dataType', 'Data', '2023-10-27 20:31:46', NULL),
+(95, 'version', 'Versión', '2023-10-27 20:31:46', NULL),
+(96, 'comercialName', 'Nombre Comercial', '2023-10-27 20:31:46', NULL),
+(97, 'mma', 'Masa Máxima Autorizada', '2023-10-27 20:31:46', NULL),
+(98, 'mmaAxe1', 'M.M.A. Eje delantero', '2023-10-27 20:31:46', NULL),
+(99, 'mmaAxe2', 'M.M.A. Eje trasero', '2023-10-27 20:31:46', NULL),
+(100, 'mmac', 'M.M.A. del conjunto', '2023-10-27 20:31:46', NULL),
+(101, 'mmar', 'M.M.A. Remolcable sin freno', '2023-10-27 20:31:46', NULL),
+(102, 'mmarf', 'M.M.A. Remolcable con freno', '2023-10-27 20:31:46', NULL),
+(103, 'mom', 'Masa en Orden de Marcha', '2023-10-27 20:31:46', NULL),
+(104, 'momAxe1', 'M.O.M. Eje delantero', '2023-10-27 20:31:46', NULL),
+(105, 'momAxe2', 'M.O.M. Eje trasero', '2023-10-27 20:34:25', NULL),
+(106, 'large', 'Largo', '2023-10-27 20:34:25', NULL),
+(107, 'width', 'Ancho', '2023-10-27 20:34:25', NULL),
+(108, 'height', 'Alto', '2023-10-27 20:34:25', NULL),
+(109, 'frontOverhang', 'Voladizo delantero', '2023-10-27 20:34:25', NULL),
+(110, 'rearOverhang', 'Voladizo trasero', '2023-10-27 20:34:25', NULL),
+(111, 'axeDistance', 'Distancia entre ejes', '2023-10-27 20:34:25', NULL),
+(112, 'chargeLength', 'Largo de carga', '2023-10-27 20:34:25', NULL),
+(113, 'deposit', 'Depósito', '2023-10-27 20:34:25', NULL),
+(114, 'variant', 'Variante', '2023-10-27 20:35:27', NULL),
+(115, 'initCharge', 'Inicio zona de carga', '2023-10-27 20:36:05', NULL),
+(116, 'accesories', 'Accesorios', '2023-10-29 20:35:29', NULL),
+(117, 'mader', 'Fabricante', '2023-11-18 19:45:50', NULL),
+(118, 'cantity', 'Cantidad', '2023-11-18 19:46:36', NULL),
+(119, 'total', 'Importe', '2023-11-19 18:22:13', NULL),
+(120, 'reference', 'Referencia', '2023-11-19 19:50:37', NULL),
+(121, 'offerNumber', 'Nº Oferta', '2023-11-20 21:01:07', NULL),
+(122, 'offerDate', 'Fecha Oferta', '2023-11-20 21:01:07', NULL),
+(123, 'customer', 'Cliente', '2023-11-20 21:01:56', NULL),
+(124, 'offerNumber', 'Número de Oferta', '2023-11-22 18:50:55', NULL),
+(125, 'offerDate', 'Fecha de Oferta', '2023-11-22 18:50:55', NULL),
+(126, 'taxes_id', 'Tipo de Iva', '2023-11-22 18:50:55', NULL),
+(127, 'customer_id', 'Cliente', '2023-11-22 18:50:55', NULL),
+(128, 'vehicle_id', 'Vehículo', '2023-11-22 18:50:55', NULL),
+(129, 'vehiclePvp', 'Precio Vehículo', '2023-11-22 18:50:55', NULL),
+(130, 'vehicleTva', 'Iva Vehículo', '2023-11-22 18:50:55', NULL),
+(131, 'vehicleTotal', 'Total Vehículo', '2023-11-22 18:50:55', NULL),
+(132, 'vehicleDiscount', 'Descuento Vehículo', '2023-11-22 18:50:55', NULL),
+(133, 'paymentWay_id', 'Forma de Pago', '2023-11-22 18:51:25', NULL),
+(134, 'tva', 'Iva', '2023-11-22 18:55:34', NULL),
+(135, 'texts', 'Textos', '2023-11-22 18:55:34', NULL),
+(136, 'vehicleComments', 'Comentarios Vehículo', '2023-11-22 18:55:34', NULL),
+(137, 'selloffercomponent_id', 'ID', '2023-12-03 08:53:32', NULL),
+(138, 'selloffersupply_id', 'ID', '2023-12-04 18:05:52', NULL),
+(139, 'work_id', 'ID', '2023-12-05 18:28:22', NULL),
+(140, 'sellofferwork_id', 'ID', '2023-12-05 18:29:38', NULL),
+(141, 'costTva', 'Iva de Compra', '2023-12-05 20:43:49', NULL),
+(142, 'costTotal', 'Total Compra', '2023-12-05 20:43:49', NULL),
+(143, 'inDate', 'Fecha Entrada', '2023-12-12 18:19:32', NULL),
+(144, 'outDate', 'Fecha Salida', '2023-12-12 18:19:32', NULL),
+(145, 'inKm', 'Km Entrada', '2023-12-12 18:20:36', NULL),
+(146, 'outKm', 'Km Salida', '2023-12-12 18:20:36', NULL),
+(147, 'text', 'Texto', '2023-12-12 18:21:30', NULL),
+(148, 'baseOrder', 'Base Imponible', '2023-12-12 18:37:55', NULL),
+(149, 'tvaOrder', 'IVA', '2023-12-12 18:37:55', NULL),
+(150, 'totalOrder', 'Total Orden de Reparación ', '2023-12-12 18:37:55', NULL),
+(151, 'orderNumber', 'Número de Orden', '2023-12-15 19:02:30', NULL),
+(152, 'discountOrder', 'Descuento', '2023-12-17 20:57:20', NULL),
+(153, 'garageOrdercomponent_id', 'ID', '2023-12-17 21:22:31', NULL),
+(154, 'garageOrderSupply_id', 'ID', '2023-12-17 21:22:31', NULL),
+(155, 'garageOrderWork_id', 'ID', '2023-12-17 21:22:59', NULL),
+(156, 'garageOrderSupply_id', 'ID', '2023-12-18 18:43:23', NULL),
+(157, 'garageOrderWork_id', 'ID', '2023-12-18 18:43:23', NULL),
+(158, 'garageOrderSupply_id', 'ID', '2023-12-18 19:05:07', NULL),
+(159, 'garageOrderWork_id', 'ID', '2023-12-18 19:05:07', NULL),
+(160, 'garageOrderSupply_id', 'ID', '2023-12-18 19:05:23', NULL),
+(161, 'garageOrderWork_id', 'ID', '2023-12-18 19:05:23', NULL),
+(162, 'garageOrderSupply_id', 'ID', '2023-12-18 19:07:14', NULL),
+(163, 'garageOrderWork_id', 'ID', '2023-12-19 18:03:50', NULL),
+(164, 'garageOrderwork_id', 'ID', '2023-12-19 18:04:58', NULL),
+(165, 'sellOffercomponent_id', 'ID', '2023-12-21 18:23:54', NULL),
+(166, 'sellOffersupply_id', 'ID', '2023-12-21 18:23:54', NULL),
+(167, 'sellOfferwork_id', 'ID', '2023-12-21 18:27:55', NULL),
+(168, 'vehiclecomponent_id', 'ID', '2023-12-21 18:53:37', NULL),
+(169, 'vehiclesupply_id', 'ID', '2023-12-21 18:53:37', NULL),
+(170, 'vehiclework_id', 'ID', '2023-12-21 18:53:37', NULL),
+(171, 'getter_id', 'Tomador', '2024-01-02 20:48:06', NULL),
+(172, 'owner_id', 'Propietario', '2024-01-02 20:48:06', NULL),
+(173, 'effectDate', 'Fecha de Efecto', '2024-01-02 20:49:24', NULL),
+(174, 'object_id', 'Vehículo', '2024-01-02 20:49:24', NULL),
+(175, 'price', 'Precio', '2024-01-02 20:51:58', NULL),
+(176, 'duration', 'Duración', '2024-01-02 20:58:11', NULL),
+(177, 'options', 'Opciones', '2024-01-02 21:00:31', NULL),
+(178, 'workSheetNumber', 'Nº Hoja de Trabajo', '2024-06-13 20:53:49', NULL),
+(179, 'orderId', 'Nº Orden de Trabajo', '2024-06-13 20:53:49', NULL),
+(180, 'customerId', 'Cliente', '2024-06-13 20:54:31', NULL),
+(181, 'vehicleId', 'Vehículo', '2024-06-13 20:54:31', NULL),
+(182, 'workId', 'Trabajo a realizar', '2024-06-13 20:55:27', NULL),
+(183, 'order_id', 'Nº Orden de Trabajo', '2024-06-13 21:01:22', NULL),
+(184, 'baseWorkSheet', 'Base Imponible', '2024-06-15 21:17:44', NULL),
+(185, 'tvaWorkSheet', 'Iva ', '2024-06-15 21:17:44', NULL),
+(186, 'discountWorkSheet', 'Descuento', '2024-06-15 21:17:44', NULL),
+(187, 'totalWorkSheet', 'Total', '2024-06-15 21:17:44', NULL),
+(188, 'workSheetsComponent_id', 'ID', '2024-06-16 20:17:46', NULL),
+(189, 'workSheetsSupply_id', 'ID', '2024-06-16 20:17:46', NULL),
+(190, 'workSheetsWork_id', 'ID', '2024-06-16 20:17:57', NULL),
+(191, 'workSheetscomponent_id', 'ID', '2024-06-16 20:25:21', NULL),
+(192, 'worksheetcomponent_id', 'ID', '2024-06-16 20:37:08', NULL),
+(193, 'workSheetsSupply_id', 'ID', '2024-06-19 17:51:21', NULL),
+(194, 'workSheetWork_id', 'ID', '2024-06-19 18:35:13', NULL),
+(195, 'workSheetSupply_id', 'ID', '2024-06-19 18:35:41', NULL),
+(196, 'workSheetComponent_id', 'ID', '2024-06-19 18:37:31', NULL),
+(197, 'workSheetWork_id', 'ID', '2024-06-19 18:44:26', NULL),
+(198, 'garageOrderwork_id', 'ID', '2024-06-19 19:52:12', NULL),
+(199, 'garageOrdersupply_id', 'ID', '2024-06-19 19:53:08', NULL),
+(200, 'expertName', 'Perito', '2024-06-21 18:19:38', NULL),
+(201, 'date', 'Fecha', '2024-06-21 18:19:38', NULL),
+(202, 'expertId', 'ID Perito', '2024-06-21 18:21:13', NULL),
+(203, 'expertSurname', 'Apellidos', '2024-06-21 18:21:42', NULL),
+(204, 'expertAddress', 'Direccion', '2024-06-21 18:21:42', NULL),
+(205, 'expertState', 'Provincia', '2024-06-21 18:22:14', NULL),
+(206, 'expertCP', 'C.P.', '2024-06-21 18:22:14', NULL),
+(207, 'expertPhone', 'Telefono', '2024-06-21 18:22:45', NULL),
+(208, 'expertEmail', 'Email', '2024-06-21 18:22:45', NULL),
+(209, 'opinionId', 'ID Peritacion', '2024-06-21 18:23:19', NULL),
+(210, 'expertCity', 'Poblacion', '2024-06-21 18:24:00', NULL),
+(211, 'demander', 'Solicitante', '2024-06-21 18:24:00', NULL),
+(212, 'object', 'Objeto', '2024-06-21 18:24:52', NULL),
+(213, 'actions', 'Acciones', '2024-06-21 18:24:52', NULL),
+(214, 'conclusions', 'Conclusiones', '2024-06-21 18:26:31', NULL),
+(215, 'anexed', 'Anexos', '2024-06-21 18:26:31', NULL),
+(216, 'opinionPvp', 'Importe', '2024-07-15 19:39:38', NULL),
+(217, 'opinionTva', 'IVA', '2024-07-15 19:39:38', NULL),
+(218, 'opinionTotal', 'Total', '2024-07-15 19:39:55', NULL),
+(219, 'totalExpertOpinion', 'Total', '2024-07-15 19:45:49', NULL),
+(220, 'tvaExpertOpinion', 'IVA', '2024-07-15 19:45:49', NULL),
+(221, 'baseExpertOpinion', 'Importe', '2024-07-15 19:46:05', NULL),
+(222, 'expertOpinionComponent_id', 'ID', '2024-07-15 19:55:11', NULL),
+(223, 'expertOpinionSupply_id', 'ID', '2024-07-15 19:55:11', NULL),
+(224, 'expertOpinionWork_id', 'ID', '2024-07-15 19:55:26', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `locations`
+--
+
+CREATE TABLE `locations` (
+  `id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `locations`
+--
+
+INSERT INTO `locations` (`id`, `store_id`, `name`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, 'TA', '2023-01-26 20:34:35', '2023-01-26 20:34:47', '2023-01-26 20:34:47'),
+(2, 1, 'UM', '2023-01-26 20:34:56', '2023-01-26 20:43:18', '2023-01-26 20:43:18'),
+(3, 21, '28', '2023-10-04 20:38:45', '2023-10-14 13:32:34', '2023-10-14 13:32:34'),
+(4, 21, 'ZC', '2023-10-04 20:38:50', '2023-10-14 13:33:26', '2023-10-14 13:33:26'),
+(5, 21, 'SB', '2023-10-04 20:39:01', '2023-10-04 20:39:01', NULL),
+(6, 21, '4C', '2023-10-04 20:39:09', '2023-10-04 20:39:17', '2023-10-04 20:39:17'),
+(7, 21, 'Q6', '2023-10-04 20:39:22', '2023-10-04 20:39:22', NULL),
+(8, 26, 'YL', '2023-10-04 20:45:30', '2023-10-04 20:45:30', NULL),
+(9, 26, 'CW', '2023-10-04 20:45:34', '2023-10-04 20:45:34', NULL),
+(10, 26, 'BV', '2023-10-04 20:45:43', '2023-10-04 20:45:43', NULL),
+(11, 26, 'H5', '2023-10-04 20:45:52', '2023-10-04 20:46:00', '2023-10-04 20:46:00'),
+(12, 26, 'F1', '2023-10-04 20:46:06', '2023-10-04 20:46:06', NULL),
+(14, 17, '31', '2023-10-21 20:21:34', '2023-10-21 20:21:34', NULL),
+(15, 17, '4Q', '2023-10-21 20:21:38', '2023-10-21 20:21:38', NULL),
+(16, 17, '3V', '2023-10-21 20:21:46', '2023-10-21 20:21:46', NULL),
+(17, 17, '1E', '2023-10-21 20:21:54', '2023-10-21 20:22:02', '2023-10-21 20:22:02'),
+(18, 17, '4A', '2023-10-21 20:22:06', '2023-10-21 20:22:06', NULL),
+(19, 31, 'Z2', '2023-10-21 20:24:48', '2023-10-21 20:24:48', NULL),
+(20, 31, 'RK', '2023-10-21 20:24:52', '2023-10-21 20:24:52', NULL),
+(21, 31, 'OP', '2023-10-21 20:25:00', '2023-10-21 22:34:30', '2023-10-21 22:34:30'),
+(22, 31, '2B', '2023-10-21 20:25:09', '2023-10-21 20:25:17', '2023-10-21 20:25:17'),
+(23, 31, 'ST', '2023-10-21 20:25:22', '2023-10-21 22:33:48', '2023-10-21 22:33:48'),
+(24, 17, 'rgt', '2023-10-21 20:25:29', '2023-10-21 22:33:07', '2023-10-21 22:33:07'),
+(25, 31, '7R', '2023-10-21 20:29:02', '2023-10-21 22:23:15', '2023-10-21 22:23:15'),
+(26, 31, 'E1', '2023-10-21 20:29:05', '2023-10-21 22:22:28', '2023-10-21 22:22:28'),
+(27, 31, 'Q0', '2023-10-21 20:29:14', '2023-10-21 22:21:12', '2023-10-21 22:21:12'),
+(28, 31, 'B9', '2023-10-21 20:29:22', '2023-10-21 20:29:30', '2023-10-21 20:29:30'),
+(29, 31, '8H', '2023-10-21 20:29:34', '2023-10-21 22:16:25', '2023-10-21 22:16:25'),
+(45, 31, 'A9', '2023-10-21 22:35:01', '2023-10-21 22:35:01', NULL),
+(46, 31, 'TW', '2023-10-21 22:35:05', '2023-10-21 22:35:05', NULL),
+(47, 31, 'NX', '2023-10-21 22:35:13', '2023-10-21 22:35:13', NULL),
+(48, 31, 'Y6', '2023-10-21 22:35:22', '2023-10-21 22:35:29', '2023-10-21 22:35:29'),
+(49, 31, 'TW', '2023-10-21 22:35:34', '2023-10-21 22:35:34', NULL),
+(50, 31, 'BW', '2023-10-21 22:36:47', '2023-10-21 22:36:47', NULL),
+(51, 31, 'VD', '2023-10-21 22:36:50', '2023-10-21 22:36:50', NULL),
+(52, 31, 'OL', '2023-10-21 22:37:00', '2023-10-21 22:37:06', '2023-10-21 22:37:06'),
+(53, 31, 'L0', '2023-10-21 22:37:10', '2023-10-21 22:37:17', '2023-10-21 22:37:17'),
+(54, 31, 'WQ', '2023-10-21 22:37:22', '2023-10-21 22:37:22', NULL),
+(55, 31, 'HX', '2023-10-21 22:39:31', '2023-10-21 22:39:31', NULL),
+(56, 17, 'BZ', '2023-10-21 22:39:35', '2023-10-21 22:39:42', NULL),
+(57, 31, 'JX', '2023-10-21 22:39:46', '2023-10-21 22:39:52', '2023-10-21 22:39:52'),
+(58, 31, 'DG', '2023-10-21 22:39:56', '2023-10-21 22:40:03', '2023-10-21 22:40:03'),
+(59, 31, 'Z9', '2023-10-21 22:40:08', '2023-10-21 22:40:08', NULL),
+(60, 31, 'H7', '2023-12-28 22:16:59', '2023-12-28 22:16:59', NULL),
+(61, 31, '3C', '2023-12-28 22:17:03', '2023-12-28 22:17:11', NULL),
+(62, 31, 'WJ', '2023-12-28 22:17:15', '2023-12-28 22:17:21', '2023-12-28 22:17:21'),
+(63, 31, 'TF', '2023-12-28 22:17:26', '2023-12-28 22:17:34', '2023-12-28 22:17:34'),
+(64, 31, 'AP', '2023-12-28 22:17:39', '2023-12-28 22:17:39', NULL),
+(65, 36, 'N3', '2023-12-29 20:15:55', '2023-12-29 20:16:09', '2023-12-29 20:16:09'),
+(66, 36, 'S3', '2023-12-29 20:16:18', '2023-12-29 20:16:26', '2023-12-29 20:16:26'),
+(67, 17, 'CX', '2024-01-02 20:09:45', '2024-01-02 20:10:01', '2024-01-02 20:10:01'),
+(68, 38, '10', '2024-01-02 20:10:09', '2024-01-02 20:10:17', '2024-01-02 20:10:17'),
+(69, 17, '1J', '2024-01-09 22:46:39', '2024-01-09 22:46:53', '2024-01-09 22:46:53'),
+(70, 40, 'F3', '2024-01-09 22:47:02', '2024-01-09 22:47:10', '2024-01-09 22:47:10'),
+(71, 17, '81', '2024-01-12 17:03:00', '2024-01-12 17:03:18', '2024-01-12 17:03:18'),
+(72, 42, 'A9', '2024-01-12 17:03:29', '2024-01-12 17:03:39', '2024-01-12 17:03:39'),
+(73, 17, 'WP', '2024-06-12 19:52:21', '2024-06-12 19:52:39', '2024-06-12 19:52:39'),
+(74, 42, 'FN', '2024-06-12 19:52:50', '2024-06-12 19:52:59', '2024-06-12 19:52:59');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `maders`
+--
+
+CREATE TABLE `maders` (
+  `id` int(11) NOT NULL,
+  `fiscalId` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `postalCode` int(11) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `site` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `maders`
+--
+
+INSERT INTO `maders` (`id`, `fiscalId`, `name`, `address`, `city`, `postalCode`, `state`, `country`, `phone`, `email`, `site`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, '6X21RDE03H', 'LoremIpsum', 'C/ Lorem Ipsum, 123', 'Ipsum', 18202, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-26 20:59:12', '2023-01-26 20:59:12', NULL),
+(2, 'RN9Q87LX2E', 'LoremIpsumEdited', 'C/ Lorem Ipsum, 123', 'Ipsum', 17742, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-26 20:59:15', '2023-01-26 20:59:23', NULL),
+(3, '5R6WJCGFZ8', 'LoremIpsum', 'C/ Lorem Ipsum, 123', 'Ipsum', 75409, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-26 20:59:26', '2023-01-26 20:59:32', '2023-01-26 20:59:32'),
+(4, '3E75NC2JGK', 'LoremIpsum', 'C/ Lorem Ipsum, 123', 'Ipsum', 66392, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-26 20:59:37', '2023-01-26 20:59:44', '2023-01-26 20:59:44'),
+(5, 'SIWX0RKAZ5', 'LoremIpsum', 'C/ Lorem Ipsum, 123', 'Ipsum', 19495, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-01-26 20:59:48', '2023-01-26 20:59:48', NULL),
+(6, '74AFIBZT80', 'LoremIpsum', 'C/ Lorem Ipsum, 123', 'Ipsum', 37935, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-04 20:39:36', '2023-10-04 20:39:36', NULL),
+(7, '5CYIWK8DP0', 'LoremIpsumEdited', 'C/ Lorem Ipsum, 123', 'Ipsum', 69748, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-04 20:39:39', '2023-10-04 20:39:47', NULL),
+(8, '5JHWL6BV7R', 'LoremIpsum', 'C/ Lorem Ipsum, 123', 'Ipsum', 15335, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-04 20:39:51', '2023-10-04 20:39:57', '2023-10-04 20:39:57'),
+(9, '9J50AGWV2Q', 'LoremIpsum', 'C/ Lorem Ipsum, 123', 'Ipsum', 56926, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-04 20:40:02', '2023-10-04 20:40:09', '2023-10-04 20:40:09'),
+(10, '2BMUYZ7CGP', 'LoremIpsum', 'C/ Lorem Ipsum, 123', 'Ipsum', 66283, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-04 20:40:13', '2023-10-04 20:40:13', NULL),
+(11, 'WGQTXBD1P5', 'LoremIpsum', 'C/ Lorem Ipsum, 123', 'Ipsum', 55798, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-21 20:22:19', '2023-10-21 20:22:19', NULL),
+(12, 'J8Q9RZV6FX', 'LoremIpsumEdited', 'C/ Lorem Ipsum, 123', 'Ipsum', 89044, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-21 20:22:23', '2023-10-21 20:22:30', NULL),
+(13, 'SCMW2F4H8K', 'LoremIpsum', 'C/ Lorem Ipsum, 123', 'Ipsum', 76854, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-21 20:22:34', '2023-10-21 20:22:40', '2023-10-21 20:22:40'),
+(14, '29ZC6U3HT1', 'LoremIpsum', 'C/ Lorem Ipsum, 123', 'Ipsum', 36634, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-21 20:22:45', '2023-10-21 20:22:52', '2023-10-21 20:22:52'),
+(15, '5BNHAMDW8R', 'LoremIpsum', 'C/ Lorem Ipsum, 123', 'Ipsum', 90956, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-10-21 20:22:56', '2023-10-21 20:22:56', NULL),
+(16, 'Y4FVLZNHGW', 'LoremIpsum', 'C/ Lorem Ipsum, 123', 'Ipsum', 65991, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-12-28 22:17:53', '2023-12-28 22:17:53', NULL),
+(17, 'P38Z65DCHB', 'LoremIpsumEdited', 'C/ Lorem Ipsum, 123', 'Ipsum', 17264, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-12-28 22:17:57', '2023-12-28 22:18:05', NULL),
+(18, 'TSWO37XP8C', 'LoremIpsum', 'C/ Lorem Ipsum, 123', 'Ipsum', 38522, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-12-28 22:18:09', '2023-12-28 22:18:16', '2023-12-28 22:18:16'),
+(19, 'BTWKUD0G7V', 'LoremIpsum', 'C/ Lorem Ipsum, 123', 'Ipsum', 91171, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-12-28 22:18:21', '2023-12-28 22:18:28', '2023-12-28 22:18:28'),
+(20, 'AB9UKGZP0S', 'LoremIpsum', 'C/ Lorem Ipsum, 123', 'Ipsum', 15622, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-12-28 22:18:34', '2023-12-28 22:18:34', NULL),
+(21, 'AUDHEYRO65', 'LoremIpsumEdited', 'C/ Lorem Ipsum, 123', 'Ipsum', 94674, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-12-29 20:16:40', '2023-12-29 20:16:54', '2023-12-29 20:16:54'),
+(22, '98H6Z745N2', 'LoremIpsum', 'C/ Lorem Ipsum, 123', 'Ipsum', 44289, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2023-12-29 20:17:03', '2023-12-29 20:17:13', '2023-12-29 20:17:13'),
+(23, 'U37BA50LOQ', 'LoremIpsumEdited', 'C/ Lorem Ipsum, 123', 'Ipsum', 94428, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2024-01-02 20:10:31', '2024-01-02 20:10:46', '2024-01-02 20:10:46'),
+(24, 'L1Z2UWP0GH', 'LoremIpsum', 'C/ Lorem Ipsum, 123', 'Ipsum', 58050, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2024-01-02 20:10:55', '2024-01-02 20:11:03', '2024-01-02 20:11:03'),
+(25, '1WAGBLS2TJ', 'LoremIpsumEdited', 'C/ Lorem Ipsum, 123', 'Ipsum', 59359, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2024-01-09 22:47:28', '2024-01-09 22:47:45', '2024-01-09 22:47:45'),
+(26, 'J7NQO8A4PW', 'LoremIpsum', 'C/ Lorem Ipsum, 123', 'Ipsum', 15612, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2024-01-09 22:47:55', '2024-01-09 22:48:03', '2024-01-09 22:48:03'),
+(27, 'NWGF3MXRH5', 'LoremIpsumEdited', 'C/ Lorem Ipsum, 123', 'Ipsum', 63046, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2024-01-12 17:03:56', '2024-01-12 17:04:14', '2024-01-12 17:04:14'),
+(28, '8BX1N4DR9A', 'LoremIpsum', 'C/ Lorem Ipsum, 123', 'Ipsum', 38588, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2024-01-12 17:04:26', '2024-01-12 17:04:39', '2024-01-12 17:04:39'),
+(29, 'TQX9O07SAM', 'LoremIpsumEdited', 'C/ Lorem Ipsum, 123', 'Ipsum', 70351, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2024-06-12 19:53:14', '2024-06-12 19:53:30', '2024-06-12 19:53:30'),
+(30, '8DOU6Z3XWV', 'LoremIpsum', 'C/ Lorem Ipsum, 123', 'Ipsum', 34184, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', 'www.loremipsum.com', '2024-06-12 19:53:39', '2024-06-12 19:53:47', '2024-06-12 19:53:47');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `models`
+--
+
+CREATE TABLE `models` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `brand_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `models`
+--
+
+INSERT INTO `models` (`id`, `name`, `brand_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Berlingo', 1, '2023-10-21 11:55:16', '2023-10-21 11:55:16', NULL),
+(2, 'Transit Connect', 2, '2023-11-24 19:38:58', '2023-11-24 19:39:12', NULL),
+(3, 'IC2FZPUYS607', 2, '2023-12-30 19:36:57', '2023-12-30 19:37:11', '2023-12-30 19:37:11'),
+(4, 'UT2PGD54VBRL', 2, '2023-12-30 19:37:20', '2023-12-30 19:37:28', '2023-12-30 19:37:28'),
+(5, 'CGFK35YQ8S4D', 2, '2024-01-02 20:11:12', '2024-01-02 20:11:26', '2024-01-02 20:11:26'),
+(6, 'UW8NXL0IZM5F', 2, '2024-01-02 20:11:35', '2024-01-02 20:11:43', '2024-01-02 20:11:43'),
+(7, 'DXCE5NVT2MLO', 2, '2024-01-09 22:48:13', '2024-01-09 22:48:30', '2024-01-09 22:48:30'),
+(8, '9RCQJ7SMOGV6', 2, '2024-01-09 22:48:40', '2024-01-09 22:48:48', '2024-01-09 22:48:48'),
+(9, 'OZ6PYT3W9DRK', 2, '2024-01-12 17:04:50', '2024-01-12 17:05:08', '2024-01-12 17:05:08'),
+(10, '0IBLQGOCYNPS', 2, '2024-01-12 17:05:18', '2024-01-12 17:05:32', '2024-01-12 17:05:32'),
+(11, 'K9QAXJGV04ID', 2, '2024-06-12 19:53:56', '2024-06-12 19:54:10', '2024-06-12 19:54:10'),
+(12, '2PX4E8LYF31M', 2, '2024-06-12 19:54:19', '2024-06-12 19:54:27', '2024-06-12 19:54:27');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ordercomponents`
+--
+
+CREATE TABLE `ordercomponents` (
+  `id` int(11) NOT NULL,
+  `garageOrder_id` int(11) NOT NULL,
+  `component_id` int(11) NOT NULL,
+  `cantity` int(11) NOT NULL,
+  `pvp` float NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `ordercomponents`
+--
+
+INSERT INTO `ordercomponents` (`id`, `garageOrder_id`, `component_id`, `cantity`, `pvp`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(5, 8, 3, 2, 200, '2023-12-17 22:25:11', '2023-12-17 22:26:15', NULL),
+(6, 8, 4, 1, 185, '2023-12-17 22:25:21', '2023-12-17 22:25:21', NULL),
+(7, 1, 4, 1, 185, '2023-12-19 21:32:12', '2023-12-19 21:32:12', NULL),
+(8, 6, 3, 1, 200, '2024-06-15 23:38:07', '2024-06-15 23:38:07', NULL),
+(9, 9, 4, 1, 185, '2024-06-16 20:11:55', '2024-06-16 20:11:55', NULL),
+(10, 10, 4, 1, 185, '2024-06-16 20:23:13', '2024-06-16 20:23:13', NULL),
+(11, 11, 4, 1, 185, '2024-06-16 20:24:36', '2024-06-16 20:24:36', NULL),
+(13, 12, 3, 1, 200, '2024-06-16 22:14:36', '2024-06-16 22:14:36', NULL),
+(17, 13, 3, 1, 200, '2024-06-19 20:43:36', '2024-06-19 20:43:36', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ordersupplies`
+--
+
+CREATE TABLE `ordersupplies` (
+  `id` int(11) NOT NULL,
+  `garageOrder_id` int(11) NOT NULL,
+  `supply_id` int(11) NOT NULL,
+  `cantity` int(11) NOT NULL,
+  `pvp` float NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `ordersupplies`
+--
+
+INSERT INTO `ordersupplies` (`id`, `garageOrder_id`, `supply_id`, `cantity`, `pvp`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(5, 19, 2, 1, 29, '2024-06-19 19:28:24', '2024-06-19 19:28:24', NULL),
+(10, 13, 1, 1, 40, '2024-06-19 20:43:49', '2024-06-19 20:43:49', NULL),
+(11, 12, 1, 1, 40, '2024-06-19 21:52:38', '2024-06-19 21:52:38', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `orderworks`
+--
+
+CREATE TABLE `orderworks` (
+  `id` int(11) NOT NULL,
+  `garageOrder_id` int(11) NOT NULL,
+  `work_id` int(11) NOT NULL,
+  `cantity` int(11) NOT NULL,
+  `pvp` float NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `orderworks`
+--
+
+INSERT INTO `orderworks` (`id`, `garageOrder_id`, `work_id`, `cantity`, `pvp`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(3, 12, 1, 1, 30, '2024-06-19 21:52:28', '2024-06-19 21:52:28', NULL),
+(4, 24, 4, 2, 30, '2024-06-20 19:53:04', '2024-06-20 19:53:17', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `paymentways`
+--
+
+CREATE TABLE `paymentways` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `account_id` int(11) NOT NULL,
+  `discount` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `paymentways`
+--
+
+INSERT INTO `paymentways` (`id`, `name`, `account_id`, `discount`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(7, 'RXJ72P9Y61CH8LEKMNOD', 1, 20, '2023-01-27 20:58:49', '2023-01-27 20:58:49', NULL),
+(8, '0CYDPU2BAXT1H6LNF8WQ', 1, 20, '2023-01-27 20:58:53', '2023-01-27 20:58:53', NULL),
+(9, 'FLYU58JMS2B6T3ZCDVPO', 1, 20, '2023-01-27 20:59:01', '2023-01-27 20:59:01', NULL),
+(10, 'WBM6CVH3SUKE2AQD4NZP', 1, 20, '2023-01-27 20:59:10', '2023-01-27 20:59:17', '2023-01-27 20:59:17'),
+(11, '1PXC7WZIM0OSKLEHA36R', 0, 20, '2023-01-27 20:59:22', '2023-01-27 21:04:17', '2023-01-27 21:04:17'),
+(12, 'JCB0WML7D6XGIZAP9U3T', 0, 20, '2023-01-27 21:01:26', '2023-01-27 21:01:54', '2023-01-27 21:01:54'),
+(13, 'KP45SBV7RJT9F1ZUGCAX', 1, 20, '2023-10-04 20:40:21', '2023-10-04 20:40:21', NULL),
+(14, 'OY6QHGPM4U0WAJ9VT7EK', 1, 20, '2023-10-04 20:40:25', '2023-10-04 20:40:25', NULL),
+(15, 'YG8CXBJNHLW6VUF4DA7E', 1, 20, '2023-10-04 20:40:33', '2023-10-04 20:40:33', NULL),
+(16, '941DPTE386BMSIU2JO0V', 1, 20, '2023-10-04 20:40:42', '2023-10-04 20:40:49', '2023-10-04 20:40:49'),
+(17, '07GEJT5HSFBXY9L61CDM', 1, 20, '2023-10-04 20:40:54', '2023-10-04 20:40:54', NULL),
+(18, '3CXIZFV85B27UHLW69YT', 1, 20, '2023-10-21 20:23:03', '2023-10-21 20:23:03', NULL),
+(19, 'BZ1ODA3WKVH8NLSGEYI2', 1, 20, '2023-10-21 20:23:07', '2023-10-21 20:23:07', NULL),
+(20, 'TZ8HBCUQPREFA6GDMI1N', 1, 20, '2023-10-21 20:23:15', '2023-10-21 20:23:15', NULL),
+(21, 'HO6U0MWRJ7PLNVIZ2GTC', 1, 20, '2023-10-21 20:23:24', '2023-10-21 20:23:31', '2023-10-21 20:23:31'),
+(22, 'HAVIS65J24LGP7MQ18TF', 1, 20, '2023-10-21 20:23:36', '2023-10-21 22:41:21', '2023-10-21 22:41:21'),
+(34, 'Contado', 1, 10, '2023-10-22 19:22:27', '2023-10-22 19:22:27', NULL),
+(35, 'X6YM51Z9WTEHRUD80BAP', 1, 20, '2023-10-22 19:22:58', '2023-10-22 19:22:58', NULL),
+(36, '7ZR5MH3EWPTQ0I8VLYCF', 1, 20, '2023-10-22 19:23:01', '2023-10-22 19:23:01', NULL),
+(37, 'PJ7Z1OT0S2LH3EC6GAFI', 1, 20, '2023-10-22 19:23:10', '2023-10-22 19:23:10', NULL),
+(38, 'WLPH1935EYQGU8B6V2OR', 1, 20, '2023-10-22 19:23:18', '2023-10-22 19:23:25', '2023-10-22 19:23:25'),
+(39, 'SNXR92EITKBZC67W08LP', 1, 20, '2023-10-22 19:23:30', '2023-10-22 19:23:30', NULL),
+(40, 'TLPCGMH8Q571ZRSD4WBU', 1, 20, '2023-12-28 22:18:42', '2023-12-28 22:18:42', NULL),
+(41, 'Q3KYJM0NR8APILSH16FX', 1, 20, '2023-12-28 22:18:47', '2023-12-28 22:18:47', NULL),
+(42, 'FYM2J5R01PZKST7U3IOW', 1, 20, '2023-12-28 22:18:56', '2023-12-28 22:18:56', NULL),
+(43, '0KC9EGD21NV5FA3WPH78', 1, 20, '2023-12-28 22:19:06', '2023-12-28 22:19:14', '2023-12-28 22:19:14'),
+(44, '5KVHR4LTAFNDCPU0BEYO', 1, 20, '2023-12-28 22:19:19', '2023-12-28 22:19:19', NULL),
+(45, 'ONI3BYW0U874CKP1FL9J', 1, 20, '2023-12-29 20:17:22', '2023-12-29 20:17:22', NULL),
+(46, '0LRIUYXQ21OMEDASZFNB', 1, 20, '2023-12-29 20:17:40', '2023-12-29 20:17:40', NULL),
+(47, 'OF8CK0RB7A9VI4GPSHNW', 1, 20, '2023-12-29 20:20:33', '2023-12-29 20:20:33', NULL),
+(48, '4BMQNHWCRSDKU9G1EX5F', 1, 20, '2023-12-29 20:20:51', '2023-12-29 20:20:51', NULL),
+(49, 'EGM9BOAV7FR04ZSHJ2X8', 1, 20, '2023-12-29 20:23:26', '2023-12-29 20:23:40', '2023-12-29 20:23:40'),
+(50, 'J0CBEZ1Y536DWMVTPA4X', 1, 20, '2023-12-29 20:23:49', '2023-12-29 20:23:57', '2023-12-29 20:23:57'),
+(51, '8ZND14JTUYMB0X953C67', 1, 20, '2024-01-02 20:11:53', '2024-01-02 20:12:10', '2024-01-02 20:12:10'),
+(52, 'W4CX5GS3FKZYBUQ061PT', 1, 20, '2024-01-02 20:12:19', '2024-01-02 20:12:27', '2024-01-02 20:12:27'),
+(53, 'SNDYCGIPLA1735JUHVOZ', 1, 20, '2024-01-09 22:48:58', '2024-01-09 22:49:17', '2024-01-09 22:49:17'),
+(54, 'FN9SH1GJA8KL3XO507MR', 1, 20, '2024-01-09 22:49:28', '2024-01-09 22:49:37', '2024-01-09 22:49:37'),
+(55, '76BO13GMQXJVH8L2ZCFD', 1, 20, '2024-01-12 17:05:55', '2024-01-12 17:06:28', '2024-01-12 17:06:28'),
+(56, 'PAM25EILDXWYF103O6T7', 1, 20, '2024-06-12 19:54:36', '2024-06-12 19:54:51', '2024-06-12 19:54:51'),
+(57, 'M3R9CP2T7O10Y5U6KBJH', 1, 20, '2024-06-12 19:55:00', '2024-06-12 19:55:09', '2024-06-12 19:55:09');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `phinxlog`
+--
+
+CREATE TABLE `phinxlog` (
+  `version` bigint(20) NOT NULL,
+  `migration_name` varchar(100) DEFAULT NULL,
+  `start_time` timestamp NULL DEFAULT NULL,
+  `end_time` timestamp NULL DEFAULT NULL,
+  `breakpoint` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `phinxlog`
+--
+
+INSERT INTO `phinxlog` (`version`, `migration_name`, `start_time`, `end_time`, `breakpoint`) VALUES
+(1, 'CreateBrandsTable', '2022-12-24 14:01:32', '2022-12-24 14:01:32', 0),
+(2, 'CreateModelTable', '2022-12-24 14:01:32', '2022-12-24 14:01:32', 0),
+(3, 'CreateStoreTable', '2022-12-24 14:01:32', '2022-12-24 14:01:32', 0),
+(4, 'CreateVehicleTypesTable', '2022-12-24 14:01:32', '2022-12-24 14:01:32', 0),
+(5, 'CreateProvidorTable', '2022-12-24 14:01:32', '2022-12-24 14:01:32', 0),
+(6, 'CreateBanksTable', '2022-12-24 14:01:32', '2022-12-24 14:01:32', 0),
+(7, 'CreateCustomerTypesTable', '2022-12-24 14:01:32', '2022-12-24 14:01:32', 0),
+(8, 'CreateCustomersTable', '2022-12-24 14:01:32', '2022-12-24 14:01:32', 0),
+(9, 'CreateSellerTable', '2022-12-24 14:01:32', '2022-12-24 14:01:32', 0),
+(10, 'CreateLocationTable', '2022-12-24 14:01:32', '2022-12-24 14:01:32', 0),
+(11, 'CreateVehiclesTable', '2022-12-24 14:01:32', '2022-12-24 14:01:33', 0),
+(12, 'CreateMadersTable', '2022-12-24 14:01:33', '2022-12-24 14:01:33', 0),
+(13, 'CreateHomologationsTable', '2022-12-24 14:01:33', '2022-12-24 14:01:33', 0),
+(14, 'CreateSuppliesTable', '2022-12-24 14:01:33', '2022-12-24 14:01:33', 0),
+(15, 'CreateComponentsTable', '2022-12-24 14:01:33', '2022-12-24 14:01:33', 0),
+(16, 'CreateWorksTable', '2022-12-24 14:01:33', '2022-12-24 14:01:33', 0),
+(17, 'CreateAccountsTable', '2022-12-24 14:01:33', '2022-12-24 14:01:33', 0),
+(18, 'UserLevelTable', '2022-12-27 19:37:22', '2022-12-27 19:37:22', 0),
+(19, 'AssurancesTable', '2023-11-19 19:35:21', '2023-11-19 19:35:22', 0),
+(24, 'CreateTaxesTable', '2022-12-24 14:01:33', '2022-12-24 14:01:33', 0),
+(25, 'CreatePaymentWaysTable', '2022-12-24 14:01:33', '2022-12-24 14:01:34', 0),
+(26, 'CreateSellOffersTable', '2022-12-24 14:01:34', '2022-12-24 14:01:34', 0),
+(27, 'CreateSellOffersSuppliesTable', '2022-12-24 14:01:34', '2022-12-24 14:01:34', 0),
+(28, 'CreateTableSellOffersComponents', '2022-12-24 14:01:34', '2022-12-24 14:01:34', 0),
+(29, 'CreateSellOffersWorksTable', '2022-12-24 14:01:34', '2022-12-24 14:01:34', 0),
+(30, 'CreateUsersTable', '2022-12-24 14:01:35', '2022-12-24 14:01:35', 0),
+(31, 'CreateAccesoriesTable', '2022-12-24 14:01:35', '2022-12-24 14:01:35', 0),
+(32, 'CreateArticlesTable', '2022-12-24 14:01:35', '2022-12-24 14:01:35', 0),
+(33, 'CreateBuyDeliveryTable', '2022-12-24 14:01:35', '2022-12-24 14:01:35', 0),
+(34, 'CreateBuyInvoicesTable', '2022-12-24 14:01:35', '2022-12-24 14:01:35', 0),
+(35, 'CreateCompanyTable', '2022-12-24 14:01:35', '2022-12-24 14:01:35', 0),
+(36, 'CreateCountersTable', '2022-12-24 14:01:35', '2022-12-24 14:01:35', 0),
+(37, 'CreateFinanceTable', '2022-12-24 14:01:35', '2022-12-24 14:01:35', 0),
+(38, 'CreateGarageTable', '2022-12-24 14:01:35', '2022-12-24 14:01:35', 0),
+(39, 'CreateGarageOrderTable', '2022-12-24 14:01:35', '2022-12-24 14:01:36', 0),
+(40, 'CreateProductionTable', '2022-12-24 14:01:36', '2022-12-24 14:01:36', 0),
+(41, 'CreateSettingsTable', '2022-12-24 14:01:36', '2022-12-24 14:01:36', 0),
+(42, 'CreateTextsTable', '2022-12-24 14:01:36', '2022-12-24 14:01:36', 0),
+(44, 'CreateProductTable', '2022-12-24 14:01:36', '2022-12-24 14:01:36', 0),
+(45, 'VehicleAccesoriesTable', '2022-12-24 14:01:36', '2022-12-24 14:01:36', 0),
+(49, 'CreateVehicleSuppliesTable', '2022-12-24 14:01:36', '2022-12-24 14:01:37', 0),
+(50, 'CreateVehicleComponentsTable', '2022-12-24 14:01:37', '2022-12-24 14:01:37', 0),
+(51, 'LabelsTable', '2022-12-31 09:27:29', '2022-12-31 09:27:29', 0),
+(52, 'VehicleWorksTable', '2023-11-19 19:35:22', '2023-11-19 19:35:22', 0),
+(53, 'OrderComponentsTable', '2023-12-12 18:47:19', '2023-12-12 18:47:19', 0),
+(54, 'OrderSuppliesTable', '2023-12-12 18:47:19', '2023-12-12 18:47:19', 0),
+(55, 'OrderWorksTable', '2023-12-12 18:47:19', '2023-12-12 18:47:19', 0),
+(56, 'WorkSheetsTable', '2024-06-13 18:49:59', '2024-06-13 18:49:59', 0),
+(57, 'WorkSheetsComponentsTable', '2024-06-13 20:47:00', '2024-06-13 20:47:00', 0),
+(58, 'WorkSheetsSuppliesTable', '2024-06-13 20:47:00', '2024-06-13 20:47:00', 0),
+(59, 'WorkSheetsWorksTable', '2024-06-18 17:35:05', '2024-06-18 17:35:05', 0),
+(60, 'ExpertOpinionsTable', '2024-06-18 17:35:05', '2024-06-18 17:35:05', 0),
+(61, 'ExpertOpinionsComponentsTable', '2024-06-21 20:08:31', '2024-06-21 20:08:31', 0),
+(62, 'ExpertOpinionsSuppliesTable', '2024-06-21 20:08:31', '2024-06-21 20:08:31', 0),
+(63, 'ExpertOpinionsWorksTable', '2024-06-21 20:08:31', '2024-06-21 20:08:31', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `productions`
+--
+
+CREATE TABLE `productions` (
+  `id` int(11) NOT NULL,
+  `vehicleId` int(11) NOT NULL,
+  `homologationId` int(11) NOT NULL,
+  `productionNumber` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `dateIn` date DEFAULT NULL,
+  `dateOut` date DEFAULT NULL,
+  `accesories` varchar(255) DEFAULT NULL,
+  `observations` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `providors`
+--
+
+CREATE TABLE `providors` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `fiscalId` varchar(255) DEFAULT NULL,
+  `fiscalName` varchar(255) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `postal_code` int(11) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `site` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `providors`
+--
+
+INSERT INTO `providors` (`id`, `name`, `fiscalId`, `fiscalName`, `address`, `city`, `postal_code`, `state`, `country`, `phone`, `email`, `site`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Lorem Ipsum', '32432423d', 'daperesdfj', 'lkdfhal sdfl', 'dhflak jdsla', 21342, 'kjljlhlilñjpoiuo', 'oiuoihij', 'uiouoiohioi', 'hiohoiho', 'oihoohohooho', '2023-10-27 22:43:22', '2023-10-27 22:43:22', NULL),
+(2, 'C5BAZ0P2WI3F', 'CEORPA43X6', '', '', '', 0, '', '', '', '', '', '2023-12-30 22:26:03', '2023-12-30 22:26:18', '2023-12-30 22:26:18'),
+(3, 'HDMZW89BQAF7', '6RJEMZCO9H', '', '', '', 0, '', '', '', '', '', '2023-12-30 22:26:27', '2023-12-30 22:26:35', '2023-12-30 22:26:35'),
+(4, 'C47TPIZNHJVA', 'GF6NJ4RSQK', '', '', '', 0, '', '', '', '', '', '2024-01-02 20:12:36', '2024-01-02 20:12:51', '2024-01-02 20:12:51'),
+(5, 'XHCIPVAGDF57', 'YZFOBLMCJV', '', '', '', 0, '', '', '', '', '', '2024-01-02 20:13:00', '2024-01-02 20:13:08', '2024-01-02 20:13:08'),
+(6, 'O1XUZ4IBF2A5', 'J7LSWU3RVI', '', '', '', 0, '', '', '', '', '', '2024-01-09 22:49:46', '2024-01-09 22:50:01', '2024-01-09 22:50:01'),
+(7, 'PVIQTAOESZL7', 'QURWSPI2B7', '', '', '', 0, '', '', '', '', '', '2024-01-09 22:50:10', '2024-01-09 22:50:19', '2024-01-09 22:50:19'),
+(8, '8VZRT4J569XL', '1U8C2GSIMN', '', '', '', 0, '', '', '', '', '', '2024-01-15 19:45:14', '2024-01-15 19:45:14', NULL),
+(9, 'FH1GUW98CJXP', 'TEGA1ZUKWN', '', '', '', 0, '', '', '', '', '', '2024-06-12 19:55:19', '2024-06-12 19:55:36', '2024-06-12 19:55:36'),
+(10, 'XQASVG06OWJM', '6WPND4KBOE', '', '', '', 0, '', '', '', '', '', '2024-06-12 19:55:46', '2024-06-12 19:55:55', '2024-06-12 19:55:55');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `sellers`
+--
+
+CREATE TABLE `sellers` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `fiscalId` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `postalCode` int(11) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `birthDate` date DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `sellers`
+--
+
+INSERT INTO `sellers` (`id`, `name`, `fiscalId`, `address`, `city`, `postalCode`, `state`, `country`, `phone`, `email`, `birthDate`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Jose Antonio Pinto Gimeno', '34323343h', 'dalfkdhaldslfj', 'ldknafldksn sla', 12435, 'djlkf jlajldj', 'ljdlfjal sdkjflkasjdl', 'dfaljkljllj', 'eoihralsdfsdk@ksadjreklh.com', '0000-00-00', '2023-10-19 20:35:46', '2023-10-19 20:37:29', '2023-10-19 20:37:29'),
+(3, '3X7GUMIOLRDB', 'A5XUCYQZD7', '', '', 0, '', '', '', '', '1970-01-01', '2023-12-30 22:31:07', '2023-12-30 22:31:22', '2023-12-30 22:31:22'),
+(4, '9FZ87BQWMJ6O', 'MKC2SB9GYP', '', '', 0, '', '', '', '', '1970-01-01', '2023-12-30 22:31:30', '2023-12-30 22:31:38', '2023-12-30 22:31:38'),
+(5, 'MCT5FARK3VGI', '06EDHM9QR4', '', '', 0, '', '', '', '', '1970-01-01', '2024-01-02 20:13:17', '2024-01-02 20:13:33', '2024-01-02 20:13:33'),
+(6, 'H7SVJGCBIO3K', '0DNZTJQ732', '', '', 0, '', '', '', '', '1970-01-01', '2024-01-02 20:13:41', '2024-01-02 20:13:50', '2024-01-02 20:13:50'),
+(7, 'M1NCROEHQZ97', 'ZD3B6HJO7V', '', '', 0, '', '', '', '', '1970-01-01', '2024-01-09 22:51:11', '2024-01-09 22:51:26', '2024-01-09 22:51:26'),
+(8, 'XEM0BGO1TYU4', 'QJO7EU8FPS', '', '', 0, '', '', '', '', '1970-01-01', '2024-01-09 22:51:36', '2024-01-09 22:51:45', '2024-01-09 22:51:45'),
+(9, 'QO8GDFYAK5HB', '5VRKD4WXO8', '', '', 0, '', '', '', '', '1970-01-01', '2024-06-12 19:56:48', '2024-06-12 19:57:05', '2024-06-12 19:57:05'),
+(10, 'SHLBX78VYWG6', 'UH09QTKRBN', '', '', 0, '', '', '', '', '1970-01-01', '2024-06-12 19:57:14', '2024-06-12 19:57:23', '2024-06-12 19:57:23');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `selloffers`
+--
+
+CREATE TABLE `selloffers` (
+  `id` int(11) NOT NULL,
+  `offerNumber` varchar(255) NOT NULL,
+  `offerDate` date NOT NULL,
+  `taxes_id` int(11) NOT NULL,
+  `paymentWay_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `vehicle_id` int(11) NOT NULL,
+  `vehiclePvp` float DEFAULT NULL,
+  `vehicleDiscount` float DEFAULT NULL,
+  `vehicleTva` float DEFAULT NULL,
+  `vehicleTotal` float DEFAULT NULL,
+  `pvp` float DEFAULT NULL,
+  `discount` float DEFAULT NULL,
+  `tva` float DEFAULT NULL,
+  `total` float DEFAULT NULL,
+  `observations` varchar(255) DEFAULT NULL,
+  `texts` varchar(255) DEFAULT NULL,
+  `vehicleComments` varchar(255) DEFAULT NULL,
+  `equipment` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `selloffers`
+--
+
+INSERT INTO `selloffers` (`id`, `offerNumber`, `offerDate`, `taxes_id`, `paymentWay_id`, `customer_id`, `vehicle_id`, `vehiclePvp`, `vehicleDiscount`, `vehicleTva`, `vehicleTotal`, `pvp`, `discount`, `tva`, `total`, `observations`, `texts`, `vehicleComments`, `equipment`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'OV202300001', '2023-11-28', 1, 7, 3, 9, 6000, 0, 1260, 7260, 6269, 0, 1316, 7585, '', '', '', NULL, '2023-11-28 21:58:07', '2023-12-10 22:33:03', NULL),
+(4, 'OV20230002', '2023-11-29', 1, 7, 3, 9, 6000, 0, 1260, 7260, 6329, 0, 1329, 7658, '', '', '', NULL, '2023-11-29 22:05:08', '2023-12-11 19:16:19', NULL),
+(6, 'OV202300003', '2023-11-29', 1, 7, 3, 9, 6000, 0, 1260, 7260, 5999, 1, 1259, 7258, '', '', '', NULL, '2023-11-29 22:12:00', '2023-12-11 19:16:31', NULL),
+(85, 'OV202300004', '2024-06-20', 1, 7, 3, 9, 6000, 0, 1260, 7260, 6000, 0, 1260, 7260, '', '', '', NULL, '2024-06-20 19:38:15', '2024-06-20 19:38:15', NULL),
+(86, 'OV202300005', '2024-07-15', 1, 7, 3, 9, 6000, 0, 1260, 7260, 6000, 0, 1260, 7260, '', '', '', NULL, '2024-07-15 19:56:52', '2024-07-15 19:56:52', NULL),
+(87, 'OV202300006', '2024-07-15', 1, 7, 3, 9, 6000, 0, 1260, 7260, 6000, 0, 1260, 7260, '', '', '', NULL, '2024-07-15 19:58:02', '2024-07-15 19:58:02', NULL),
+(88, 'OV202300007', '2024-07-15', 1, 7, 3, 9, 6000, 0, 1260, 7260, 6000, 0, 1260, 7260, '', '', '', NULL, '2024-07-15 19:59:02', '2024-07-15 19:59:02', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `sellofferscomponents`
+--
+
+CREATE TABLE `sellofferscomponents` (
+  `id` int(11) NOT NULL,
+  `selloffer_id` int(11) NOT NULL,
+  `component_id` int(11) NOT NULL,
+  `cantity` int(11) NOT NULL,
+  `pvp` float NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `sellofferscomponents`
+--
+
+INSERT INTO `sellofferscomponents` (`id`, `selloffer_id`, `component_id`, `cantity`, `pvp`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(48, 4, 3, 1, 200, '2023-12-09 20:07:47', '2023-12-09 20:07:47', NULL),
+(50, 1, 3, 2, 200, '2023-12-20 19:21:36', '2023-12-21 19:40:17', NULL),
+(52, 1, 4, 1, 185, '2023-12-29 20:29:08', '2023-12-29 20:29:08', NULL),
+(54, 27, 4, 1, 185, '2024-01-15 21:51:42', '2024-01-15 21:51:42', NULL),
+(55, 28, 4, 1, 185, '2024-01-16 20:07:06', '2024-01-16 20:07:06', NULL),
+(56, 29, 4, 1, 185, '2024-01-16 20:09:00', '2024-01-16 20:09:00', NULL),
+(57, 30, 4, 1, 185, '2024-01-16 20:09:43', '2024-01-16 20:09:43', NULL),
+(58, 31, 4, 1, 185, '2024-01-16 20:10:51', '2024-01-16 20:10:51', NULL),
+(59, 32, 4, 1, 185, '2024-01-16 20:11:34', '2024-01-16 20:11:34', NULL),
+(60, 33, 4, 1, 185, '2024-01-16 20:20:02', '2024-01-16 20:20:02', NULL),
+(61, 34, 4, 1, 185, '2024-01-16 20:30:08', '2024-01-16 20:30:08', NULL),
+(62, 35, 4, 1, 185, '2024-01-16 20:32:17', '2024-01-16 20:32:17', NULL),
+(63, 36, 4, 1, 185, '2024-01-16 20:33:13', '2024-01-16 20:33:13', NULL),
+(64, 37, 4, 1, 185, '2024-01-16 20:34:14', '2024-01-16 20:34:14', NULL),
+(65, 38, 4, 1, 185, '2024-01-16 20:35:05', '2024-01-16 20:35:05', NULL),
+(66, 39, 4, 1, 185, '2024-01-16 20:36:14', '2024-01-16 20:36:14', NULL),
+(67, 40, 4, 1, 185, '2024-01-16 22:14:59', '2024-01-16 22:14:59', NULL),
+(68, 41, 4, 1, 185, '2024-01-16 22:21:28', '2024-01-16 22:21:28', NULL),
+(69, 42, 4, 1, 185, '2024-01-16 22:24:47', '2024-01-16 22:24:47', NULL),
+(70, 43, 4, 1, 185, '2024-01-16 22:30:58', '2024-01-16 22:30:58', NULL),
+(71, 44, 4, 1, 185, '2024-01-16 22:34:48', '2024-01-16 22:34:48', NULL),
+(73, 46, 4, 1, 185, '2024-01-17 19:25:57', '2024-01-17 19:25:57', NULL),
+(74, 47, 4, 1, 185, '2024-01-17 19:28:51', '2024-01-17 19:28:51', NULL),
+(75, 48, 4, 1, 185, '2024-01-17 19:32:02', '2024-01-17 19:32:02', NULL),
+(76, 49, 4, 2, 185, '2024-01-17 19:33:14', '2024-01-17 20:25:49', NULL),
+(83, 50, 4, 2, 185, '2024-01-17 22:14:18', '2024-01-17 22:27:51', NULL),
+(84, 55, 4, 2, 185, '2024-06-16 19:03:08', '2024-06-16 19:03:21', NULL),
+(85, 56, 4, 1, 185, '2024-06-16 19:09:21', '2024-06-16 19:09:21', NULL),
+(86, 57, 4, 1, 185, '2024-06-16 19:12:41', '2024-06-16 19:12:41', NULL),
+(87, 58, 4, 1, 185, '2024-06-16 19:16:14', '2024-06-16 19:16:14', NULL),
+(88, 59, 4, 2, 185, '2024-06-16 19:19:04', '2024-06-16 19:19:17', NULL),
+(96, 67, 4, 1, 185, '2024-06-16 21:57:43', '2024-06-16 21:57:43', NULL),
+(97, 68, 4, 1, 185, '2024-06-16 21:59:10', '2024-06-16 21:59:10', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `sellofferssupplies`
+--
+
+CREATE TABLE `sellofferssupplies` (
+  `id` int(11) NOT NULL,
+  `selloffer_id` int(11) NOT NULL,
+  `supply_id` int(11) NOT NULL,
+  `cantity` int(11) NOT NULL,
+  `pvp` float NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `sellofferssupplies`
+--
+
+INSERT INTO `sellofferssupplies` (`id`, `selloffer_id`, `supply_id`, `cantity`, `pvp`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(16, 4, 1, 1, 40, '2023-12-09 20:05:02', '2023-12-09 20:05:02', NULL),
+(17, 4, 2, 1, 29, '2023-12-09 20:05:46', '2023-12-09 20:05:46', NULL),
+(18, 1, 2, 2, 29, '2023-12-21 19:30:10', '2023-12-21 19:32:00', NULL),
+(20, 1, 1, 3, 40, '2023-12-21 19:40:40', '2023-12-21 19:40:52', NULL),
+(21, 77, 2, 1, 29, '2024-06-18 22:00:09', '2024-06-18 22:00:09', NULL),
+(25, 49, 1, 1, 40, '2024-06-19 20:06:52', '2024-06-19 20:06:52', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `selloffersworks`
+--
+
+CREATE TABLE `selloffersworks` (
+  `id` int(11) NOT NULL,
+  `selloffer_id` int(11) NOT NULL,
+  `work_id` int(11) NOT NULL,
+  `cantity` float NOT NULL,
+  `pvp` float NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `selloffersworks`
+--
+
+INSERT INTO `selloffersworks` (`id`, `selloffer_id`, `work_id`, `cantity`, `pvp`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(12, 4, 1, 1, 30, '2023-12-09 22:10:24', '2023-12-09 22:10:24', NULL),
+(13, 4, 4, 2, 30, '2023-12-09 22:12:43', '2023-12-09 22:12:43', NULL),
+(15, 1, 4, 3, 30, '2023-12-21 19:41:15', '2023-12-21 19:41:25', NULL),
+(16, 1, 1, 1, 30, '2023-12-21 19:43:08', '2023-12-21 19:43:08', NULL),
+(17, 49, 4, 1, 30, '2024-06-19 20:07:03', '2024-06-19 20:07:03', NULL),
+(18, 83, 4, 1, 30, '2024-06-20 19:33:43', '2024-06-20 19:33:43', NULL),
+(19, 84, 4, 1, 30, '2024-06-20 19:35:03', '2024-06-20 19:35:03', NULL),
+(20, 73, 1, 1, 30, '2024-06-20 19:36:03', '2024-06-20 19:36:03', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `value` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `stores`
+--
+
+CREATE TABLE `stores` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `postal_code` int(11) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `stores`
+--
+
+INSERT INTO `stores` (`id`, `name`, `address`, `city`, `postal_code`, `state`, `country`, `phone`, `email`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'LoremIpsum', 'C/ Lorem Ipsum, 123', 'Ipsum', 94649, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-01-25 20:46:03', '2023-01-26 20:35:31', '2023-01-26 20:35:31'),
+(4, 'Lorem Ipsum', 'C/ Ipsum Lorem, 45', 'Lorem', 23123, 'Ipsum', 'España', '948751424', 'loremipsum@loremipsum.com', '2023-01-25 20:49:24', '2023-01-26 20:32:00', '2023-01-26 20:32:00'),
+(12, 'UQZMFKNGCBATYWVX', 'C/ Lorem Ipsum, 123', 'Ipsum', 94972, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-01-26 20:29:09', '2023-01-26 20:31:05', '2023-01-26 20:31:05'),
+(13, 'EJXTAUPOVRZIHYCW', 'C/ Lorem Ipsum, 123', 'Ipsum', 47232, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-01-26 20:29:25', '2023-01-26 20:29:44', '2023-01-26 20:29:44'),
+(14, 'RTEJQIBUGLOMXHNF', 'C/ Lorem Ipsum, 123', 'Ipsum', 27984, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-01-26 20:30:46', '2023-01-26 20:30:57', '2023-01-26 20:30:57'),
+(15, 'LoremIpsumEdited', 'C/ Lorem Ipsum, 123', 'Ipsum', 87013, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-01-26 20:31:39', '2023-01-26 20:31:52', '2023-01-26 20:31:52'),
+(16, 'WNCKYBIDPHTQJMLG', 'C/ Lorem Ipsum, 123', 'Ipsum', 91744, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-01-26 20:35:09', '2023-01-26 20:35:22', '2023-01-26 20:35:22'),
+(17, 'UERSMYXTJWKCIQGB', 'C/ Lorem Ipsum, 123', 'Ipsum', 65259, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-01-26 20:44:16', '2023-01-26 20:44:16', NULL),
+(18, 'ZQNLMPRBTASGDXYO', 'C/ Lorem Ipsum, 123', 'Ipsum', 21750, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-01-26 20:44:19', '2023-01-26 20:44:19', NULL),
+(19, 'TWVYDUSEHRCOBZKJ', 'C/ Lorem Ipsum, 123', 'Ipsum', 95163, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-01-26 20:44:30', '2023-01-26 20:44:36', '2023-01-26 20:44:36'),
+(20, 'TNJOXPEQDWMUKVYZ', 'C/ Lorem Ipsum, 123', 'Ipsum', 35920, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-01-26 20:44:41', '2023-01-26 20:44:48', '2023-01-26 20:44:48'),
+(21, 'BLUWOKJQXFSYAETH', 'C/ Lorem Ipsum, 123', 'Ipsum', 84740, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-01-26 20:44:53', '2023-01-26 20:44:53', NULL),
+(22, 'DKSTIBMPGRLZHQNV', 'C/ Lorem Ipsum, 123', 'Ipsum', 45194, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-10-04 20:41:01', '2023-10-04 20:41:01', NULL),
+(23, 'GRLVYENJMTKFAWPQ', 'C/ Lorem Ipsum, 123', 'Ipsum', 79210, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-10-04 20:41:05', '2023-10-04 20:41:05', NULL),
+(24, 'GJINUFSZHMBTPLYO', 'C/ Lorem Ipsum, 123', 'Ipsum', 75279, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-10-04 20:41:17', '2023-10-04 20:41:23', '2023-10-04 20:41:23'),
+(25, 'GMILKNOVAEWCYFXR', 'C/ Lorem Ipsum, 123', 'Ipsum', 28127, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-10-04 20:41:28', '2023-10-04 20:41:36', '2023-10-04 20:41:36'),
+(26, 'YVTZDFKEMCGNIAOS', 'C/ Lorem Ipsum, 123', 'Ipsum', 79405, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-10-04 20:41:41', '2023-10-04 20:41:41', NULL),
+(27, 'YDVXLRMAUTFQJCHG', 'C/ Lorem Ipsum, 123', 'Ipsum', 93946, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-10-21 20:23:43', '2023-10-21 20:23:43', NULL),
+(28, 'BYARODUHSLCWJXQT', 'C/ Lorem Ipsum, 123', 'Ipsum', 93336, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-10-21 20:23:46', '2023-10-21 20:23:46', NULL),
+(29, 'CDKTLXEYJVRNAWOF', 'C/ Lorem Ipsum, 123', 'Ipsum', 63768, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-10-21 20:23:58', '2023-10-21 20:24:04', '2023-10-21 20:24:04'),
+(30, 'CQIXJNOPYSTFMUDZ', 'C/ Lorem Ipsum, 123', 'Ipsum', 10880, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-10-21 20:24:08', '2023-10-21 20:24:15', '2023-10-21 20:24:15'),
+(31, 'DPWKCZIRHYVLMJNX', 'C/ Lorem Ipsum, 123', 'Ipsum', 87171, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-10-21 20:24:20', '2023-10-21 20:24:20', NULL),
+(32, 'FSABHPOYCEJMWNDG', 'C/ Lorem Ipsum, 123', 'Ipsum', 82855, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-12-28 22:19:27', '2023-12-28 22:19:27', NULL),
+(33, 'VQRDIMKNBAZCPHJY', 'C/ Lorem Ipsum, 123', 'Ipsum', 78144, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-12-28 22:19:32', '2023-12-28 22:19:32', NULL),
+(34, 'DNIWRJESBCXHLYFM', 'C/ Lorem Ipsum, 123', 'Ipsum', 30351, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-12-28 22:19:44', '2023-12-28 22:19:50', '2023-12-28 22:19:50'),
+(35, 'PSVLZEJBMTQOURFC', 'C/ Lorem Ipsum, 123', 'Ipsum', 44899, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-12-28 22:19:55', '2023-12-28 22:20:03', '2023-12-28 22:20:03'),
+(36, 'BOKCVEDRYPLTJHIM', 'C/ Lorem Ipsum, 123', 'Ipsum', 54801, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-12-28 22:20:08', '2023-12-28 22:20:08', NULL),
+(37, 'ENMOAKSYHUIPQXRJ', 'C/ Lorem Ipsum, 123', 'Ipsum', 60054, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-12-29 20:17:54', '2023-12-29 20:18:08', '2023-12-29 20:18:08'),
+(38, 'WADQCGIPVMEYHJRL', 'C/ Lorem Ipsum, 123', 'Ipsum', 17829, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2023-12-29 20:18:16', '2023-12-29 20:18:21', '2023-12-29 20:18:21'),
+(39, 'WOJGPKIQVMDHELUR', 'C/ Lorem Ipsum, 123', 'Ipsum', 66739, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2024-01-02 20:13:59', '2024-01-02 20:14:14', '2024-01-02 20:14:14'),
+(40, 'NQOXYUKFZHGIMSPB', 'C/ Lorem Ipsum, 123', 'Ipsum', 21336, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2024-01-02 20:14:23', '2024-01-02 20:14:28', '2024-01-02 20:14:28'),
+(41, 'AXSEFQILYKUGHJZW', 'C/ Lorem Ipsum, 123', 'Ipsum', 68027, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2024-01-09 22:51:54', '2024-01-09 22:52:13', '2024-01-09 22:52:13'),
+(42, 'KSIHWPQYBMJFGTDL', 'C/ Lorem Ipsum, 123', 'Ipsum', 26313, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2024-01-09 22:52:22', '2024-01-09 22:52:27', '2024-01-09 22:52:27'),
+(43, 'GKFBQRZVJATYCNEP', 'C/ Lorem Ipsum, 123', 'Ipsum', 26964, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2024-06-12 19:57:33', '2024-06-12 19:57:54', '2024-06-12 19:57:54'),
+(44, 'NKUTBYGFIWZMLESA', 'C/ Lorem Ipsum, 123', 'Ipsum', 32659, 'Lorem', 'IpsumLorem', '962541144', 'loremipsum@loremipsum.com', '2024-06-12 19:58:04', '2024-06-12 19:58:10', '2024-06-12 19:58:10');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `supplies`
+--
+
+CREATE TABLE `supplies` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `ref` varchar(255) NOT NULL,
+  `mader_id` int(11) NOT NULL,
+  `maderCode` varchar(255) DEFAULT NULL,
+  `pvc` float DEFAULT NULL,
+  `pvp` float DEFAULT NULL,
+  `observations` varchar(255) DEFAULT NULL,
+  `stock` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `supplies`
+--
+
+INSERT INTO `supplies` (`id`, `name`, `ref`, `mader_id`, `maderCode`, `pvc`, `pvp`, `observations`, `stock`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Filtro Aceite', 'd35w345', 2, '543rtefd', 18, 40, '', 0, '2023-11-19 15:31:30', '2023-11-19 15:31:30', NULL),
+(2, 'Filtro de Aire', '43453453', 2, 'gd fhtrt4', 10, 29, '', 0, '2023-11-19 15:32:00', '2023-11-19 15:32:00', NULL),
+(3, '7YIC8SAZ', 'RVKND29SIW', 20, '', 10, 20, '', 0, '2023-12-30 22:33:59', '2023-12-30 22:34:13', '2023-12-30 22:34:13'),
+(4, 'ONQ8T4XB', 'JTWC3MZOVE', 20, '', 10, 20, '', 0, '2023-12-30 22:34:22', '2023-12-30 22:34:31', '2023-12-30 22:34:31'),
+(5, 'EDF6TY85', 'WV1XPABGF6', 20, '', 10, 20, '', 0, '2024-01-02 20:14:37', '2024-01-02 20:14:51', '2024-01-02 20:14:51'),
+(6, '9WPTQJEY', 'EL3J1TBM7N', 20, '', 10, 20, '', 0, '2024-01-02 20:15:00', '2024-01-02 20:15:09', '2024-01-02 20:15:09'),
+(7, '6RZ8FHYM', '4P75AE2FMG', 20, '', 10, 20, '', 0, '2024-01-09 22:52:37', '2024-01-09 22:52:54', '2024-01-09 22:52:54'),
+(8, 'PY8N7XJ5', 'S1J9VIA4YX', 20, '', 10, 20, '', 0, '2024-01-09 22:53:04', '2024-01-09 22:53:13', '2024-01-09 22:53:13'),
+(9, 'BRYT3XS6', 'MFVG8X3CNI', 20, '', 10, 20, '', 0, '2024-06-12 19:58:20', '2024-06-12 19:58:36', '2024-06-12 19:58:36'),
+(10, '3MG012RW', 'FRZ3U7KN0S', 20, '', 10, 20, '', 0, '2024-06-12 19:58:45', '2024-06-12 19:58:54', '2024-06-12 19:58:54');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `taxes`
+--
+
+CREATE TABLE `taxes` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `percentaje` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `taxes`
+--
+
+INSERT INTO `taxes` (`id`, `name`, `percentaje`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'General', 21, '2023-06-24 21:00:06', '2023-06-24 21:00:06', NULL),
+(2, 'Reducido', 10, '2023-10-19 20:22:25', '2023-10-19 20:22:25', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `texts`
+--
+
+CREATE TABLE `texts` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `content` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `userlevels`
+--
+
+CREATE TABLE `userlevels` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `userlevels`
+--
+
+INSERT INTO `userlevels` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Administrador', '2022-12-30 18:59:56', NULL),
+(2, 'Usuario', '2022-12-30 18:59:56', NULL),
+(3, 'Usuario Avanzado', '2022-12-30 19:00:26', '2022-12-30 19:00:26');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `postalCode` int(11) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `userlevels_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `users`
+--
+
+INSERT INTO `users` (`id`, `email`, `password`, `name`, `address`, `postalCode`, `city`, `state`, `country`, `phone`, `userlevels_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'tonyllomouse@gmail.com', '$2y$10$RQTVBRy4n6zi53Sc7feesORWsORQ1aaD4Sa8ZGNAoMZ9Nk5Qbg11q', 'Tony Pinto', 'Camino Cervera, 30', 12598, 'Peñiscola', 'Castellon', 'España', '64654561', 1, '2022-12-28 21:29:32', '2022-12-28 22:28:37', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `vehicleaccesories`
+--
+
+CREATE TABLE `vehicleaccesories` (
+  `id` int(11) NOT NULL,
+  `vehicle_id` int(11) NOT NULL,
+  `accesory_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `vehicleaccesories`
+--
+
+INSERT INTO `vehicleaccesories` (`id`, `vehicle_id`, `accesory_id`, `created_at`, `updated_at`) VALUES
+(50, 9, 4, '2023-11-10 21:25:03', '2023-11-10 21:25:03'),
+(56, 9, 2, '2023-11-11 22:09:27', '2023-11-11 22:09:27'),
+(69, 9, 1, '2023-11-12 21:50:34', '2023-11-12 21:50:34');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `vehiclecomponents`
+--
+
+CREATE TABLE `vehiclecomponents` (
+  `id` int(11) NOT NULL,
+  `vehicle_id` int(11) NOT NULL,
+  `component_id` int(11) NOT NULL,
+  `cantity` int(11) NOT NULL,
+  `pvp` float NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `vehiclecomponents`
+--
+
+INSERT INTO `vehiclecomponents` (`id`, `vehicle_id`, `component_id`, `cantity`, `pvp`, `created_at`, `updated_at`) VALUES
+(46, 9, 3, 2, 200, '2023-12-21 21:33:31', '2023-12-21 21:44:36'),
+(47, 9, 4, 1, 185, '2023-12-21 21:54:56', '2023-12-21 21:54:56');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `vehicles`
+--
+
+CREATE TABLE `vehicles` (
+  `id` int(11) NOT NULL,
+  `brand_id` int(11) NOT NULL,
+  `model_id` int(11) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `plate` varchar(255) DEFAULT NULL,
+  `registryDate` date DEFAULT NULL,
+  `vin` varchar(255) DEFAULT NULL,
+  `store_id` int(11) NOT NULL,
+  `location` varchar(255) DEFAULT NULL,
+  `type_id` int(11) NOT NULL,
+  `color` varchar(255) DEFAULT NULL,
+  `places` varchar(255) DEFAULT NULL,
+  `doors` varchar(255) DEFAULT NULL,
+  `power` varchar(255) DEFAULT NULL,
+  `km` varchar(255) DEFAULT NULL,
+  `providor_id` int(11) NOT NULL,
+  `cost` float DEFAULT NULL,
+  `costTva` float NOT NULL,
+  `costTotal` float NOT NULL,
+  `vehiclePvp` float DEFAULT NULL,
+  `discount` float NOT NULL,
+  `tva` float NOT NULL,
+  `total` float NOT NULL,
+  `transference` varchar(255) DEFAULT NULL,
+  `service` varchar(255) DEFAULT NULL,
+  `secondKey` tinyint(1) NOT NULL DEFAULT 0,
+  `rebu` tinyint(1) NOT NULL DEFAULT 0,
+  `technicCard` tinyint(1) NOT NULL DEFAULT 0,
+  `permission` tinyint(1) NOT NULL DEFAULT 0,
+  `arrival` date DEFAULT NULL,
+  `buyDate` date DEFAULT NULL,
+  `sellDate` date DEFAULT NULL,
+  `appointDate` date DEFAULT NULL,
+  `customer_id` int(11) NOT NULL,
+  `seller_id` int(11) NOT NULL,
+  `dataType` varchar(255) DEFAULT NULL,
+  `variant` varchar(255) DEFAULT NULL,
+  `version` varchar(255) DEFAULT NULL,
+  `comercialName` varchar(255) DEFAULT NULL,
+  `mma` int(11) DEFAULT NULL,
+  `mmaAxe1` int(11) DEFAULT NULL,
+  `mmaAxe2` int(11) DEFAULT NULL,
+  `mmac` int(11) DEFAULT NULL,
+  `mmar` int(11) DEFAULT NULL,
+  `mmarf` int(11) DEFAULT NULL,
+  `mom` int(11) DEFAULT NULL,
+  `momAxe1` int(11) DEFAULT NULL,
+  `momAxe2` int(11) DEFAULT NULL,
+  `large` int(11) DEFAULT NULL,
+  `width` int(11) DEFAULT NULL,
+  `height` int(11) DEFAULT NULL,
+  `frontOverhang` int(11) DEFAULT NULL,
+  `rearOverhang` int(11) DEFAULT NULL,
+  `axeDistance` int(11) DEFAULT NULL,
+  `chargeLength` int(11) DEFAULT NULL,
+  `deposit` int(11) DEFAULT NULL,
+  `initCharge` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `vehicles`
+--
+
+INSERT INTO `vehicles` (`id`, `brand_id`, `model_id`, `description`, `plate`, `registryDate`, `vin`, `store_id`, `location`, `type_id`, `color`, `places`, `doors`, `power`, `km`, `providor_id`, `cost`, `costTva`, `costTotal`, `vehiclePvp`, `discount`, `tva`, `total`, `transference`, `service`, `secondKey`, `rebu`, `technicCard`, `permission`, `arrival`, `buyDate`, `sellDate`, `appointDate`, `customer_id`, `seller_id`, `dataType`, `variant`, `version`, `comercialName`, `mma`, `mmaAxe1`, `mmaAxe2`, `mmac`, `mmar`, `mmarf`, `mom`, `momAxe1`, `momAxe2`, `large`, `width`, `height`, `frontOverhang`, `rearOverhang`, `axeDistance`, `chargeLength`, `deposit`, `initCharge`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(9, 1, 1, '1.5DCI 90cv Illusion', '4562FGE', '2008-04-12', 'CDRSF43253DKSJÑW423', 17, 'A1', 1, 'BLANCO', '5', '5', '90', '34500', 1, 4000, 0, 0, 6000, 0, 0, 0, '', '0', 1, 1, 0, 0, '1970-01-01', '1970-01-01', '1970-01-01', '1970-01-01', 1, 1, '0', '0', '0', '0', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2023-10-28 22:48:27', '2023-11-14 20:28:56', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `vehiclesupplies`
+--
+
+CREATE TABLE `vehiclesupplies` (
+  `id` int(11) NOT NULL,
+  `vehicle_id` int(11) NOT NULL,
+  `supply_id` int(11) NOT NULL,
+  `cantity` int(11) NOT NULL,
+  `pvp` float NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `vehiclesupplies`
+--
+
+INSERT INTO `vehiclesupplies` (`id`, `vehicle_id`, `supply_id`, `cantity`, `pvp`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(13, 9, 2, 2, 29, '2023-12-21 20:05:21', '2023-12-21 20:05:38', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `vehicletypes`
+--
+
+CREATE TABLE `vehicletypes` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `vehicletypes`
+--
+
+INSERT INTO `vehicletypes` (`id`, `name`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Turismo', '2023-10-21 17:48:35', '2023-10-21 17:48:35', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `vehicleworks`
+--
+
+CREATE TABLE `vehicleworks` (
+  `id` int(11) NOT NULL,
+  `vehicle_id` int(11) NOT NULL,
+  `work_id` int(11) NOT NULL,
+  `cantity` int(11) NOT NULL,
+  `pvp` float NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `vehicleworks`
+--
+
+INSERT INTO `vehicleworks` (`id`, `vehicle_id`, `work_id`, `cantity`, `pvp`, `created_at`, `updated_at`) VALUES
+(8, 9, 1, 1, 30, '2023-12-21 20:14:29', '2023-12-21 20:14:50'),
+(9, 9, 4, 3, 30, '2023-12-21 20:15:10', '2023-12-21 20:15:10');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `works`
+--
+
+CREATE TABLE `works` (
+  `id` int(11) NOT NULL,
+  `ref` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `pvc` float NOT NULL,
+  `pvp` float NOT NULL,
+  `observations` varchar(255) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `works`
+--
+
+INSERT INTO `works` (`id`, `ref`, `name`, `pvc`, `pvp`, `observations`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, '23', 'Cambio de Aceite', 10, 30, '', '2023-11-19 20:51:11', '2023-11-19 20:58:05', NULL),
+(4, '34', 'Hora taller', 15, 30, 'Hora de trabajo ordinaria en taller', '2023-11-19 20:58:46', '2023-11-19 20:58:50', NULL),
+(5, 'T85ZQM0KG6WSUVHYBID2', 'DK17YJGCLRT5', 0, 0, '', '2023-12-30 22:42:08', '2023-12-30 22:42:23', '2023-12-30 22:42:23'),
+(6, '37U8QV45TFO2ZXPICMAE', 'PFGWNAK78E5D', 0, 0, '', '2023-12-30 22:42:31', '2023-12-30 22:42:38', '2023-12-30 22:42:38'),
+(7, '0CLXWKVEG29YH3IP8OQ1', 'WMARPFT9IU1G', 0, 0, '', '2024-01-02 20:16:01', '2024-01-02 20:16:16', '2024-01-02 20:16:16'),
+(8, 'E9X1K3SVP4BCWT0HGRQZ', 'PDZU046QA5K3', 0, 0, '', '2024-01-02 20:16:24', '2024-01-02 20:16:32', '2024-01-02 20:16:32'),
+(9, 'BWELRU0GP6KVACY2JD54', 'IEB9NV8GPX1T', 0, 0, '', '2024-01-09 22:54:07', '2024-01-09 22:54:23', '2024-01-09 22:54:23'),
+(10, 'HMYLE45P2QV3RWSGCTJU', 'MERSG3TILYCU', 0, 0, '', '2024-01-09 22:54:31', '2024-01-09 22:54:40', '2024-01-09 22:54:40'),
+(11, 'JTZI0XK5RMP4963F7A8G', 'YIDOGU5AFVSP', 0, 0, '', '2024-06-12 19:59:48', '2024-06-12 20:00:03', '2024-06-12 20:00:03'),
+(12, 'N8F4XCV2RG0BM9T5EH63', '2K78FWYQAC0B', 0, 0, '', '2024-06-12 20:00:11', '2024-06-12 20:00:19', '2024-06-12 20:00:19');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `worksheets`
+--
+
+CREATE TABLE `worksheets` (
+  `id` int(11) NOT NULL,
+  `workSheetNumber` varchar(255) NOT NULL,
+  `inDate` datetime DEFAULT NULL,
+  `outDate` datetime DEFAULT NULL,
+  `order_id` int(11) NOT NULL,
+  `customer_id` int(11) DEFAULT NULL,
+  `vehicle_id` int(11) DEFAULT NULL,
+  `workId` int(11) DEFAULT NULL,
+  `baseWorkSheet` float DEFAULT NULL,
+  `discountWorkSheet` float DEFAULT NULL,
+  `tvaWorkSheet` float DEFAULT NULL,
+  `totalWorkSheet` float DEFAULT NULL,
+  `text` text DEFAULT NULL,
+  `observations` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `worksheets`
+--
+
+INSERT INTO `worksheets` (`id`, `workSheetNumber`, `inDate`, `outDate`, `order_id`, `customer_id`, `vehicle_id`, `workId`, `baseWorkSheet`, `discountWorkSheet`, `tvaWorkSheet`, `totalWorkSheet`, `text`, `observations`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'OT202300001', '2024-06-14 10:32:30', '2024-06-14 10:32:30', 6, 3, 9, 1, NULL, NULL, NULL, NULL, 'Texto', 'Observaciones', '2024-06-14 20:34:16', '2024-06-15 06:20:37', NULL),
+(3, 'OT20230002', '2024-06-16 06:35:41', '2024-06-16 06:35:41', 6, 3, 9, 1, 0, 0, 0, 0, '', '', '2024-06-16 16:56:50', '2024-06-16 16:56:50', NULL),
+(4, 'OT20230003', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 8, 3, 9, 1, 0, 0, 0, 0, 'Texto', 'Observaciones', '2024-06-16 16:57:03', '2024-06-16 16:57:18', '2024-06-16 16:57:18'),
+(14, 'OT202300003', '2024-06-17 08:20:15', '2024-06-17 08:20:15', 6, 3, 9, 1, 0, 0, 0, 0, '', '', '2024-06-17 18:20:18', '2024-06-17 18:20:18', NULL),
+(15, 'OT20230004', '2024-06-19 07:42:12', '2024-06-19 07:42:12', 6, 3, 9, 1, 0, 0, 0, 0, '', '', '2024-06-19 17:42:16', '2024-06-19 17:42:16', NULL),
+(16, 'OT202300005', '2024-06-19 07:44:26', '2024-06-19 07:44:26', 6, 3, 9, 1, 0, 0, 0, 0, '', '', '2024-06-19 17:44:30', '2024-06-19 17:44:30', NULL),
+(17, 'OT20230006', '2024-06-19 07:46:41', '2024-06-19 07:46:41', 6, 3, 9, 1, 0, 0, 0, 0, '', '', '2024-06-19 17:46:45', '2024-06-19 17:46:45', NULL),
+(18, 'OT202300007', '2024-06-19 09:57:25', '2024-06-19 09:57:25', 6, 3, 9, 1, 0, 0, 0, 0, '', '', '2024-06-19 19:57:29', '2024-06-19 19:57:29', NULL),
+(19, 'OT20230008', '2024-06-19 09:59:42', '2024-06-19 09:59:42', 6, 3, 9, 1, 0, 0, 0, 0, '', '', '2024-06-19 19:59:46', '2024-06-19 19:59:46', NULL),
+(20, 'OT202300009', '2024-06-19 10:00:42', '2024-06-19 10:00:42', 6, 3, 9, 1, 0, 0, 0, 0, '', '', '2024-06-19 20:00:46', '2024-06-19 20:00:46', NULL),
+(21, 'OT202300010', '2024-06-19 10:07:34', '2024-06-19 10:07:34', 6, 3, 9, 1, 0, 0, 0, 0, '', '', '2024-06-19 20:07:38', '2024-06-19 20:07:38', NULL),
+(22, 'OT202300011', '2024-06-20 08:11:36', '2024-06-20 08:11:36', 6, 3, 9, 1, 0, 0, 0, 0, '', '', '2024-06-20 18:11:40', '2024-06-20 18:11:40', NULL),
+(23, 'OT2023000012', '2024-06-20 08:14:09', '2024-06-20 08:14:09', 6, 3, 9, 1, 0, 0, 0, 0, '', '', '2024-06-20 18:14:12', '2024-06-20 18:14:12', NULL),
+(24, 'OT202300013', '2024-06-20 08:15:59', '2024-06-20 08:15:59', 6, 3, 9, 1, 0, 0, 0, 0, '', '', '2024-06-20 18:16:03', '2024-06-20 18:16:03', NULL),
+(25, 'OT2023000014', '2024-06-20 08:25:58', '2024-06-20 08:25:58', 6, 3, 9, 1, 0, 0, 0, 0, '', '', '2024-06-20 18:26:02', '2024-06-20 18:26:02', NULL),
+(26, 'OT202300015', '2024-07-15 08:12:52', '2024-07-15 08:12:52', 6, 3, 9, 1, 0, 0, 0, 0, '', '', '2024-07-15 18:12:56', '2024-07-15 18:12:56', NULL),
+(27, 'OT2023000016', '2024-07-15 08:35:22', '2024-07-15 08:35:22', 6, 3, 9, 1, 0, 0, 0, 0, '', '', '2024-07-15 18:35:25', '2024-07-15 18:35:25', NULL),
+(28, 'OT202300017', '2024-07-15 08:36:42', '2024-07-15 08:36:42', 6, 3, 9, 1, 0, 0, 0, 0, '', '', '2024-07-15 18:36:46', '2024-07-15 18:36:46', NULL),
+(29, 'OT2023000018', '2024-07-15 08:37:55', '2024-07-15 08:37:55', 6, 3, 9, 1, 0, 0, 0, 0, '', '', '2024-07-15 18:37:58', '2024-07-15 18:37:58', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `worksheetscomponents`
+--
+
+CREATE TABLE `worksheetscomponents` (
+  `id` int(11) NOT NULL,
+  `worksheet_id` int(11) NOT NULL,
+  `component_id` int(11) NOT NULL,
+  `cantity` int(11) NOT NULL,
+  `pvp` float NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `worksheetscomponents`
+--
+
+INSERT INTO `worksheetscomponents` (`id`, `worksheet_id`, `component_id`, `cantity`, `pvp`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(3, 3, 3, 1, 200, '2024-06-16 22:15:19', '2024-06-16 22:15:19', NULL),
+(7, 17, 3, 1, 200, '2024-06-19 20:36:58', '2024-06-19 20:36:58', NULL),
+(8, 1, 3, 1, 200, '2024-06-19 21:50:25', '2024-06-19 21:50:25', NULL),
+(9, 26, 4, 1, 185, '2024-07-15 20:13:01', '2024-07-15 20:13:01', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `worksheetssupplies`
+--
+
+CREATE TABLE `worksheetssupplies` (
+  `id` int(11) NOT NULL,
+  `worksheet_id` int(11) NOT NULL,
+  `supply_id` int(11) NOT NULL,
+  `cantity` int(11) NOT NULL,
+  `pvp` float NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `worksheetssupplies`
+--
+
+INSERT INTO `worksheetssupplies` (`id`, `worksheet_id`, `supply_id`, `cantity`, `pvp`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, 2, 2, 29, '2024-06-15 23:03:31', '2024-06-19 20:43:06', NULL),
+(3, 15, 2, 1, 29, '2024-06-19 19:42:19', '2024-06-19 19:42:19', NULL),
+(4, 16, 2, 1, 29, '2024-06-19 19:44:34', '2024-06-19 19:44:34', NULL),
+(6, 18, 2, 1, 29, '2024-06-19 21:57:33', '2024-06-19 21:57:47', NULL),
+(7, 19, 2, 1, 29, '2024-06-19 21:59:50', '2024-06-19 22:00:04', NULL),
+(8, 20, 2, 2, 29, '2024-06-19 22:00:49', '2024-06-19 22:01:03', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `worksheetsworks`
+--
+
+CREATE TABLE `worksheetsworks` (
+  `id` int(11) NOT NULL,
+  `worksheet_id` int(11) NOT NULL,
+  `work_id` int(11) NOT NULL,
+  `cantity` int(11) NOT NULL,
+  `pvp` float NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `worksheetsworks`
+--
+
+INSERT INTO `worksheetsworks` (`id`, `worksheet_id`, `work_id`, `cantity`, `pvp`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 17, 4, 1, 30, '2024-06-19 20:36:07', '2024-06-19 20:36:07', NULL),
+(2, 1, 1, 1, 30, '2024-06-19 21:50:40', '2024-06-19 21:50:40', NULL),
+(3, 22, 4, 1, 30, '2024-06-20 20:11:43', '2024-06-20 20:11:43', NULL),
+(4, 23, 4, 2, 30, '2024-06-20 20:14:15', '2024-06-20 20:14:29', NULL),
+(5, 24, 4, 2, 30, '2024-06-20 20:16:06', '2024-06-20 20:16:20', NULL);
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `accesories`
+--
+ALTER TABLE `accesories`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indices de la tabla `accounts`
+--
+ALTER TABLE `accounts`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `accountNumber` (`accountNumber`),
+  ADD KEY `bank` (`bank_id`);
+
+--
+-- Indices de la tabla `articles`
+--
+ALTER TABLE `articles`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `maderId` (`maderId`);
+
+--
+-- Indices de la tabla `assurances`
+--
+ALTER TABLE `assurances`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `banks`
+--
+ALTER TABLE `banks`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `fiscalId` (`fiscalId`);
+
+--
+-- Indices de la tabla `brands`
+--
+ALTER TABLE `brands`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indices de la tabla `buydelivery`
+--
+ALTER TABLE `buydelivery`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `deliveryNumber` (`deliveryNumber`),
+  ADD KEY `providorId` (`providorId`);
+
+--
+-- Indices de la tabla `buyinvoices`
+--
+ALTER TABLE `buyinvoices`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `invoiceNumber` (`invoiceNumber`),
+  ADD KEY `providorId` (`providorId`);
+
+--
+-- Indices de la tabla `company`
+--
+ALTER TABLE `company`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `fiscalId` (`fiscalId`);
+
+--
+-- Indices de la tabla `components`
+--
+ALTER TABLE `components`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `serialNumber` (`serialNumber`),
+  ADD KEY `maderId` (`mader_id`);
+
+--
+-- Indices de la tabla `counters`
+--
+ALTER TABLE `counters`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `reference` (`reference`);
+
+--
+-- Indices de la tabla `customers`
+--
+ALTER TABLE `customers`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `fiscalId` (`fiscalId`),
+  ADD KEY `customerType` (`customerType`);
+
+--
+-- Indices de la tabla `customertypes`
+--
+ALTER TABLE `customertypes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `expertopinions`
+--
+ALTER TABLE `expertopinions`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `OpinionId` (`opinionId`);
+
+--
+-- Indices de la tabla `expertopinionscomponents`
+--
+ALTER TABLE `expertopinionscomponents`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `expertopinionssupplies`
+--
+ALTER TABLE `expertopinionssupplies`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `expertopinionsworks`
+--
+ALTER TABLE `expertopinionsworks`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `finance`
+--
+ALTER TABLE `finance`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `fiscalId` (`fiscalId`),
+  ADD KEY `bankId` (`bank_id`);
+
+--
+-- Indices de la tabla `garages`
+--
+ALTER TABLE `garages`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `fiscalId` (`fiscalId`);
+
+--
+-- Indices de la tabla `garage_orders`
+--
+ALTER TABLE `garage_orders`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `orderNumber` (`orderNumber`),
+  ADD KEY `vehicleId` (`vehicle_id`),
+  ADD KEY `customerId` (`customer_id`);
+
+--
+-- Indices de la tabla `homologations`
+--
+ALTER TABLE `homologations`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `homologationCode` (`homologationCode`);
+
+--
+-- Indices de la tabla `labels`
+--
+ALTER TABLE `labels`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `locations`
+--
+ALTER TABLE `locations`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `storeId` (`store_id`);
+
+--
+-- Indices de la tabla `maders`
+--
+ALTER TABLE `maders`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `models`
+--
+ALTER TABLE `models`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`),
+  ADD KEY `brandId` (`brand_id`);
+
+--
+-- Indices de la tabla `ordercomponents`
+--
+ALTER TABLE `ordercomponents`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `ordersupplies`
+--
+ALTER TABLE `ordersupplies`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `orderworks`
+--
+ALTER TABLE `orderworks`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `paymentways`
+--
+ALTER TABLE `paymentways`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `phinxlog`
+--
+ALTER TABLE `phinxlog`
+  ADD PRIMARY KEY (`version`);
+
+--
+-- Indices de la tabla `productions`
+--
+ALTER TABLE `productions`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `productionNumber` (`productionNumber`),
+  ADD KEY `vehicleId` (`vehicleId`),
+  ADD KEY `homologationId` (`homologationId`);
+
+--
+-- Indices de la tabla `providors`
+--
+ALTER TABLE `providors`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `fiscalId` (`fiscalId`);
+
+--
+-- Indices de la tabla `sellers`
+--
+ALTER TABLE `sellers`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `fiscalId` (`fiscalId`);
+
+--
+-- Indices de la tabla `selloffers`
+--
+ALTER TABLE `selloffers`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `offerNumber` (`offerNumber`),
+  ADD KEY `taxesId` (`taxes_id`),
+  ADD KEY `paymentWayId` (`paymentWay_id`),
+  ADD KEY `customerId` (`customer_id`),
+  ADD KEY `vehicleId` (`vehicle_id`);
+
+--
+-- Indices de la tabla `sellofferscomponents`
+--
+ALTER TABLE `sellofferscomponents`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sellofferId` (`selloffer_id`),
+  ADD KEY `componentId` (`component_id`);
+
+--
+-- Indices de la tabla `sellofferssupplies`
+--
+ALTER TABLE `sellofferssupplies`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sellofferId` (`selloffer_id`),
+  ADD KEY `supplyId` (`supply_id`);
+
+--
+-- Indices de la tabla `selloffersworks`
+--
+ALTER TABLE `selloffersworks`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sellofferId` (`selloffer_id`),
+  ADD KEY `workId` (`work_id`);
+
+--
+-- Indices de la tabla `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `stores`
+--
+ALTER TABLE `stores`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indices de la tabla `supplies`
+--
+ALTER TABLE `supplies`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `ref` (`ref`),
+  ADD KEY `maderId` (`mader_id`);
+
+--
+-- Indices de la tabla `taxes`
+--
+ALTER TABLE `taxes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `texts`
+--
+ALTER TABLE `texts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `userlevels`
+--
+ALTER TABLE `userlevels`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indices de la tabla `vehicleaccesories`
+--
+ALTER TABLE `vehicleaccesories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `vehicleId` (`vehicle_id`);
+
+--
+-- Indices de la tabla `vehiclecomponents`
+--
+ALTER TABLE `vehiclecomponents`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `vehicles`
+--
+ALTER TABLE `vehicles`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `vin` (`vin`),
+  ADD UNIQUE KEY `plate` (`plate`),
+  ADD KEY `brandId` (`brand_id`),
+  ADD KEY `modelId` (`model_id`);
+
+--
+-- Indices de la tabla `vehiclesupplies`
+--
+ALTER TABLE `vehiclesupplies`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `vehicletypes`
+--
+ALTER TABLE `vehicletypes`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indices de la tabla `vehicleworks`
+--
+ALTER TABLE `vehicleworks`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `works`
+--
+ALTER TABLE `works`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `reference` (`ref`);
+
+--
+-- Indices de la tabla `worksheets`
+--
+ALTER TABLE `worksheets`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `workSheetNumber` (`workSheetNumber`);
+
+--
+-- Indices de la tabla `worksheetscomponents`
+--
+ALTER TABLE `worksheetscomponents`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `worksheetssupplies`
+--
+ALTER TABLE `worksheetssupplies`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `worksheetsworks`
+--
+ALTER TABLE `worksheetsworks`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `accesories`
+--
+ALTER TABLE `accesories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT de la tabla `accounts`
+--
+ALTER TABLE `accounts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
+
+--
+-- AUTO_INCREMENT de la tabla `articles`
+--
+ALTER TABLE `articles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `assurances`
+--
+ALTER TABLE `assurances`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT de la tabla `banks`
+--
+ALTER TABLE `banks`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+
+--
+-- AUTO_INCREMENT de la tabla `brands`
+--
+ALTER TABLE `brands`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT de la tabla `buydelivery`
+--
+ALTER TABLE `buydelivery`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `buyinvoices`
+--
+ALTER TABLE `buyinvoices`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `company`
+--
+ALTER TABLE `company`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
+
+--
+-- AUTO_INCREMENT de la tabla `components`
+--
+ALTER TABLE `components`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT de la tabla `counters`
+--
+ALTER TABLE `counters`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `customers`
+--
+ALTER TABLE `customers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT de la tabla `customertypes`
+--
+ALTER TABLE `customertypes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT de la tabla `expertopinions`
+--
+ALTER TABLE `expertopinions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de la tabla `expertopinionscomponents`
+--
+ALTER TABLE `expertopinionscomponents`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de la tabla `expertopinionssupplies`
+--
+ALTER TABLE `expertopinionssupplies`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `expertopinionsworks`
+--
+ALTER TABLE `expertopinionsworks`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `finance`
+--
+ALTER TABLE `finance`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+
+--
+-- AUTO_INCREMENT de la tabla `garages`
+--
+ALTER TABLE `garages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT de la tabla `garage_orders`
+--
+ALTER TABLE `garage_orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
+-- AUTO_INCREMENT de la tabla `homologations`
+--
+ALTER TABLE `homologations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `labels`
+--
+ALTER TABLE `labels`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=225;
+
+--
+-- AUTO_INCREMENT de la tabla `locations`
+--
+ALTER TABLE `locations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+
+--
+-- AUTO_INCREMENT de la tabla `maders`
+--
+ALTER TABLE `maders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT de la tabla `models`
+--
+ALTER TABLE `models`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT de la tabla `ordercomponents`
+--
+ALTER TABLE `ordercomponents`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT de la tabla `ordersupplies`
+--
+ALTER TABLE `ordersupplies`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT de la tabla `orderworks`
+--
+ALTER TABLE `orderworks`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `paymentways`
+--
+ALTER TABLE `paymentways`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+
+--
+-- AUTO_INCREMENT de la tabla `productions`
+--
+ALTER TABLE `productions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `providors`
+--
+ALTER TABLE `providors`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT de la tabla `sellers`
+--
+ALTER TABLE `sellers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT de la tabla `selloffers`
+--
+ALTER TABLE `selloffers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
+
+--
+-- AUTO_INCREMENT de la tabla `sellofferscomponents`
+--
+ALTER TABLE `sellofferscomponents`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+
+--
+-- AUTO_INCREMENT de la tabla `sellofferssupplies`
+--
+ALTER TABLE `sellofferssupplies`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT de la tabla `selloffersworks`
+--
+ALTER TABLE `selloffersworks`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT de la tabla `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `stores`
+--
+ALTER TABLE `stores`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+
+--
+-- AUTO_INCREMENT de la tabla `supplies`
+--
+ALTER TABLE `supplies`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT de la tabla `taxes`
+--
+ALTER TABLE `taxes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT de la tabla `texts`
+--
+ALTER TABLE `texts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `userlevels`
+--
+ALTER TABLE `userlevels`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `vehicleaccesories`
+--
+ALTER TABLE `vehicleaccesories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+
+--
+-- AUTO_INCREMENT de la tabla `vehiclecomponents`
+--
+ALTER TABLE `vehiclecomponents`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+
+--
+-- AUTO_INCREMENT de la tabla `vehicles`
+--
+ALTER TABLE `vehicles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT de la tabla `vehiclesupplies`
+--
+ALTER TABLE `vehiclesupplies`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT de la tabla `vehicletypes`
+--
+ALTER TABLE `vehicletypes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `vehicleworks`
+--
+ALTER TABLE `vehicleworks`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT de la tabla `works`
+--
+ALTER TABLE `works`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT de la tabla `worksheets`
+--
+ALTER TABLE `worksheets`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+--
+-- AUTO_INCREMENT de la tabla `worksheetscomponents`
+--
+ALTER TABLE `worksheetscomponents`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT de la tabla `worksheetssupplies`
+--
+ALTER TABLE `worksheetssupplies`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT de la tabla `worksheetsworks`
+--
+ALTER TABLE `worksheetsworks`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `articles`
+--
+ALTER TABLE `articles`
+  ADD CONSTRAINT `articles_ibfk_1` FOREIGN KEY (`maderId`) REFERENCES `maders` (`id`);
+
+--
+-- Filtros para la tabla `buydelivery`
+--
+ALTER TABLE `buydelivery`
+  ADD CONSTRAINT `buydelivery_ibfk_1` FOREIGN KEY (`providorId`) REFERENCES `providors` (`id`);
+
+--
+-- Filtros para la tabla `buyinvoices`
+--
+ALTER TABLE `buyinvoices`
+  ADD CONSTRAINT `buyinvoices_ibfk_1` FOREIGN KEY (`providorId`) REFERENCES `providors` (`id`);
+
+--
+-- Filtros para la tabla `components`
+--
+ALTER TABLE `components`
+  ADD CONSTRAINT `components_ibfk_1` FOREIGN KEY (`mader_id`) REFERENCES `maders` (`id`);
+
+--
+-- Filtros para la tabla `customers`
+--
+ALTER TABLE `customers`
+  ADD CONSTRAINT `customers_ibfk_1` FOREIGN KEY (`customerType`) REFERENCES `customertypes` (`id`);
+
+--
+-- Filtros para la tabla `finance`
+--
+ALTER TABLE `finance`
+  ADD CONSTRAINT `finance_ibfk_1` FOREIGN KEY (`bank_id`) REFERENCES `banks` (`id`);
+
+--
+-- Filtros para la tabla `locations`
+--
+ALTER TABLE `locations`
+  ADD CONSTRAINT `locations_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `stores` (`id`);
+
+--
+-- Filtros para la tabla `models`
+--
+ALTER TABLE `models`
+  ADD CONSTRAINT `models_ibfk_1` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`id`);
+
+--
+-- Filtros para la tabla `productions`
+--
+ALTER TABLE `productions`
+  ADD CONSTRAINT `productions_ibfk_1` FOREIGN KEY (`vehicleId`) REFERENCES `vehicles` (`id`),
+  ADD CONSTRAINT `productions_ibfk_2` FOREIGN KEY (`homologationId`) REFERENCES `homologations` (`id`);
+
+--
+-- Filtros para la tabla `selloffers`
+--
+ALTER TABLE `selloffers`
+  ADD CONSTRAINT `selloffers_ibfk_1` FOREIGN KEY (`taxes_id`) REFERENCES `taxes` (`id`),
+  ADD CONSTRAINT `selloffers_ibfk_2` FOREIGN KEY (`paymentWay_id`) REFERENCES `paymentways` (`id`),
+  ADD CONSTRAINT `selloffers_ibfk_3` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
+  ADD CONSTRAINT `selloffers_ibfk_4` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicles` (`id`);
+
+--
+-- Filtros para la tabla `supplies`
+--
+ALTER TABLE `supplies`
+  ADD CONSTRAINT `supplies_ibfk_1` FOREIGN KEY (`mader_id`) REFERENCES `maders` (`id`);
+
+--
+-- Filtros para la tabla `vehicleaccesories`
+--
+ALTER TABLE `vehicleaccesories`
+  ADD CONSTRAINT `vehicleaccesories_ibfk_1` FOREIGN KEY (`vehicle_id`) REFERENCES `vehicles` (`id`);
+
+--
+-- Filtros para la tabla `vehicles`
+--
+ALTER TABLE `vehicles`
+  ADD CONSTRAINT `vehicles_ibfk_1` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`id`),
+  ADD CONSTRAINT `vehicles_ibfk_2` FOREIGN KEY (`model_id`) REFERENCES `models` (`id`);
+COMMIT;
