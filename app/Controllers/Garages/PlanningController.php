@@ -24,7 +24,8 @@ class PlanningController extends BaseController{
     }
     public function getIndexAction($request){
         $params = $request->getQueryParams();
-        $iterables = ['orders' => $this->planningService->getAllRegisters(new GarageOrder)
+        $iterables = ['orders' => $this->planningService->getAllRegisters(new GarageOrder),
+            'worksheets' => $this->planningService->getAllRegisters(new \App\Models\WorkSheets)
                 ];
         $menuState = $params['menu'];  
         $menuItem = $params['item'];

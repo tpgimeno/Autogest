@@ -14,9 +14,13 @@
         <group>
             <file>file:/C:/xampp/htdocs/Intranet/App/Controllers/Garages/ExpertOpinionsController.php</file>
             <file>file:/C:/xampp/htdocs/Intranet/views/planning.html.twig</file>
+            <file>file:/C:/xampp/htdocs/Intranet/assets/js/calendar.js</file>
+            <file>file:/C:/xampp/htdocs/Intranet/views/templateFormView.html.twig</file>
             <file>file:/C:/xampp/htdocs/Intranet/App/Services/Garages/PlaningService.php</file>
             <file>file:/C:/xampp/htdocs/Intranet/App/Controllers/Garages/PlanningController.php</file>
+            <file>file:/C:/xampp/htdocs/Intranet/assets/js/autogest.js</file>
             <file>file:/C:/xampp/htdocs/Intranet/logs/app.log</file>
+            <file>file:/C:/xampp/htdocs/Intranet/views/layout.html.twig</file>
         </group>
     </open-files>
 </project-private>
