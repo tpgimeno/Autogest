@@ -64,8 +64,8 @@ class VehicleService extends BaseService {
     public function addVehicleAccesoryAjax($postData) {
         $responseMessage = null;
         $vehicle_accesory = new VehicleAccesories();
-        if (isset($postData['vehicle_id']) && isset($postData['accesory_id'])) {
-            $vehicle_accesory->vehicle_id = $postData['vehicle_id'];
+        if (isset($postData['id']) && isset($postData['accesory_id'])) {
+            $vehicle_accesory->vehicle_id = $postData['id'];
             $vehicle_accesory->accesory_id = $postData['accesory_id'];
             $vehicle_accesory->save();
             $responseMessage = "Accesory Saved";
@@ -75,7 +75,7 @@ class VehicleService extends BaseService {
 
     public function delVehicleAccesoryAjax($postData) {
         $responseMessage = null;
-        $vehicle_accesory = VehicleAccesories::where('vehicle_id', '=', $postData['vehicle_id'])
+        $vehicle_accesory = VehicleAccesories::where('vehicle_id', '=', $postData['id'])
                         ->where('accesory_id', '=', $postData['accesory_id'])
                         ->get()->first();
         if ($vehicle_accesory) {
@@ -93,7 +93,7 @@ class VehicleService extends BaseService {
                     ->join('components', 'vehiclecomponents.component_id', '=', 'components.id')
                     ->join('maders', 'components.mader_id', '=', 'maders.id')
                     ->select('components.id as component_id', 'vehiclecomponents.id as vehiclecomponent_id', 'maders.name as mader', 'components.ref as ref', 'components.name as name', 'components.pvp as pvp', 'vehiclecomponents.cantity as cantity')
-                    ->where('vehiclecomponents.vehicle_id', '=', $postData['vehicle_id'])
+                    ->where('vehiclecomponents.id', '=', $postData['id'])
                     ->get();
         } else {
             $params = $request->getQueryParams();
@@ -112,7 +112,7 @@ class VehicleService extends BaseService {
 //        var_dump($postData);die();
         $component_exist = true;
         $responseMessage = null;
-        $component = VehicleComponents::where('vehicle_id', '=', $postData['vehicle_id'])
+        $component = VehicleComponents::where('vehicle_id', '=', $postData['id'])
                         ->where('component_id', '=', $postData['component_id'])
                         ->get()->first();
         if (!$component) {
@@ -121,7 +121,7 @@ class VehicleService extends BaseService {
         }
        
         $component->component_id = $postData['component_id'];
-        $component->vehicle_id = $postData['vehicle_id'];
+        $component->vehicle_id = $postData['id'];
         $component->cantity = $postData['cantity'];
         $component->pvp = $postData['pvp'];        
         if ($component_exist === true) {
@@ -150,7 +150,7 @@ class VehicleService extends BaseService {
                     ->join('supplies', 'vehiclesupplies.supply_id', '=', 'supplies.id')
                     ->join('maders', 'supplies.mader_id', '=', 'maders.id')
                     ->select('supplies.id as supply_id', 'vehiclesupplies.id as vehiclesupply_id', 'maders.name as mader', 'supplies.ref as ref', 'supplies.name as name', 'supplies.pvp as pvp', 'vehiclesupplies.cantity as cantity')
-                    ->where('vehiclesupplies.vehicle_id', '=', $postData['vehicle_id'])
+                    ->where('vehiclesupplies.vehicle_id', '=', $postData['id'])
                     ->get();
         } else {
             $params = $request->getQueryParams();
@@ -169,7 +169,7 @@ class VehicleService extends BaseService {
         
         $supply_exist = true;
         $responseMessage = null;
-        $supply = VehicleSupplies::where('vehicle_id', '=', $postData['vehicle_id'])
+        $supply = VehicleSupplies::where('vehicle_id', '=', $postData['id'])
                         ->where('supply_id', '=', $postData['supply_id'])
                         ->get()->first();
         if (!$supply) {
@@ -178,7 +178,7 @@ class VehicleService extends BaseService {
         }
        
         $supply->supply_id = $postData['supply_id'];
-        $supply->vehicle_id = $postData['vehicle_id'];
+        $supply->vehicle_id = $postData['id'];
         $supply->cantity = $postData['cantity'];
         $supply->pvp = $postData['pvp'];        
         if ($supply_exist === true) {
@@ -207,7 +207,7 @@ class VehicleService extends BaseService {
                     ->join('vehicles', 'vehicleworks.vehicle_id', '=', 'vehicles.id')
                     ->join('works', 'vehicleworks.work_id', '=', 'works.id')
                     ->select('works.id as work_id', 'vehicleworks.id as vehiclework_id', 'works.ref as ref', 'works.name as name', 'works.pvp as pvp', 'vehicleworks.cantity as cantity')
-                    ->where('vehicleworks.vehicle_id', '=', $postData['vehicle_id'])
+                    ->where('vehicleworks.vehicle_id', '=', $postData['id'])
                     ->get();
         } else {
             $params = $request->getQueryParams();
@@ -224,7 +224,7 @@ class VehicleService extends BaseService {
     public function addVehicleWorkAjax($postData) {  
         $work_exist = true;
         $responseMessage = null;        
-        $work = VehicleWorks::where('vehicle_id', '=', intval($postData['vehicle_id']))
+        $work = VehicleWorks::where('vehicle_id', '=', intval($postData['id']))
                 ->where('work_id', '=', intval($postData['work_id']))
                 ->get()->first();
         
@@ -233,7 +233,7 @@ class VehicleService extends BaseService {
             $work_exist = false;
         }
         $work->work_id = $postData['work_id'];
-        $work->vehicle_id = $postData['vehicle_id'];
+        $work->vehicle_id = $postData['id'];
         $work->cantity = $postData['cantity'];
         $work->pvp = $postData['pvp'];        
         if ($work_exist === true) {

@@ -112,7 +112,7 @@
                                 {% endif %}                                
                                 {{ macros.assetsDataTable("dataTableVehicleWorks_wrapper", "dataTableVehicleWorks", optionsArray['vehicle_work_labels'], labels, optionsArray['vehicle_works'], currencies, optionsArray['work_functions']['set'], optionsArray['work_functions']['delete'], setWorksUrl, data, optionsArray['assets_prices'][13], optionsArray['assets_prices'][14], optionsArray['assets_prices'][15], optionsArray['assets_prices'][16], optionsArray['assets_prices'][17], optionsArray['assets_prices'][18], 'works_modal') }}                                
                             {% endif %}                                
-                                {% for item in properties[tab] %}                                                                        
+                            {% for item in properties[tab] %}                                                                        
                                 {% if item in selects %}                                    
                                     <div class="row">                                        
                                         <div class="input-group col-10">
@@ -138,28 +138,38 @@
                                             </select>        
                                         </div>                            
                                     </div>
-                                {% elseif item in orders %}                                     
+                                {% elseif item in orders and titleForm != 'Vehículo' %}
+                                    
                                     <div class="row">
                                         <div class="input-group col-10">
+                                            
                                             <label class="control-label" for="{{ item }}">{{ labels[item] }}</label>
                                             <select id="{{ item }}" name="{{ item }}" class="form-control select2" value="">
-                                                {% for option in optionsArray['vehicles'] %}                                                    
-                                                    {% if item == 'plate' %}                                                        
-                                                        <option km="{{ option['km'] }}" vin="{{ option['vin'] }}" price="{{ option['vehiclePvp'] }}" vehicle_brand="{{ option['brand_id'] }}" vehicle_model="{{ option['model_id'] }}" value="{{ option['id'] }}" >{{ option['plate'] }}</option>                                                        
+                                                {% for option in optionsArray['vehicles'] %}
+                                                    {% if item == 'plate' %}  
+                                                        {% for plate_item in optionsArray['vehicles'] %}
+                                                            <option km="{{ option['km'] }}" vin="{{ option['vin'] }}" price="{{ option['vehiclePvp'] }}" vehicle_brand="{{ option['brand_id'] }}" vehicle_model="{{ option['model_id'] }}" vehicle_id="{{ option['id'] }}" value="{{ option['id'] }}" >{{ option['plate'] }}</option>                                                        
+                                                        {% endfor %}
                                                     {% elseif item == 'brand' %}
                                                         {% for brand_item in optionsArray['brands'] %}
                                                             <option value="{{ brand_item.id }}" {% if brand_item.id == option['brand_id'] %}{{ 'selected="true"' }}{%  endif %}>{{ brand_item.name }}</option>
                                                         {% endfor %}
                                                     {% elseif item == 'model' %}
-                                                        <option value="{{ option['model_id'] }}" >{{ option['model'] }}</option>  
+                                                        {% for model_item in optionsArray['models'] %}
+                                                            <option value="{{ model_item.id }}" {% if model_item.id == option['model_id'] %}{{ 'selected="true"' }}{%  endif %}>{{ model_item.name }}</option>
+                                                        {% endfor %}
                                                     {% endif %}
+                                                   
                                                 {% endfor %}
 
                                                 <option value="0">Sin datos</option>
                                             </select>        
                                         </div>                            
-                                    </div>                                                        
-                                {% elseif item in hidden %}                                    
+                                    </div> 
+                                        
+                                {% elseif item in hidden %}
+                                  
+                                     
                                 {% elseif item in textareas %}
                                     <div class="row">
                                         <div class="input-group col-10">

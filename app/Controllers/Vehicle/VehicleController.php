@@ -109,7 +109,7 @@ class VehicleController extends BaseController {
             'modals_functions' => ['setComponent' => 'setComponent', 'saveComponent' => 'saveVehicleComponent()' ,'setSupply' => 'setSupply', 'saveSupply' => 'saveVehicleSupply()','setWork' => 'setWork','saveWork' => 'saveVehicleWork()'],
             'forms' => ['1' => 'vehicle_component_form','2' => 'vehicle_supply_form','3' => 'vehicle_work_form']);
         if($request->getMethod() == 'POST') {
-            $postData = $request->getParsedBody();
+            $postData = $request->getParsedBody();            
             $postData = $this->getCheckboxes($postData);                     
             $vehicleValidator = v::key('plate', v::stringType()->notEmpty());                       
             try{

@@ -300,40 +300,40 @@ $(document).ready(function(){
     if(titleForm === 'formPeritacion'){         
         if($('#opinionId').val() === null || $('#opinionId').val() === ""){            
             get_new_opinionId();
-        } 
+        }
+        set_models_by_brand("/Intranet/garages/models/get",'#formPeritacion', $('#formPeritacion #brand option:selected').val());
         if(($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'components-tab') || ($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'supplies-tab') || ($('.nav-tabs .nav-item .nav-link.active').attr('id') === 'works-tab')){            
             var delButton = $('#delete_button');            
             delButton.attr('style', 'display:none;');
-        }
+        }  
         
-        
-         $('#formPeritacion #discount').change(function(){
+        $('#formPeritacion #discount').change(function(){
             set_worksheet_prices();
             $('#formPeritacion #discount').val(numeral($('#formPeritacion #discount').val()).format('(0.0,$)'));
         });  
         
         $('#formPeritacion #brand').change(function(){ 
-           set_models_by_brand($('#formPeritacion #brand option:selected').val());               
-           $('#formPeritacion #plate').val('0');
-           $('#formPeritacion #plate').trigger('change');
-           let brand = $('#formPeritacion #brand option:selected').val();
-           let model = $('#formPeritacion #model option:selected').val();
-           set_vehicles_by_model(brand,model); 
-           $('#formPeritacion #plate').trigger('change');
+           set_models_by_brand("/Intranet/garages/models/get",'#formPeritacion', $('#formPeritacion #brand option:selected').val());               
+           $('#formPeritacion #plate').val('0');          
+           setTimeout(() => {set_vehicles_by_model("/Intranet/garages/vehicles/get", '#formPeritacion',$('#formPeritacion #brand option:selected').val(), $('#formPeritacion #model option:selected').val());}, 1000);
+           setTimeout( () => {$('#formPeritacion #km').val(($('#formPeritacion #plate option:selected').attr('km')));},1000);  
+           setTimeout( () => {$('#formPeritacion #vin').val(($('#formPeritacion #plate option:selected').attr('vin')));},1000);
            
+          
         });
         
         $('#formPeritacion #plate').change(function(){
-            
+            set_vehicles_by_plate("/Intranet/garages/vehicles/plate",'#formPeritacion' ,$('#formPeritacion #plate option:selected').val());
         });
         
-        $('#formOfertadeVenta #model').change(function(){
-            set_vehicles_by_model($('#formOfertadeVenta #brand option:selected').val(), $('#formOfertadeVenta #model option:selected').val());
+        $('#formPeritacion #model').change(function(){
+             console.log($('#formPeritacion #model option:selected').val());   
+//            set_vehicles_by_model("/Intranet/garages/vehicles/get", $('#formPeritacion #brand option:selected').val(), $('#formPeritacion #model option:selected').val());
         });
         
-        $('#formOfertadeVenta #discount').change(function(){
+        $('#formPeritacion #discount').change(function(){
             set_selloffer_price();
-            $('#formOfertadeVenta #discount').val(numeral($('#formOfertadeVenta #discount').val()).format('(0.0,$)'));
+            $('#formPeritacion #discount').val(numeral($('#formPeritacion #discount').val()).format('(0.0,$)'));
         });
         set_components_prices();
         set_supplies_prices();
@@ -575,9 +575,9 @@ function set_models_by_brand(url, form, brand){
         method: "POST",
         url: url,
         data: {'brand' : brand},
-        async: false,
+        async: true,
         dataType: "json",
-        success: function(data){
+        success: function(data){            
             var newArray = [];
             $(form + ' #model').empty();
             for(let i = 0;i < data.length; i++){
@@ -585,22 +585,22 @@ function set_models_by_brand(url, form, brand){
                 newArray.push(tempArray);
             }
             newArray.push({'id' : '0', 'text' : 'Sin datos'});
-            $(form + '#model').select2({
+            $(form + ' #model').select2({
                 data : newArray
             });
         }
     });
 }
 
-function set_vehicles_by_model(url, form, brand, model){
+function set_vehicles_by_model(url, form, brand, model){    
     $.ajax({
         method: "POST",
         url: url,
         data: {'brand' : brand, 'model' : model},
         async: false,
-        dataType: "html",
+        dataType: "json",
         success: function(data){ 
-            console.log(data);
+            
             $(form + ' #plate').empty();
             for(let i = 0;i < data.length; i++){
                 let tempOption = '<option km="' + data[i].km + '" vin="' + data[i].vin + '" price="' + data[i].pvp + '" vehicle_brand="' + data[i].brand_id + '" vehicle_model="' + data[i].model_id + '" value="' + data[i].id + '" >'+ data[i].plate + '</option>'; 
@@ -620,8 +620,7 @@ function set_vehicles_by_plate(url, form, plate){
         data: {'plate' : plate},
         async: false,
         dataType: "json",
-        success: function(data){    
-            
+        success: function(data){            
             $(form + '#brand').val(data['brand']).trigger('change.select2');           
         }
     });

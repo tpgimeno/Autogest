@@ -105,6 +105,14 @@ class ProductionRoutes {
             'App\Controllers\Garages\ExpertOpinionsController',
             'deleteAction'
         ]);
+        $map->post('getExpertOpinionModelsByBrand', '/Intranet/garages/models/get', [
+            'App\Controllers\Garages\ExpertOpinionsController',
+            'getExpertOpinionModelsbyBrand'
+        ]);
+        $map->post('getExpertOpinionVehiclesByModel', '/Intranet/garages/vehicles/get', [
+            'App\Controllers\Garages\ExpertOpinionsController',
+            'getExpertOpinionVehiclesbyModel'
+        ]);
         $map->post('saveExpertOpinionComponent', '/Intranet/garages/expertOpinions/components/add', [
            'App\Controllers\Garages\ExpertOpinionsController',
            'addComponentsExpertOpinionsAction'

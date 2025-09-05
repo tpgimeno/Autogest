@@ -11,6 +11,7 @@ use App\Models\ExpertOpinionComponents;
 use App\Models\ExpertOpinions;
 use App\Models\ExpertOpinionSupplies;
 use App\Models\ExpertOpinionWorks;
+use App\Models\ModelVh;
 use App\Models\Vehicle;
 use App\Services\BaseService;
 
@@ -25,8 +26,9 @@ class ExpertOpinionsService extends BaseService{
         $values = ExpertOpinions::join('vehicles', 'expertopinions.vehicle_id', '=', 'vehicles.id')                
                 ->join('brands', 'vehicles.brand_id', '=', 'brands.id')
                 ->join('models', 'vehicles.model_id', '=', 'models.id')
-                ->get(['expertopinions.id as id', 'expertopinions.expertName as name', 'expertopinions.expertSurname as surname', 'vehicles.plate as plate', 'expertopinions.date as date'])
+                ->get(['expertopinions.id as id', 'expertopinions.expertName as expertName', 'expertopinions.expertSurname as surname', 'vehicles.plate as plate', 'expertopinions.date as date'])
                 ->toArray();
+        
         return $values;
     }
     
@@ -215,6 +217,19 @@ class ExpertOpinionsService extends BaseService{
         return $responseMessage;
     }
     
+    public function getModelsByBrandAjax($brand){
+        $models = ModelVh::where('models.brand_id', '=', intval($brand))
+                ->get()->toArray();  
+        
+        return $models;
+    }
+    public function getVehiclesByModelAjax($brand,$model){        
+        $plates = Vehicle::where('vehicles.brand_id', '=', intval($brand))
+                ->where('vehicles.model_id', '=', intval($model))                
+                ->get()->toArray();  
+        
+        return $plates;
+    }
     public function delWorksExpertOpinionsAction($postData){    
         $work = ExpertOpinionWorks::where('id', '=', $postData['id'])
                 ->get()->first();

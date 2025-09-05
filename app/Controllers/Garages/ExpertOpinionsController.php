@@ -35,7 +35,8 @@ class ExpertOpinionsController extends BaseController{
         $this->properties = $this->expertOpinionsService->getModelProperties($this->model);
     }     
     public function getIndexAction($request) {
-        return $this->getBaseIndexAction($request, $this->model, null);
+        $values = $this->expertOpinionsService->list();
+        return $this->getBaseIndexAction($request, $this->model, $values);
     }      
     
     public function getExpertOpinionsDataAction($request) {                
@@ -63,7 +64,9 @@ class ExpertOpinionsController extends BaseController{
             'modals_functions' => ['setComponent' => 'setComponent','saveComponent' => 'saveExpertOpinionsComponent()','setSupply' => 'setSupply', 'saveSupply' => 'saveExpertOpinionsSupply()','setWork' => 'setWork','saveWork' => 'saveExpertOpinionsWork()'],
             'forms' => ['1' => 'expertOpinion_component_form','2' => 'expertOpinion_supply_form','3' => 'expertOpinion_work_form']];
         if($request->getMethod() == 'POST') {
-            $postData = $request->getParsedBody();            
+            $postData = $request->getParsedBody(); 
+            $postData['vehicle_id'] = $postData['plate'];
+        
             $expertOpinionsValidator = v::key('opinionId', v::stringType()->notEmpty()) 
             ->key('date', v::notEmpty());            
             try{
@@ -141,6 +144,21 @@ class ExpertOpinionsController extends BaseController{
         $postData = $request->getParsedBody();        
         $work = $this->expertOpinionsService->delWorksExpertOpinionsAction($postData);
         $response = new JsonResponse($work);
+        return $response;
+    }
+    
+    public function getExpertOpinionModelsbyBrand($request){
+        $postData = $request->getParsedBody();
+        $models = $this->expertOpinionsService->getModelsByBrandAjax($postData['brand']);        
+        $response = new JsonResponse($models);
+        return $response;
+    }
+    public function getExpertOpinionVehiclesbyModel($request){        
+        $postData = $request->getParsedBody();   
+        
+        $models = $this->expertOpinionsService->getVehiclesByModelAjax($postData['brand'],$postData['model']);  
+       
+        $response = new JsonResponse($models);
         return $response;
     }
     
