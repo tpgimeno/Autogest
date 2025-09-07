@@ -314,10 +314,10 @@ $(document).ready(function(){
         
         $('#formPeritacion #brand').change(function(){ 
            set_models_by_brand("/Intranet/garages/models/get",'#formPeritacion', $('#formPeritacion #brand option:selected').val());               
-           $('#formPeritacion #plate').val('0');          
-           setTimeout(() => {set_vehicles_by_model("/Intranet/garages/vehicles/get", '#formPeritacion',$('#formPeritacion #brand option:selected').val(), $('#formPeritacion #model option:selected').val());}, 1000);
-           setTimeout( () => {$('#formPeritacion #km').val(($('#formPeritacion #plate option:selected').attr('km')));},500);  
-           setTimeout( () => {$('#formPeritacion #vin').val(($('#formPeritacion #plate option:selected').attr('vin')));},500);
+           $('#formPeritacion #plate').val('0');
+           set_vehicles_by_model("/Intranet/garages/vehicles/get", '#formPeritacion',$('#formPeritacion #brand option:selected').val(), $('#formPeritacion #model option:selected').val());
+           $('#formPeritacion #km').val(($('#formPeritacion #plate option:selected').attr('km')));
+           $('#formPeritacion #vin').val(($('#formPeritacion #plate option:selected').attr('vin')));
            
           
         });
@@ -574,7 +574,7 @@ function set_models_by_brand(url, form, brand){
         method: "POST",
         url: url,
         data: {'brand' : brand},
-        async: true,
+        async: false,
         dataType: "json",
         success: function(data){            
             var newArray = [];
@@ -591,7 +591,8 @@ function set_models_by_brand(url, form, brand){
     });
 }
 
-function set_vehicles_by_model(url, form, brand, model){    
+function set_vehicles_by_model(url, form, brand, model){   
+    console.log(brand, model);
     $.ajax({
         method: "POST",
         url: url,
@@ -599,7 +600,7 @@ function set_vehicles_by_model(url, form, brand, model){
         async: false,
         dataType: "json",
         success: function(data){ 
-            console.log(data);
+           
             $(form + ' #plate').empty();
             for(let i = 0;i < data.length; i++){
                 let tempOption = '<option km="' + data[i].km + '" vin="' + data[i].vin + '" price="' + data[i].pvp + '" vehicle_brand="' + data[i].brand_id + '" vehicle_model="' + data[i].model_id + '" value="' + data[i].id + '" >'+ data[i].plate + '</option>'; 

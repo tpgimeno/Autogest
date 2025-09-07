@@ -155,7 +155,7 @@ class ExpertOpinionsController extends BaseController{
     }
     public function getExpertOpinionVehiclesbyModel($request){        
         $postData = $request->getParsedBody();   
-        
+       
         $models = $this->expertOpinionsService->getVehiclesByModelAjax($postData['brand'],$postData['model']);  
        
         $response = new JsonResponse($models);
