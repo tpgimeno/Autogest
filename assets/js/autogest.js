@@ -316,8 +316,8 @@ $(document).ready(function(){
            set_models_by_brand("/Intranet/garages/models/get",'#formPeritacion', $('#formPeritacion #brand option:selected').val());               
            $('#formPeritacion #plate').val('0');          
            setTimeout(() => {set_vehicles_by_model("/Intranet/garages/vehicles/get", '#formPeritacion',$('#formPeritacion #brand option:selected').val(), $('#formPeritacion #model option:selected').val());}, 1000);
-           setTimeout( () => {$('#formPeritacion #km').val(($('#formPeritacion #plate option:selected').attr('km')));},1000);  
-           setTimeout( () => {$('#formPeritacion #vin').val(($('#formPeritacion #plate option:selected').attr('vin')));},1000);
+           setTimeout( () => {$('#formPeritacion #km').val(($('#formPeritacion #plate option:selected').attr('km')));},500);  
+           setTimeout( () => {$('#formPeritacion #vin').val(($('#formPeritacion #plate option:selected').attr('vin')));},500);
            
           
         });
@@ -327,8 +327,7 @@ $(document).ready(function(){
         });
         
         $('#formPeritacion #model').change(function(){
-             console.log($('#formPeritacion #model option:selected').val());   
-//            set_vehicles_by_model("/Intranet/garages/vehicles/get", $('#formPeritacion #brand option:selected').val(), $('#formPeritacion #model option:selected').val());
+            setTimeout(() => {set_vehicles_by_model("/Intranet/garages/vehicles/get", '#formPeritacion',$('#formPeritacion #brand option:selected').val(), $('#formPeritacion #model option:selected').val());}, 1000);
         });
         
         $('#formPeritacion #discount').change(function(){
@@ -600,7 +599,7 @@ function set_vehicles_by_model(url, form, brand, model){
         async: false,
         dataType: "json",
         success: function(data){ 
-            
+            console.log(data);
             $(form + ' #plate').empty();
             for(let i = 0;i < data.length; i++){
                 let tempOption = '<option km="' + data[i].km + '" vin="' + data[i].vin + '" price="' + data[i].pvp + '" vehicle_brand="' + data[i].brand_id + '" vehicle_model="' + data[i].model_id + '" value="' + data[i].id + '" >'+ data[i].plate + '</option>'; 
@@ -826,7 +825,7 @@ function saveGarageOrderSupply(){
 }
 
 function delGarageOrderSupply(data){ 
-    console.log(data);  
+   
     var url = "Intranet/garageOrders/supplies/del";
     var setData = {'id' : data.garageOrdersupply_id};
     delAsset(url, setData, 'supplies', 'Intranet/garageOrders/form?id=' + $('.form-horizontal #id').val() + '&menu=taller&item=repairOrders');
@@ -900,7 +899,7 @@ function saveWorkSheetsComponent(){
             'component_id' : $('#workSheets_component_form #component_id').val(),
             'pvp' : $('#workSheets_component_form #pvp').val(),
             'cantity' : $('#workSheets_component_form #cantity').val()};
-    console.log(data);
+   
     saveAssets(url, data, '#components_modal', '#component_form_modal','components', 'Intranet/workSheets/form?id=' + $('.form-horizontal #id').val() + '&menu=taller&item=workSheets');
    
 }

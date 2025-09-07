@@ -41,6 +41,7 @@ class AccountCest {
         $I->fillField('#accountNumber', $this->accountNumber);
         $I->fillField('observations', 'Lorem ipsum ...');
         $I->click('#submit');
+        $I->wait(2);
         $I->see('Saved');
         $this->id = $I->grabFromDatabase('accounts', 'id', ['accountNumber' => $this->accountNumber]);
     }

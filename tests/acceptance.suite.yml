@@ -11,10 +11,10 @@ modules:
             url: 'http://localhost/Intranet'
             browser: chrome
             window_size: 2000x1000
-            port: 9515            
+            port: 50415            
             capabilities:            
-                chromeOptions:
-                    args: ["--headless"] # Run Chrome in headless mode
+#                goog:chromeOptions:
+#                    args: ["--headless"] # Run Chrome in headless mode
                     prefs:
                         download.default_directory: "..."        
         - \Helper\Acceptance
