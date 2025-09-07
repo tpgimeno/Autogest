@@ -43,11 +43,13 @@ class VehicleService extends BaseService {
             }
         } else {
             $params = $request->getQueryParams();
-            $accesories = DB::table('vehicleaccesories')
-                    ->join('accesories', 'vehicleaccesories.accesory_id', '=', 'accesories.id')
-                    ->select('accesories.id', 'vehicleaccesories.vehicle_id', 'accesories.keyString', 'accesories.name')
-                    ->where('vehicleaccesories.vehicle_id', '=', intval($params['id']))
-                    ->get();
+            if(isset ($params['id']) && $params['id']){
+                $accesories = DB::table('vehicleaccesories')
+                        ->join('accesories', 'vehicleaccesories.accesory_id', '=', 'accesories.id')
+                        ->select('accesories.id', 'vehicleaccesories.vehicle_id', 'accesories.keyString', 'accesories.name')
+                        ->where('vehicleaccesories.vehicle_id', '=', intval($params['id']))
+                        ->get();
+            }
         }
         return $accesories;
     }
@@ -86,6 +88,7 @@ class VehicleService extends BaseService {
     }
 
     public function getVehicleComponents($request) {
+        $components = null;
         if ($request->getMethod() === 'POST') {
             $postData = $request->getParsedBody();
             $components = DB::table('vehiclecomponents')
@@ -97,13 +100,15 @@ class VehicleService extends BaseService {
                     ->get();
         } else {
             $params = $request->getQueryParams();
-            $components = DB::table('vehiclecomponents')
-                    ->join('vehicles', 'vehiclecomponents.vehicle_id', '=', 'vehicles.id')
-                    ->join('components', 'vehiclecomponents.component_id', '=', 'components.id')
-                    ->join('maders', 'components.mader_id', '=', 'maders.id')
-                    ->select('components.id as component_id', 'vehiclecomponents.id as vehiclecomponent_id', 'maders.name as mader', 'components.ref as ref', 'components.name as name', 'components.pvp as pvp', 'vehiclecomponents.cantity as cantity')
-                    ->where('vehiclecomponents.vehicle_id', '=', $params['id'])
-                    ->get();
+            if(isset ($params['id']) && $params['id']){
+                $components = DB::table('vehiclecomponents')
+                        ->join('vehicles', 'vehiclecomponents.vehicle_id', '=', 'vehicles.id')
+                        ->join('components', 'vehiclecomponents.component_id', '=', 'components.id')
+                        ->join('maders', 'components.mader_id', '=', 'maders.id')
+                        ->select('components.id as component_id', 'vehiclecomponents.id as vehiclecomponent_id', 'maders.name as mader', 'components.ref as ref', 'components.name as name', 'components.pvp as pvp', 'vehiclecomponents.cantity as cantity')
+                        ->where('vehiclecomponents.vehicle_id', '=', $params['id'])
+                        ->get();
+            }
         }
         return $components;
     }
@@ -143,6 +148,7 @@ class VehicleService extends BaseService {
     }
 
     public function getVehicleSupplies($request) {
+        $supplies = null;
         if ($request->getMethod() === 'POST') {
             $postData = $request->getParsedBody();
             $supplies = DB::table('vehiclesupplies')
@@ -154,13 +160,15 @@ class VehicleService extends BaseService {
                     ->get();
         } else {
             $params = $request->getQueryParams();
-            $supplies = DB::table('vehiclesupplies')
-                    ->join('vehicles', 'vehiclesupplies.vehicle_id', '=', 'vehicles.id')
-                    ->join('supplies', 'vehiclesupplies.supply_id', '=', 'supplies.id')
-                    ->join('maders', 'supplies.mader_id', '=', 'maders.id')
-                    ->select('supplies.id as supply_id', 'vehiclesupplies.id as vehiclesupply_id', 'maders.name as mader', 'supplies.ref as ref', 'supplies.name as name', 'supplies.pvp as pvp', 'vehiclesupplies.cantity as cantity')
-                    ->where('vehiclesupplies.vehicle_id', '=', $params['id'])
-                    ->get();
+            if(isset ($params['id']) && $params['id']){
+                $supplies = DB::table('vehiclesupplies')
+                        ->join('vehicles', 'vehiclesupplies.vehicle_id', '=', 'vehicles.id')
+                        ->join('supplies', 'vehiclesupplies.supply_id', '=', 'supplies.id')
+                        ->join('maders', 'supplies.mader_id', '=', 'maders.id')
+                        ->select('supplies.id as supply_id', 'vehiclesupplies.id as vehiclesupply_id', 'maders.name as mader', 'supplies.ref as ref', 'supplies.name as name', 'supplies.pvp as pvp', 'vehiclesupplies.cantity as cantity')
+                        ->where('vehiclesupplies.vehicle_id', '=', $params['id'])
+                        ->get();
+            }
         }
         return $supplies;
     }
@@ -201,6 +209,7 @@ class VehicleService extends BaseService {
     }
     
     public function getVehicleWorks($request) {
+        $works = null;
         if ($request->getMethod() === 'POST') {
             $postData = $request->getParsedBody();
             $works = DB::table('vehicleworks')
@@ -211,12 +220,14 @@ class VehicleService extends BaseService {
                     ->get();
         } else {
             $params = $request->getQueryParams();
-            $works = DB::table('vehicleworks')
-                    ->join('vehicles', 'vehicleworks.vehicle_id', '=', 'vehicles.id')
-                    ->join('works', 'vehicleworks.work_id', '=', 'works.id')
-                    ->select('works.id as work_id', 'vehicleworks.id as vehiclework_id', 'works.ref as ref', 'works.name as name', 'works.pvp as pvp', 'vehicleworks.cantity as cantity')
-                    ->where('vehicleworks.vehicle_id', '=', $params['id'])
-                    ->get();
+            if(isset ($params['id']) && $params['id']){
+                $works = DB::table('vehicleworks')
+                        ->join('vehicles', 'vehicleworks.vehicle_id', '=', 'vehicles.id')
+                        ->join('works', 'vehicleworks.work_id', '=', 'works.id')
+                        ->select('works.id as work_id', 'vehicleworks.id as vehiclework_id', 'works.ref as ref', 'works.name as name', 'works.pvp as pvp', 'vehicleworks.cantity as cantity')
+                        ->where('vehicleworks.vehicle_id', '=', $params['id'])
+                        ->get();
+            }
         }
         return $works;
     }

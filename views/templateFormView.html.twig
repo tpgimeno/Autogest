@@ -145,7 +145,7 @@
                                             
                                             <label class="control-label" for="{{ item }}">{{ labels[item] }}</label>
                                             <select id="{{ item }}" name="{{ item }}" class="form-control select2" value="">
-                                                {% for option in optionsArray['vehicles'] %}
+                                                
                                                     {% if item == 'plate' %}  
                                                         {% for plate_item in optionsArray['vehicles'] %}
                                                             <option km="{{ option['km'] }}" vin="{{ option['vin'] }}" price="{{ option['vehiclePvp'] }}" vehicle_brand="{{ option['brand_id'] }}" vehicle_model="{{ option['model_id'] }}" vehicle_id="{{ option['id'] }}" value="{{ option['id'] }}" >{{ option['plate'] }}</option>                                                        
@@ -160,7 +160,7 @@
                                                         {% endfor %}
                                                     {% endif %}
                                                    
-                                                {% endfor %}
+                                                
 
                                                 <option value="0">Sin datos</option>
                                             </select>        
