@@ -6,7 +6,7 @@ RewriteRule ^(js|css|map|jpg|png|woff|woff2|ttf)/|\.(css|js|map|jpg|png|woff|wof
 
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{THE_REQUEST} /Intranet/public/([^\s?]*) [NC]
+RewriteCond %{THE_REQUEST} /public/([^\s?]*) [NC]
 RewriteRule ^ %1 [L,NE,R=302]
 RewriteRule ^((?!public/).*)$ public/$1 [L,NC]
 
