@@ -23,6 +23,8 @@ final class CalendarEventsTable extends AbstractMigration
                 ->addColumn('date_end', 'date')
                 ->addColumn('time_start', 'time')
                 ->addColumn('time_end', 'time')
+                ->addColumn('title', 'string')
+                ->addColumn('description', 'string')
                 ->addColumn('created_at', 'datetime')
                 ->addColumn('updated_at', 'datetime', ['null' => true])
                 ->create();

@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class CustomerTypes extends Model
 {
-    protected $table = 'customerTypes';
+    protected $table = 'customertypes';
     protected $properties = ['name'];
     public function getProperties(){
         return $this->properties;

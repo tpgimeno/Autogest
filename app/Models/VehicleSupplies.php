@@ -11,5 +11,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class VehicleSupplies extends Model 
 {
-    protected $table = "vehicleSupplies";
+    protected $table = "vehiclesupplies";
 }

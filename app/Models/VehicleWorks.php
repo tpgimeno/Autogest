@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class VehicleWorks extends Model 
 {
-    protected $table = "vehicleWorks";
+    protected $table = "vehicleworks";
     protected $properties = ['vehicle_id', 'work_id', 'cantity', 'pvp'];
     public function getProperties(){
         return $this->properties;

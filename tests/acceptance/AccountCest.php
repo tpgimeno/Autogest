@@ -22,6 +22,7 @@ class AccountCest {
         $I->click('Cuentas Bancarias');
         $I->see('Cuentas Bancarias');
         $I->click('#newButton');
+        $I->wait(1);
         $I->see('Cuenta Bancaria');
         $I->click('Lista');
         $I->seeCurrentUrlEquals("/Intranet/accounts/list?menu=mantenimiento&item=accounts");
