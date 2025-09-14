@@ -11,7 +11,7 @@ modules:
             url: 'http://localhost/Intranet'
             browser: chrome
             window_size: 2000x1000
-            port: 50415            
+            port: 40185           
             capabilities:            
 #                goog:chromeOptions:
 #                    args: ["--headless"] # Run Chrome in headless mode

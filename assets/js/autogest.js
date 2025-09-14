@@ -229,6 +229,7 @@ $(document).ready(function(){
     
     $('.modal-form').each(function(){
         $(this).each(function(){
+            console.log($(this));
             var modal = $(this).attr('id');
             $('#'+modal+' #cantity').change(function(){
               var cant = $(this).val();
@@ -295,6 +296,11 @@ $(document).ready(function(){
         set_worksheet_prices();
     }
     
+        /*
+     * =============================================================================
+     * EXPRERT OPINIONS FUNCTIONS ON PAGE READY
+     * =============================================================================
+     */
     
     var titleForm = $('.form-horizontal').attr('id');
     if(titleForm === 'formPeritacion'){         
@@ -341,9 +347,21 @@ $(document).ready(function(){
     }
      
     
-  
+    /*
+     * =============================================================================
+     * ASSURANCES FUNCTIONS ON PAGE READY
+     * =============================================================================
+     */
     
-    
+    var titleForm = $('.form-horizontal').attr('id');
+    if(titleForm === 'formPolizadeSeguro'){   
+        $('#formPolizadeSeguro #price').change(function(){
+            $('#formPolizadeSeguro #price').val(numeral($('#formPolizadeSeguro #price').val()).format('(0.0,$)'));
+        });
+        $('#formPolizadeSeguro #discount').change(function(){
+            $('#formPolizadeSeguro #discount').val(numeral($('#formPolizadeSeguro #discount').val()).format('(0.0,$)'));
+        });
+    }      
     
 });
 

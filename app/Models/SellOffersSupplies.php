@@ -13,6 +13,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class SellOffersSupplies extends Model 
 {
-    protected $table = "selloffersSupplies";   
+    protected $table = "sellofferssupplies";   
 }
 
