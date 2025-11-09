@@ -207,6 +207,10 @@ $(document).ready(function(){
             set_garageOrder_price();
             $('#formOrdendeTrabajo #discount').val(numeral($('#formOrdendeTrabajo #discount').val()).format('(0.0,$)'));
         });
+        set_models_by_brand("/Intranet/garages/models/get",'#formOrdendeTrabajo', $('#formOrdendeTrabajo #brand option:selected').val());
+        $('#formOrdendeTrabajo #brand').change(function(){
+            set_models_by_brand("/Intranet/garages/models/get",'#formOrdendeTrabajo', $('#formOrdendeTrabajo #brand option:selected').val());
+        });
         
         set_components_prices();
         set_supplies_prices();
@@ -229,7 +233,7 @@ $(document).ready(function(){
     
     $('.modal-form').each(function(){
         $(this).each(function(){
-            console.log($(this));
+           
             var modal = $(this).attr('id');
             $('#'+modal+' #cantity').change(function(){
               var cant = $(this).val();
@@ -610,7 +614,7 @@ function set_models_by_brand(url, form, brand){
 }
 
 function set_vehicles_by_model(url, form, brand, model){   
-    console.log(brand, model);
+    
     $.ajax({
         method: "POST",
         url: url,
