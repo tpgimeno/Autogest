@@ -1,31 +1,87 @@
 # INTRANET VEHICLES SELLERS
 
-## Comercial system for vehicles sellers
-----------------------------------------
+## Commercial System for Vehicle Sellers
 
-With this system I want to offer a comercial solution for vehicles concessionaires. Offers and Vehicles.
+This system offers a comprehensive commercial solution for vehicle concessionaires, managing offers, vehicles, and sales processes.
 
-# GETING STARTED
+### 🚀 Getting Started
 
-This software is the result of accumulated experience in the vehicle sales sector, having been in the different departments of the company, Commercial, Administration, Production. I have been able to observe the necessary points to be able to generate offers with the necessary information, accessories, components or work to be done. Application of discounts and control of sales.
+This software is the result of accumulated experience in the vehicle sales sector, covering Commercial, Administration, and Production departments. It addresses the need for generating precise offers with detailed information on accessories, components, and work required, along with discount application and sales control.
 
-By formalizing all the information in a document, it allows to generate a more precise repair order, avoiding wasted time and improving the performance of the company.
+By formalizing all information into a single document, it allows for the generation of precise repair orders, minimizing wasted time and improving company performance.
 
-This software has been developed in Php7.4, the pattern has been MVC, it is presented as an intranet on a local server.
+### 🛠️ Technology Stack
 
-I have used OOP, mysql and various symfony modules, such as the Twig template engine and Http routing. I have also used Eloquent, the Laravel database engine.
+The application is built using **PHP 7.4** following the **MVC** pattern and is designed to run as an intranet on a local server.
 
-Next we will see the requirements for installation.
+**Key Technologies:**
+*   **Core:** PHP 7.4, OOP
+*   **Routing:** Aura Router
+*   **Templating:** Twig
+*   **Database ORM:** Eloquent (Laravel)
+*   **Dependency Injection:** PHP-DI
+*   **Validation:** Respect/Validation
+*   **Logging:** Monolog
+*   **Migrations:** Phinx
+*   **Excel/PDF:** PhpSpreadsheet, FPDF
+*   **Frontend:** CKEditor, DataTables (via Bower)
 
-# REQUIREMENTS
+### 📋 Requirements
 
-You should have installed:
+*   **PHP 7.4**
+*   **Composer** (https://getcomposer.org/)
+*   **MySQL** / MariaDB
+*   **Bower** (for frontend dependencies)
 
-- Php7.4
-- Composer(https://getcomposer.org/)
-- The rest of modules will be installed with composer.
+### ⚙️ Installation
 
-# INSTALATION
+1.  **Clone the repository**
+    ```bash
+    git clone <repository-url>
+    cd Intranet
+    ```
 
+2.  **Install Backend Dependencies**
+    ```bash
+    composer install
+    ```
 
+3.  **Install Frontend Dependencies**
+    ```bash
+    bower install
+    ```
 
+4.  **Database Configuration**
+    *   Create a MySQL database.
+    *   Configure your database connection settings in `phinx.yml` or your environment configuration file.
+
+5.  **Run Migrations**
+    Initialize the database schema using Phinx:
+    ```bash
+    php vendor/bin/phinx migrate
+    ```
+
+### 🧪 Testing
+
+The project uses **Codeception** for testing.
+
+**Running Acceptance Tests:**
+
+1.  Start Chromedriver (required for acceptance tests):
+    ```bash
+    # From your webdriver bin directory (e.g., C:/Webdriver/bin)
+    chromedriver --url-base=/wd/hub --port=4123
+    ```
+
+2.  Run tests:
+    ```bash
+    vendor/bin/codecept run
+    ```
+
+### 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+### 👥 Authors
+
+*   **TpGimeno** - *Initial work* - [tonyllomouse@gmail.com](mailto:tonyllomouse@gmail.com)
