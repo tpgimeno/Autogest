@@ -54,6 +54,11 @@ The application is built using **PHP 7.4** following the **MVC** pattern and is 
 4.  **Database Configuration**
     *   Create a MySQL database.
     *   Configure your database connection settings in `phinx.yml` or your environment configuration file.
+    *   Configura the database connection setting in .env file.
+    *   Create the database by running:
+        ```bash
+        php console.php app:create-database
+        ```
 
 5.  **Run Migrations**
     Initialize the database schema using Phinx:

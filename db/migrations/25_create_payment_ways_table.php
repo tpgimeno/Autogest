@@ -19,13 +19,13 @@ final class CreatePaymentWaysTable extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('paymentWays');
-        $table->addColumn('name', 'string')  
-                ->addColumn('account_id', 'integer')
-                ->addColumn('discount', 'integer')
-                ->addColumn('created_at', 'datetime')
-                ->addColumn('updated_at', 'datetime', ['null' => true])
-                ->addColumn('deleted_at', 'datetime', ['null' => true])
-                ->addForeignKey('account_id', 'accounts','id', array('delete' => 'SET_NULL', 'update' => 'NO_ACTION'))
-                ->create();
+        $table->addColumn('name', 'string')
+            ->addColumn('account_id', 'integer', ['null' => true])
+            ->addColumn('discount', 'integer', ['null' => true])
+            ->addColumn('created_at', 'datetime')
+            ->addColumn('updated_at', 'datetime', ['null' => true])
+            ->addColumn('deleted_at', 'datetime', ['null' => true])
+            ->addForeignKey('account_id', 'accounts', 'id', ['delete' => 'SET_NULL', 'update' => 'NO_ACTION'])
+            ->create();
     }
 }

@@ -20,19 +20,19 @@ final class CreateUsersTable extends AbstractMigration
     {
         $table = $this->table('users');
         $table->addColumn('email', 'string')
-                ->addColumn('password', 'string')
-                ->addColumn('name', 'string', ['null' => true])
-                ->addColumn('address', 'string', ['null' => true])
-                ->addColumn('postalCode', 'integer', ['null' => true])
-                ->addColumn('city', 'string', ['null' => true])
-                ->addColumn('state', 'string', ['null' => true])
-                ->addColumn('country', 'string', ['null' => true])
-                ->addColumn('phone', 'string', ['null' => true])                
-                ->addColumn('userlevels_id', 'integer', ['null' => true])
-                ->addColumn('created_at', 'datetime')
-                ->addColumn('updated_at', 'datetime', ['null' => true])
-                ->addColumn('deleted_at', 'datetime', ['null' => true])
-                ->addIndex('email', ['unique' => true])
-                ->create();           
+            ->addColumn('password', 'string')
+            ->addColumn('name', 'string', ['null' => true])
+            ->addColumn('address', 'string', ['null' => true])
+            ->addColumn('postalCode', 'integer', ['null' => true])
+            ->addColumn('city', 'string', ['null' => true])
+            ->addColumn('state', 'string', ['null' => true])
+            ->addColumn('country', 'string', ['null' => true])
+            ->addColumn('phone', 'string', ['null' => true])
+            ->addColumn('userlevels_id', 'integer', ['null' => true])
+            ->addColumn('created_at', 'datetime')
+            ->addColumn('updated_at', 'datetime', ['null' => true, 'default' => null])
+            ->addColumn('deleted_at', 'datetime', ['null' => true, 'default' => null])
+            ->addIndex('email', ['unique' => true])
+            ->create();
     }
 }

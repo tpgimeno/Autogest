@@ -20,8 +20,9 @@ final class UserLevelTable extends AbstractMigration
     {
         $table = $this->table('userlevels');
         $table->addColumn('name', 'string')
-                ->addColumn('created_at', 'timestamp')
-                ->addColumn('updated_at', 'timestamp')
-                ->create();
+            ->addColumn('created_at', 'datetime')
+            ->addColumn('updated_at', 'datetime', ['null' => true, 'default' => null])
+            ->addColumn('deleted_at', 'datetime', ['null' => true, 'default' => null])
+            ->create();
     }
 }

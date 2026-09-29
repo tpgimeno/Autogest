@@ -20,19 +20,19 @@ final class CreateBuyInvoicesTable extends AbstractMigration
     {
         $table = $this->table('buyInvoices');
         $table->addColumn('invoiceNumber', 'string')
-                ->addColumn('date', 'date')
-                ->addColumn('providorId', 'integer')
-                ->addColumn('articles', 'string', ['null' => true])
-                ->addColumn('base', 'float', ['null' => true])
-                ->addColumn('tva', 'float', ['null' => true])
-                ->addColumn('total', 'float', ['null' => true])
-                ->addColumn('observations', 'string', ['null' => true])
-                ->addColumn('text', 'string', ['null' => true])
-                ->addColumn('created_at', 'datetime')
-                ->addColumn('updated_at', 'datetime', ['null' => true])
-                ->addColumn('deleted_at', 'datetime', ['null' => true])
-                ->addIndex('invoiceNumber', ['unique' => true])
-                ->addForeignKey(['providorId'], 'providers', ['id'])
-                ->create();
+            ->addColumn('date', 'date')
+            ->addColumn('providorId', 'integer', ['null' => true])
+            ->addColumn('articles', 'string', ['null' => true])
+            ->addColumn('base', 'float', ['null' => true])
+            ->addColumn('tva', 'float', ['null' => true])
+            ->addColumn('total', 'float', ['null' => true])
+            ->addColumn('observations', 'string', ['null' => true])
+            ->addColumn('text', 'string', ['null' => true])
+            ->addColumn('created_at', 'datetime')
+            ->addColumn('updated_at', 'datetime', ['null' => true])
+            ->addColumn('deleted_at', 'datetime', ['null' => true])
+            ->addIndex('invoiceNumber', ['unique' => true])
+            ->addForeignKey(['providorId'], 'providors', ['id'], ['delete' => 'SET_NULL', 'update' => 'NO_ACTION'])
+            ->create();
     }
 }
